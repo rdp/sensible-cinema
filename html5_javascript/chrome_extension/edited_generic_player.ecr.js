@@ -1271,7 +1271,7 @@ function findFirstVideoTagOrNull() {
     all.concat(frames[i].contentDocument.document.getElementsByTagName("video"));
   }
   for(var i = 0, len = all.length; i < len; i++) {
-    if (all[i].currentTime > 0) {
+    if (all[i].currentTime > 0) { // somewhere once had some background ones that stayed paused :|
       return all[i];
     }
   }
@@ -1287,7 +1287,11 @@ function getCurrentTime() {
   if (isYoutubePimw()) {
     return youtube_pimw_player.getCurrentTime();
   } else {
-    return video_element.currentTime;
+    if (isAmazon()) {
+      return video_element.currentTime - 10; // not sure why they did this :|
+    } else {
+      return video_element.currentTime;
+    }
   }
 }
 
@@ -1305,7 +1309,12 @@ function rawSeekToTime(ts) {
     var allowSeekAhead = true;
     youtube_pimw_player.seekTo(ts, allowSeekAhead); // no callback option
   } else {
-    video_element.currentTime = ts;
+    if (isAmazon()) {
+      video_element.currentTime = ts + 10;
+    } else {
+      // really raw LOL
+      video_element.currentTime = ts;
+    }
   }
 }
 
