@@ -591,7 +591,6 @@ function checkIfShouldDoActionAndUpdateUI() {
         iframe.height = "70%";
         iframe.width = "100%";
         // can't refullscreen it "programmatically" at least in chrome, so punt!
-        // TODO move it to the top, etc. etc. [?]
       }
     }
   }
@@ -626,7 +625,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   var next_future_tag = getNextTagAfterOrWithin(getCurrentTime());
   if (next_future_tag) {
     second_line += "next: " + timeStampToHuman(next_future_tag.start) + 
-           " (" + next_future_tag.default_action + " for " + (next_future_tag.endy - next_future_tag.start).toFixed(2) + "s)";
+           " (" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
     if (!next_future_tag.default_enabled) {
       second_line += "(disabled)";
     }
@@ -638,7 +637,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   }
   updateHTML(document.getElementById('tag_details_second_line'), second_line);
   
-  updateHTML(document.getElementById("playback_rate"), getPlaybackRate().toFixed(2) + "x");
+  updateHTML(document.getElementById("playback_rate"), twoDecimals(getPlaybackRate()) + "x");
   removeIfNotifyEditsHaveEnded(cur_time); // gotta clean this up sometime, and also support "rewind and renotify" so just notify once on init...
 }
 
@@ -783,7 +782,7 @@ function checkStatus() {
 }
 
 function timestamp_log(message, cur_time, tag) {
-  local_message = message + " at " + cur_time.toFixed(2) + " start:" + tag.start + " will_end:" + tag.endy + " in " + (tag.endy - cur_time).toFixed(2) + "s";;
+  local_message = message + " at " + twoDecimals(cur_time) + " start:" + tag.start + " will_end:" + tag.endy + " in " + twoDecimals(tag.endy - cur_time) + "s";;
   console.log(local_message);
 }
 
@@ -1011,7 +1010,7 @@ function testCurrentFromUi() {
     return; // abort!
   }
   if ((currentTestAction() == "make_video_smaller") && !isYoutubePimw()) {
-    alert("we only do that for youtube today, ping us if you want more");
+    alert("we only do that for youtube today, ping us if you want it added elsewhere");
     return;
   }
   if (currentTestAction() == "change_speed" && !getEndSpeed(faux_tag.details)) {
@@ -1633,7 +1632,7 @@ function seekToTime(ts, callback) {
         var seconds_buffered = getSecondsBufferedAhead();
 
         if (seconds_buffered > 2) { // usually 4 or 6...
-  			  console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " ts=" + ts + " length=" + (ts - start_time) + " buffered_ahead=" + seconds_buffered);
+  			  console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " ts=" + ts + " length=" + twoDecimals(ts - start_time) + " buffered_ahead=" + twoDecimals(seconds_buffered) + " start=" + twoDecimals(start_time));
           if (!isYoutubePimw()) {
             if (!current_pause_state) { // youtube loses 0.05 with these shenanigans so attempt avoid :|
       			  doPlay();
@@ -1651,6 +1650,10 @@ function seekToTime(ts, callback) {
         }
 		  }		
 	}, 50);
+}
+
+function twoDecimals(thisNumber) {
+  return thisNumber.toFixed(2);
 }
 
 // method to bind easily to resize event
@@ -1754,7 +1757,7 @@ function timeStampToHuman(timestamp) {
   timestamp -= hours * 3600;
   var minutes  = Math.floor(timestamp / 60);
   timestamp -= minutes * 60;
-  var seconds = timestamp.toFixed(2); //  -> "12.31" or "2.3"
+  var seconds = twoDecimals(timestamp); //  -> "12.31" or "2.3"
   // padding is "hard" apparently in javascript LOL
   if (hours > 0)
     return hours + "h " + minutes + "m " + seconds + "s";
