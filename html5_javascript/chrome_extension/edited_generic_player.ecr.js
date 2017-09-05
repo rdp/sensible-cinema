@@ -477,7 +477,7 @@ function isWatchingAdd() {
     // TODO remove them... :|
     // withinDelta 10 is for amazon at the end, weird stuff LOL
 		if (current_json.url.total_time > 0 && !withinDelta(current_json.url.total_time, videoDuration(), 10)) {
-			logOnce("watching add? Or possibly hit X after starting movie amazon expected=" + current_json.url.total_time + " got_duration=" + videoDuration()); // we get NaN for video_element.duration after it closes [?]
+			logOnce("watching add? Or possibly hit X after starting movie amazon expected=" + current_json.url.total_time + " got_duration=" + videoDuration()); // we get NaN for video_element.duration after hit video x in amazon :| [?]
       return true;
 			// and do nothing
 		}
@@ -642,6 +642,13 @@ function addForNewVideo() {
 		// TODO don't even offer to edit it for them on that page [?] and other pages where it's impossible today [facebook]?
     return;
 	}
+  if (isAmazon()) {
+    if (withinDelta(getCurrentTime(), videoDuration(), 30)) { // unfortunately not accurate enough, it gets the "inflated" time if has ever once gone past end :|
+      // paranoia, even accurate [?]
+      alert("we can't tell the right duration if it's too near the end in amazon, seek to beginning and try again");
+      return;
+    }
+  }
   window.open("https://" + request_host + "/new_url_from_plugin?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name="  +
 		      encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + videoDuration(), "_blank");
 	setTimeout(loadForNewUrl, 4000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|					
