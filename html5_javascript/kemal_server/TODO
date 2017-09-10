@@ -7,14 +7,13 @@ kickstarter
 
 == todo list (me personally) ==
 
-
 LLC
   real one, learn the hard way :|
   after, move to its own linode server :|
 
 some IP
-  youtube: smaller, change speed to arbitrary, work on any browser, come out of fullscreen (screen record what it does already)
-  youtube: 5% audio (arbitrary), disable mute, add "wait paused" [?]
+  youtube: 5% audio (arbitrary), add "wait paused" [? try it :| why not? ]
+  youtube: smaller, change speed to arbitrary, work on any browser, come out of fullscreen (screen record what it does...)
 
 decide and/or do personalized edits but publically usable :| woot
   
@@ -43,9 +42,6 @@ hbo tab?
 
 boss baby: 26m 8 couldn't "edit previous" to find right tag
 
-youtube: redirect to edited somehow :|
-  show list of other youtubes below it? At least link...
-  ask forum if I can mute? https://productforums.google.com/forum/#!forum/youtube
 
 better "updated at" option et al for sorting :|
 some series' are out of order? Does it get avatar name right even?
@@ -88,12 +84,16 @@ the easier chrome install :)
 
 == meh sometime ==
 
+youtube: redirect to edited somehow, from youtube.com stuffs :|
+  show list of other youtubes below all? At least link...
+  ask forum if I can mute? https://productforums.google.com/forum/#!forum/youtube
+
 fix youtube for slower phones :|
 
 tell crystal their server shucks under stress test :|
 
-IP: youtube "10% audio"
-  copy some vids
+IP:
+  copy some vids (from youtube to the other place)
   my own "fullscreen" for youtube so that it can go smaller and larger within fullscreen (maximize my own div that contains the youtube api iframe for it...)  
 
 personalize: defaults
