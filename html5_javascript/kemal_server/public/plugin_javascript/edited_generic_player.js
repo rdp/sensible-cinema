@@ -380,7 +380,7 @@ popup text
 <input type="text" name="popup_text_after" id="popup_text_after_id" size="30" value="" style="background-color: rgba(255, 255, 255, 0.85);" placeholder="use only on occasion" />
 <br/>
 
-default enabled?
+default edit on?
 <select name="default_enabled" id="default_enabled_id"> <!-- check boxes have caveats avoid for now -->
   <option value="true">Y</option>
   <option value="false">N</option>
@@ -505,7 +505,8 @@ function areWeWithin(thisTagArray, cur_time) {
 }
 
 var i_muted_it = false; // attempt to let them still control their mute button :|
-var i_changed_its_speed = false;
+var i_changed_its_speed = false; // attempt to let them still control speed manually if desired
+var last_speed_value = null;
 var last_timestamp = 0;
 var i_unfullscreened_it_element = null;
 
@@ -588,7 +589,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       var iframe = youtube_pimw_player.getIframe();
       if (iframe.height == "200") {
         console.log("back to normal size cur_time=" + cur_time);
-        iframe.height = "70%";
+        iframe.height = "70%"; // XXXX save away instead
         iframe.width = "100%";
         // can't refullscreen it "programmatically" at least in chrome, so punt!
       }
@@ -597,19 +598,20 @@ function checkIfShouldDoActionAndUpdateUI() {
   
 	tag = areWeWithin(change_speeds, cur_time);
   if (tag) {
-    var desired_speed = getEndSpeed(tag.details);
+    var desired_speed = getEndSpeedOrAlert(tag.details);
     if (desired_speed) {
       if (getPlaybackRate() != desired_speed) {
   	    timestamp_log("setting speed=" + desired_speed, cur_time, tag);      
+        last_speed_value = getPlaybackRate();
         setPlaybackRate(desired_speed);
-        i_changed_its_speed = true;        
+        i_changed_its_speed = true;
       }
     }
   } else {
-    if (i_changed_its_speed && getPlaybackRate() != 1) {
+    if (i_changed_its_speed && getPlaybackRate() != last_speed_value) {
       i_changed_its_speed = false;
-      console.log("back to normal speed 1 cur_time=" + cur_time);
-      setPlaybackRate(1);
+      console.log("back to speed=" + last_speed_value + " cur_time=" + cur_time);
+      setPlaybackRate(last_speed_value);
     }
   }
   
@@ -698,19 +700,16 @@ function optionally_show_notification(seek_tag) {
 
 function sendNotification(notification_desired) {
   if (isYoutubePimw()) {
-      // can't rely on background.js :|
-      // just send it here...
+      // can't rely on background.js existing at all :|
+      // so just send it here...
 
       if (!("Notification" in window)) {
         console.log("This browser does not support desktop notification");
-        return; // oh well
+        return; // oh well, punt!
       }
-
-      // Let's check whether notification permissions have already been granted
-      else if (Notification.permission === "granted") {
+      else if (Notification.permission === "granted") { // already been granted before...
         createNotification(notification_desired);
       }
-
       // Otherwise, we need to ask the user for permission
       else if (Notification.permission !== "denied") {
         Notification.requestPermission(function (permission) {
@@ -720,8 +719,9 @@ function sendNotification(notification_desired) {
           }
         });
       }
-      // At last, if the user has denied notifications, and you 
-      // want to be respectful there is no need to bother them any more.
+      else {
+        // denied previously :| I guess don't alert they denied it right? :) but they're using it? oh well...
+      }
   } else {
     sendMessageToPlugin({notification_desired : notification_desired});
   }
@@ -834,7 +834,7 @@ function videoDuration() {
   if (isYoutubePimw()) {
     return youtube_pimw_player.getDuration();
   } else {
-    return video_element.duration;
+    return video_element.duration; // and hope they're not near the end :|
   }
 }
 
@@ -887,6 +887,7 @@ function increasePlaybackRate() {
 }
 
 function setPlaybackRate(toExactlyThis) {
+  console.log("setting playbackrate=" + toExactlyThis);
   if (isYoutubePimw()) {
     youtube_pimw_player.setPlaybackRate(toExactlyThis);
   } else {
@@ -938,7 +939,6 @@ function addForNewVideo() {
 function toggleAddNewTagStuff() {
   toggleDiv(document.getElementById("tag_details_div_id"));
 }
-
 
 function collapseAddTagStuff() {
   hideDiv(document.getElementById("tag_details_div_id"));
@@ -1000,7 +1000,7 @@ function testCurrentFromUi() {
     doTimeoutEarly(inMiddleOfTestingTimer); // nulls it out for us
 	}
   if (humanToTimeStamp(document.getElementById('endy').value) == 0) {
-    document.getElementById('endy').value = getCurrentVideoTimestampHuman(); // assume they wanted to test till "right now"
+    document.getElementById('endy').value = getCurrentVideoTimestampHuman(); // assume they wanted to test till "right now" I did this a couple of times :)
   }
 	var faux_tag = {
 		start: humanToTimeStamp(document.getElementById('start').value),
@@ -1023,7 +1023,7 @@ function testCurrentFromUi() {
     alert("we only do that for youtube today, ping us if you want it added elsewhere");
     return;
   }
-  if (currentTestAction() == "change_speed" && !getEndSpeed(faux_tag.details)) {
+  if (currentTestAction() == "change_speed" && !getEndSpeedOrAlert(faux_tag.details)) {
     return;
   }
   var temp_array = currentEditArray();
@@ -1040,12 +1040,12 @@ function testCurrentFromUi() {
 	    length = 0; // it skips it, so the amount of time before being done is less :)
 		}
     if (currentTestAction() == "change_speed") {
-      length /= getEndSpeed(faux_tag.details); // XXXX this is wrong somehow (too long). Also remove entirely at some point :|
+      length /= getEndSpeedOrAlert(faux_tag.details); // XXXX this is wrong somehow (too long?).
     }
     
 	  wait_time_millis = (length + rewindSeconds + 0.5) * 1000;
     if (isPaused()) {
-      doPlay(); // seems like we want this...
+      doPlay(); // seems like we want it like this...
     }
 	  inMiddleOfTestingTimer = makeTimeout(function() { // we call this early to cancel if they hit it a second time...
       console.log("popping " + JSON.stringify(faux_tag));
@@ -1568,10 +1568,6 @@ function findFirstVideoTagOrNull() {
   // or document.querySelector("video");
 }
 
-function isYoutubePimw() {
-  return (typeof youtube_pimw_player !== 'undefined');
-}
-
 function getCurrentTime() {
   if (isYoutubePimw()) {
     return youtube_pimw_player.getCurrentTime();
@@ -1640,9 +1636,9 @@ function seekToTime(ts, callback) {
 	seek_timer = setInterval(function() {
       console.log("seek_timer interval");
       if (isYoutubePimw()) {
-        // it stays always as "paused"
         // var done_buffering = (youtube_pimw_player.getPlayerState() == YT.PlayerState.CUED);
-        var done_buffering = true; // ???
+        // it stays always as state "paused" ???? :|
+        var done_buffering = true;
       } else {
         var HAVE_ENOUGH_DATA_HTML5 = 4;
         var done_buffering = (video_element.readyState == HAVE_ENOUGH_DATA_HTML5);
@@ -1863,7 +1859,11 @@ function setImpactIfMute() {
        }
 }
 
-function getEndSpeed(value) {
+function isYoutubePimw() {
+  return (typeof youtube_pimw_player !== 'undefined');
+}
+
+function getEndSpeedOrAlert(value) {
   var re = /(\d\.\d+)x$/;
   var match = re.exec(value);
   if (match) {
@@ -1891,6 +1891,7 @@ function doubleCheckValues() {
     alert("please select category first");
     return false;
   }
+  
   var age = document.getElementById('age_maybe_ok_id').value;
   
   if (document.getElementById('subcategory_select_id').value == "") {
@@ -1907,7 +1908,13 @@ function doubleCheckValues() {
     alert("please enter tag details");
     return false;
   }
-  if (document.getElementById('action_sel').value == "change_speed" && !getEndSpeed(details)) {
+  var action = document.getElementById('action_sel').value;
+  if (action == "change_speed" && !getEndSpeedOrAlert(details)) {
+    return false;
+  }
+  
+  if (isYoutubePimw() && action == "mute") {
+    alert("we seemingly aren't allowed to do mutes for youtube, you can either skip or change the volume to low, that's about it");
     return false;
   }
   

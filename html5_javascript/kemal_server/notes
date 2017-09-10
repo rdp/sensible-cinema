@@ -66,7 +66,11 @@ could shrink to 200px by 200px (the video that size that is)
   doesn't work in full screen :|
     can't resize full screen, or trivially come out of it? :|
 
-can mute
+tricky one:
+separate, isolate, or modify the audio or video components of any YouTube audiovisual content made available as part of, or in connection with, YouTube API Services. For example, you must not apply alternate audio tracks to videos;
+promote separately the audio or video components of any YouTube audiovisual content made available as part of, or in connection with, the YouTube API Services;
+
+OK take the high road uh guess :(((
 
 I *think* I can reliably seek...hmm...
   and phew

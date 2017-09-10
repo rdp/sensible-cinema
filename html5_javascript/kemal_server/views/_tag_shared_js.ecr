@@ -35,7 +35,11 @@ function setImpactIfMute() {
        }
 }
 
-function getEndSpeed(value) {
+function isYoutubePimw() {
+  return (typeof youtube_pimw_player !== 'undefined');
+}
+
+function getEndSpeedOrAlert(value) {
   var re = /(\d\.\d+)x$/;
   var match = re.exec(value);
   if (match) {
@@ -63,6 +67,7 @@ function doubleCheckValues() {
     alert("please select category first");
     return false;
   }
+  
   var age = document.getElementById('age_maybe_ok_id').value;
   
   if (document.getElementById('subcategory_select_id').value == "") {
@@ -79,7 +84,13 @@ function doubleCheckValues() {
     alert("please enter tag details");
     return false;
   }
-  if (document.getElementById('action_sel').value == "change_speed" && !getEndSpeed(details)) {
+  var action = document.getElementById('action_sel').value;
+  if (action == "change_speed" && !getEndSpeedOrAlert(details)) {
+    return false;
+  }
+  
+  if (isYoutubePimw() && action == "mute") {
+    alert("we seemingly aren't allowed to do mutes for youtube, you can either skip or change the volume to low, that's about it");
     return false;
   }
   
