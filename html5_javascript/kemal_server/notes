@@ -41,14 +41,24 @@ DO
 
 0.06558707820129328
 
+embed requirements:
+  can't autostart unless within view, 200x200, if autostart should be immediate, when visible. weird.
+  "The YouTube API Services Policies also includes several policies relevant to API Clients that play YouTube audiovisual content. "
+  guess I am an "API Client" looks like I'm using "Youtube API Services"
+    API Clients must display a link to YouTube's Terms of Service (https://www.youtube.com/t/terms), and they must also state in their own terms of use that, by using those API Clients, users are agreeing to be bound by the YouTube Terms of Service. 
+  "YouTube API Services Terms of Service" seem clean
+  "YouTube API Services - Required Minimum Functionality" seems clean
+
 modify, build upon, or block any portion or functionality of a YouTube player;
-  so overlay is out
+  so overlay is out...yeah probably...
+  that's functionality of the *player* not portions of the video FWIW :|
+  you can't mess with how the player behaves basically
+  except you can turn off controls anyway so...uh...
   
 basically, the player needs to "just sit there"
  and I can control it with the embed API
  and that's it.
-
-so what does the embed API give me...hmm...
+ so what does the embed API give me...hmm...
 
 could shrink to 200px by 200px (the video that size that is)
   might actually be legal "14.use a video player smaller than the minimum video player size set forth in the YouTube API documentation and specifications."
@@ -66,13 +76,15 @@ I could speed things up but...but...just for youtube?  it's baaack LOL
 
 move the screen down then back up?
   it is barely barely iffy unfortunately...they want it visible I guess... [?]
+  no :|
 
 Embedded players must have a viewport that is at least 200px by 200px. If the player displays controls, it must be large enough to fully display the controls without shrinking the viewport below the minimum size. We recommend 16:9 players be at least 480 pixels wide and 270 pixels tall.
 
 youtubes "are" 16x9
-  so smallest: 200 height, 356 wide
+  so smallest'ish: 200 height, 356 wide
    youtube_pimw_player.setSize(355, 200)
-  but if I have my own controls....apparently they can't deny me 200x200 muhaha
+  but if I have my own controls....apparently they can't deny me 200x200
+  and I want really as small as possible :|
 
 just do the easy for fun
 
