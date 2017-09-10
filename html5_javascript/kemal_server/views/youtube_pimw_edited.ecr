@@ -1,5 +1,5 @@
 <h2>Youtube edited
-<br><%= url ? url.name : "youtube unedited, please click 'add' below the movie" %></h2>
+<br><%= url ? url.name : "youtube unedited, please click 'add' in the box below the movie" %></h2>
 
 <div id="player_with_controls">
   <div id="ytplayer_div"></div>
@@ -26,12 +26,17 @@ input,select {
 <div style="height: 760px; max-width: 620px; background: black;" id="show_your_instructions_here_id"> <!-- plugin binds here -->
 </div>
 
+
+
 <h3>Create new other (youtube)</h3>
 Enter url of movie here:
 <form action="/new_manual_url" method="GET">Your Movie's url: <input type="text" name="url"/>
   <input type="submit" value="Submit">
 </form>
 
+<br/>
+Watch <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!-- in case it matches youtube's terms of use better -->
+<br/>
 By using this you agree to youtube <a href=https://www.youtube.com/t/terms>terms of use</a>.   Ny using the youtube API Client, you are agreeing to be bound by the YouTube Terms of Service.  You must agree to these terms of use or not use these services.  We remote control your youtube playback to avoid scary scenes and scenes that might be offensive.  Your viewing differs from the original only for those scenes.  We believe this kind of playback is in keeping with the youtube <a href=https://developers.google.com/youtube/terms/developer-policies#definition-api-client>Developer Policies</a> (which prohibit separating, isolating, modifying or promoting separately audio and video components of youtubes) because the components are kept together (not isolated), still played "in sync" (i.e. promoted together), components are unmodified, but playback  is modified (not components themselves).  The youtube embed API gives controls, we use that to modify playback.  To us, video with "temporarily muted audio" (small portions) is not isolated or separated from the audio, it's just muted temporarily. relative to those terms.
 
 <script>
@@ -117,7 +122,7 @@ function onPlayerReady(event) {
   document.getElementById('vol-control-id').value = youtube_pimw_player.getVolume(); // init isn't 100
   setInterval(updateTime, 1000/30);
 
-  // inject plugin ftw :|  
+  // inject plugin FTW :|  
   var my_awesome_script = document.createElement('script');
   my_awesome_script.setAttribute('src','https://playitmyway.org/plugin_javascript/edited_generic_player.js');
 document.head.appendChild(my_awesome_script);
