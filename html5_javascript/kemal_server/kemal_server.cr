@@ -71,6 +71,10 @@ get "/ping" do |env|
   "It's alive!"
 end
 
+get "/terms_of_service_youtube" do |env|
+  render "views/terms_of_service_youtube.ecr", "views/layout.ecr"
+end
+
 get "/youtube_pimw_edited/:youtube_id" do |env|
   youtube_id = env.params.url["youtube_id"]
   in_system = "https:&#x2F;&#x2F;playitmyway.org&#x2F;youtube_pimw_edited&#x2F;" + youtube_id # hacky way to be able to look it up to display stuff about it
@@ -96,7 +100,7 @@ get "/sync_web_server" do |env|
   end
 end
 
-get "/getting_started" do |env| # google like this once I think LOL
+get "/getting_started" do |env| # google did this once I think LOL
   env.redirect "/installation"
 end
 
