@@ -47,7 +47,7 @@ function getEndSpeedOrAlert(value) {
       return parseFloat(match[1]);
     }
   }
-  // some failure
+  // failure of some kind er other...
   if (isYoutubePimw()) {
       var out = "you need to enter the speed you want in the details like 'my_details 2.0x' or 'my_details 0.5x' (options:";
       var rates = youtube_pimw_player.getAvailablePlaybackRates();
@@ -58,6 +58,16 @@ function getEndSpeedOrAlert(value) {
   } else {
       alert("you need to enter the speed you want in the details like 'my_details 2.0x' or 'my_details 0.5x' (goes up to 4.0x, down to 0.5x with audio)");
   }
+  return null;
+}
+
+function getAudioPercentOrAlert(value) {
+  var re = /(\d+)%$/;
+  var match = re.exec(value);
+  if (match) {
+    return parseFloat(match[1]);
+  }
+  alert("you need to enter the audio percent you want, like 'my_details 5%' [at least 5% if youtube]");
   return null;
 }
 

@@ -12,7 +12,7 @@ var extra_message = "";
 var inMiddleOfTestingTimer;
 var current_json, url;
 var mouse_move_timer;
-var mutes, skips, yes_audio_no_videos, do_nothings, mute_audio_no_videos, make_video_smallers, change_speeds;
+var mutes, skips, yes_audio_no_videos, do_nothings, mute_audio_no_videos, make_video_smallers, change_speeds, set_audio_percents;
 var seek_timer;
 var all_pimw_stuff;
 var currently_in_process_tags = new Map();
@@ -227,7 +227,10 @@ function areWeWithin(thisTagArray, cur_time) {
 
 var i_muted_it = false; // attempt to let them still control their mute button :|
 var i_changed_its_speed = false; // attempt to let them still control speed manually if desired
+var i_changed_audio_percent = false;
+
 var last_speed_value = null;
+var last_audio_percent = null;
 var last_timestamp = 0;
 var i_unfullscreened_it_element = null;
 
@@ -333,6 +336,25 @@ function checkIfShouldDoActionAndUpdateUI() {
       i_changed_its_speed = false;
       console.log("back to speed=" + last_speed_value + " cur_time=" + cur_time);
       setPlaybackRate(last_speed_value);
+    }
+  }
+  
+  tag = areWeWithin(set_audio_percents, cur_time);
+  if (tag) {
+    var desired_percent = getAudioPercentOrAlert(tag.details);
+    if (desired_percent) {
+      if (!i_changed_audio_percent) {
+        timestamp_log("setting audio=" + desired_percent, cur_time, tag);
+        last_audio_percent = getAudioVolumePercent();
+        setAudioVolumePercent(desired_percent);
+        i_changed_audio_percent = true;
+      }
+    }
+  } else {
+    if (i_changed_audio_percent && getAudioVolumePercent() != last_audio_percent) {
+      i_changed_audio_percent = false;
+      console.log("back to audio_percent=" + last_audio_percent + " cur_time=" + cur_time);
+      setAudioVolumePercent(last_audio_percent);
     }
   }
   
@@ -570,7 +592,7 @@ function isPaused() {
 }
 
 function doPlay() {
-  console.log("doing doPlay()");
+  console.log("doing doPlay() paused=" + video_element.paused);
   if (isYoutubePimw()) {
     youtube_pimw_player.playVideo();
   } else {
@@ -583,6 +605,23 @@ function getPlaybackRate() {
     return youtube_pimw_player.getPlaybackRate();
   } else {
     return video_element.playbackRate;
+  }
+}
+
+function getAudioVolumePercent() {
+  if (isYoutubePimw()) {
+    return youtube_pimw_player.getVolume();
+  } else {
+    return video_element.volume * 100;
+  }
+}
+
+function setAudioVolumePercent(toThisMaxOneHundred) {
+  console.log("setting audio_volume_percent=" + toThisMaxOneHundred);
+  if (isYoutubePimw()) {
+    return youtube_pimw_player.setVolume(toThisMaxOneHundred);
+  } else {
+    return video_element.volume = toThisMaxOneHundred / 100;
   }
 }
 
@@ -791,6 +830,8 @@ function currentEditArray() {
       return make_video_smallers;
     case 'change_speed':
       return change_speeds;
+    case 'set_audio_volume':
+      return set_audio_percents;
     default:
       alert('internal error 1...' + currentTestAction()); // hopefully never get here...
   }
@@ -1043,6 +1084,7 @@ function setTheseTagsAsTheOnesToUse(tags) {
   mute_audio_no_videos = [];
   make_video_smallers = [];
   change_speeds = [];
+  set_audio_percents = [];
 	for (var i = 0; i < tags.length; i++) {
 		var tag = tags[i];
 		var push_to_array;
@@ -1059,6 +1101,8 @@ function setTheseTagsAsTheOnesToUse(tags) {
         push_to_array = make_video_smallers;
       } else if (tag.default_action == 'change_speed') {
         push_to_array = change_speeds;
+      } else if (tag.default_action == 'set_audio_volume') {
+        push_to_array = set_audio_percents;
       } else { alert("please report failure 1 " + tag.default_action); }
     } else {
       push_to_array = do_nothings;
@@ -1302,7 +1346,7 @@ function getCurrentTime() {
 }
 
 function doPause() {
-  console.log("doing doPause()");
+  console.log("doing doPause paused=" + video_element.paused);
   if (isYoutubePimw()) {
     youtube_pimw_player.pauseVideo();
   } else {
@@ -1311,6 +1355,7 @@ function doPause() {
 }
 
 function rawSeekToTime(ts) {
+  console.log("doing rawSeekToTime=" + ts);
   if (isYoutubePimw()) {
     var allowSeekAhead = true;
     youtube_pimw_player.seekTo(ts, allowSeekAhead); // no callback option
@@ -1345,8 +1390,8 @@ function seekToTime(ts, callback) {
   }
   var current_pause_state = isPaused();
   // try and avoid freezes after seeking...if it was playing first...
-	console.log("seeking to " + timeStampToHuman(ts));
   var start_time = getCurrentTime();
+	console.log("seeking to " + timeStampToHuman(ts) + " from=" + timeStampToHuman(start_time));
   // [amazon] if this is far enough away from current, it also implies a "play" call...oddly. I mean seriously that is bizarre.
 	// however if it close enough, then we need to call play
 	// some shenanigans to pretend to work around this...
@@ -1355,7 +1400,7 @@ function seekToTime(ts, callback) {
   } // youtube seems to retain it grrate
   rawSeekToTime(ts); 
 	seek_timer = setInterval(function() {
-      console.log("seek_timer interval");
+      console.log("seek_timer interval [i.e. still seeking...]");
       if (isYoutubePimw()) {
         // var done_buffering = (youtube_pimw_player.getPlayerState() == YT.PlayerState.CUED);
         // it stays always as state "paused" ???? :|
@@ -1370,10 +1415,10 @@ function seekToTime(ts, callback) {
         if (seconds_buffered > 2) { // usually 4 or 6...
   			  console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " ts=" + ts + " length=" + twoDecimals(ts - start_time) + " buffered_ahead=" + twoDecimals(seconds_buffered) + " start=" + twoDecimals(start_time));
           if (!isYoutubePimw()) {
-            if (!current_pause_state) { // youtube loses 0.05 with these shenanigans so attempt avoid :|
+            if (!current_pause_state) { // youtube loses 0.05 with these shenanigans needed on amazon, so attempt avoid :|
       			  doPlay();
             } else {
-              console.log("staying paused [internal seek]");
+              console.log("staying paused [was paused before seek]");
             }
           }
   			  clearInterval(seek_timer);
