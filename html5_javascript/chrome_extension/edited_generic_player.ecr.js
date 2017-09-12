@@ -343,7 +343,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   if (tag) {
     var desired_percent = getAudioPercentOrAlert(tag.details);
     if (desired_percent) {
-      if (!i_changed_audio_percent) {
+      if (getAudioVolumePercent() != desired_percent) {
         timestamp_log("setting audio=" + desired_percent, cur_time, tag);
         last_audio_percent = getAudioVolumePercent();
         setAudioVolumePercent(desired_percent);
