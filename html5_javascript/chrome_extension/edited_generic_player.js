@@ -623,10 +623,16 @@ function checkIfShouldDoActionAndUpdateUI() {
   if (tag) {
     var desired_percent = getAudioPercentOrAlert(tag.details);
     if (desired_percent) {
-      if (getAudioVolumePercent() != desired_percent) {
+      var relative_desired_percent;
+      if (i_changed_audio_percent) {
+        relative_desired_percent = last_audio_percent * desired_percent / 100;
+      } else {
+        relative_desired_percent = getAudioVolumePercent() * desired_percent / 100;
+      }
+      if (!withinDelta(getAudioVolumePercent(), relative_desired_percent, 1)) { // we never changed it, or they did after it was decreased :\
         timestamp_log("setting audio=" + desired_percent, cur_time, tag);
         last_audio_percent = getAudioVolumePercent();
-        setAudioVolumePercent(desired_percent);
+        setAudioVolumePercent(relative_desired_percent);
         i_changed_audio_percent = true;
       }
     }
