@@ -75,7 +75,7 @@
       100.chr => ["___", "deity exclamation harsh"],
       "meu deus" => ["___", "deity foreign language"],
       "lo" + 
-      "rd" => ["l...", "deity exclamation mild"], # there are things like "fire lord" that aren't harsh...
+      "rd" => ["....", "deity exclamation mild"], # there are things like "fire lord" that aren't harsh...
       "da" +
       "mn" => ["d...", "d word"],
       "f" +
