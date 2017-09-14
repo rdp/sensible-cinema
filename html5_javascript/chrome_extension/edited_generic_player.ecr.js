@@ -160,12 +160,15 @@ function reportProblem() {
 function liveEpisodeName() {
   if (isAmazon() && document.getElementsByClassName("subtitle").length > 0) {
     split = document.getElementsByClassName("subtitle")[0].innerHTML.split(/Ep. \d+/); // like "Season 3, Ep. 3 The Painted Lady"
-    if(split.length == 2)
-      return split[1].trim();
-    else
-      return split[0].trim();
+    var just_name;
+    if(split.length == 2) {
+      just_name = split[1]; // has Ep. x in it
+    } else {
+      just_name = split[0];
+    }
+    return just_name.replace(/<!--([\s\S]*?)-->/mig, '').trim(); // remove weird <-- react --> comments
   }
-  else
+  else {
     if (isGoogleIframe()) {
       var numberNameDiv = window.parent.document.querySelectorAll('.epname-number')[0]; // apparently I have backward but not forward visibility. phew.
       if (numberNameDiv) {
@@ -180,7 +183,7 @@ function liveEpisodeName() {
      }
     }
     return "";
-  end
+  }
 }
 
 function liveEpisodeNumber() {
