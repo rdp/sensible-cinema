@@ -74,12 +74,10 @@
             <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%= logged_in_user(env).name %><span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="/logout">logout</a></li>
-            </ul>
-            <% if admin?(env) %>
-              <ul class="dropdown-menu">
+              <% if admin?(env) %>
                 <li>admin whoa!</li>
-              </ul>
-            <% end %>
+              <% end %>
+            </ul>
           </li>
         </ul>
       <% else %>
