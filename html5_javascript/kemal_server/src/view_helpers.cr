@@ -31,6 +31,10 @@ def editor?(env)
   end
 end
 
+def admin?(env)
+  logged_in?(env) && logged_in_user(env).admin
+end
+
 def tags_by_category(url)
   url.tags.group_by{|tag| tag.category}.select{|category, tags| tags.size > 1 }.map{|category, tags| 
     category = "clothing/kissing etc" if category == "physical"

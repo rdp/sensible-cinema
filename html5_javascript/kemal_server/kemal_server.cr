@@ -164,7 +164,7 @@ get "/delete_all_tags/:url_id" do |env|
 end
 
 get "/promote_user" do |env|
-  raise "admin only" unless logged_in_user(env).admin
+  raise "admin only" unless admin?(env)
   user = User.only_by_email(env.params.query["email"])
   user.editor = true
   user.create_or_update
@@ -173,7 +173,7 @@ get "/promote_user" do |env|
 end
 
 get "/admin" do |env|
-  if logged_in_user(env).admin # XXX more?
+  if admin?(env)
     User.all.map{|user| 
       if !user.editor
         "promote <a href=/promote_user?email=#{user.email}>#{user.name}</a> to editor"
