@@ -109,7 +109,7 @@ function autoStartIfShould() {
     chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "facebook we don't handle yet"}); // don't auto load for now, too chatty on the server, not compat... [?]
     return;
   }
-  if (url.includes("play.google.com") || url.includes("amazon.com") || url.includes("playitmyway.org")) {
+  if (url.includes("play.google.com") || url.includes("amazon.com") || (url.includes("playitmyway.org") && !inIframe())) {
     if (inIframe()) { 
       // avoid google iframes popup after it says <smiley> and reset it back even though it is playing OK
       console.log("not setting plugin text to ... from an iframe");
