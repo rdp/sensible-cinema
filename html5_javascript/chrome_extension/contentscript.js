@@ -50,7 +50,7 @@ window.addEventListener("message", function(event) {
     return;
 
   if (event.data.type && (event.data.type == "FROM_PAGE_TO_CONTENT_SCRIPT")) {
-  	// only way to update the tab icon I think anyway...is from the background.js
+    // only way to update the tab icon I think anyway...is from the background.js
     // also want that for permissions weirdness in amazon
     chrome.runtime.sendMessage(event.data.payload); // rebroadcast to rest of extension
   }
@@ -91,7 +91,7 @@ function injectEditedPlayerOnce() {
     }
     else {
         already_loaded = true;
-				loadScript(chrome.extension.getURL('edited_generic_player.js'));
+        loadScript(chrome.extension.getURL('edited_generic_player.js'));
    }
 }
 
@@ -116,14 +116,14 @@ function autoStartIfShould() {
     }
     else {
       chrome.runtime.sendMessage({text: "look", color: "#808080", 
-			      details: "edited playback and waiting for a video to appear present, then will try to see if edits exist for it so can playback edited"}); 
+            details: "edited playback and waiting for a video to appear present, then will try to see if edits exist for it so can playback edited"}); 
     }
     // iframe wants to load it though, for google play
     console.log("big 3/pimw polling for video tag...");
     var interval = setInterval(function(){
-			var video_element = findFirstVideoTagOrNull();
+      var video_element = findFirstVideoTagOrNull();
       if (video_element != null) {
-				console.log("big 3 found video tag [or pimw auto], injecting...");
+        console.log("big 3 found video tag [or pimw auto], injecting...");
         injectEditedPlayerOnce();
         clearInterval(interval);
       }
@@ -146,10 +146,10 @@ function currentUrlNotIframe() { // duplicated with other .js
 function getStandardizedCurrentUrl() { // duplicated with other .js
   var current_url = currentUrlNotIframe();
   if (document.querySelector('link[rel="canonical"]') != null && !current_url.includes("youtube.com")) {
-		// -> canonical, the crystal code does this for everything so guess we should do here as well...ex youtube it strips off any &t=2 or something...
+    // -> canonical, the crystal code does this for everything so guess we should do here as well...ex youtube it strips off any &t=2 or something...
     current_url = document.querySelector('link[rel="canonical"]').href; // seems to always convert from "/gp/" to "/dp/" and sometimes even change the ID :|
   }
-	// attempt to leave the rest in cyrstal
+  // attempt to leave the rest in cyrstal
   return current_url;
 }
 
@@ -166,13 +166,13 @@ function currentHasEdits() {
 }
 
 function currentHasNone(status) {
-	if (status == 0) {
+  if (status == 0) {
     console.log("appears the cleanstream server is currently down, please alert us! Edits unable to load for now..."); // barely scared it could become too annoying :|
-	}
-	else {
+  }
+  else {
     console.log("unable to find one on server for " + currentUrlNotIframe() + " so not auto loading it, doing nothing " + status);
-	}
-	// thought it was too invasive to inject the javascript for say facebook :|
+  }
+  // thought it was too invasive to inject the javascript for say facebook :|
   chrome.runtime.sendMessage({text: "none", color: "#808080", details: "We found a video playing, do not have edits for this video in our system yet, please click above to add it!"}); 
 }
 

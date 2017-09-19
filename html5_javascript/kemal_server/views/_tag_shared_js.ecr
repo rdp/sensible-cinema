@@ -7,14 +7,14 @@ function showSubCatWithRightOptionsAvailable() {
   for (var i=0; i < subcategory_select.length; i++){
     var option = subcategory_select.options[i];
     var cat_from_subcat = option.text.split(" ")[0]; // profanity
-		if (cat_from_subcat != type && option.text.includes(" -- ")) {
-		  option.style.display = "none";
-		}
-		else {
-		  option.style.display = "block";
+    if (cat_from_subcat != type && option.text.includes(" -- ")) {
+      option.style.display = "none";
+    }
+    else {
+      option.style.display = "block";
       width_needed = Math.max(width_needed, option.offsetWidth);
-		}
-	}
+    }
+  }
   resizeToCurrentSize(subcategory_select); // it probably reset to the top option of a new category [so new size]  
 }
 
@@ -100,7 +100,7 @@ function doubleCheckValues() {
   }
  
   // TODO don't allow this on the dropdown of youtube or warn on test edit... 
-  if (isYoutubePimw() && (action == "mute" || action == "mute_audio_no_video") {
+  if (isYoutubePimw() && (action == "mute" || action == "mute_audio_no_video")) {
     alert("we seemingly aren't allowed to do mutes for youtube, you can either skip or change the volume to low [5%], instead");
     return false;
   }

@@ -128,6 +128,12 @@ function addEditUi() {
   addMouseAnythingListener(mouseJustMoved);
   mouseJustMoved({pageX: 0, pageY: 0}); // start its timer, prime it :|
   tagsCreated(); // from shared javascript, means "the HTML elements are in there"
+  if (isYoutubePimw()) {
+    // assume it can never change to a different type of movie...I doubt it :|
+    $("#action_sel option[value='yes_audio_no_video']").remove();
+    $("#action_sel option[value='mute']").remove();
+    $("#action_sel option[value='mute_audio_no_video']").remove();
+  }
 }
 
 function playButtonClicked() {

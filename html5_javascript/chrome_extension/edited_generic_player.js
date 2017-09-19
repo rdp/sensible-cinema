@@ -408,6 +408,12 @@ default edit on?
   addMouseAnythingListener(mouseJustMoved);
   mouseJustMoved({pageX: 0, pageY: 0}); // start its timer, prime it :|
   tagsCreated(); // from shared javascript, means "the HTML elements are in there"
+  if (isYoutubePimw()) {
+    // assume it can never change to a different type of movie...I doubt it :|
+    $("#action_sel option[value='yes_audio_no_video']").remove();
+    $("#action_sel option[value='mute']").remove();
+    $("#action_sel option[value='mute_audio_no_video']").remove();
+  }
 }
 
 function playButtonClicked() {
@@ -1889,14 +1895,14 @@ function showSubCatWithRightOptionsAvailable() {
   for (var i=0; i < subcategory_select.length; i++){
     var option = subcategory_select.options[i];
     var cat_from_subcat = option.text.split(" ")[0]; // profanity
-		if (cat_from_subcat != type && option.text.includes(" -- ")) {
-		  option.style.display = "none";
-		}
-		else {
-		  option.style.display = "block";
+    if (cat_from_subcat != type && option.text.includes(" -- ")) {
+      option.style.display = "none";
+    }
+    else {
+      option.style.display = "block";
       width_needed = Math.max(width_needed, option.offsetWidth);
-		}
-	}
+    }
+  }
   resizeToCurrentSize(subcategory_select); // it probably reset to the top option of a new category [so new size]  
 }
 
@@ -1982,7 +1988,7 @@ function doubleCheckValues() {
   }
  
   // TODO don't allow this on the dropdown of youtube or warn on test edit... 
-  if (isYoutubePimw() && (action == "mute" || action == "mute_audio_no_video") {
+  if (isYoutubePimw() && (action == "mute" || action == "mute_audio_no_video")) {
     alert("we seemingly aren't allowed to do mutes for youtube, you can either skip or change the volume to low [5%], instead");
     return false;
   }
