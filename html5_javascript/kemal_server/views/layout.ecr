@@ -75,6 +75,11 @@
             <ul class="dropdown-menu">
               <li><a href="/logout">logout</a></li>
             </ul>
+            <% if admin?(env) %>
+              <ul class="dropdown-menu">
+                <li>admin whoa!</li>
+              </ul>
+            <% end %>
           </li>
         </ul>
       <% else %>
