@@ -305,12 +305,13 @@ function checkIfShouldDoActionAndUpdateUI() {
     var iframe = youtube_pimw_player.getIframe();
     if (iframe.width == "100%") {
       timestamp_log("making small", cur_time, tag);
-      youtube_pimw_player.setSize(200, 200); // smallest they permit :|
+      youtube_pimw_player.setSize(200, 200); // smallest youtube's terms of use permits :)
       var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
       if (fullscreenElement) {
-        exitFullScreen(); // :|
+        exitFullScreen(); // :| XXXX
       }
     }
+    extra_message += "making small";
   } else {
     if (isYoutubePimw()) {
       var iframe = youtube_pimw_player.getIframe();
@@ -333,6 +334,7 @@ function checkIfShouldDoActionAndUpdateUI() {
         setPlaybackRate(desired_speed);
         i_changed_its_speed = true;
       }
+      extra_message += "speed=" + desired_speed + "x";
     }
   } else {
     if (i_changed_its_speed && getPlaybackRate() != last_speed_value) {
@@ -358,6 +360,7 @@ function checkIfShouldDoActionAndUpdateUI() {
         setAudioVolumePercent(relative_desired_percent);
         i_changed_audio_percent = true;
       }
+      extra_message += "audio percent=" + desired_percent + "%";
     }
   } else {
     if (i_changed_audio_percent && getAudioVolumePercent() != last_audio_percent) {
