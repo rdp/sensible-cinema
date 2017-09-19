@@ -122,7 +122,8 @@ Watch <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!-- in case it
 function onPlayerReady(event) {
   console.log("youtube_player ready and setup! auto playing...");
   event.target.playVideo();
-  document.getElementById('vol-control-id').value = youtube_pimw_player.getVolume(); // init isn't 100
+  event.target.setVolume(50); // default isn't 100? is? huh?
+  document.getElementById('vol-control-id').value = youtube_pimw_player.getVolume();
   setInterval(updateTime, 1000/30);
 
   // inject plugin FTW :|  
