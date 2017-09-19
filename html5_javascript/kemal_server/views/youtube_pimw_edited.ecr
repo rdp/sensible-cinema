@@ -112,7 +112,8 @@ Watch <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!-- in case it
       enablejsapi: true,
       playerVars: { 'fs': 1, 'controls': 0 },
       events: {
-        'onReady': onPlayerReady
+        'onReady': onPlayerReady,
+         onStateChange: onPlayerStateChange
       }
     });
   }
@@ -128,6 +129,13 @@ function onPlayerReady(event) {
   var my_awesome_script = document.createElement('script');
   my_awesome_script.setAttribute('src','https://playitmyway.org/plugin_javascript/edited_generic_player.js');
 document.head.appendChild(my_awesome_script);
+}
+
+function onPlayerStateChange(event) {        
+    if(event.data === 0) {          
+        console.log('video just ended');
+        exitFullScreen();
+    }
 }
 
 </script>

@@ -95,15 +95,15 @@ function doubleCheckValues() {
     return false;
   }
   var action = document.getElementById('action_sel').value;
+  
   if (action == "change_speed" && !getEndSpeedOrAlert(details)) {
     return false;
   }
-  
   if (action == "set_audio_volume" && !getAudioPercentOrAlert(details)) {
     return false;
   }
  
-  // TODO don't allow this on the dropdown of youtube or warn on test edit... 
+  // XXXX don't really need anymore... 
   if (isYoutubePimw() && (action == "mute" || action == "mute_audio_no_video")) {
     alert("we seemingly aren't allowed to do mutes for youtube, you can either skip or change the volume to low [5%], instead");
     return false;
