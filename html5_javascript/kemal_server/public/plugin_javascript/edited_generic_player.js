@@ -1980,9 +1980,14 @@ function doubleCheckValues() {
   if (action == "change_speed" && !getEndSpeedOrAlert(details)) {
     return false;
   }
-  
-  if (isYoutubePimw() && action == "mute") {
-    alert("we seemingly aren't allowed to do mutes for youtube, you can either skip or change the volume to low, that's about it");
+ 
+  // TODO don't allow this on the dropdown of youtube or warn on test edit... 
+  if (isYoutubePimw() && (action == "mute" || action == "mute_audio_no_video") {
+    alert("we seemingly aren't allowed to do mutes for youtube, you can either skip or change the volume to low [5%], instead");
+    return false;
+  }
+  if (isYoutubePimw() && action == "yes_audio_no_video") {
+    alert("we can't do no_video for youtube, just skip instead");
     return false;
   }
   
