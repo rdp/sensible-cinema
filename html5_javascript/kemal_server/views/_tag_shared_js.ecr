@@ -98,6 +98,10 @@ function doubleCheckValues() {
   if (action == "change_speed" && !getEndSpeedOrAlert(details)) {
     return false;
   }
+  
+  if (action == "set_audio_volume" && !getAudioPercentOrAlert(details)) {
+    return false;
+  }
  
   // TODO don't allow this on the dropdown of youtube or warn on test edit... 
   if (isYoutubePimw() && (action == "mute" || action == "mute_audio_no_video")) {
