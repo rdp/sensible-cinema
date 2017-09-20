@@ -1,10 +1,6 @@
        <div id="box_movie_<%= url.id %>" style="border-radius: 25px; box-shadow: #B3B3B3 40px 40px 40px; border: 1px dotted #000; float: left; padding: 10px; padding-right: 5px; height: 405; width: 248px; margin-right: 20px; margin-bottom: 20px;" > <!-- just experiment for right width LOL -->
          <div id="box_movie_<%= url.id %>_inside" style="height: 385; overflow-x: hidden; overflow-y: auto;"> <!-- scroll here so not too ugly in windows, auto means scroll if you need it -->
-           <a href=# onclick="expandBoxOrOpen('box_movie_<%= url.id %>'); return false;">
-             <%= url.image_tag "id='box_movie_#{url.id}_image' style='max-height: 300px; max-width: 300px; filter: drop-shadow(5px 5px 5px #222); padding: 5px; margin-left: auto; margin-right: auto; display: block; margin-bottom: 5px;'", ImageSize::VerySmall %>
-              <div style="text-align: center;"><%= url.name_with_episode %></div>
-          </a>
-          <a href="<%= url.url %>" id="box_movie_<%= url.id %>_open" target="_blank"
+          <a href="<%= url.url %>" target="_blank"
               onclick="
                <% if url.url !~ /youtube_pimw_edited/ %>
                  if (!alertIfNoExtension()) return false;
@@ -15,16 +11,19 @@
                  alert('after opening the series, click play button for episode <%= url.episode_number %> (<%= url.episode_name %>)');
               <% end %>
             ">
+            <%= url.image_tag "id='box_movie_#{url.id}_image' style='max-height: 300px; max-width: 300px; filter: drop-shadow(5px 5px 5px #222); padding: 5px; margin-left: auto; margin-right: auto; display: block; margin-bottom: 5px;'", ImageSize::VerySmall %>
+              <div style="text-align: center;"><%= url.name_with_episode %></div>
+
             <div style="text-align: center;">
               <% if url.editing_status == editing_phases[:done_second_pass] %>
                 <% if url.amazon_prime_free_type == "" && url.rental_cost > 0 %>
                   <% if url.purchase_cost == 0 %>
                     Rent to watch edited now!
                   <% else %>
-                    Rent or purchase to watch edited now!
+                    Rent or buy to watch edited now!
                   <% end %>
                 <% elsif url.amazon_prime_free_type == "" && url.purchase_cost > 0 %>
-                  Purchase to watch edited now!
+                  Buy to watch edited now!
                 <% else %>
                   Watch edited now!
                 <% end %>
@@ -37,6 +36,10 @@
               <% end %>
             </div>
           </a>
+          <div style="text-align: center;">		  
+
+            <a href=""  onclick="expandBoxOrOpen('box_movie_<%= url.id %>'); return false;">Show details</a>
+            </div>
           <%= if_present_with_break url.details %>
           <%= if_present_with_break url.wholesome_uplifting_level, "Wholesome level:" %>
           <%= if_present_with_break url.wholesome_review, "Wholesome review:" %>
