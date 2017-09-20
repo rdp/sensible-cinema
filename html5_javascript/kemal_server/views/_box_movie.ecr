@@ -48,7 +48,7 @@
           <%= if_present_with_break "#{url.genre} (#{url.human_duration})", "Genre:" %>
           <%= if_present_with_break url.cost_string, "Price:" %>
           <%= if_present_with_break url.editing_notes, "" %>
-          <a href="/personalized_edit_list/<%= url.id %>">Our tags</a> 
+          <a href="/personalized_edit_list/<%= url.id %>">What you can edit out:</a> 
           <% if url.tag_count > 0 %>
             (<%= tags_by_category(url) %>) <!-- if this screws up its a tag with unknown category -->
           <% end %>
