@@ -35,7 +35,7 @@ Enter url of movie here:
 </form>
 
 <br/>
-Watch <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!-- in case it matches youtube's terms of use better -->
+Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!-- in case it matches youtube's terms of use better -->
 <br/>
 <a href=/terms_of_service_youtube>Terms of use</a>.
 <br/>
@@ -121,12 +121,12 @@ Watch <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!-- in case it
 
 function onPlayerReady(event) {
   console.log("youtube_player ready and setup! auto playing...");
+  SetVolume(50); // default isn't 100? is? huh?
   event.target.playVideo();
-  event.target.setVolume(50); // default isn't 100? is? huh?
   document.getElementById('vol-control-id').value = youtube_pimw_player.getVolume();
   setInterval(updateTime, 1000/30);
 
-  // inject plugin FTW :|  
+  // inject copy of plugin FTW :|  
   var my_awesome_script = document.createElement('script');
   my_awesome_script.setAttribute('src','https://playitmyway.org/plugin_javascript/edited_generic_player.js');
 document.head.appendChild(my_awesome_script);

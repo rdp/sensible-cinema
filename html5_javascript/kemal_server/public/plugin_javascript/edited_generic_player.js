@@ -13,7 +13,7 @@ var extra_message = "";
 var inMiddleOfTestingTimer;
 var current_json, url;
 var mouse_move_timer;
-var mutes, skips, yes_audio_no_videos, do_nothings, mute_audio_no_videos, make_video_smallers, change_speeds, set_audio_percents;
+var mutes, skips, yes_audio_no_videos, do_nothings, mute_audio_no_videos, make_video_smallers, change_speeds, set_audio_percents, pause_videos;
 var seek_timer;
 var all_pimw_stuff;
 var currently_in_process_tags = new Map();
@@ -120,6 +120,7 @@ function addEditUi() {
           <option value="make_video_smaller">make_video_smaller</option>
           <option value="change_speed">change_speed</option>
           <option value="set_audio_volume">set_audio_volume</option>
+          <option value="pause_video">pause_video</option>
         </select>
 
 
@@ -420,7 +421,7 @@ function playButtonClicked() {
   if (isPaused()) {
     doPlay();
   } else if (getPlaybackRate() != 1) {
-    setPlaybackRate(1.0); // back to normal :)
+    setPlaybackRate(1.0); // back to normal if they hit the play button while going slow :)
   }
 }
 
@@ -522,6 +523,7 @@ var last_speed_value = null;
 var last_audio_percent = null;
 var last_timestamp = 0;
 var i_unfullscreened_it_element = null;
+var i_paused_it = null;
 
 function checkIfShouldDoActionAndUpdateUI() {
   var cur_time = getCurrentTime();
@@ -653,6 +655,28 @@ function checkIfShouldDoActionAndUpdateUI() {
       i_changed_audio_percent = false;
       console.log("back to audio_percent=" + last_audio_percent + " cur_time=" + cur_time);
       setAudioVolumePercent(last_audio_percent);
+    }
+  }
+  
+  tag = areWeWithin(pause_videos, cur_time);
+  if (tag) {
+    var pause_tag = tag; // save it :\
+    // "should" be right at beginning hrm...todo seek back to beginning if they seek to within it, first? hrm...
+    if (!i_paused_it) {
+      i_paused_it = true;
+      if (!isPaused()) {
+        doPause();
+      } // else ??
+      setTimeout(function() {
+        seekToTime(pause_tag.endy);
+      }, (pause_tag.endy - pause_tag.start)*1000);
+    }
+  } else {
+    if (i_paused_it) {
+      i_paused_it = false;
+      if (isPaused()) {
+        doPlay();
+      } // else how? but it's already playing anyway... :\
     }
   }
   
@@ -1130,6 +1154,8 @@ function currentEditArray() {
       return change_speeds;
     case 'set_audio_volume':
       return set_audio_percents;
+    case 'pause_video':
+      return pause_videos;
     default:
       alert('internal error 1...' + currentTestAction()); // hopefully never get here...
   }
@@ -1383,6 +1409,7 @@ function setTheseTagsAsTheOnesToUse(tags) {
   make_video_smallers = [];
   change_speeds = [];
   set_audio_percents = [];
+  pause_videos = [];
   for (var i = 0; i < tags.length; i++) {
     var tag = tags[i];
     var push_to_array;
@@ -1401,6 +1428,8 @@ function setTheseTagsAsTheOnesToUse(tags) {
         push_to_array = change_speeds;
       } else if (tag.default_action == 'set_audio_volume') {
         push_to_array = set_audio_percents;
+      } else if (tag.default_action == 'pause_video') {
+        push_to_array = pause_videos;
       } else { alert("please report failure 1 " + tag.default_action); }
     } else {
       push_to_array = do_nothings;
@@ -1983,11 +2012,15 @@ function doubleCheckValues() {
     return false;
   }
   var action = document.getElementById('action_sel').value;
+  
   if (action == "change_speed" && !getEndSpeedOrAlert(details)) {
     return false;
   }
+  if (action == "set_audio_volume" && !getAudioPercentOrAlert(details)) {
+    return false;
+  }
  
-  // TODO don't allow this on the dropdown of youtube or warn on test edit... 
+  // XXXX don't really need anymore... 
   if (isYoutubePimw() && (action == "mute" || action == "mute_audio_no_video")) {
     alert("we seemingly aren't allowed to do mutes for youtube, you can either skip or change the volume to low [5%], instead");
     return false;
