@@ -6,10 +6,10 @@
           </a>
           <a href="<%= url.url %>" id="box_movie_<%= url.id %>_open" target="_blank"
               onclick="
-               <% if !url.url =~ /youtube_pimw_edited/ %>
+               <% if url.url !~ /youtube_pimw_edited/ %>
                  if (!alertIfNoExtension()) return false;
               <% else %>
-                <!-- let firefox through here -->
+                <!-- let mobile/firefox through -->
               <% end %>
               <% if url.episode_number != 0  && url.amazon? %>
                  alert('after opening the series, click play button for episode <%= url.episode_number %> (<%= url.episode_name %>)');

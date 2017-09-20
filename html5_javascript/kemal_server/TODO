@@ -14,10 +14,11 @@ LLC
 some IP
   youtube: smaller, change speed to arbitrary, set audio volume, works on any browser, come out of fullscreen (screen record what it does...)
   record it "remote viewing editing" from vultr [+ mention could screen capture and stream :\ ] big buck bunny LOL
-  mention "wait paused"
+  mention "wait paused" feature
   record me watching edited via chrome remote desktop on android LOL
   mention "my own full screen"
-  record me remote controlling to start playback + mention "mirror"able to a TV
+  record me remote controlling to start playback + mention "mirror"able to a TV :|
+  mention "could grab the mp4 output and redirect it to your home" LOL
   
 decide and/or do personalized edits but publically usable :| woot
   
@@ -33,24 +34,22 @@ fix seek out of yes_audio_no_video
 make the edits just stay always on the page, for easier editing et al :|
 
 humanize/easify the personalize page more
-  at least make the individual ones button expandable??
+  at least make the individual ones button expansions??
 
 youtube images are coming in wrong?
   tweak so I get duration :|
-  list "more" to watch underneath (make black less terrifying if not logged in?)
-  youtube on mobile should be "more full screen" (no top bar either?) :|
-  remember volume?
+  list "more" to watch underneath (make black less terrifyingly large if not logged in?)
+  remember volume? for desktop people...sure why not?
   release plugin
   
 edit very high youtubes :|
 
-== somewhat random list ==
+  click on it -> watch it!
 
-youtube should "un full screen" when it nears finishing [?] terms?
+== somewhat random list ==
 
 make movies "expand down" sane-r (the boxes)/speed up home page :|
   yet it functions'ish without this...
-  click on it -> edited
   
 integrate with "real" amazon API so I can get the rental numbers right :|
 
@@ -93,30 +92,36 @@ the easier chrome install :)
   more neighbors etc. feedback
     people installing it for feedback
 
-'watch edited' on amazon
+'watch edited' on amazon UI
 
 Main page: clicking on a movie should watch it edited
   tabs you can't handle should say "these are available edited from desktop"
 
 mention more options for TV: long mouse cable, remote desktop, position a little computer there [?]
 
-it should say "skipping" or something for very long skips :|
+it should say [alert?] "skipping" or something for very long skips :|
 
 youtube: some way to get from youtube.com to mine (low prio though...maybe just need an "add to play it my way" popup.html?)
   just if I do private edits :|
   
 == meh sometime ==
 
+pauses should say pausing?
+
+finish somehow grooming youtube true fullscreen (desktop users might...care...maybe...)
+
+youtube on mobile should be "more full screen" (no top bar either?) :|
+
 convert old youtubes over
 
-just combine accounts on create/login :|
+combine accounts on create/login :|
 
 Melissa wanted more fields
   have somebody 5th pass everything for the synopses :|
 
-youtube HD button for mobile :|
+youtube HD button for mobile? :|
 
-make a real android app :|
+make a real'ish android app :|
 
 make a real iOS app wait what?
 
@@ -126,7 +131,7 @@ youtube: redirect to edited somehow, from youtube.com stuffs :|
 
 fix youtube for slower phones :|
 
-tell crystal their server shucks under stress test :|
+tell crystal their servers shucks under stress test :|
 
 edge plugin (for underpowered HTPC boxes )
   should be legal! 
@@ -138,15 +143,13 @@ IP:
 personalize: defaults
 me edit princess bride?
 
-better icon "if it has one" in our system...
-
 some subcats are non comprehensible by humans...and yet...hmm...some are though...
 
 us: edit ben-hur, maybe others on our list/owned (lego movie, incredibles [m. prof's?])
   finish 3rd pass charly
   3rd pass new york doll
 
-make auto subs do "disabled" right/better
+make auto subs do "disabled" right/better (dang should be disabled..) :\
 
 the extension popup.html is awful text on non-amazon, and broken link :|
 
@@ -158,10 +161,9 @@ soft launch looks like: easy links...ycombinator...reddit [? more?]
 extension: episode to episode was saying "watching ad?" amazon broken here :|
 easier chrome install (if they're on chrome I guess LOL)
 faq: mention wireless mouse,
-some kind of "most recent" option, in general cleanup UI [?]
+some kind of "most recent" ordering, in general cleanup UI [?]
   updated_at...
 better search'ish :|
-try out wireless mouse + extension :)
 try out chromecast et al.
 list for "watch later" for them :)
 
@@ -185,10 +187,8 @@ on edit_tag "next tag and previous" buttons :)
 
 overlaps with tag starting -> violence tag starting
 
-make R-ratd "opt in"?
-add an "edited" tag underneath images :|
+make R-rated "opt in"?
 
-re-finish greg's youtubes
 watch edited on view_url doesn't warn if wrong :|
 
 don't use access tokens as GET params, barely wonky...
@@ -241,6 +241,8 @@ promo: "free for a year if you win this contest, re-share!" LOL
 
 advertise? facebook? flds? faux seo?
 
+add an "edited" tag underneath images in the amazon "watchlist"
+
 seasons have their own page, really [so one link]
   or at least their own div or something LOL
 
@@ -254,6 +256,10 @@ make it look finer-er on mobile
   also it's too wide there??
 
 == todo never LOL ==
+
+youtube can I mute it?
+
+try out wireless mouse + extension :)
 
 seeking in youtube seem awrful with a mouse :|
 
