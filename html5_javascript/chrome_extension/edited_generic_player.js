@@ -1300,6 +1300,10 @@ function loadSucceeded(json_string) {
   hideDiv(document.getElementById("load_failed_div_id"));
   hideDiv(document.getElementById("server_down_div_id")); // in case it's a recovery
   sendMessageToPlugin({text: "☺", color: "#008000", details: "Edited playback is enabled and fully operational for current video being played"}); // green
+  if (isAmazon()) {
+    var span = document.getElementsByClassName("dv-provenence-msg")[0];
+    span.innerHTML += "<br/><small>(Play it my way plugin enabled)</small>";
+  }
 }
 
 function loadFailed(status) {
