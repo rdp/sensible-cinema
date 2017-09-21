@@ -1208,8 +1208,8 @@ function saveEditButton() {
   // reset so people don't think they can tweak and resave...
   document.getElementById('start').value = timeStampToHuman(0);
   document.getElementById('endy').value = timeStampToHuman(0);
-  document.getElementById('tag_details_div_id').value = "";
   document.getElementById('details_input_id').value = "";
+  document.getElementById('popup_text_after_id').value = "";
   // don't reset category since I'm not sure if the javascript handles its going back to ""
   document.getElementById('subcategory_select_id').selectedIndex = 0; // use a present value so size doesn't go to *0*
   showSubCatWithRightOptionsAvailable(); // resize it back to none, not sure how to auto-trigger this
@@ -2057,21 +2057,17 @@ function doubleCheckValues() {
 }
 
 function tagsCreated() {
-  // they call this when we're ready to setup shtuff, somehow necessary :|
+  // they call this when we're ready to setup stuff, since otherwise the right divs aren't in place yet :|
   
-  document.getElementById('action_sel').addEventListener(
-     'change',
-     setImpactIfMute,
-     false
-  );
-  setImpactIfMute(); // the default is mute so set it up as we'd anticipate :|
+  document.getElementById('action_sel').addEventListener('change', setImpactIfMute, false);
+  // setImpactIfMute(); // the default is mute so set up origin as we'd anticipate :| except can't because resets it from edit_tag.cr :\
   var subcat_select = document.getElementById("subcategory_select_id");
   resizeToCurrentSize(subcat_select);
   subcat_select.addEventListener(
        'change',
        function() {
          if (subcat_select.options[subcat_select.selectedIndex].value == "joke edit") {
-           alert("for joking edits please set default_enabled as False, then you can create your own personalized edit list where you modify it to get a mute or skip, that way for default user playback it isn't edited out");
+           alert("for joking edits please set default_enabled as N, then you can create your own personalized edit list where you modify it to get a mute or skip, that way for default user playback it isn't edited out");
            document.getElementById('default_enabled_id').value = 'false';
          }
         },

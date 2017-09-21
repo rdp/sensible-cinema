@@ -927,8 +927,8 @@ function saveEditButton() {
   // reset so people don't think they can tweak and resave...
   document.getElementById('start').value = timeStampToHuman(0);
   document.getElementById('endy').value = timeStampToHuman(0);
-  document.getElementById('tag_details_div_id').value = "";
   document.getElementById('details_input_id').value = "";
+  document.getElementById('popup_text_after_id').value = "";
   // don't reset category since I'm not sure if the javascript handles its going back to ""
   document.getElementById('subcategory_select_id').selectedIndex = 0; // use a present value so size doesn't go to *0*
   showSubCatWithRightOptionsAvailable(); // resize it back to none, not sure how to auto-trigger this
