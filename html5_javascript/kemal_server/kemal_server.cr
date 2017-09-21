@@ -294,6 +294,7 @@ post "/save_tag/:url_id" do |env|
   tag.default_action = resanitize_html(params["default_action"])
   tag.category = resanitize_html params["category"]
   tag.impact_to_movie = get_int(params, "impact_to_movie")
+  puts "got = #{tag.impact_to_movie} from #{params}"
   if params["popup_text_after"]? # remove july 4 '17'ish...
     tag.popup_text_after = resanitize_html params["popup_text_after"]
   end
