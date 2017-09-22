@@ -54,7 +54,7 @@ def standardize_url(unescaped)
   original = unescaped
   # basically do it all here, except canonicalize, which we do in javascript...
   if unescaped =~ /amazon.com|netflix.com/
-    unescaped = unescaped.split("?")[0] # strip off extra cruft but google play needs to keep it https://play.google.com/store/movies/details/Ice_Age_Dawn_of_the_Dinosaurs?id=FkVpRvzYblc
+    unescaped = unescaped.split("?")[0] # strip off extra cruft but google play needs to keep it ex:  https://play.google.com/store/movies/details/Ice_Age_Dawn_of_the_Dinosaurs?id=FkVpRvzYblc
   end
   unescaped = unescaped.split("&")[0] # strip off cruft https://www.youtube.com/watch?v=FzT9MS3n83U&list=PL7326EF82122776A9&ndex=21 :|
   unescaped = unescaped.gsub("smile.amazon", "www.amazon") # standardize to always www

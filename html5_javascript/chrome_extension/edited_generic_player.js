@@ -835,15 +835,28 @@ function isWatchingAdd() {
   
 }
 
+var i_set_it_to_add = false;
+
 function checkStatus() {
   // avoid unmuting videos playing that we don't even control [like youtube main page] with this if...
   if (url != null) {
     if (isWatchingAdd()) {
+      if (!i_set_it_to_add) {
+        i_set_it_to_add = true;
+        var yellow = "#FFFF00";
+        sendMessageToPlugin({text: "add?", color: yellow, details: "Watching add? edits disabled"}); 
+      }
       // and do no mutes etc...since it's an add, or amazon unloaded :|
+      return;
     }
     else {
       checkIfShouldDoActionAndUpdateUI();
     }
+  }
+  if (i_set_it_to_add) {
+      setSmiley();
+      // disable for now
+      // i_set_it_to_add = false;
   }
   checkIfEpisodeChanged();
   video_element = findFirstVideoTagOrNull() || video_element; // refresh it in case changed, but don't switch to null between clips :|
@@ -1299,11 +1312,22 @@ function loadSucceeded(json_string) {
   }
   hideDiv(document.getElementById("load_failed_div_id"));
   hideDiv(document.getElementById("server_down_div_id")); // in case it's a recovery
-  sendMessageToPlugin({text: "☺", color: "#008000", details: "Edited playback is enabled and fully operational for current video being played"}); // green
   if (isAmazon()) {
     var span = document.getElementsByClassName("dv-provenence-msg")[0];
-    span.innerHTML += "<br/><small>(Play it my way plugin enabled)</small>";
+    if (span) {
+      var extra = "<br/><small>(Play it my way plugin enabled)";
+      if (url.editing_status != "Done with second review, tags viewed as complete") {
+        extra += " (not fully edited yet)";
+      }
+      extra += "</small";
+      span.innerHTML += extra;
+    }
   }
+  setSmiley();
+}
+
+function setSmiley() {
+  sendMessageToPlugin({text: "☺", color: "#008000", details: "Edited playback is enabled and fully operational for current video being played"}); // green
 }
 
 function loadFailed(status) {
@@ -1610,7 +1634,6 @@ function onReady(yourMethod) { // from SO :)
   }
 }
 
-
 function inIframe() {
   try {
       return window.self !== window.top;
@@ -1641,9 +1664,8 @@ function withinDelta(first, second, delta) {
 }
 
 function findFirstVideoTagOrNull() {
-  var url = currentUrlNotIframe();
-  var is_pimw_youtube = (url.includes("playitmyway.org") || url.includes(request_host)) && url.includes("youtube_pimw_edited");
-  if (is_pimw_youtube && typeof youtube_pimw_player !== 'undefined') { // assume returning video_element implies "I'm alive"
+   // or document.querySelector("video") LOL
+  if (isYoutubePimw()) {
     return document.getElementById("show_your_instructions_here_id");
   }
   
@@ -1662,7 +1684,6 @@ function findFirstVideoTagOrNull() {
     }
   }
   return null;
-  // or document.querySelector("video");
 }
 
 function getCurrentTime() {
