@@ -845,8 +845,8 @@ function checkStatus() {
     if (isWatchingAdd()) {
       if (!i_set_it_to_add) {
         i_set_it_to_add = true;
-        var yellow = "#FFFF00";
-        sendMessageToPlugin({text: "add?", color: yellow, details: "Watching add? edits disabled"}); 
+        var dark_yellow = "#CCCC00";
+        sendMessageToPlugin({text: "add?", color: dark_yellow, details: "Watching add? edits disabled"}); 
       }
       // and enforce no mutes etc...since it's an add
       // still fall through in case amazon reloaded :\ 
