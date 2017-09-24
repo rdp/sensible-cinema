@@ -585,7 +585,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   else {
     if (video_element.style.visibility != "") {
       video_element.style.visibility=""; // non hidden :)
-      console.log("unhiding video with left audio " + cur_time);
+      console.log("unhiding video with cur_time=" + cur_time);
     }
   }
   
@@ -854,10 +854,10 @@ function checkStatus() {
     else {
       if (i_set_it_to_add) {
         setSmiley();
-        // disable revert for now, hard to test :|
         i_set_it_to_add = false;
       }
       checkIfShouldDoActionAndUpdateUI();
+      addPluginEnabledText();
     }
   }
 
@@ -1315,9 +1315,13 @@ function loadSucceeded(json_string) {
   }
   hideDiv(document.getElementById("load_failed_div_id"));
   hideDiv(document.getElementById("server_down_div_id")); // in case it's a recovery
+  setSmiley();
+}
+
+function addPluginEnabledText() {
   if (isAmazon()) {
     var span = document.getElementsByClassName("dv-provenence-msg")[0];
-    if (span) {
+    if (span && !span.innerHTML.includes("it my way")) {
       var extra = "<br/><small>(Play it my way plugin enabled)";
       if (url.editing_status != "Done with second review, tags viewed as complete") {
         extra += " (not fully edited yet)";
@@ -1326,7 +1330,6 @@ function loadSucceeded(json_string) {
       span.innerHTML += extra;
     }
   }
-  setSmiley();
 }
 
 function setSmiley() {
@@ -1596,7 +1599,7 @@ function mouseJustMoved(event) {
     clearTimeout(mouse_move_timer);
   }
   if (isWatchingAdd()) {
-    console.log("not showing UI since in add...");
+    console.log("not showing UI from mouse move since in add...");
     hideAllPimwStuff();
   }
 }
