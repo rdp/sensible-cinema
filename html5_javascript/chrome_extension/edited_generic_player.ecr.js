@@ -302,7 +302,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   else {
     if (video_element.style.visibility != "") {
       video_element.style.visibility=""; // non hidden :)
-      console.log("unhiding video with left audio " + cur_time);
+      console.log("unhiding video with cur_time=" + cur_time);
     }
   }
   
@@ -565,18 +565,19 @@ function checkStatus() {
         var yellow = "#FFFF00";
         sendMessageToPlugin({text: "add?", color: yellow, details: "Watching add? edits disabled"}); 
       }
-      // and do no mutes etc...since it's an add, or amazon unloaded :|
-      return;
+      // and enforce no mutes etc...since it's an add
+      // still fall through in case amazon reloaded :\ 
     }
     else {
+      if (i_set_it_to_add) {
+        setSmiley();
+        // disable revert for now, hard to test :|
+        i_set_it_to_add = false;
+      }
       checkIfShouldDoActionAndUpdateUI();
     }
   }
-  if (i_set_it_to_add) {
-      setSmiley();
-      // disable for now
-      // i_set_it_to_add = false;
-  }
+
   checkIfEpisodeChanged();
   video_element = findFirstVideoTagOrNull() || video_element; // refresh it in case changed, but don't switch to null between clips :|
   setEditedControlsToMovieRight(); // in case something changed [i.e. amazon moved their video element into "on screen" :| ]
