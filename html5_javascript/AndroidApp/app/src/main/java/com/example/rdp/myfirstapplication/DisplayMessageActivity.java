@@ -26,33 +26,55 @@ public class DisplayMessageActivity extends AppCompatActivity {
         textView.setText("entrd:" + message); // does not work?
 
         WebView myWebView = (WebView) findViewById(R.id.webView1);
-
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setJavaScriptEnabled(true);
        // myWebView.getSettings().setDomStorageEnabled(true);
-        myWebView.loadUrl("https://playitmyway.org");
+//        myWebView.loadUrl("https://playitmyway.org");
+
+        String summary = "<html><head><title>WebView JS Tester</title></head><body>" +
+                "Code<br>" +
+                "<textarea id='code'></textarea><br>" +
+                "Result<br>" +
+                "<textarea id='result'></textarea><br>" +
+                "<input type='button' value='Eval' onclick='" +
+                "document.getElementById(\"result\").value=eval(document.getElementById(\"code\").value)" +
+                "'>" +
+                "</body></html>";
+        myWebView.loadData(summary, "text/html; charset=utf-8", "utf-8");
 
         myWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                // loadUrl "might" be broken on real devices wait what?
 
-                view.evaluateJavascript("var x = (document.getElementById('replace_me').innerHTML = 'texthere3')", null);
                 StringBuilder sb = new StringBuilder();
-                sb.append("alert('hello inject');");
+                sb.append("alert('hello inject');document.getElementById('replace_me').innerHTML = 'texthere4'; null;");
                 view.loadUrl("javascript:" + sb.toString());
-                view.loadUrl(
-                        "javascript:document.getElementById('replace_me').innerHTML = 'texthere1'; nil");
+
                 //view.evaluateJavascript("document.getElementById('replace_me').innerHTML = 'texthere2'", null);
+//                view.evaluateJavascript("(function() { alert('x'); " +
+//                        "return { var1: document.title, var2: \"variable2\", var3: var y = document.getElementById('replace_me').innerHTML}; })();", new ValueCallback<String>() {
+//                    @Override
+//                    public void onReceiveValue(String s) {
+//                        System.out.println("LogName" + s);
+//                    }
+//                });
+
+                // works
                 view.evaluateJavascript("(function() { alert('x'); " +
-                        "return { var1: document.title, var2: \"variable2\", var3: (var y = document.getElementById('replace_me').innerHTML }; })();", new ValueCallback<String>() {
+                        "return { var1: document.title, var2: \"variable2\", var3: document.getElementById('replace_me').innerHTML}; })();", new ValueCallback<String>() {
                     @Override
                     public void onReceiveValue(String s) {
                         System.out.println("LogName" + s);
                     }
                 });
 
+
+                // works
+                //view.loadUrl(
+                //        "javascript:document.getElementById('replace_me').innerHTML = 'texthere1'; nil");
                 // works! (doesn't alert of course)
                 view.evaluateJavascript("(function() { alert('x'); " +
                         "return { var1: document.title, var2: \"variable2\"}; })();", new ValueCallback<String>() {
