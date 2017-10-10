@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">My First Application</string>
     <string name="edit_message">Enter msgz</string>
-    <string name="button_send">sendo!</string>
+    <string name="button_send">See all movies</string>
 </resources>

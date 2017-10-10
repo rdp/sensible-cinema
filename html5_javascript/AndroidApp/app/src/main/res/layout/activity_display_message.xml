@@ -6,32 +6,13 @@
     android:layout_height="match_parent"
     tools:context="com.example.rdp.myfirstapplication.DisplayMessageActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="159dp"
-        android:layout_height="66dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="casual"
-        android:text="TextView"
-        android:textColor="@android:color/holo_green_dark"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:typeface="sans"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.071" />
-
     <WebView
         android:id="@+id/webView1"
-        android:layout_width="337dp"
-        android:layout_height="408dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="384dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        android:layout_marginBottom="8dp"
-        tools:layout_editor_absoluteY="95dp" />
+        tools:layout_editor_absoluteY="10dp"
+        app:layout_constraintHorizontal_bias="0.441" />
 
 </android.support.constraint.ConstraintLayout>
