@@ -44,18 +44,15 @@ public class DisplayMessageActivity extends AppCompatActivity {
                 super.onPageFinished(view, url);
                 // loadUrl "might" be broken on real devices wait what?
                 Log.v(TAG, "index=" + url);
+                StringBuilder sb = new StringBuilder();
                 if (url.contains("amazon.com")) {
-
+                    sb.append(" var my_awesome_script = document.createElement('script'); my_awesome_script.setAttribute('src','https://playitmyway.org/plugin_javascript/edited_generic_player.js'); document.head.appendChild(my_awesome_script);");
                 }
 
-                StringBuilder sb = new StringBuilder();
-                sb.append("alert('hello inject');document.getElementById('replace_me').innerHTML = 'texthere4'; null;");
+                sb.append("document.getElementById('replace_me').innerHTML = 'texthere4'; null;");
                 view.loadUrl("javascript:" + sb.toString());
-
             }
-
         });
-
     }
 
     @Override
@@ -66,5 +63,4 @@ public class DisplayMessageActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
 }

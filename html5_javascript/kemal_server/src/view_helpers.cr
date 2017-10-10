@@ -21,7 +21,7 @@ end
 
 def is_mobile(env)
   ua = env.request.headers["User-Agent"]? 
-  puts "ua=#{ua}"
+  puts "ua=#{ua} a=#{/Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/} b=#{ua !~ /PlayItMyWayUndroid/}"
   ua =~ /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/ && (ua !~ /PlayItMyWayUndroid/)
 end
 
