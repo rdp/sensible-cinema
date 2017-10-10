@@ -28,7 +28,7 @@
            Or <a href=/personalized_edit_list/<%=url.id%>>personalize edits</a> your way!
           </div>
           <div style="text-align: center;">		  
-            <button onclick="document.getElementById('box_movie_details_<%= url.id %>').style.display = 'block';
+            <button onclick="var x = document.getElementById('box_movie_details_<%= url.id %>'); x.style.display = (x.style.display == 'none' ? 'block' : 'none');
               expandBoxOrOpen('box_movie_<%= url.id %>'); return false;">Details</button>
           </div>
           <div id=box_movie_details_<%= url.id %> style="display:none;">
