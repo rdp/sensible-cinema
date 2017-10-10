@@ -35,6 +35,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendMessageMinions(View view) {
         Intent intent = new Intent(this, DisplayMessageActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, "https://smile.amazon.com/Minions-Sandra-Bullock/dp/B011802KGM?sa-no-redirect=1");
+        startActivity(intent);
+    }
+
+    public void sendMessageBigBuck(View view) {
+        Intent intent = new Intent(this, DisplayMessageActivity.class);
         intent.putExtra(EXTRA_MESSAGE, "https://playitmyway.org/test_movie_for_practicing_edits.html");
         startActivity(intent);
     }

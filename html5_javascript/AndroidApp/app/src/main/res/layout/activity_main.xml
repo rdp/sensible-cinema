@@ -50,4 +50,14 @@
         android:text="Minions"
         app:layout_constraintTop_toBottomOf="@+id/button2"
         tools:layout_editor_absoluteX="276dp" />
+
+    <Button
+        android:id="@+id/bigbuckbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:onClick="sendMessageBigBuck"
+        android:text="Big Buck"
+        app:layout_constraintTop_toBottomOf="@+id/button3"
+        tools:layout_editor_absoluteX="279dp" />
 </android.support.constraint.ConstraintLayout>
