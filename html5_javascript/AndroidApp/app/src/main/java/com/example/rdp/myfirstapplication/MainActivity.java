@@ -32,4 +32,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+    public void sendMessageMinions(View view) {
+        Intent intent = new Intent(this, DisplayMessageActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, "https://playitmyway.org/test_movie_for_practicing_edits.html");
+        startActivity(intent);
+    }
+
 }

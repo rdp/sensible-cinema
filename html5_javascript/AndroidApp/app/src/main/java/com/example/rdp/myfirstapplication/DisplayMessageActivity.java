@@ -25,6 +25,8 @@ public class DisplayMessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_message);
 
+        // TODO try: Oreo, does it work on real devices? bigger web?
+
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
@@ -37,7 +39,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setJavaScriptEnabled(true);
-       // myWebView.getSettings().setDomStorageEnabled(true);
+        myWebView.getSettings().setDomStorageEnabled(true);
         //myWebView.loadUrl("chrome://components"); // nope
         // Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.135 Safari/537.36 is chrome with "desktop" checked
         myWebView.getSettings().setUserAgentString("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.135 Safari/537.36 PlayItMyWay/0.0");
@@ -49,6 +51,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
             public void onPermissionRequest(PermissionRequest request) {
                 request.grant(new String[]{RESOURCE_PROTECTED_MEDIA_ID});
             }
+            // alerts should work now anyway :|
 
         });
 
@@ -59,9 +62,10 @@ public class DisplayMessageActivity extends AppCompatActivity {
                 super.onPageFinished(view, url);
                 // loadUrl "might" be broken on real devices wait what?
                 Log.v(TAG, "url=" + url);
-                StringBuilder sb = new StringBuilder(); // TODO I load this thrice?
+                StringBuilder sb = new StringBuilder(); // TODO I load this thrice???
+                // big buck? sniff https://playitmyway.org/test_movie_for_practicing_edits.html
                 if (url.contains("amazon.com") || (url.contains("playitmyway.org") && !url.contains("pimw_edited_youtube"))) {
-                    sb.append("var my_awesome_script = document.createElement('script'); my_awesome_script.setAttribute('src','https://playitmyway.org/plugin_javascript/edited_generic_player.js'); document.head.appendChild(my_awesome_script);");
+                    sb.append("var my_awesome_script = document.createElement('script'); my_awesome_script.setAttribute('src','https://playitmyway.org/plugin_javascript/contentscript.js'); document.head.appendChild(my_awesome_script);");
                 }
 
                 sb.append("document.getElementById('replace_me').innerHTML = 'texthere4'; null;");
