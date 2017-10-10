@@ -28,8 +28,9 @@
            Or <a href=/personalized_edit_list/<%=url.id%>>personalize edits</a> your way!
           </div>
           <div style="text-align: center;">		  
-            <button onclick="expandBoxOrOpen('box_movie_<%= url.id %>'); return false;">Details</button>
-           </div>
+            <button onclick="expandBoxOrOpen('box_movie_details_<%= url.id %>'); return false;">Details</button>
+          </div>
+          <div id=box_movie_details_<%= url.id %> style="display:none;">
           <%= if_present_with_break url.details %>
           <%= if_present_with_break url.wholesome_uplifting_level, "Wholesome level:" %>
           <%= if_present_with_break url.wholesome_review, "Wholesome review:" %>
@@ -46,6 +47,7 @@
           <%= if_present_with_break url.cost_string, "Price:" %>
           <div style="text-align: center;">		  
             <a href="/view_url/<%= url.id %>">Movie page</a>
+          </div>
           </div>
          </div>
        </div>

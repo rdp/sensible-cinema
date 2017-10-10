@@ -1,5 +1,13 @@
-#!/usr/bin/env fish
+#!/usr/bin/env bash
 echo "attempting to load server to https://localhost:3000"
-# dev keys: openssl req -x509 -newkey rsa:4096 -keyout _key.pem -out cert.pem -days 365 -nodes
-
+if [[ ! -f db/local_cookie_secret ]]; then
+  crystal eval 'require "secure_random"; puts SecureRandom.hex(64)' > db/local_cookie_secret
+fi
+if [[ ! -d sessions ]]; then
+  mkdir sessions
+fi
+if [[ ! -f _key.pem ]]; then
+  echo "generating dev keys"
+  openssl req -x509 -newkey rsa:4096 -keyout _key.pem -out cert.pem -days 365 -nodes
+fi
 crystal run ./kemal_server.cr -- --ssl --ssl-key-file _key.pem --ssl-cert-file cert.pem or exit 1
