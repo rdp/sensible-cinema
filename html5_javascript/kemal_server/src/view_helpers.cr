@@ -27,7 +27,7 @@ end
 
 def my_android?(env)
   ua = env.request.headers["User-Agent"]? 
-  ua =~ /PlayItMyWayUndroid/
+  ua =~ /PlayItMyWay/
 end
 
 def editor?(env)

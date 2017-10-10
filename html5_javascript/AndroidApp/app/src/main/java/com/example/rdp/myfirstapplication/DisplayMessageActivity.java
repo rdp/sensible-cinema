@@ -39,7 +39,8 @@ public class DisplayMessageActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
        // myWebView.getSettings().setDomStorageEnabled(true);
         //myWebView.loadUrl("chrome://components"); // nope
-        myWebView.getSettings().setUserAgentString("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.19 (KHTML, like Gecko) PlayItMyWayUndroid Chrome/18.0.1025.45 Safari/535.19");
+        // Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.135 Safari/537.36 is chrome with "desktop" checked
+        myWebView.getSettings().setUserAgentString("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.135 Safari/537.36 PlayItMyWay/0.0");
         // tries to launch app:
         // myWebView.getSettings().setUserAgentString("Mozilla/5.0 (Linux; Android 6.0.1; SGP771 Build/32.2.A.0.253; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/52.0.2743.98 Safari/537.36 PlayItMyWayUndroid/0.0");
 
