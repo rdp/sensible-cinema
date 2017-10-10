@@ -15,6 +15,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
     private static final String TAG = "MyActivity";
 
+    WebView myWebView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +29,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.textView);
         textView.setText("entrd:" + message); // does not work?
 
-        WebView myWebView = (WebView) findViewById(R.id.webView1);
+         myWebView = (WebView) findViewById(R.id.webView1);
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setJavaScriptEnabled(true);
@@ -37,6 +38,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         myWebView.getSettings().setUserAgentString("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.19 (KHTML, like Gecko) PlayItMyWayUndroid Chrome/18.0.1025.45 Safari/535.19");
 
         myWebView.setWebViewClient(new WebViewClient() {
+
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
@@ -54,6 +56,15 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (myWebView.canGoBack()) {
+            myWebView.goBack();
+        } else {
+            super.onBackPressed();
+        }
     }
 
 }
