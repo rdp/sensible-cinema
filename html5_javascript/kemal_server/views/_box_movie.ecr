@@ -14,7 +14,7 @@
             <%= url.image_tag "id='box_movie_#{url.id}_image' style='max-height: 300px; max-width: 300px; filter: drop-shadow(5px 5px 5px #222); padding: 5px; margin-left: auto; margin-right: auto; display: block; margin-bottom: 5px;'", ImageSize::VerySmall %>
             <div style="text-align: center;">
               <% if url.editing_status == editing_phases[:done_second_pass] %>
-                Watch <%= url.name_with_episode %> edited now!
+                Watch <%= url.name_with_episode %> 
               <% elsif url.tag_count == 0 %>
                 (not started, click here to watch unedited anyway)
               <% elsif url.editing_status == editing_phases[:done_first_pass] %>
@@ -23,9 +23,9 @@
                 (edits incomplete, work in progress, click here to watch anyway)
               <% end %>
             </div>
-          </a>
+          </a> edited now!
           <div style="text-align: center;">		  
-           Or <a href=/personalized_edit_list/<%=url.id%>>personalize edits your way!</a>
+           Or <a href=/personalized_edit_list/<%=url.id%>>personalize edits</a> your way!
           </div>
           <div style="text-align: center;">		  
             <button onclick="expandBoxOrOpen('box_movie_<%= url.id %>'); return false;">Details</button>
