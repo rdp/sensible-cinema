@@ -277,11 +277,9 @@ class Url
        if amazon_prime_free_type != ""
          out += ", "
        end
-       if rental_cost_sd > 0
-         out += " $%.2f (rent SD)" % rental_cost_sd
-       end
-       if rental_cost > 0
-         out += " $%.2f (rent HD)" % rental_cost
+
+       if rental_cost_sd > 0 || rental_cost > 0
+         out += "Rent: " + [rental_cost_sd, rental_cost].select{|cost| cost > 0}.map{|c| "$#{c}"}.join("/")
        end
        if purchase_cost_sd > 0
          out += " $%.2f (buy SD)" % purchase_cost_sd
