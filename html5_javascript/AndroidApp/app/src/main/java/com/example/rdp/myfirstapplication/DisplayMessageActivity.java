@@ -40,6 +40,9 @@ public class DisplayMessageActivity extends AppCompatActivity {
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setJavaScriptEnabled(true);
         myWebView.getSettings().setDomStorageEnabled(true);
+        myWebView.getSettings().setAllowContentAccess(true);
+        myWebView.getSettings().setMediaPlaybackRequiresUserGesture(false);
+
         //myWebView.loadUrl("chrome://components"); // nope
         // Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.135 Safari/537.36 is chrome with "desktop" checked
         myWebView.getSettings().setUserAgentString("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.135 Safari/537.36 PlayItMyWay/0.0");
