@@ -21,8 +21,12 @@ end
 
 def is_mobile(env)
   ua = env.request.headers["User-Agent"]? 
-  puts "ua=#{ua} a=#{/Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/} b=#{ua !~ /PlayItMyWayUndroid/}"
-  ua =~ /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/ && (ua !~ /PlayItMyWayUndroid/)
+  ua =~ /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/
+end
+
+def my_android?(env)
+  ua = env.request.headers["User-Agent"]? 
+  ua =~ /PlayItMyWayUndroid/
 end
 
 def editor?(env)
