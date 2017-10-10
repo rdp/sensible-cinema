@@ -15,11 +15,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    /** Called when the user taps the Send button */
+    /**
+     * Called when the user taps the Send button
+     */
     public void sendMessage(View view) {
         Intent intent = new Intent(this, DisplayMessageActivity.class);
         EditText editText = (EditText) findViewById(R.id.editText);
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);    }
+        startActivity(intent);
+    }
+
+    public void sendMessageShaka(View view) {
+        Intent intent = new Intent(this, DisplayMessageActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, "https://shaka-player-demo.appspot.com/demo/#asset=//storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd;lang=en-US");
+        startActivity(intent);
+    }
+
 }
