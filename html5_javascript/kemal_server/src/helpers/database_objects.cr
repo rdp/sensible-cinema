@@ -279,13 +279,10 @@ class Url
        end
 
        if rental_cost_sd > 0 || rental_cost > 0
-         out += "Rent: " + [rental_cost_sd, rental_cost].select{|cost| cost > 0}.map{|c| "$#{c}"}.join("/")
+         out += "Rent: " + [rental_cost_sd, rental_cost].select{|cost| cost > 0}.map{|c| "$#{c}"}.join("/") + " "
        end
-       if purchase_cost_sd > 0
-         out += " $%.2f (buy SD)" % purchase_cost_sd
-       end
-       if purchase_cost > 0
-         out += " $%.2f (buy HD)" % purchase_cost
+       if purchase_cost_sd > 0 || purchase_cost > 0
+         out += "Buy: " + [purchase_cost_sd, purchase_cost].select{|cost| cost > 0}.map{|c| "$#{c}"}.join("/") + " "
        end
     elsif human_readable_company == "youtube" # 0 is OK here :)
        out = "free (youtube)"
