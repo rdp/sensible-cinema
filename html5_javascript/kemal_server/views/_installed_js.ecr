@@ -67,6 +67,9 @@ function pluginFullyInstalled() {
 }
 
 function alertIfNoExtension() { // for the _box
+  <% if my_android?(env) %>
+    return true; // :\
+  <% end %>
   if (!pluginFullyInstalled()) {
     <% if is_mobile(env) %>
       alert("Edited playback only works on desktop/laptop computers today. You can see the video page, but playback will not be edited yet...");
