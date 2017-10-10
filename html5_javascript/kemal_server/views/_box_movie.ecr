@@ -37,13 +37,13 @@
           <%= if_present_with_break url.review, "Good movie review:" %>
           <%= if_present_with_break url.original_rating, "Original rating:" %>
           <%= if_present_with_break "#{url.genre} (#{url.human_duration})", "Genre:" %>
-          <%= if_present_with_break url.cost_string, "Price:" %>
           <%= if_present_with_break url.editing_notes, "" %>
           What you can edit out: 
           <% if url.tag_count > 0 %>
             (<%= tags_by_category(url) %>) <!-- if this screws up its a tag with unknown category -->
           <% end %>
           <br/>
+          <%= if_present_with_break url.cost_string, "Price:" %>
           <div style="text-align: center;">		  
             <a href="/view_url/<%= url.id %>">Movie page</a>
           </div>
