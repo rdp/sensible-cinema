@@ -1322,7 +1322,7 @@ function mouseJustMoved(event) {
 }
 
 function hideAllPimwStuff() {
-  if (!isYoutubePimw() && (!window.navigator.contains("PlayItMyWay")) {
+  if (!isYoutubePimw() && (!window.navigator.contains("PlayItMyWay"))) {
     hideDiv(all_pimw_stuff);
   }
 }
