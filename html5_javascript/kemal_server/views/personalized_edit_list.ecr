@@ -50,7 +50,7 @@ personal notes (ex: "for kids")
   <h4><%= subcategory %></h4>
   <input id="unused" type="checkbox" checked 
     onchange='updateSelectAll(<%= subcategory_tags_and_enableds.map{|tag, action| tag.id}.pretty_inspect %>, this.checked);'
-  > Edit out all <%= subcategory %>
+  > Select all "<%= subcategory %>"
   <br/>
   <table class="table table-striped">
   <% subcategory_tags_and_enableds.each{|tag, enabled| %>
@@ -60,29 +60,28 @@ personal notes (ex: "for kids")
         onchange='' >
     <%= seconds_to_human tag.start %> 
     </td>
-    <td>lasts <%= seconds_to_human tag.duration %></td>
+    <td>
+      <div style="visibility: <%= tag.age_maybe_ok > 0 ? "visible" : "hidden" %>;"> <!-- keep same size for tables to match up -->
+        not OK age <%= tag.age_maybe_ok %> and under
+      </div>
+    </td>
     <td>
       <% if tag.impact_to_movie > 0 %>
         impact to story if edited out: <%= tag.impact_to_movie %>
       <% end %>
     </td>
     <td>
-    <% if editor?(env) %>
-      <a href=/edit_tag/<%= tag.id %>><%= tag.default_action %></a>
-    <% else %>
-     <%= tag.default_action %>
-    <% end %>
-
+      <% if editor?(env) %>
+        <a href=/edit_tag/<%= tag.id %>><%= tag.default_action %></a>
+      <% else %>
+       <%= tag.default_action %>
+      <% end %>
     </td>
+    <td>lasts <%= seconds_to_human tag.duration %></td>
     <% if show_tag_details %>
       <td><%= tag.details %></td>
       <td><%= tag.popup_text_after %></td>
     <% end %>
-    <td>
-      <div style="visibility: <%= tag.age_maybe_ok > 0 ? "visible" : "hidden" %>;"> <!-- keep same size for tables to match up -->
-        not OK age <%= tag.age_maybe_ok %> and under
-      </div>
-    </td>
   </tr>
   
   <% } %> <!-- end tag -->
