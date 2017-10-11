@@ -61,6 +61,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
                 Log.v(TAG, "url=" + url);
                 StringBuilder sb = new StringBuilder(); // XXXX I load this thrice??? huh wuh?
                 // XXXX more smarts here, also adjust UA or something? More instructions? Add link to your library?
+                // reload button [?] real fullscreen [?]
                 if (url.contains("amazon.com") || (url.contains("playitmyway.org") && !url.contains("youtube_pimw_edited"))) {
                     sb.append("var my_awesome_script = document.createElement('script'); my_awesome_script.setAttribute('src','https://playitmyway.org/plugin_javascript/edited_generic_player.js'); document.head.appendChild(my_awesome_script);");
                 }
