@@ -1,4 +1,4 @@
-<h1>Modify personalized edits</h1> for <a href=/view_url/<%= tag_edit_list.url.id %>><%= tag_edit_list.url.name_with_episode %></a>.
+<h1>Modify personalized edits</h1> of <a href=/view_url/<%= tag_edit_list.url.id %>><%= tag_edit_list.url.name_with_episode %></a> for <%= logged_in_user(env).name %>.
 <br/>
 <br/>
 
@@ -7,7 +7,7 @@
 <% if tag_edit_list.id != 0 %>
   <input type="hidden" name="id" value="<%= tag_edit_list.id %>">
 <% else %>
-  You haven't set any personalized edits yet!
+  You haven't set any personalized edits yet! Set them here:
   <br/>
 <% end %>
 
