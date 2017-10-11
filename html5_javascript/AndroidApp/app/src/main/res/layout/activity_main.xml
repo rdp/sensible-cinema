@@ -64,7 +64,6 @@
         android:layout_marginBottom="35dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="22dp" />
 
