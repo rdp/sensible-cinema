@@ -41,10 +41,10 @@ personal notes (ex: "for kids")
 <% tags_by_category.each_with_index{ |category_and_tags_and_enableds, index| category, tags_and_enableds = category_and_tags_and_enableds%>
   <h2><%= category.capitalize %></h2>
   <input id="unused" type="checkbox" checked onchange='updateSelectAll(<%= tags_by_category[category].map{|tag, enabled| tag.id }.pretty_inspect %>, this.checked);'
-  > Edit out all <%= category %>
+  > Edit out all <%= category %> (<%= tags_and_enableds.size %>)
   <br/>
   <br/>
-  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#category_div_<%= index %>" aria-expanded="false" aria-controls="collapseExample">Choose individual tags (<%= tags_and_enableds.size %>)</button>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#category_div_<%= index %>" aria-expanded="false" aria-controls="collapseExample">Choose individual tags</button>
   <div id=category_div_<%= index %>  class="collapse">
   <% tags_and_enableds.sort_by{|tag, personal_action| tag.subcategory}.group_by{ |tag, personal_action| tag.subcategory}.each{ |subcategory, subcategory_tags_and_enableds| %>
   <h4><%= subcategory %></h4>
