@@ -37,7 +37,7 @@ personal notes (ex: "for kids")
 <% end %>
 
 <% tags_by_category = tag_edit_list.tags_with_personalized_enabled.group_by{|tag, enabled| tag.category} %>
-<% categories = tags_by_category.keys.sort.revert %>
+<% categories = tags_by_category.keys.sort.reverse %>
 
 <% categories.each_with_index{ |category, index| tags_and_enableds = tags_by_category[category] %>
   <% human_category = category; human_category = "other" if category == "movie-content" %>
