@@ -44,7 +44,7 @@ personal notes (ex: "for kids")
   > Edit out all <%= category %>
   <br/>
   <br/>
-  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#category_div_<%= index %>" aria-expanded="false" aria-controls="collapseExample">
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#category_div_<%= index %>" aria-expanded="false" aria-controls="collapseExample">See individual details</button>
   <div id=category_div_<%= index %>  class="collapse">
   <% tags_and_enableds.sort_by{|tag, personal_action| tag.subcategory}.group_by{ |tag, personal_action| tag.subcategory}.each{ |subcategory, subcategory_tags_and_enableds| %>
   <h4><%= subcategory %></h4>
