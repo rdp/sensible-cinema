@@ -1,6 +1,7 @@
 package com.example.rdp.myfirstapplication;
 
 import android.content.Intent;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +38,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         myWebView.getSettings().setAllowContentAccess(true);
         myWebView.getSettings().setMediaPlaybackRequiresUserGesture(false);
         myWebView.getSettings().setBuiltInZoomControls(true);
+        myWebView.getSettings().setSupportMultipleWindows(true);
 
         myWebView.getSettings().setLoadWithOverviewMode(true);
         myWebView.getSettings().setUseWideViewPort(true);
@@ -48,7 +50,51 @@ public class DisplayMessageActivity extends AppCompatActivity {
             public void onPermissionRequest(PermissionRequest request) {
                 request.grant(new String[]{RESOURCE_PROTECTED_MEDIA_ID});
             }
-            // alerts should work now again :|
+
+
+            @Override
+            public void onCloseWindow(WebView window) {
+                Log.d("onCloseWindow", "called");
+            }
+
+            @Override
+            public boolean onCreateWindow(final WebView view, boolean isDialog,
+                                          boolean isUserGesture, Message resultMsg) {
+
+                // support amazon oauth :\ XXX minify? use intent instead?  Latter probably doesn't work :\
+                final WebView newWebView = new WebView(DisplayMessageActivity.this);
+                newWebView.getSettings().setJavaScriptEnabled(true);
+                newWebView.getSettings().setSupportZoom(true);
+                newWebView.getSettings().setBuiltInZoomControls(true);
+                newWebView.getSettings().setPluginState(WebSettings.PluginState.ON);
+                newWebView.getSettings().setSupportMultipleWindows(true);
+                newWebView.getSettings().setJavaScriptEnabled(true);
+                newWebView.getSettings().setDomStorageEnabled(true);
+                newWebView.getSettings().setAppCacheEnabled(true);
+                newWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+                view.addView(newWebView);
+                WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
+                transport.setWebView(newWebView);
+                resultMsg.sendToTarget();
+
+                newWebView.setWebViewClient(new WebViewClient() {
+                    @Override
+                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                        view.loadUrl(url);
+                        return true;
+                    }
+                });
+                newWebView.setWebChromeClient(new WebChromeClient() {
+                    @Override
+                    public void onCloseWindow(WebView window) {
+                        Log.d("onCloseWindow", "called");
+                        view.removeView(newWebView);
+                    }
+                });
+
+                return true;
+            }
+
 
         });
 

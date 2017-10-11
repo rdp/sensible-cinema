@@ -35,7 +35,7 @@ function logout_facebook() {
         window.location.href = "/logout_session"; // redir
       });
     } else {
-      alert("not logged in to facebook?");
+      alert("attempted to logout via facebook, not logged in to facebook?" + response.status + " " + response);
     }
   });
 };
