@@ -389,6 +389,7 @@ def logged_in?(env)
   env.session.int?("user_id") ? true : false
 end
 
+
 get "/logout" do |env|
   if is_dev?
     logout_session(env)
@@ -603,11 +604,23 @@ get "/support" do |env| # contact
   render "views/support.ecr", "views/layout.ecr"
 end
 
-get "/login" do |env|
-  if is_dev?
+get "/go_admin" do |env|
+ if env.params.query["secret"] == File.read("secret_bypass")
+   login_test_admin(env)
+ else
+   raise "try again " +  env.params.query["secret"]
+ end
+end
+
+def login_test_admin(env)
     env.params.query["email_subscribe"] = "false"
     add_to_flash env, "logged in special as test user"
     setup_user_and_session("test_user_id", "test_user_name", "test@test.com", "facebook", env) # match row from test db.init.sql
+end
+
+get "/login" do |env|
+  if is_dev?
+    login_test_admin(env)
   elsif logged_in?(env)
     add_to_flash env, "already logged in!"
     env.redirect "/"

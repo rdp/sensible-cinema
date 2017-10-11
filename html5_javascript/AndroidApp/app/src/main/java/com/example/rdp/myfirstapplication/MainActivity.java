@@ -20,15 +20,15 @@ public class MainActivity extends AppCompatActivity {
      */
     public void sendMessage(View view) {
         Intent intent = new Intent(this, DisplayMessageActivity.class);
-        /*EditText editText = (EditText) findViewById(R.id.editText);
-        String message = editText.getText().toString(); */
         intent.putExtra(EXTRA_MESSAGE, ""); // meaning "all"
         startActivity(intent);
     }
 
     public void sendMessageShaka(View view) {
         Intent intent = new Intent(this, DisplayMessageActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, "https://shaka-player-demo.appspot.com/demo/#asset=//storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd;lang=en-US");
+        EditText editText = (EditText) findViewById(R.id.password);
+        String message = editText.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE, "https://playitmyway.org/go_admin?secret=" + message);
         startActivity(intent);
     }
 

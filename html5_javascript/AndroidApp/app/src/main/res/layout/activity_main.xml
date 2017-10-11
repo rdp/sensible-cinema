@@ -57,4 +57,15 @@
         tools:layout_editor_absoluteX="29dp"
         tools:layout_editor_absoluteY="16dp" />
 
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="35dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="22dp" />
+
 </android.support.constraint.ConstraintLayout>
