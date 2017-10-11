@@ -26,7 +26,7 @@ input,select {
 <div style="height: 760px; max-width: 620px; background: black;" id="show_your_instructions_here_id"> <!-- plugin binds here -->
 </div>
 
-
+<p>Seeing closed captions? To turn them off go to <a href=youtube.com>youtube.com</a> and watch something and turn them off there.
 
 <h3>Create new other (youtube)</h3>
 Enter url of movie here:
@@ -123,7 +123,9 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
 function onPlayerReady(event) {
   console.log("youtube_player ready and setup! auto playing...");
   SetVolume(50); // default isn't 100? is? huh?
-  event.target.playVideo();
+  <% if !is_mobile?(env) %>
+    event.target.playVideo();
+  <% end %>
   setTimeout(function() { // get doesn't seem to work immediately :\
     document.getElementById('vol-control-id').value = youtube_pimw_player.getVolume();
     }, 50);
