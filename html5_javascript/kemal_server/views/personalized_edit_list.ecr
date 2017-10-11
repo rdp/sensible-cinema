@@ -38,13 +38,14 @@ personal notes (ex: "for kids")
 
 <% tags_by_category = tag_edit_list.tags_with_personalized_enabled.group_by{|tag, enabled| tag.category} %>
 
-<% tags_by_category.each{ |category, tags_and_enableds| %>
+<% tags_by_category.each_with_index{ |category_and_tags_and_enableds, index| category, tags_and_enableds = category_and_tags_and_enableds%>
   <h2><%= category.capitalize %></h2>
   <input id="unused" type="checkbox" checked onchange='updateSelectAll(<%= tags_by_category[category].map{|tag, enabled| tag.id }.pretty_inspect %>, this.checked);'
   > Edit out all <%= category %>
   <br/>
   <br/>
-
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#category_div_<%= index %>" aria-expanded="false" aria-controls="collapseExample">
+  <div id=category_div_<%= index %>  class="collapse">
   <% tags_and_enableds.sort_by{|tag, personal_action| tag.subcategory}.group_by{ |tag, personal_action| tag.subcategory}.each{ |subcategory, subcategory_tags_and_enableds| %>
   <h4><%= subcategory %></h4>
   <input id="unused" type="checkbox" checked 
@@ -87,6 +88,7 @@ personal notes (ex: "for kids")
   <% } %> <!-- end tag -->
   </table>
   <% } %> <!-- end subcat -->
+  </div>
 
 <% } %> <!-- end cat -->
 
