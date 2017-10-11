@@ -79,7 +79,7 @@ personal notes (ex: "for kids")
        <%= tag.default_action %>
       <% end %>
     </td>
-    <td>lasts <%= seconds_to_human tag.duration %></td>
+    <td>lasts <%= "%.1f" % tag.duration %>s</td>
     <td>
       <a href="#" onclick="document.getElementById('details_span_id_<%= tag.id %>').style.display='block'; return false;">See graphic details:</a>
       <span id=details_span_id_<%= tag.id %> style="display: <%= show_tag_details ? "block" : "none" %>;">
