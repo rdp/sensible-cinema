@@ -1,10 +1,12 @@
 package com.example.rdp.myfirstapplication;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.webkit.CookieManager;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -44,56 +46,17 @@ public class DisplayMessageActivity extends AppCompatActivity {
         // Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.135 Safari/537.36 is chrome with "desktop" checked
         myWebView.getSettings().setUserAgentString("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.135 Safari/537.36 PlayItMyWay/0.2");
 
+        if (Build.VERSION.SDK_INT >= 21) {
+            // required seemingly
+           CookieManager cookieManager = CookieManager.getInstance();
+           cookieManager.setAcceptThirdPartyCookies(myWebView, true);
+        }
+
         myWebView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onPermissionRequest(PermissionRequest request) {
                 request.grant(new String[]{RESOURCE_PROTECTED_MEDIA_ID});
             }
-
-
-            @Override
-            public void onCloseWindow(WebView window) {
-                Log.d("onCloseWindow", "called");
-            }
-
-            @Override
-            public boolean onCreateWindow(final WebView view, boolean isDialog,
-                                          boolean isUserGesture, Message resultMsg) {
-
-                // support amazon oauth :\ XXX minify? use intent instead?  Latter probably doesn't work :\
-                final WebView newWebView = new WebView(DisplayMessageActivity.this);
-                newWebView.getSettings().setJavaScriptEnabled(true);
-                newWebView.getSettings().setSupportZoom(true);
-                newWebView.getSettings().setBuiltInZoomControls(true);
-                newWebView.getSettings().setPluginState(WebSettings.PluginState.ON);
-                newWebView.getSettings().setSupportMultipleWindows(true);
-                newWebView.getSettings().setJavaScriptEnabled(true);
-                newWebView.getSettings().setDomStorageEnabled(true);
-                newWebView.getSettings().setAppCacheEnabled(true);
-                newWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-                view.addView(newWebView);
-                WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
-                transport.setWebView(newWebView);
-                resultMsg.sendToTarget();
-
-                newWebView.setWebViewClient(new WebViewClient() {
-                    @Override
-                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                        view.loadUrl(url);
-                        return true;
-                    }
-                });
-                newWebView.setWebChromeClient(new WebChromeClient() {
-                    @Override
-                    public void onCloseWindow(WebView window) {
-                        Log.d("onCloseWindow", "called");
-                        view.removeView(newWebView);
-                    }
-                });
-
-                return true;
-            }
-
 
         });
 
