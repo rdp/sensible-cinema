@@ -37,8 +37,9 @@ personal notes (ex: "for kids")
 <% end %>
 
 <% tags_by_category = tag_edit_list.tags_with_personalized_enabled.group_by{|tag, enabled| tag.category} %>
+<% categories = tags_by_category.keys.sort %>
 
-<% tags_by_category.each_with_index{ |category_and_tags_and_enableds, index| category, tags_and_enableds = category_and_tags_and_enableds%>
+<% categories.each_with_index{ |category, index| tags_and_enableds = tags_by_category[category] %>
   <h2><%= category.capitalize %></h2>
   <input id="unused" type="checkbox" checked onchange='updateSelectAll(<%= tags_by_category[category].map{|tag, enabled| tag.id }.pretty_inspect %>, this.checked);'
   > Edit out all <%= category %> (<%= tags_and_enableds.size %>)
