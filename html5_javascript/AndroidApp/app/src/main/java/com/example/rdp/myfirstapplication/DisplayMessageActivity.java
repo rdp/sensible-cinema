@@ -1,15 +1,21 @@
 package com.example.rdp.myfirstapplication;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Message;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import static android.webkit.PermissionRequest.RESOURCE_PROTECTED_MEDIA_ID;
@@ -17,8 +23,11 @@ import static android.webkit.PermissionRequest.RESOURCE_PROTECTED_MEDIA_ID;
 public class DisplayMessageActivity extends AppCompatActivity {
 
     private static final String TAG = "MyActivity";
+    private Context mContext;
 
     WebView myWebView;
+    private WebView mWebviewPop;
+    private ConstraintLayout mContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +42,8 @@ public class DisplayMessageActivity extends AppCompatActivity {
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setSupportMultipleWindows(true);
+
         myWebView.getSettings().setDomStorageEnabled(true);
         myWebView.getSettings().setAllowContentAccess(true);
         myWebView.getSettings().setMediaPlaybackRequiresUserGesture(false);
@@ -48,11 +59,42 @@ public class DisplayMessageActivity extends AppCompatActivity {
             public void onPermissionRequest(PermissionRequest request) {
                 request.grant(new String[]{RESOURCE_PROTECTED_MEDIA_ID});
             }
-            // alerts should work now again :|
 
+
+            @Override
+            public boolean onCreateWindow(WebView view, boolean isDialog,
+                                          boolean isUserGesture, Message resultMsg) {
+                mWebviewPop = new WebView(mContext);
+                mWebviewPop.setWebViewClient(new WebViewClient() {
+
+                    @Override
+                    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest url) {
+                        return false; // all stay here
+                    }
+                });
+                mWebviewPop.setVerticalScrollBarEnabled(false);
+                mWebviewPop.setHorizontalScrollBarEnabled(false);
+                // assume we don't need our stuff anymore. Wait what?
+                // mWebviewPop.setWebViewClient(new UriWebViewClient());
+                mWebviewPop.getSettings().setJavaScriptEnabled(true);
+                mWebviewPop.getSettings().setSavePassword(false);
+                mWebviewPop.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT));
+                mContainer.addView(mWebviewPop);
+                WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
+                transport.setWebView(mWebviewPop);
+                resultMsg.sendToTarget();
+
+                return true;
+            }
         });
 
         myWebView.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest url) {
+                return false;
+            }
 
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -76,6 +118,9 @@ public class DisplayMessageActivity extends AppCompatActivity {
         } else {
             myWebView.loadUrl("https://playitmyway.org");
         }
+        mContext=this.getApplicationContext();
+        mContainer = (ConstraintLayout) findViewById(R.id.webview_frame);
+
     }
 
     @Override
