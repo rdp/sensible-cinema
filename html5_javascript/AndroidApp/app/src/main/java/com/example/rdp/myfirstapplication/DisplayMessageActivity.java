@@ -18,7 +18,6 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
     private static final String TAG = "MyActivity";
 
-
     WebView myWebView;
 
     @Override
@@ -42,7 +41,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         myWebView.getSettings().setLoadWithOverviewMode(true);
         myWebView.getSettings().setUseWideViewPort(true);
         // Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.135 Safari/537.36 is chrome with "desktop" checked
-        myWebView.getSettings().setUserAgentString("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.135 Safari/537.36 PlayItMyWay/0.1");
+        myWebView.getSettings().setUserAgentString("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.135 Safari/537.36 PlayItMyWay/0.2");
 
         myWebView.setWebChromeClient(new WebChromeClient() {
             @Override
@@ -60,8 +59,9 @@ public class DisplayMessageActivity extends AppCompatActivity {
                 super.onPageFinished(view, url);
                 // loadUrl "might" be broken on real devices wait what?
                 Log.v(TAG, "url=" + url);
-                StringBuilder sb = new StringBuilder(); // TODO I load this thrice???
-                if (url.contains("amazon.com") || (url.contains("playitmyway.org") && !url.contains("pimw_edited_youtube"))) {
+                StringBuilder sb = new StringBuilder(); // XXXX I load this thrice??? huh wuh?
+                // XXXX more smarts here, also adjust UA or something? More instructions? Add link to your library?
+                if (url.contains("amazon.com") || (url.contains("playitmyway.org") && !url.contains("youtube_pimw_edited"))) {
                     sb.append("var my_awesome_script = document.createElement('script'); my_awesome_script.setAttribute('src','https://playitmyway.org/plugin_javascript/edited_generic_player.js'); document.head.appendChild(my_awesome_script);");
                 }
 

@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     public void sendMessageMinions(View view) {
         Intent intent = new Intent(this, DisplayMessageActivity.class);
         intent.putExtra(EXTRA_MESSAGE, "https://smile.amazon.com/Minions-Sandra-Bullock/dp/B011802KGM?sa-no-redirect=1");
