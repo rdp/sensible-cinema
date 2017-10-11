@@ -1,17 +1,13 @@
-<h1>Modify personalized edits</h1> for <a href=/view_url/<%= tag_edit_list.url.id %>><%= tag_edit_list.url.name_with_episode %></a>.
+<h1>Modify personalized edits</h1> of <a href=/view_url/<%= tag_edit_list.url.id %>><%= tag_edit_list.url.name_with_episode %></a> for <%= logged_in_user(env).name %>.
 <br/>
 <br/>
 
-Want to see all the (sometimes grphic) details of each tag? click <a href=/personalized_edit_list/<%= tag_edit_list.url_id %>?show_tag_details=true %>here</a>.
-
-<br/>
-<br/>
 <form action="/save_tag_edit_list" method="POST">
 
 <% if tag_edit_list.id != 0 %>
   <input type="hidden" name="id" value="<%= tag_edit_list.id %>">
 <% else %>
-  You haven't set any personalized edits yet!
+  You haven't set any personalized edits yet! Set them here:
   <br/>
 <% end %>
 
@@ -46,7 +42,7 @@ personal notes (ex: "for kids")
   > Edit out all <%= human_category %> (<%= tags_and_enableds.size %>)
   <br/>
   <br/>
-  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#category_div_<%= index %>" aria-expanded="false" aria-controls="collapseExample">Choose individual tags</button>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#category_div_<%= index %>" aria-expanded="false" aria-controls="collapseExample">Choose individual <%= human_category %> tags</button>
   <div id=category_div_<%= index %>  class="collapse">
   <% tags_and_enableds.sort_by{|tag, personal_action| tag.subcategory}.group_by{ |tag, personal_action| tag.subcategory}.each{ |subcategory, subcategory_tags_and_enableds| %>
   <h3><%= subcategory %></h3>
@@ -81,7 +77,7 @@ personal notes (ex: "for kids")
     </td>
     <td>lasts <%= "%.1f" % tag.duration %>s</td>
     <td>
-      <a href="#" onclick="document.getElementById('details_span_id_<%= tag.id %>').style.display='block'; return false;">See graphic details:</a>
+      <a href="#" onclick="$('#details_span_id_<%= tag.id %>').toggle(); return false;">Show sometimes graphic details:</a>
       <span id=details_span_id_<%= tag.id %> style="display: <%= show_tag_details ? "block" : "none" %>;">
         <%= tag.details %> <%= tag.popup_text_after %>
       </span>
@@ -103,7 +99,8 @@ age_recommendation_after_edited (for this personalized list) (ex: 10, or 0 for n
 <br/>
 </div>
 <br/>
-<input type="submit" value="Save your choices" onclick='document.getElementById("category_select").disabled = false; //so it'll post' >
+<br/>
+&nbsp;&nbsp;<input type="submit" value="Save your choices" onclick='document.getElementById("category_select").disabled = false; //so it'll post' >
 
 </form>
 
