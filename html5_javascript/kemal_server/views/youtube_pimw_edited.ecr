@@ -123,7 +123,7 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
 function onPlayerReady(event) {
   console.log("youtube_player ready and setup! auto playing...");
   SetVolume(50); // default isn't 100? is? huh?
-  <% if !is_mobile?(env) %>
+  <% if !mobile?(env) %>
     event.target.playVideo();
   <% end %>
   setTimeout(function() { // get doesn't seem to work immediately :\

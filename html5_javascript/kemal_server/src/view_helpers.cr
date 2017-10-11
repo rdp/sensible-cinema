@@ -19,7 +19,7 @@ def google_search_string(url)
    google_search
 end
 
-def is_mobile(env)
+def mobile?(env)
   ua = env.request.headers["User-Agent"]? 
   puts "ua=#{ua}"
   ua =~ /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/

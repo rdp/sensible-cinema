@@ -8,7 +8,7 @@
 }(document, 'script', 'facebook-jssdk')); </script> <!-- early to load faster ?? they recommended it anyway... -->
 <img src=/camera.128.png width="75px;" style="float:left;"/>
 <h1 style="font-family: 'Patua One', cursive;">Play It My Way! <span style="text-shadow: 0 0 1em green, 0 0 0.2em blue; ">Beta.</span>
-<br/><% if !is_mobile(env) %>&nbsp;&nbsp;&nbsp;<% end %>Your movies.  Your way.
+<br/><% if !mobile?(env) %>&nbsp;&nbsp;&nbsp;<% end %>Your movies.  Your way.
 </h1>
 <span id='replace_me'></span> <!-- android will fill this in -->
 <div style="clear: both; margin-bottom: 20px;"></div>
@@ -49,7 +49,7 @@ We will be holding a Kickstarter soon, like our <a href=https://www.facebook.com
 
 <a href="#how_install" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">How do I install it?</a>
 <div id="how_install" class="collapse">
- <% if is_mobile(env) %>
+ <% if mobile?(env) %>
    First, grab your computer or laptop.  Check out our collection in the meantime, and come back on your computer to try it out and stream some awesome edited movies!  Click <a href=/installation>here</a> to email yourself a link so you can find us more easily.
     <% else %>
       <br/>

@@ -1,6 +1,6 @@
 <h2>Installation:</h2>
 <br>
-<% if is_mobile(env) %>
+<% if mobile?(env) %>
   Our chrome extension currently is only supported on the chrome web browser (on a computer, or laptop or chromebook, Windows, Linux or OS X).  So grab one of them and come on back here :)</h2>
  Enter your email address to send yourself an email with a link to it so you can find it more easily later: 
   <form action=/send_me_mail method=POST >
@@ -22,7 +22,7 @@ Currently, Play It My Way works on the chrome desktop web browser on a computer/
 Want to watch it on your TV?  You can also use a cable to connect your computer/laptop to your TV and watch it there.  You could for instance run a long (<a href='https://smile.amazon.com/AmazonBasics-High-Speed-HDMI-Cable-Standard/dp/B014I8T0YQ/ref=sr_1_3?ie=UTF8&qid=1489783144&sr=8-3&keywords=10%27+hdmi'>10'</a>, <a href='https://smile.amazon.com/BlueRigger-Speed-Ethernet-Supports-Return/dp/B003XM73P2'>25'</a> or <a href='https://smile.amazon.com/High-Speed-HDMI-Cable-Supports-Specification/dp/B00RYRJYDG/ref=sr_1_2?ie=UTF8&qid=1499106979&sr=8-2&keywords=50+foot+hdmi'>50'</a>) HDMI cable from your computer to your TV, buy yourself a <a href=https://smile.amazon.com/gp/product/B013WJRG5C/ref=ox_sc_act_title_1?smid=A7LHUY529ERHL&psc=1 >bluetooth mouse</a> and watch in HD.  Another option might be a "Home Theater PC" that supports the Chrome web browser, or repurposing an old laptop/desktop as a dedicated viewing device.
 <br/>
 
-<% if !is_mobile(env) %>
+<% if !mobile?(env) %>
 
 <h2>Installing the program</h2>
 
