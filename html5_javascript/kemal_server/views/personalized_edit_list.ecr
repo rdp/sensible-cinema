@@ -49,7 +49,7 @@ personal notes (ex: "for kids")
   <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#category_div_<%= index %>" aria-expanded="false" aria-controls="collapseExample">Choose individual tags</button>
   <div id=category_div_<%= index %>  class="collapse">
   <% tags_and_enableds.sort_by{|tag, personal_action| tag.subcategory}.group_by{ |tag, personal_action| tag.subcategory}.each{ |subcategory, subcategory_tags_and_enableds| %>
-  <h4><%= subcategory %></h4>
+  <h3><%= subcategory %></h3>
   <input id="unused" type="checkbox" checked 
     onchange='updateSelectAll(<%= subcategory_tags_and_enableds.map{|tag, action| tag.id}.pretty_inspect %>, this.checked);'
   > Select all "<%= subcategory %>"
