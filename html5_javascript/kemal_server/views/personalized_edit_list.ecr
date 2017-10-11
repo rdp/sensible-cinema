@@ -2,7 +2,7 @@
 <br/>
 <br/>
 
-Want to see all the (sometimes gruesome) details of each tag? click <a href=/personalized_edit_list/<%= tag_edit_list.url_id %>?show_tag_details=true %>here</a>.
+Want to see all the (sometimes grphic) details of each tag? click <a href=/personalized_edit_list/<%= tag_edit_list.url_id %>?show_tag_details=true %>here</a>.
 
 <br/>
 <br/>
@@ -79,7 +79,7 @@ personal notes (ex: "for kids")
     </td>
     <td>lasts <%= seconds_to_human tag.duration %></td>
     <td>
-      <a href="#" onclick="document.getElementById('details_span_id_<%= tag.id %>').style.display='block'; return false;">Details:</a>
+      <a href="#" onclick="document.getElementById('details_span_id_<%= tag.id %>').style.display='block'; return false;">See graphic details:</a>
       <span id=details_span_id_<%= tag.id %> style="display: <%= show_tag_details ? "block" : "none" %>;">
         <%= tag.details %> <%= tag.popup_text_after %>
       </span>
