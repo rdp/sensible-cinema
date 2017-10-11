@@ -42,11 +42,18 @@ def admin?(env)
   logged_in?(env) && logged_in_user(env).admin
 end
 
-def tags_by_category(url)
-  url.tags.group_by{|tag| tag.category}.select{|category, tags| tags.size > 1 }.map{|category, tags| 
+def humanize_category(category)
     category = "clothing/kissing etc" if category == "physical"
     category = "language" if category == "profanity"
     category = "substance use" if category == "substance-abuse"
+    category = "other" if category == "movie-content"
+    # else stay
+    category
+end
+
+def tags_by_category(url)
+  url.tags.group_by{|tag| tag.category}.select{|category, tags| tags.size > 1 }.map{|category, tags| 
+    category = humanize_category(category)
     "#{category}: #{tags.size}"
   }.join(", ")
 end

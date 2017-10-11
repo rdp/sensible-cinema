@@ -36,7 +36,7 @@ personal notes (ex: "for kids")
 <% categories = tags_by_category.keys.sort.reverse %>
 
 <% categories.each_with_index{ |category, index| tags_and_enableds = tags_by_category[category] %>
-  <% human_category = category; human_category = "other" if category == "movie-content" %>
+  <% human_category = humanize_category(category) %>
   <h2><%= human_category.capitalize %></h2>
   <input id="unused" type="checkbox" checked onchange='updateSelectAll(<%= tags_by_category[category].map{|tag, enabled| tag.id }.pretty_inspect %>, this.checked);'
   > Edit out all <%= human_category %> (<%= tags_and_enableds.size %>)
