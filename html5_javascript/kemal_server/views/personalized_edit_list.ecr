@@ -78,10 +78,12 @@ personal notes (ex: "for kids")
       <% end %>
     </td>
     <td>lasts <%= seconds_to_human tag.duration %></td>
-    <% if show_tag_details %>
-      <td><%= tag.details %></td>
-      <td><%= tag.popup_text_after %></td>
-    <% end %>
+    <td>
+      <a href="#" onclick="document.getElementById('details_span_id_<%= tag.id %>').style.display='block'; return false;'>Details:</a>
+      <span id=details_span_id_<%= tag.id %> style="display: <%= show_tag_details ? "block" : "none" %>;">
+        <%= tag.details %> <%= tag.popup_text_after %>
+      </span>
+    </td>
   </tr>
   
   <% } %> <!-- end tag -->
@@ -98,8 +100,8 @@ age_recommendation_after_edited (for this personalized list) (ex: 10, or 0 for n
 <br/>
 <br/>
 </div>
-
-<input type="submit" value="Save" onclick='document.getElementById("category_select").disabled = false; //so it'll post' >
+<br/>
+<input type="submit" value="Save your choices" onclick='document.getElementById("category_select").disabled = false; //so it'll post' >
 
 </form>
 
