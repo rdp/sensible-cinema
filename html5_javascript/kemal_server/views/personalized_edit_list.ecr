@@ -77,7 +77,7 @@ personal notes (ex: "for kids")
     </td>
     <td>lasts <%= seconds_to_human tag.duration %></td>
     <td>
-      <a href="#" onclick="document.getElementById('details_span_id_<%= tag.id %>').style.display='block'; return false;">See graphic details:</a>
+      <a href="#" onclick="$('#details_span_id_<%= tag.id %>').toggle(); return false;">Show sometimes graphic details:</a>
       <span id=details_span_id_<%= tag.id %> style="display: <%= show_tag_details ? "block" : "none" %>;">
         <%= tag.details %> <%= tag.popup_text_after %>
       </span>
