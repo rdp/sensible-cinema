@@ -14,7 +14,7 @@
             ">
             <%= url.image_tag "id='box_movie_#{url.id}_image' style='max-height: 300px; max-width: 300px; filter: drop-shadow(5px 5px 5px #222); padding: 5px; margin-left: auto; margin-right: auto; display: block; margin-bottom: 5px;'", ImageSize::VerySmall %>
               <% if url.editing_status == editing_phases[:done_second_pass] %>
-                Watch <%= url.name_with_episode %> 
+                Watch 
               <% elsif url.tag_count == 0 %>
                 (not started, click here to watch unedited anyway)
               <% elsif url.editing_status == editing_phases[:done_first_pass] %>
@@ -22,6 +22,7 @@
               <% else %>
                 (edits incomplete, work in progress, click here to watch anyway)
               <% end %>
+              <%= url.name_with_episode %>
             </a> edited now!
           </div>
           <div style="text-align: center;">		  
