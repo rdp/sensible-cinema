@@ -40,6 +40,8 @@ public class DisplayMessageActivity extends AppCompatActivity {
         myWebView.getSettings().setAllowContentAccess(true);
         myWebView.getSettings().setMediaPlaybackRequiresUserGesture(false);
         myWebView.getSettings().setBuiltInZoomControls(true);
+        myWebView.getSettings().setDisplayZoomControls(true);
+        myWebView.getSettings().setPluginState(PluginState.ON);
 
         myWebView.getSettings().setLoadWithOverviewMode(true);
         myWebView.getSettings().setUseWideViewPort(true);
@@ -47,7 +49,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         myWebView.getSettings().setUserAgentString("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.135 Safari/537.36 PlayItMyWay/0.2");
 
         if (Build.VERSION.SDK_INT >= 21) {
-            // required seemingly
+            // required seemingly for my cookies to connect with logged in user
            CookieManager cookieManager = CookieManager.getInstance();
            cookieManager.setAcceptThirdPartyCookies(myWebView, true);
         }
@@ -70,6 +72,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
                 StringBuilder sb = new StringBuilder(); // XXXX I load this thrice??? huh wuh?
                 // XXXX more smarts here, also adjust UA or something? More instructions? Add link to your library?
                 // reload button [?] real fullscreen [?]
+                //
                 if (url.contains("amazon.com") || (url.contains("playitmyway.org") && !url.contains("youtube_pimw_edited"))) {
                     sb.append("var my_awesome_script = document.createElement('script'); my_awesome_script.setAttribute('src','https://playitmyway.org/plugin_javascript/edited_generic_player.js'); document.head.appendChild(my_awesome_script);");
                 }
