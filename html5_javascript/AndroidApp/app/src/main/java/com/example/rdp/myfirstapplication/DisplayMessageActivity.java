@@ -41,7 +41,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         myWebView.getSettings().setMediaPlaybackRequiresUserGesture(false);
         myWebView.getSettings().setBuiltInZoomControls(true);
         myWebView.getSettings().setDisplayZoomControls(true);
-        myWebView.getSettings().setPluginState(PluginState.ON);
+        myWebView.getSettings().setPluginState(WebSettings.PluginState.ON);
 
         myWebView.getSettings().setLoadWithOverviewMode(true);
         myWebView.getSettings().setUseWideViewPort(true);
