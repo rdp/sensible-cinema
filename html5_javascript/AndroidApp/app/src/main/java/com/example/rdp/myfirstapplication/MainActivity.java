@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void sendMessageShaka(View view) {
+    public void sendMessageLogin(View view) {
         Intent intent = new Intent(this, DisplayMessageActivity.class);
         EditText editText = (EditText) findViewById(R.id.password);
         String message = editText.getText().toString();
@@ -44,4 +44,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void sendMessageRawUrl(View view) {
+        Intent intent = new Intent(this, DisplayMessageActivity.class);
+        EditText editText = (EditText) findViewById(R.id.rawUrl);
+        String message = editText.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+    }
 }

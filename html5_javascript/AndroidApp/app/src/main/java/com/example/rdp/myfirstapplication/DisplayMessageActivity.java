@@ -6,10 +6,12 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -41,6 +43,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         myWebView.getSettings().setMediaPlaybackRequiresUserGesture(false);
         myWebView.getSettings().setBuiltInZoomControls(true);
         myWebView.getSettings().setDisplayZoomControls(true);
+        myWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
         myWebView.getSettings().setLoadWithOverviewMode(true);
         myWebView.getSettings().setUseWideViewPort(true);
@@ -59,9 +62,15 @@ public class DisplayMessageActivity extends AppCompatActivity {
                 request.grant(new String[]{RESOURCE_PROTECTED_MEDIA_ID});
             }
 
+
         });
 
         myWebView.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                return false; // default
+            }
 
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -89,7 +98,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() { // allow android button to navigate within webview
         if (myWebView.canGoBack()) {
             myWebView.goBack();
         } else {
