@@ -32,7 +32,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        final String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
         myWebView = (WebView) findViewById(R.id.webView1);
         WebSettings webSettings = myWebView.getSettings();
@@ -104,5 +104,11 @@ public class DisplayMessageActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        myWebView.destroy(); // seems necessary. What?
     }
 }
