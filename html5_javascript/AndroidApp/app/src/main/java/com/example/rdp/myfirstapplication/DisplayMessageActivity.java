@@ -47,6 +47,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
         myWebView.getSettings().setLoadWithOverviewMode(true);
         myWebView.getSettings().setUseWideViewPort(true);
+        
         // Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.135 Safari/537.36 is chrome with "desktop" checked
         myWebView.getSettings().setUserAgentString("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.135 Safari/537.36 PlayItMyWay/0.2");
 
@@ -85,7 +86,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
                     sb.append("var my_awesome_script = document.createElement('script'); my_awesome_script.setAttribute('src','https://playitmyway.org/plugin_javascript/edited_generic_player.js'); document.head.appendChild(my_awesome_script);");
                 }
 
-                if (url.equals("https://playitmyway.org")) {
+                if (url.equals("https://playitmyway.org/")) {
                     sb.append("document.getElementById('replace_me').innerHTML = 'Play it my way browser enabled!'; null;");
                 }
                 view.loadUrl("javascript:" + sb.toString());
