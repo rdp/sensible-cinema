@@ -1730,9 +1730,9 @@ function rawSeekToTime(ts) {
 
 function getSecondsBufferedAhead() {
   if (isYoutubePimw()) {
-    seconds_buffered = youtube_pimw_player.getDuration() * youtube_pimw_player.getVideoLoadedFraction() - getCurrentTime();
+    var seconds_buffered = youtube_pimw_player.getDuration() * youtube_pimw_player.getVideoLoadedFraction() - getCurrentTime();
   } else if (video_element.buffered.length == 1) { // the normal case I think...
-    seconds_buffered = (video_element.buffered.end(0) - video_element.buffered.start(0)); // wait is this end guaranteed to be after our current???
+    var seconds_buffered = (video_element.buffered.end(0) - video_element.buffered.start(0)); // wait is this end guaranteed to be after our current???
   }
   return seconds_buffered;
 }

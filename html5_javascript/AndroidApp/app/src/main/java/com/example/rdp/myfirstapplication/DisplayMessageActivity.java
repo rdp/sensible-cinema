@@ -85,7 +85,9 @@ public class DisplayMessageActivity extends AppCompatActivity {
                     sb.append("var my_awesome_script = document.createElement('script'); my_awesome_script.setAttribute('src','https://playitmyway.org/plugin_javascript/edited_generic_player.js'); document.head.appendChild(my_awesome_script);");
                 }
 
-                sb.append("document.getElementById('replace_me').innerHTML = 'Play it my way browser enabled!'; null;");
+                if (url.equals("https://playitmyway.org")) {
+                    sb.append("document.getElementById('replace_me').innerHTML = 'Play it my way browser enabled!'; null;");
+                }
                 view.loadUrl("javascript:" + sb.toString());
             }
         });
