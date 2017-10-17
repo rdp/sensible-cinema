@@ -70,7 +70,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                return false; // default
+                return false; // false == default
             }
 
             @Override
