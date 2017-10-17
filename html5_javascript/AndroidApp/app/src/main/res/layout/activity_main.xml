@@ -1,19 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-    <WebView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/webView"
-        android:layout_gravity="center"
-        />
-    <FrameLayout
-        android:id="@+id/customViewContainer"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:visibility="gone"
-        />
-</LinearLayout>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.rdp.myfirstapplication.MainActivity">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:onClick="sendMessage"
+        android:text="@string/button_send"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="15dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="26dp"
+        android:onClick="sendMessageLogin"
+        android:text="AdminLogin"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/password"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="29dp"
+        app:layout_constraintHorizontal_bias="1.0" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="sendMessageMinions"
+        android:text="Minions"
+        android:layout_marginRight="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <Button
+        android:id="@+id/bigbuckbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:onClick="sendMessageBigBuck"
+        android:text="Big Buck"
+        app:layout_constraintTop_toBottomOf="@+id/button3"
+        android:layout_marginRight="16dp"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="181dp"
+        android:layout_height="138dp"
+        android:text="Welcome to Play it My Way Browser for Android!"
+        tools:layout_editor_absoluteX="29dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="35dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="22dp" />
+
+    <EditText
+        android:id="@+id/rawUrl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="https://developers.google.com/youtube/youtube_player_demo"
+        app:layout_constraintBottom_toTopOf="@+id/password"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <Button
+        android:id="@+id/buttonRawUrl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:onClick="sendMessageRawUrl"
+        android:text="Go to Url"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintHorizontal_bias="0.285"
+        app:layout_constraintLeft_toRightOf="@+id/rawUrl"
+        app:layout_constraintRight_toRightOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
