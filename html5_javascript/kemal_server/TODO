@@ -6,15 +6,16 @@ kickstarter
   fire!
 
 == todo list (me personally) ==
+take pictures
 LLC
   real one, learn the hard way :|
-  L.L.C. purpose optional
-    goodness plus 
+  L.L.C. goodness plus 
 
-youtube images are coming in wrong?
+youtube
   tweak so I get duration :|
+  images are coming in wrong?
   list "more" to watch underneath (make black less terrifyingly large if not logged in?)
-  remember volume? for desktop people...why not?
+  remember volume? for at least desktop people...why not?
   
 some IP
   youtube: smaller, change speed to arbitrary, set audio volume, works on any browser, come out of fullscreen (screen record what it does...)
@@ -40,11 +41,11 @@ fix seek out of yes_audio_no_video
 
 == somewhat random list ==
 
+Add "total movies played" thing at the bottom :)
+
 make the edits just stay always on the video page, for easier editing et al :|
 
 "free" ones couldn't show details?
-
-integrate with "real" amazon API so I can get the rental numbers right :|
 
 hbo tab?
 
@@ -86,11 +87,13 @@ Main page:
 mention more options for TV: long mouse cable, remote desktop, position a little computer there [?]
 
 youtube: some way to get from youtube.com to mine (low prio though...maybe just need an "add to play it my way" popup.html?)
-  just if I do private edits :|
+  just if I do private edits? :|
   
 == meh sometime ==
 
-add an "hd" button for youtubes
+integrate with "real" amazon API so I can get the rental numbers right :|
+
+add an "hd" button for youtubes pimw_edited
 
 get bank account, move to its own linode server :|
 
@@ -107,7 +110,7 @@ it should say [alert?] "skipping" or something for very long skips :|
 some preliminary facebook ads [?]
   need base, maybe...like...some...
 
-listen to greg's'...
+listen to all greg's'...
 
 two had no duration :|
  (+ disallow)
@@ -183,8 +186,6 @@ simplify the series' somehow they are super confusing today...
 auto detect when shtuff goes off prime somehow?
 link from personalized to watch edited? groom that flow more anyway...
 saner url's :| more human
-
-Price: free (with Prime), $2.00 (rent SD) $3.00 (rent HD) $8.00 (buy SD) $10.00 (buy HD) remove the .00, also round from 1.99 [?]
 
 groom the "sell it to them edited" options :|
   split it out into its own columns?
