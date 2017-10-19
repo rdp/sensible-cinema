@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
@@ -112,6 +113,11 @@ public class DisplayMessageActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        myWebView.destroy(); // seems necessary. What?
+        // once ran into
+        // 10-18 20:50:13.103 2580-2580/? E/ActivityThread: Activity com.example.rdp.myfirstapplication.DisplayMessageActivity has leaked IntentReceiver android.widget.ZoomButtonsController$1@910dfc3 that was originally registered here. Are you missing a call to unregisterReceiver()?
+        ViewGroup view = (ViewGroup) getWindow().getDecorView();
+        view.removeAllViews();
+
+        myWebView.destroy(); // seems necessary else it just...keeps...running...
     }
 }
