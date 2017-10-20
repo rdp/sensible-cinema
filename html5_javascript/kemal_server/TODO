@@ -39,9 +39,12 @@ melissa add pictures for personalize
 == somewhat random list ==
 
 android:
-  allow login
+  allow logins :|
   cleanup front page
-  add "fullscreen"
+  add "fullscreen" new button
+  adjust UA so it is sometimes prettier
+  link to "see all your purchased movies" (if that works by now LOL)
+  more instructions (if can't fake via UA)
 
 youtube:
   list "more" to watch underneath (make black less terrifyingly large if not logged in?)
@@ -94,9 +97,7 @@ youtube: some way to get from youtube.com to mine (low prio though...maybe just 
   just if I do private edits? :|
   
 == meh sometime ==
-
-on their 
-
+  
 integrate with "real" amazon API so I can get the rental numbers right :|
 
 add an "hd" button for youtubes pimw_edited
