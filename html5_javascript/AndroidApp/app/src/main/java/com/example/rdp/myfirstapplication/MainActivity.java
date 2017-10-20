@@ -16,25 +16,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user taps the Send button
+     * Called when the user taps the "all" button
      */
     public void sendMessage(View view) {
         Intent intent = new Intent(this, DisplayMessageActivity.class);
         intent.putExtra(EXTRA_MESSAGE, ""); // meaning "all"
-        startActivity(intent);
-    }
-
-    public void sendMessageLogin(View view) {
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
-        EditText editText = (EditText) findViewById(R.id.password);
-        String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, "https://playitmyway.org/go_admin?secret=" + message);
-        startActivity(intent);
-    }
-
-    public void sendMessageMinions(View view) {
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, "https://smile.amazon.com/Minions-Sandra-Bullock/dp/B011802KGM?sa-no-redirect=1");
         startActivity(intent);
     }
 
@@ -44,11 +30,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void sendMessageRawUrl(View view) {
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
-        EditText editText = (EditText) findViewById(R.id.rawUrl);
-        String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
+    public void sendMessageAdmin(View view) {
+        Intent intent = new Intent(this, AdminActivity.class);
         startActivity(intent);
     }
 }

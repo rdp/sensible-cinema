@@ -40,11 +40,11 @@ melissa add pictures for personalize
 
 android:
   allow logins :|
-  cleanup front page
-  add "fullscreen" new button
-  adjust UA so it is sometimes prettier
+  add "fullscreen" new button for humanz to use
+  adjust UA so it is sometimes prettier (tried, failed)
   link to "see all your purchased movies" (if that works by now LOL)
-  more instructions (if can't fake via UA)
+  Progress bar while loads URL, tiz too white...
+  should it keep playing in background??  I doubt so...  
 
 youtube:
   list "more" to watch underneath (make black less terrifyingly large if not logged in?)

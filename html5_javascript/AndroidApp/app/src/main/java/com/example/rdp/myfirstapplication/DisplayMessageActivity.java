@@ -2,28 +2,23 @@ package com.example.rdp.myfirstapplication;
 
 import android.content.Intent;
 import android.os.Build;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.PermissionRequest;
-import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 
 import static android.webkit.PermissionRequest.RESOURCE_PROTECTED_MEDIA_ID;
 
 public class DisplayMessageActivity extends AppCompatActivity {
 
-    private static final String TAG = "MyActivity";
-
+    private static final String LOG_TAG = "DisplayMessageActivity";
     WebView myWebView;
 
     @Override
@@ -41,10 +36,9 @@ public class DisplayMessageActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
         myWebView.getSettings().setDomStorageEnabled(true);
         myWebView.getSettings().setAllowContentAccess(true);
-        myWebView.getSettings().setMediaPlaybackRequiresUserGesture(false);
-        myWebView.getSettings().setBuiltInZoomControls(true);
-        myWebView.getSettings().setDisplayZoomControls(true);
-        myWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        myWebView.getSettings().setMediaPlaybackRequiresUserGesture(false); // otherwise amazon wouldn't start
+        myWebView.getSettings().setBuiltInZoomControls(true); // allow pinch
+        myWebView.getSettings().setDisplayZoomControls(true); // seem useful
 
         myWebView.getSettings().setLoadWithOverviewMode(true);
         myWebView.getSettings().setUseWideViewPort(true);
@@ -63,26 +57,20 @@ public class DisplayMessageActivity extends AppCompatActivity {
             public void onPermissionRequest(PermissionRequest request) {
                 request.grant(new String[]{RESOURCE_PROTECTED_MEDIA_ID});
             }
-
-
         });
 
         myWebView.setWebViewClient(new WebViewClient() {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                return false; // false == default
+                return false; // false == default  [means "you handle it, WebView!"] we never get here anyway?? what?
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                // loadUrl "might" be broken on real devices wait what?
-                Log.v(TAG, "url=" + url);
-                StringBuilder sb = new StringBuilder(); // XXXX I load this thrice??? huh wuh?
-                // XXXX more smarts here, also adjust UA or something? More instructions? Add link to your library?
-                // reload button [?] real fullscreen [?]
-                //
+                Log.v(LOG_TAG, "onPageFinished url=" + url);
+                StringBuilder sb = new StringBuilder();
                 if (url.contains("amazon.com") || (url.contains("playitmyway.org") && !url.contains("youtube_pimw_edited"))) {
                     sb.append("var my_awesome_script = document.createElement('script'); my_awesome_script.setAttribute('src','https://playitmyway.org/plugin_javascript/edited_generic_player.js'); document.head.appendChild(my_awesome_script);");
                 }
