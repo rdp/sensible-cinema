@@ -894,13 +894,7 @@ function compareTagStarts(tag1, tag2) {
 }
 
 function getNextTagAfterOrWithin(cur_time) {
-  // or current_json.tags; // already sorted :|
-  var all = mutes.concat(skips);
-  all = all.concat(yes_audio_no_videos);
-  all = all.concat(mutes);
-  all = all.concat(do_nothings);
-  // re sort LOL
-  all.sort(compareTagStarts);
+  var all = current_json.tags; // already sorted :|
   for (var i = 0; i < all.length; i++) {
     var tag = all[i];
     var start_time = tag.start;
