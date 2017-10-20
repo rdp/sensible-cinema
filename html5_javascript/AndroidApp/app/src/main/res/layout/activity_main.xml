@@ -31,7 +31,7 @@
         android:id="@+id/textView2"
         android:layout_width="181dp"
         android:layout_height="138dp"
-        android:text="Welcome to Play it My Way Browser for Android!\nLogin to Amazon then you can watch movies you own/Prime edited!"
+        android:text="Welcome to Play it My Way Browser for Android!\nLogin to Amazon then you can watch movies you own/Prime edited!\nZoom in to login, then zoom out to watch your movies!"
         tools:layout_editor_absoluteX="29dp"
         tools:layout_editor_absoluteY="16dp" />
 
