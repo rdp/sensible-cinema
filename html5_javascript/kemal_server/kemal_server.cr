@@ -67,13 +67,7 @@ def db_style_from_query_url(env)
   sanitize_html standardize_url(real_url)
 end
 
-get "/ping" do |env|
-  "It's alive!"
-end
-
-get "/terms_of_service_youtube" do |env|
-  render "views/terms_of_service_youtube.ecr", "views/layout.ecr"
-end
+require "./straight_forward.cr"
 
 get "/youtube_pimw_edited/:youtube_id" do |env|
   youtube_id = env.params.url["youtube_id"]
@@ -99,10 +93,6 @@ get "/sync_web_server" do |env|
   else
     "not restarting, it didn't build, batman!" 
   end
-end
-
-get "/getting_started" do |env| # google did this once I think LOL
-  env.redirect "/installation"
 end
 
 get "/look_for_outdated_primes" do
@@ -154,10 +144,6 @@ end
 
 def json_for(db_url, env)
   render "views/html5_edited.just_settings.json.ecr"
-end
-
-get "/instructions_create_new_url" do | env|
-  render "views/instructions_create_new_url.ecr", "views/layout.ecr"
 end
 
 get "/delete_all_tags/:url_id" do |env|
@@ -220,7 +206,6 @@ def hard_nuke_url_or_nil(env, just_delete_tags = false)
    raise "not found to nuke? #{url}"
   end
 end
-
 
 get "/delete_tag/:tag_id" do |env|
   id = env.params.url["tag_id"]
@@ -585,26 +570,6 @@ get "/movies_in_works" do |env|
   end
 end
 
-get "/installation" do |env|
-  render "views/installation.ecr", "views/layout.ecr"
-end
-
-get "/privacy" do |env|
-  render "views/privacy.ecr", "views/layout.ecr"
-end
-
-get "/faq" do |env|
-  render "views/faq.ecr", "views/layout.ecr"
-end
-
-get "/add_movie" do |env|
-  render "views/add_movie.ecr", "views/layout.ecr"
-end
-
-get "/support" do |env| # contact
-  render "views/support.ecr", "views/layout.ecr"
-end
-
 get "/go_admin" do |env|
  if env.params.query["secret"] == File.read("secret_bypass")
    login_test_admin(env)
@@ -638,7 +603,6 @@ get "/delete_tag_edit_list/:url_id" do |env|
   add_to_flash env, "deleted one tag edit list"
   env.redirect "/view_url/#{url_id}"
 end
-
 
 get "/personalized_edit_list/:url_id" do |env|
   url_id = env.params.url["url_id"].to_i
