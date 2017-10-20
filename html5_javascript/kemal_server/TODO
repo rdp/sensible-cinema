@@ -7,14 +7,13 @@ kickstarter
 
 == todo list (me personally) ==
 LLC
-  real one, learn the hard way :|
-  Goodness Plus, L.L.C.
-
+  Provo zoning :\
+  
 youtube
   tweak so I get duration :|
   images are coming in wrong?
-  
-some IP
+
+some IP (post business license)
   youtube: smaller, change speed to arbitrary, set audio volume, works on any browser, come out of fullscreen (screen record what it does...)
   record it "remote viewing editing" from vultr [+ mention could screen capture and stream :\ ] big buck bunny LOL
   mention "wait paused" feature
@@ -42,7 +41,7 @@ main website: a big picture at top
 
 android:
   allow logins :|
-  add "fullscreen" new button for humanz to use
+  add "fullscreen" new button for humanz to use their full screen!
   adjust UA so it is sometimes prettier (tried, failed)
   link to "see all your purchased movies" (if that works by now LOL)
   Progress bar while loads URL, tiz too white...
@@ -51,6 +50,9 @@ android:
   Prettier front page, prettier icons
   submit to android store
   submit to kindle fires? LOL
+  experiment with "uninstall all chrome" :\
+  real android TV app
+  after BL
   
 youtube:
   list "more" to watch underneath (make black less terrifyingly large if not logged in?)
@@ -101,12 +103,14 @@ mention more options for TV: long mouse cable, remote desktop, position a little
 
 youtube: some way to get from youtube.com to mine (low prio though...maybe just need an "add to play it my way" popup.html?)
   just if I do private edits? :|
-  
-== meh sometime ==
-  
-integrate with "real" amazon API so I can get the rental numbers right :|
 
-add an "hd" button for youtubes pimw_edited
+== meh sometime ==
+
+buy mac(book) see if looks OK there
+
+buy iphone, control computer with it
+
+integrate with "real" amazon API so I can get the rental numbers right :|
 
 get bank account, move to its own linode server :|
 
@@ -138,14 +142,12 @@ convert old youtubes over
 
 combine accounts on create/login :|
 
-Melissa wanted more fields
+Melissa wanted more fields ("age appropriate")
   have somebody 5th pass everything for the synopses :|
 
-youtube HD button for mobile? :|
+youtube HD button for mobile? :| pimw_edited
 
-make a real'ish android app :|
-
-make a real iOS app wait what?
+attempt a real iOS app
 
 youtube: redirect to edited somehow, from youtube.com stuffs :|
   show list of other youtubes below all? At least link...
