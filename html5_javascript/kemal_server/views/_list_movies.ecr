@@ -45,7 +45,7 @@
   <br/> 
   <% if episodes.size > 0 %>
     <br/>
-    <% by_series = episodes.group_by{|u| u.name} %>
+    <% by_series = episodes.sort_by{|u| u.name}.group_by{|u| u.name} %>
     <% by_series.each_with_index{ |series_episodes, idx| series, episodes = series_episodes %>
          <a href=# onclick="$('.series_div_<%= idx %>').toggle(); $('.series_image_<%= idx %>').toggle(); return false;">
            <h4><%= series %> (<%= episodes.size %> episode<%= "s" if episodes.size > 0 %>)</h4>
