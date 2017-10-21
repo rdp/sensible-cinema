@@ -29,9 +29,7 @@
 
 <span id='replace_me'></span> <!-- android will fill this in -->
 <div style="clear: both; margin-bottom: 20px;"></div>
-Watch movies without the stuff you don't want!
-<br/>Enjoy movies as a family!  Relax while you're entertained!
-
+Relax and enjoy your movies without the stuff you don't want!
 
 <div id="install_link_chrome">
 <% if chrome_desktop?(env) %>
@@ -39,8 +37,6 @@ Watch movies without the stuff you don't want!
 <form action="https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml" target="_blank">
     <input type="submit" value="Clicking here" />
 </form>  Installation and edits are free!</span>
-<% else %>
-  Watch some edited youtubes on us, install our chrome desktop extension later and watch full length movies, edits are free! 
 <% end %>
 </div>
 
@@ -118,7 +114,8 @@ Sign up for the site so you can get <a href=/login>personalized edits</a>!
 <% 
 non_youtube = all_urls_done.reject{|u| u.url =~ /youtube_pimw_edited/}
 settings = {
-  youtubes: {title: "Youtubes", urls: all_urls_done.select{|u| u.url =~ /youtube_pimw_edited/}, message: "You can watch these today, on your current device, free!"}, 
+  youtubes: {title: "Youtubes", urls: all_urls_done.select{|u| u.url =~ /youtube_pimw_edited/}, message: "You can watch these today, on your current device, free!  Install our chrome desktop extension later and watch full length movies, edits are free! 
+"}, 
   pay_movies: {title: "New releases", urls: non_youtube.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number == 0}, message: "Movies and new releases for rent/purchase."},
   pay_shows: {title: "TV series", urls: non_youtube.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number > 0}, message: "TV Series for rent/buy"},
   prime_movies: {title: "Prime Movies", urls: non_youtube.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number == 0}, message: "Movies for free with prime"},
