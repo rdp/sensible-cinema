@@ -1,3 +1,7 @@
+<% content_for "header" do %>
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
+<% end %>
+
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -7,7 +11,7 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk')); </script> <!-- early to load faster ?? they recommended it anyway... -->
 <img src=/camera.128.png width="75px;" style="float:left;"/>
-<h1 style="font-family: 'Patua One', cursive;">Play It My Way! <span style="text-shadow: 0 0 1em green; ">Beta.</span>
+<h1 style="font-family: 'Kaushan Script', cursive;">Play It My Way! <span style="text-shadow: 0 0 1em green; ">Beta.</span>
 <br/><% if !mobile?(env) %>&nbsp;&nbsp;&nbsp;<% end %>Your movies.  Your way.
 </h1>
 <span id='replace_me'></span> <!-- android will fill this in -->
