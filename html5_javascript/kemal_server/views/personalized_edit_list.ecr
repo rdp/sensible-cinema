@@ -15,21 +15,21 @@
 
 <div style="display : none;"> <!-- too confusing -->
  name for this personalized edit:
-<textarea name="description" rows="1" cols="150" ><%= tag_edit_list.description %></textarea>
-<br/>
-<br/>
+  <textarea name="description" rows="1" cols="150" ><%= tag_edit_list.description %></textarea>
+  <br/>
+  <br/>
 </div>
 
 <div  style="display : none;">
-personal notes (ex: "for kids")
-<textarea name="status_notes" rows="1" cols="150" ><%= tag_edit_list.status_notes %></textarea>
-<br/>
-<br/>
+  personal notes (ex: "for kids")
+  <textarea name="status_notes" rows="1" cols="150" ><%= tag_edit_list.status_notes %></textarea>
+  <br/>
+  <br/>
 </div>
 
 <% if tag_edit_list.tags_with_personalized_enabled.size == 0 %>
   There are no content tags for this movie yet, please go add some first then come back here.
-<br/>
+  <br/>
 <% end %>
 
 <% tags_by_category = tag_edit_list.tags_with_personalized_enabled.group_by{|tag, enabled| tag.category} %>
@@ -37,9 +37,6 @@ personal notes (ex: "for kids")
 
 <% categories.each_with_index{ |category, index| tags_and_enableds = tags_by_category[category] %>
   <% human_category = humanize_category(category) %>
-  <br/>
-  <br/>
-  <br/>
   <img src=/images/<%= category %>.png style="max-width: 100px;"/>
   <h2 style="display: inline;"><%= human_category.capitalize %></h2>
 <br/>
@@ -92,6 +89,10 @@ personal notes (ex: "for kids")
   </table>
   <% } %> <!-- end subcat -->
   </div>
+
+  <br/>
+  <br/>
+  <br/>
 
 <% } %> <!-- end cat -->
 
