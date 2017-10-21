@@ -1,7 +1,7 @@
        <div id="box_movie_<%= url.id %>" style="border-radius: 25px; box-shadow: #B3B3B3 40px 40px 40px; border: 1px dotted #000; float: left; padding: 10px; padding-right: 5px; height: 430; width: 248px; margin-right: 20px; margin-bottom: 20px;" > <!-- just experiment for right width LOL -->
          <div id="box_movie_<%= url.id %>_inside" style="height: 410; overflow-x: hidden; overflow-y: hidden;"> <!-- scroll here so not too ugly in windows, auto means scroll if you need it, or was it different on OS X? -->
           <div style="text-align: center;">
-            <a href="<%= url.url %>" target="_blank"
+            <a href="<%= url.url %>" target="_blank" 
               onclick="
                <% if url.url !~ /youtube_pimw_edited/ %>
                  if (!alertIfNoExtension()) return false;
@@ -14,7 +14,7 @@
             ">
             <%= url.image_tag "id='box_movie_#{url.id}_image' style='max-height: 300px; max-width: 300px; filter: drop-shadow(5px 5px 5px #222); padding: 5px; margin-left: auto; margin-right: auto; display: block; margin-bottom: 5px;'", ImageSize::VerySmall %>
               <% if url.editing_status == editing_phases[:done_second_pass] %>
-                Watch 
+                 
               <% elsif url.tag_count == 0 %>
                 (not started, click here to watch unedited anyway)
               <% elsif url.editing_status == editing_phases[:done_first_pass] %>
@@ -23,7 +23,8 @@
                 (edits incomplete, work in progress, click here to watch anyway)
               <% end %>
               <%= url.name_with_episode %>
-            </a> edited now!
+            <button onclick="$(this.parentElement).click(); return false;">Watch edited now!</button>
+            </a>
           </div>
           <div style="text-align: center;">		  
            Or <a href=/personalized_edit_list/<%=url.id%>>personalize edits</a> your way!
