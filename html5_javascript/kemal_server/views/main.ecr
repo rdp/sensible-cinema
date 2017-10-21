@@ -120,7 +120,7 @@ youtubes = {title: "Free Youtubes", urls: all_urls_done.select{|u| u.url =~ /you
 settings = [
   {title: "TV Series", urls: non_youtube.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number > 0}, message: "TV Series for rent/buy"},
   {title: "Movies Free With Prime", urls: non_youtube.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number == 0}, message: "Movies for free with prime"},
-  {title: "TV series Free With Prime", urls: non_youtube.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number > 0}, message: "TV Series for free with prime"},
+  {title: "TV Series Free With Prime", urls: non_youtube.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number > 0}, message: "TV Series for free with prime"},
   {title: "All Movies", urls: non_youtube.select{|u| u.episode_number == 0}, message: "All movies"},
   {title: "All Series", urls: non_youtube.select{|u| u.episode_number > 0}, message: "All TV series"},
   {title: "Free Movies", urls: non_youtube.select{|url| url.rental_cost == -1 }, message: "These are free to watch edited, even without Prime!"},
