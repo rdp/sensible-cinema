@@ -141,7 +141,7 @@ settings = {
   <!-- Tab panes -->
   <div class="tab-content">
     <% settings.each_with_index{ |name, setting, idx| %>
-      <div role="tabpanel" class="tab-pane active" id="tab_<%= idx %>">
+      <div role="tabpanel" class="tab-pane <%= idx == 0 ? "active" : "fade" %>" id="tab_<%= idx %>">
         <h3><%= settings[name][:message] %></h3>
         <%= urls = setting[:urls]; render "views/_list_movies.ecr" %>
       </div>
