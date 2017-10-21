@@ -113,10 +113,12 @@ Sign up for the site so you can get <a href=/login>personalized edits</a>!
 
 <% 
 non_youtube = all_urls_done.reject{|u| u.url =~ /youtube_pimw_edited/}
+pay_movies = {title: "New releases/Pay movies", urls: non_youtube.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number == 0}, message: "Movies and new releases for rent/purchase."}
+youtubes = {title: "Youtubes", urls: all_urls_done.select{|u| u.url =~ /youtube_pimw_edited/}, message: "You can watch these today, on your current device, free!  Install our chrome desktop extension later and watch full length movies, edits are free! 
+"}
 settings = {
-  pay_movies: {title: "New releases/Pay movies", urls: non_youtube.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number == 0}, message: "Movies and new releases for rent/purchase."},
-  youtubes: {title: "Youtubes", urls: all_urls_done.select{|u| u.url =~ /youtube_pimw_edited/}, message: "You can watch these today, on your current device, free!  Install our chrome desktop extension later and watch full length movies, edits are free! 
-"}, 
+  pay_movies: pay_movies,
+  youtubes: youtubes, 
   pay_shows: {title: "TV series", urls: non_youtube.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number > 0}, message: "TV Series for rent/buy"},
   prime_movies: {title: "Prime Movies", urls: non_youtube.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number == 0}, message: "Movies for free with prime"},
   prime_shows: {title: "Prime series", urls: non_youtube.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number > 0}, message: "TV Series for free with prime"},
@@ -143,7 +145,7 @@ settings = {
   <div class="tab-content">
     <% settings.each_with_index{ |name, setting, idx| %>
       <div role="tabpanel" class="tab-pane <%= idx == 0 ? "active" : "fade" %>" id="tab_<%= idx %>">
-        <h3><%= settings[name][:message] %></h3>
+        <h3><%= setting[:message] %></h3>
         <%= urls = setting[:urls]; render "views/_list_movies.ecr" %>
       </div>
     <% } %>
