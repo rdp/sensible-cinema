@@ -37,6 +37,7 @@ personal notes (ex: "for kids")
 
 <% categories.each_with_index{ |category, index| tags_and_enableds = tags_by_category[category] %>
   <% human_category = humanize_category(category) %>
+  <br/>
   <h2 style="display: inline;"><%= human_category.capitalize %></h2><img src=/images/<%= category %>.png style="max-width: 100px;"/>
 <br/>
   <input id="unused" type="checkbox" checked onchange='updateSelectAll(<%= tags_by_category[category].map{|tag, enabled| tag.id }.pretty_inspect %>, this.checked);'
@@ -87,7 +88,6 @@ personal notes (ex: "for kids")
   
   <% } %> <!-- end tag -->
   </table>
-  <br/>
   <% } %> <!-- end subcat -->
   </div>
 
