@@ -45,8 +45,6 @@
   <br/> 
   <% if episodes.size > 0 %>
     <br/>
-    <div style="margin-bottom: 10px;"><h3>We edit TV series episodes, too!</h3></div>
-    <br/>
     <% episodes.sort_by!{|u| u.name} # put series' back together, huh wuh?
        by_series = episodes.group_by{|u| u.name} %>
     
