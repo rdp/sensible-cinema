@@ -116,22 +116,22 @@ non_youtube = all_urls_done.reject{|u| u.url =~ /youtube_pimw_edited/}
 pay_movies = {title: "New releases/Pay movies", urls: non_youtube.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number == 0}, message: "Movies and new releases for rent/purchase."}
 youtubes = {title: "Youtubes", urls: all_urls_done.select{|u| u.url =~ /youtube_pimw_edited/}, message: "You can watch these today, on your current device, free!  Install our chrome desktop extension later and watch full length movies, edits are free! 
 "}
-settings = {
-  pay_movies: pay_movies,
-  youtubes: youtubes, 
-  pay_shows: {title: "TV series", urls: non_youtube.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number > 0}, message: "TV Series for rent/buy"},
-  prime_movies: {title: "Prime Movies", urls: non_youtube.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number == 0}, message: "Movies for free with prime"},
-  prime_shows: {title: "Prime series", urls: non_youtube.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number > 0}, message: "TV Series for free with prime"},
-  all_movies: {title: "All movies", urls: non_youtube.select{|u| u.episode_number == 0}, message: "All movies"},
-  all_shows: {title: "All series", urls: non_youtube.select{|u| u.episode_number > 0}, message: "All TV series"},
-  freebies: {title: "Free Movies", urls: non_youtube.select{|url| url.rental_cost == -1 }, message: "These are free to watch edited, even without Prime!"},
-  all_everything: {title: "Everything", urls: all_urls_done, message: "Everything we have edited!"},
-  non_done: {title: "Videos in the works (please support us!)", urls: all_urls_half_way + all_urls_just_started, message: "Things we want to get to, with your help."}
-} %>
+settings = [
+  pay_movies,
+  youtubes, 
+  {title: "TV series", urls: non_youtube.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number > 0}, message: "TV Series for rent/buy"},
+  {title: "Prime Movies", urls: non_youtube.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number == 0}, message: "Movies for free with prime"},
+  {title: "Prime series", urls: non_youtube.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number > 0}, message: "TV Series for free with prime"},
+  {title: "All movies", urls: non_youtube.select{|u| u.episode_number == 0}, message: "All movies"},
+  {title: "All series", urls: non_youtube.select{|u| u.episode_number > 0}, message: "All TV series"},
+  {title: "Free Movies", urls: non_youtube.select{|url| url.rental_cost == -1 }, message: "These are free to watch edited, even without Prime!"},
+  {title: "Everything", urls: all_urls_done, message: "Everything we have edited!"},
+  {title: "Videos in the works (please support us!)", urls: all_urls_half_way + all_urls_just_started, message: "Things we want to get to, with your help."}
+] %>
 
   <!-- Nav tabs -->
   <ul class="nav nav-pills" role="tablist">
-    <% settings.each_with_index{ |name, setting, idx| %>
+    <% settings.each_with_index{ |setting, idx| %>
       <li role="presentation"  <%= "class='active'" if idx == 0 %> >
         <a href="#tab_<%= idx %>" id="tab_link_id_<%= idx %>" aria-controls="home" role="tab" data-toggle="tab" style="border: dotted 1px; margin: 5px;">
         <span style="font-size:larger;"><%= setting[:title] %> (<%= setting[:urls].size %>)</span></a>
@@ -143,7 +143,7 @@ settings = {
   
   <!-- Tab panes -->
   <div class="tab-content">
-    <% settings.each_with_index{ |name, setting, idx| %>
+    <% settings.each_with_index{ |setting, idx| %>
       <div role="tabpanel" class="tab-pane <%= idx == 0 ? "active" : "fade" %>" id="tab_<%= idx %>">
         <h3><%= setting[:message] %></h3>
         <%= urls = setting[:urls]; render "views/_list_movies.ecr" %>
