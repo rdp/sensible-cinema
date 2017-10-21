@@ -50,11 +50,17 @@
     <% episodes.sort_by!{|u| u.name} # put series' back together, huh wuh?
        by_series = episodes.group_by{|u| u.name} %>
     
-    <% by_series.each{ |series, episodes| %>
-         <h4><%= series %></h4>
-         <% episodes.each{ |url| %>
-           <%= render "views/_box_movie.ecr" %>
-         <% } %>
+    <% by_series.each_with_index{ |series_episodes, idx| series, episodes = series_episodes %>
+         <a href=# onclick="$('#series_div_<%= idx %>').toggle(); return false;">
+           <h4><%= series %></h4>
+           Image would be here
+           <%= episodes[0].image_tag "id='xxx_#{episodes[0].id}_image'", ImageSize::VerySmall %>
+         </a>
+         <div id=series_div_<%= idx %> style="display: none;" >
+           <% episodes.each{ |url| %>
+             <%= render "views/_box_movie.ecr" %>
+           <% } %>
+         </div>
          <div style="clear: both;"></div>
     <% } %>
   <% end %>
