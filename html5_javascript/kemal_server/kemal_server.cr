@@ -117,7 +117,7 @@ get "/for_current_just_settings_json" do |env|
   if page = env.request.headers["Origin"]? # XHR hmm...
     urlish = page.split("/")[0..2].join("/") # https://amazon.com
   else
-    # assume it's big buck bunny on pimw
+    # assume it's big buck bunny on pimw for CORS purposes...
     urlish = "https://playitmyway.org"
   end
   env.response.headers.add "Access-Control-Allow-Credentials", "true" # they all need this
@@ -201,7 +201,7 @@ def hard_nuke_url_or_nil(env, just_delete_tags = false)
     return "deleted tags" if just_delete_tags
     url.delete_local_image_if_present_no_save
     url.destroy_no_cascade
-    "nuked testmovie #{HTML.escape url.inspect} from db, you can start over and re-add it now, to do some more test editing on a blank/clean slate"
+    "nuked movie #{HTML.escape url.inspect} from db, you can start over and re-add it now, to do some more test editing on a blank/clean slate"
   else
    raise "not found to nuke? #{url}"
   end
