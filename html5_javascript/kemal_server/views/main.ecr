@@ -2,6 +2,14 @@
     <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
 <% end %>
 
+<div style="background-image: url(/images/family_smiling.jpg);
+    background-color: rgba(255,255,255,0.8);
+    background-blend-mode: lighten;
+    background-position: center top;
+    background-size: cover;
+     font-weight: bold;
+    ">
+
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -11,9 +19,11 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk')); </script> <!-- early to load faster ?? they recommended it anyway... -->
 <img src=/camera.128.png width="75px;" style="float:left;"/>
-<h1 style="font-family: 'Kaushan Script', cursive;">Play It My Way! <span style="text-shadow: 0 0 1em green; ">Beta.</span>
+
+<h1 style="font-family: 'Kaushan Script', cursive; margin-top: 0px; padding-top: 10px;">Play It My Way! <span style="text-shadow: 0 0 1em green; ">Beta.</span>
 <br/><% if !mobile?(env) %>&nbsp;&nbsp;&nbsp;<% end %>Your movies.  Your way.
 </h1>
+
 <span id='replace_me'></span> <!-- android will fill this in -->
 <div style="clear: both; margin-bottom: 20px;"></div>
 Watch movies "your way" -- without the stuff you don't want!  Enjoy movies as a family!  Relax and enjoy your entertainment!
@@ -94,10 +104,13 @@ Like and share our <a href=https://www.facebook.com/Play-it-My-Way-1812282865478
 
 <div class="fb-like" data-href="https://www.facebook.com/Play-it-My-Way-1812282865478777/#!" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true" style="min-width: 450px; min-height: 56px;"></div>
 
+
 <br/>
 <h2 style="font-family: 'Patua One', cursive;">Edited Movie List</h2>
-<% non_done = all_urls_half_way + all_urls_just_started; 
+</div> <!-- end bg image -->
 
+
+<% non_done = all_urls_half_way + all_urls_just_started; 
 settings = [{title: "Movies Ready To Go", urls: all_urls_done}, {urls: non_done, title: "Videos in the works (please support us!)"}] %>
 
   <!-- Nav tabs -->
@@ -153,7 +166,7 @@ Latest from our facebook page:
 <br/>
 <div class="fb-page" data-href="https://www.facebook.com/Play-it-My-Way-1812282865478777/#!" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/Play-it-My-Way-1812282865478777/#!" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/Play-it-My-Way-1812282865478777/">Play it My Way</a></blockquote></div>
 
-<br/> <!-- footer -->
+<br/> <!-- local footer -->
 Movies, characters art, etc. are properties of their respective studios and I am making no particular claims about them.  Some words like "Amazon" and movie titles, etc. are trademark of their respective companies.
 
 <%= render "views/_installed_js.ecr" %>
