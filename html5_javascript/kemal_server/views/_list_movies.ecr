@@ -35,7 +35,6 @@
   <% 
     episodes = urls_for_host.select{|url| url.episode_number > 0 }
     movies = urls_for_host.select{|url| url.episode_number == 0 }
-    freebies = urls_for_host.select{|url| url.rental_cost == -1 }
   %>
   </div>
 
@@ -52,14 +51,6 @@
        <% if idx > 0 && (url.name != episodes[idx - 1].name) %>
          <div style="clear: both;"></div>
        <% end %>
-      <%= render "views/_box_movie.ecr" %>
-    <% } %>
-  <% end %>
-  <% if freebies.size > 0 %>
-    <div style="clear: both;"></div>
-    These are free to stream edited (with ads):
-    <div style="clear: both;"></div>
-    <% freebies.each_with_index{ |url, idx|  %>
       <%= render "views/_box_movie.ecr" %>
     <% } %>
   <% end %>
