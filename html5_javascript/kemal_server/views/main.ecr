@@ -73,6 +73,13 @@ See our list of <a href="/faq">Frequently Asked Questions</a> for questions abou
 
 </div>
 
+<div id="install_link_chrome">
+<% if chrome_desktop?(env) %>
+    <span style="font-size: larger;">Install Play It My Way by  <a href=https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml target="_blank"> 
+clicking here</a>!  Installation is free!</span>
+<% end %>
+</div>
+
 <div id="success_chrome_extension_id" style="display: none;">
   <font face="verdana" color="green">
     You installed the <a href=/installation>chrome extension</a> successfully, you're good to go, you can watch the edited movies below!
@@ -153,6 +160,7 @@ Movies, characters art, etc. are properties of their respective studios and I am
 function markAsGoodChromeExtension() { // an override
   isInstalled = true;
   document.getElementById('success_chrome_extension_id').style.display = 'block';
+  document.getElementById('install_link_chrome').style.display = 'none';
 }
 
 var last_clicked;
