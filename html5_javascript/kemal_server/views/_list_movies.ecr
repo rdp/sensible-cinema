@@ -48,7 +48,7 @@
     <% by_series = episodes.group_by{|u| u.name} %>
     <% by_series.each_with_index{ |series_episodes, idx| series, episodes = series_episodes %>
          <a href=# onclick="$('.series_div_<%= idx %>').toggle(); $('.series_image_<%= idx %>').toggle(); return false;">
-           <h4><%= series %> (<%= episodes.size %>)</h4>
+           <h4><%= series %> (<%= episodes.size %> episode<%= "s" if episodes.size > 0 %>)</h4>
            <%= episodes[0].image_tag "alt='#{series}' class='series_image_#{idx}'", ImageSize::VerySmall %>
          </a>
          <div class=series_div_<%= idx %> style="display: none;" >
