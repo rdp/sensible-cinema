@@ -469,11 +469,10 @@ end
 
 def create_new_and_redir(real_url, episode_number, episode_name, title, duration, env)
   if real_url =~ /youtu.be/
-    raise "use non shortened youtube. url's please"
+    raise "use non shortened youtube. url's for now instead"
   end
-  if real_url =~ /youtube.com/ # probably from manual ... but want to change it after download info :|
-    raise "expected normal youtube url like https://www.youtube.com/watch?v=9VH8lvZ-Z1g" unless real_url.includes?("?v=") # reject https://www.youtube.com/user/paulsoaresjr etc. which are screwy today :| though js does this too...
-    youtube_id = real_url.split("?v=")[-1]
+  if real_url =~ /youtube_pimw_edited/ # wrong title since it was using ours that didn't know it yet
+    youtube_id = real_url.split("/")[-1]
     title_from_download_url, _ = get_title_and_sanitized_standardized_canonical_url real_url # The Crayon Song Gets Ruined - YouTube
     sanitized_url = sanitize_html("https://playitmyway.org/youtube_pimw_edited/" + youtube_id)
   else
