@@ -91,6 +91,12 @@ class Url
     end
   end
   
+  def self.sum_downloads
+    with_db do |conn|
+      conn.scalar("select sum(count_downloads) from urls").as(Float64).to_i32
+    end
+  end
+  
   def self.all
       # sort by host, amazon type, name for series together
       query("SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type asc, create_timestamp desc, name, episode_number") do |rs|

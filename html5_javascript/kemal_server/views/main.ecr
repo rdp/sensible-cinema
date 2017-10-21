@@ -133,7 +133,6 @@ else
 end
 
 %>
-
   <!-- Nav tabs -->
   <ul class="nav nav-pills" role="tablist">
     <% settings.each_with_index{ |setting, idx| %>
@@ -180,6 +179,8 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 
 <br>You can <a href=/add_movie >vote</a> for a movie you'd like to see done next!
 <br>
+<br/>
+Total movies edited to date: <%= Url.sum_downloads %>
 <br/>
 
 Like our facebook page!
