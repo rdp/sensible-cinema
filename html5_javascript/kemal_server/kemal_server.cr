@@ -474,11 +474,9 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
   if real_url =~ /youtube_pimw_edited/
     # wrong title since it was using ours that didn't know it yet
     youtube_id = real_url.split("/")[-1]
-    title_from_download_url, _ = get_title_and_sanitized_standardized_canonical_url real_url # The Crayon Song Gets Ruined - YouTube
-    puts "from youtube=#{youtube_id} got #{title_from_download_url}"
+    title_from_download_url, _ = get_title_and_sanitized_standardized_canonical_url "https://www.youtube.com/watch?v=#{youtube_id}" # The Crayon Song Gets Ruined - YouTube
     sanitized_url = sanitize_html("https://playitmyway.org/youtube_pimw_edited/" + youtube_id)
   else
-  puts "non youtube"
     title_from_download_url, sanitized_url = get_title_and_sanitized_standardized_canonical_url real_url
   end
 
