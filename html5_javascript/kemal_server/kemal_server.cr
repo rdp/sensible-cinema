@@ -444,7 +444,6 @@ get "/new_url_from_plugin" do |env| # add_url add_new it does call this
   episode_name = incoming["episode_name"]
   title = incoming["title"]
   duration = incoming["duration"].to_f
-  
 
   create_new_and_redir(real_url, episode_number, episode_name, title, duration, env)
 end
@@ -456,7 +455,14 @@ get "/new_manual_url" do |env|
   else
     episode_number = 0
   end
-  create_new_and_redir(real_url, episode_number, "", "", 0.0, env)
+  if real_url =~ /youtube.com/
+    raise "expected normal youtube url like https://www.youtube.com/watch?v=9VH8lvZ-Z1g" unless real_url.includes?("?v=")
+    youtube_id = real_url.split("?v=")[-1]
+    real_url = "https://playitmyway.org/youtube_pimw_edited/" + youtube_id
+    env.redirect real_url # they can add it from there, with duration :)
+  else
+    create_new_and_redir(real_url, episode_number, "", "", 0.0, env)
+  end
 end
 
 def create_new_and_redir(real_url, episode_number, episode_name, title, duration, env)
