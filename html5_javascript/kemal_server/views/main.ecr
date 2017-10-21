@@ -105,7 +105,7 @@ See our list of <a href="/faq">Frequently Asked Questions</a> for questions abou
 </a>
 
 <br/>
-Sign up for the site so you can get <a href=/login>personalized edits</a>!
+Sign up for the site so you can get <a href=/login>announcements of new movies</a>!
 <br/>
 
 <br/>
@@ -114,11 +114,9 @@ Sign up for the site so you can get <a href=/login>personalized edits</a>!
 <% 
 non_youtube = all_urls_done.reject{|u| u.url =~ /youtube_pimw_edited/}
 pay_movies = {title: "New releases/Pay movies", urls: non_youtube.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number == 0}, message: "Movies and new releases for rent/purchase."}
-youtubes = {title: "Youtubes", urls: all_urls_done.select{|u| u.url =~ /youtube_pimw_edited/}, message: "You can watch these today, on your current device, free!  Install our chrome desktop extension later and watch full length movies, edits are free! 
+youtubes = {title: "Free Youtubes", urls: all_urls_done.select{|u| u.url =~ /youtube_pimw_edited/}, message: "You can watch these today, on your current device, free!  Install our chrome desktop extension later and watch full length movies, edits are free! 
 "}
 settings = [
-  pay_movies,
-  youtubes, 
   {title: "TV series", urls: non_youtube.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number > 0}, message: "TV Series for rent/buy"},
   {title: "Prime Movies", urls: non_youtube.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number == 0}, message: "Movies for free with prime"},
   {title: "Prime series", urls: non_youtube.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number > 0}, message: "TV Series for free with prime"},
@@ -127,7 +125,16 @@ settings = [
   {title: "Free Movies", urls: non_youtube.select{|url| url.rental_cost == -1 }, message: "These are free to watch edited, even without Prime!"},
   {title: "Everything", urls: all_urls_done, message: "Everything we have edited!"},
   {title: "Videos in the works (please support us!)", urls: all_urls_half_way + all_urls_just_started, message: "Things we want to get to, with your help."}
-] %>
+] 
+if chrome_desktop?(env)
+  settings.push(youtubes);
+  settings.push(pay_movies);
+else
+  settings.push(pay_movies);
+  settings.push(youtubes);
+end
+
+%>
 
   <!-- Nav tabs -->
   <ul class="nav nav-pills" role="tablist">
