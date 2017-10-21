@@ -33,6 +33,8 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk')); </script> <!-- early to load faster ?? they recommended it anyway... -->
 
+<link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/ionkpaepibbmmhcijkhmamakpeclkdml">
+
 <img src=/camera.128.png width="75px;" style="float:left; margin-top: 10px;"/>
 
 <h1 style="margin-top: 0px; padding-top: 10px;"><span style="font-family: 'Kaushan Script', cursive;">Play It My Way Movies! 
@@ -48,7 +50,11 @@ Relax and enjoy your movies without the stuff you don't want -- filters are free
 <% if chrome_desktop?(env) %>
   <span style="font-size: larger;">Install Play It My Way by 
     <form action="https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml" target="_blank">
-      <input type="submit" value="Clicking here" />
+      <input type="submit" value="Clicking here" onclick="installExtension(); return false;"/>
+      <script>
+        function installExtension() {
+           chrome.webstore.install(null, function() { /* success */}, function() { /* failure huh? */}); 
+        }
     </form> Installation and edits are free!
   </span>
 <% end %>
