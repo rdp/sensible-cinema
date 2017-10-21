@@ -56,7 +56,7 @@ def humanize_category(category)
     category = "profanity etc" if category == "profanity"
     category = "substance use" if category == "substance-abuse"
     category = "other" if category == "movie-content"
-    # else stay
+    # else [violence, suspense] stay XXXX constantize :\
     category
 end
 
