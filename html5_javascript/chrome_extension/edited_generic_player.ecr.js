@@ -390,7 +390,7 @@ function checkIfShouldDoActionAndUpdateUI() {
         seekToTime(pause_tag.endy);
       }, (pause_tag.endy - pause_tag.start)*1000);
     }
-     extra_message += "pausing";;
+    extra_message += "pausing";
   } else {
     if (i_paused_it) {
       i_paused_it = false;

@@ -44,6 +44,7 @@ combine logins, it just hurrrts otherwise
 
 android:
   allow logins :|
+  make WebView can go fullscreen
   add "fullscreen" new button for humanz to use their full screen!
   adjust UA so it is sometimes prettier (tried, failed)
   link to "see all your purchased movies" (if that works by now LOL)
@@ -132,14 +133,7 @@ some preliminary facebook ads [?]
 
 listen to all greg's'...
 
-two had no duration :|
- (+ disallow)
-
-pauses should say pausing?
-
-finish somehow grooming youtube true fullscreen (desktop users might...care...maybe...)
-
-youtube on mobile should be "more full screen" (no top bar either?) :|
+finish somehow grooming youtube_pimw_edited true fullscreen (desktop users might...care...maybe...)
 
 convert old youtubes over
 
