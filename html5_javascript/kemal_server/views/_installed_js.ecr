@@ -76,9 +76,13 @@ function alertIfNoExtension() { // for the _box
       return true;
     <% else %>
       // desktop
-      alert("You need to install the chrome extension to watch the video edited, which it appears you have not installed yet, please do that first.");
-      window.open("/installation");
-      return false; // too confusing otherwise :| XXXX open two tabs still??
+      var out = confirm("You need to install the chrome extension to watch the video edited, which it appears you have not installed yet, please do that first.  Click OK to go to installation instructions, cancel to continue to see movie page unedited...");
+      if (out) {
+        window.open("/installation");
+        return false; // too confusing otherwise :| XXXX open two tabs still??
+      } else {
+        return true;
+      }
     <% end %>
   }
   return true; // it's installed :)
