@@ -53,8 +53,7 @@
     <% by_series.each_with_index{ |series_episodes, idx| series, episodes = series_episodes %>
          <a href=# onclick="$('#series_div_<%= idx %>').toggle(); return false;">
            <h4><%= series %></h4>
-           Image would be here
-           <%= episodes[0].image_tag "id='xxx_#{episodes[0].id}_image'", ImageSize::VerySmall %>
+           <%= episodes[0].image_tag "alt='<%= series %>' id='xxx_#{episodes[0].id}_image'", ImageSize::VerySmall %>
          </a>
          <div id=series_div_<%= idx %> style="display: none;" >
            <% episodes.each{ |url| %>
