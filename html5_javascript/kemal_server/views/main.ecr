@@ -127,11 +127,9 @@ settings = [
   {title: "Videos in the works (please support us!)", urls: all_urls_half_way + all_urls_just_started, message: "Things we want to get to, with your help."}
 ] 
 if chrome_desktop?(env)
-  settings.push(youtubes);
-  settings.push(pay_movies);
+  settings.unshift(pay_movies, youtubes);
 else
-  settings.push(pay_movies);
-  settings.push(youtubes);
+  settings.unshift(youtubes, pay_movies);
 end
 
 %>
