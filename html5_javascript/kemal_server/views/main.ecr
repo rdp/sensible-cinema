@@ -111,40 +111,46 @@ Like and share our <a href=https://www.facebook.com/Play-it-My-Way-1812282865478
 <br/>
 <h2 style="font-family: 'Patua One', cursive;">Edited Movie List</h2>
 
-<% non_done = all_urls_half_way + all_urls_just_started; 
-settings = [{title: "Movies Ready To Go", urls: all_urls_done}, {urls: non_done, title: "Videos in the works (please support us!)"}] %>
+<% 
+settings = {
+  youtubes: {title: "Youtubes", urls: all_urls_done.select{|u| u.url =~ /youtube_pimw_edited/}, 
+  pay_movies: {title: "Pay movies", urls: all_urls_done.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number == 0}},
+  pay_shows: {title: "Pay TV shows", urls: all_urls_done.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number > 0}},
+  prime_movies: {title: "Prime Movies", urls: all_urls_done.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number == 0}},
+  prime_shows: {title: "Prime series", urls: all_urls_done.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number > 0}},
+  all_movies: {title: "All movies", urls: all_urls_done.select{|u| u.episode_number == 0}},
+  all_shows: {title: "All series", urls: all_urls_done.select{|u| u.episode_number > 0}},
+  non_done: {title: "Videos in the works (please support us!)", urls: all_urls_half_way + all_urls_just_started}}
+} %>
 
   <!-- Nav tabs -->
   <ul class="nav nav-pills" role="tablist">
-    <% settings.each_with_index{|setting, idx| %>
-      <li role="presentation" <%= "class='active'" if idx == 0 %>><a href="#tab_<%= idx %>" id="tab_link_id_<%= idx %>" aria-controls="home" role="tab" data-toggle="tab" style="border: dotted 1px; margin: 5px;">
+    <% settings.each_with_index{ |name, setting, idx| %>
+      <li role="presentation"  <%= "class='active'" if idx == 0 %> >
+        <a href="#tab_<%= idx %>" id="tab_link_id_<%= idx %>" aria-controls="home" role="tab" data-toggle="tab" style="border: dotted 1px; margin: 5px;">
         <span style="font-size:larger;"><%= setting[:title] %> (<%= setting[:urls].size %>)</span></a>
       </li>
     <% } %>
   </ul>
-</div> <!-- end bg image -->
 
+  </div> <!-- end bg image -->
+  
   <!-- Tab panes -->
   <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="tab_0">
-           <%= urls=all_urls_done; render "views/_list_movies.ecr" %>
-           <br/>
-           <h4>We also have <a href=/movies_in_works> <%= non_done.size %> more videos</a> in the works, and even more planned after that!</h4> Click <a href=/movies_in_works>here to see the list</a> of movies we'd like to add, please support us so we can add these and more!  You can even <a href=/add_movie>vote</a> for the ones you'd like to see next!
+    <% settings.each_with_index{ |name, setting, idx| %>
+      <div role="tabpanel" class="tab-pane active" id="tab_<%= idx %>">
+        <%= urls = setting[:urls]; render "views/_list_movies.ecr" %>
       </div>
-      <div role="tabpanel" class="tab-pane fade" id="tab_1">
-         <div style="height: 1000px;">Loading videos that are in the works...</div> <!-- gets fully replaced... -->
-      </div>
+    <% } %>
   </div>
 
 <script>
-function activateSecondTabe() {
-  $('a[href="#tab_1"]').tab('show');
-}
 
 loaded = false;
+
 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-  var target = $(e.target).attr("href") // activated tab string like "#tab_1"
-  if (target == "#tab_1" && !loaded) {
+  var target = $(e.target).attr("href") // just activated tab string like "#tab_1"
+  if (target == "#tab_1" && !loaded && false) {
     loaded = true;
     // $("#tab_1").html('Loading...'); //
     $.ajax({

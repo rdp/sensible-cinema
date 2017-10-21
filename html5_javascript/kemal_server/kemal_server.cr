@@ -553,16 +553,16 @@ end
 
 def put_test_last(urls)
   if urls[0].human_readable_company == "playitmyway"
-    urls.push urls.shift # put it last :|
+    urls.push urls.shift # move it to last :|
   end
   urls
 end
 
 get "/" do |env| # index home
   all_urls = get_all_urls
+  all_urls_done = all_urls.select{|url| url.editing_status == editing_phases[:done_second_pass] }
   all_urls_half_way = all_urls.select{|url| url.editing_status == editing_phases[:done_first_pass] }
   all_urls_just_started = all_urls.select{|url| url.editing_status == editing_phases[:just_started] }
-  all_urls_done = all_urls.select{|url| url.editing_status == editing_phases[:done_second_pass] }
   start = Time.now
   out = render "views/main.ecr", "views/layout.ecr"
   puts "view took #{Time.now - start}"  # pre view takes as long as first query :|
