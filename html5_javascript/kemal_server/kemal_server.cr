@@ -537,7 +537,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     end
     url.save 
     add_to_flash(env, "Successfully added #{url.name} to our system! Please add some details, then go back and add some content tags for it!")
-    download_youtube_image_if_none url
+    download_youtube_image_if_possible url
     env.redirect "/edit_url/#{url.id}"
   end
 end
@@ -764,7 +764,7 @@ post "/save_url" do |env|
   if image_url.present?
     db_url.download_image_url_and_save image_url
   else
-    download_youtube_image_if_none db_url
+    download_youtube_image_if_possible db_url
   end
 
   save_local_javascript db_url, "updated movie info #{db_url.name}", env
@@ -773,10 +773,10 @@ post "/save_url" do |env|
   env.redirect "/view_url/" + db_url.id.to_s
 end
 
-def download_youtube_image_if_none(db_url)
+def download_youtube_image_if_possible(db_url)
   if !db_url.image_local_filename.present? && db_url.url =~ /youtube_pimw_edited/
     # we can get an image fer free! :) The default ratio they seem to offer "wide horizon" unfortunately, though we might be able to do better XXXX
-    youtube_id = db_url.url.split("/")[-1]
+    youtube_id = HTML.unescape(db_url.url).split("/")[-1]
     image_url = "http://img.youtube.com/vi/#{youtube_id}/0.jpg"
     puts "downloading auto image_url=#{image_url}"
     db_url.download_image_url_and_save image_url
