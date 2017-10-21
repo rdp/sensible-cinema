@@ -115,8 +115,8 @@ Optional: <a href=/login>Sign up</a> for an account and you can get announcement
 <% 
 non_youtube = all_urls_done.reject{|u| u.url =~ /youtube_pimw_edited/}
 pay_movies = {title: "New Releases (Rent/Purchase)", urls: non_youtube.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number == 0}, message: "Movies and new releases for rent/purchase."}
-youtube_message = "You can watch these youtubes edited right now, on your current device, free!  Install our chrome app on desktop later and watch full length movies, edits are free!"
-if (chrome_desktop?(env)) 
+youtube_message = "You can watch these youtubes edited right now, on your current device, free!  Install our chrome app on desktop later to watch full length movies, edits are free!"
+if (chrome_desktop?(env))
   youtube_message = "You can watch these youtubes right now, on your current device, free!  Install our chrome app to watch full length movies, edits are free!"
 end
 youtubes = {title: "Free Youtubes", urls: all_urls_done.select{|u| u.url =~ /youtube_pimw_edited/}, message: youtube_message}
