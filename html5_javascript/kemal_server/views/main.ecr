@@ -53,10 +53,15 @@ We will be holding a Kickstarter soon, like our <a href=https://www.facebook.com
 <a href="#how_install" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">How do I install it?</a>
 <div id="how_install" class="collapse">
  <% if mobile?(env) %>
-   First, grab your computer or laptop.  Check out our collection in the meantime, and come back on your computer to try it out and stream some awesome edited movies!  Click <a href=/installation>here</a> to email yourself a link so you can find us more easily.
+   First, you can watch our youtubes right now on your mobile device!  Want to watch movies too?  Grab your computer or laptop.  Check out our collection in the meantime, and come back on your computer to try it out and stream some awesome edited movies!  Click <a href=/installation>here</a> to email yourself a link so you can find us more easily.
     <% else %>
+      <% if chrome_desktop?(env) %>
+        <span style="font-size: larger;">Install Play It My Way by <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/itemID">
+clicking here</link>!  Installation is free!</span>
+      <% else %>
+        <!-- some other kind of desktop... -->
+        <h2>In order for our player to work, you'll need to first switch to the <a href=https://www.google.com/chrome/>Chrome web browser</a>, then come back here!</h2>
       <br/>
-      <span style="font-size: larger;">Install Play It My Way by <a href=/installation>clicking here</a>!  Installation is free!</span>
     <% end %>
 </div>
 

@@ -25,6 +25,18 @@ def mobile?(env)
   ua =~ /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/
 end
 
+def chrome_desktop?(env)
+  ua = env.request.headers["User-Agent"]? 
+  if ua =~ /Chrome/CriOS/ && ua !~ /(Aviator|ChromePlus|coc_|Dragon|Edge|Flock|Iron|Kinza|Maxthon|MxNitro|Nichrome|OPR|Perk|Rockmelt|Seznam|Sleipnir|Spark|UBrowser|Vivaldi|WebExplorer|YaBrow/
+    true
+  else
+    false
+  end
+}
+
+
+end
+
 def my_android?(env)
   ua = env.request.headers["User-Agent"]? 
   ua =~ /PlayItMyWay/
