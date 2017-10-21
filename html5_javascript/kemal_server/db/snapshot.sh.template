@@ -1,5 +1,9 @@
+if [[ ! -f connection_string_local_box_no_commit.txt ]]; then
+  echo "run this from the db dir"
+  exit 1
+fi
 cat connection_string_local_box_no_commit.txt
 A=`date`
 B=`echo $A | tr -d \\n`
-nice mysqldump -uUSER DB_NAME -p > "snap$B.sql" &&  gzip "snap$B.sql" && echo "created snap$B.sql"
+nice mysqldump -uUSER DB_NAME -p > "snap$B.sql" &&  gzip "snap$B.sql" && echo "created snap$B.sql.gz"
 
