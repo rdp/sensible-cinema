@@ -191,25 +191,37 @@ function markAsGoodChromeExtension() { // an override
 var last_clicked;
 
 function expandBoxOrOpen(id) {
-  var box = document.getElementById(id);
-  box.style.display = "block"; // make visible in case not :\
-  var inside_box = document.getElementById(id + "_inside");
-  var image = document.getElementById(id + "_image");
+  var x =  $("[id=" + id + "_details]");
+  x.toggle();
+
+  var box = $("[id=" + id + "]");
+  box.css("display", "block"); // make visible in case not :\ show didn't work??
+  var inside_box = $("[id=" + id + "_inside]");
+  var image = $("[id=" + id + "_image]");
   // first remove the side scroll bar so we can get our height math right...
-  inside_box.style.overflowY = "hidden";
+  inside_box.css("overflowY", "hidden");
+  
+  var hi = 0;
+  inside_box.each(function(){
+    var h = $(this)[0].scrollHeight;
+    if(h > hi){
+       hi = h;
+    }    
+  });
+  var scrollHeight = hi;
   
   var paddingToAdd = 5;
   if (last_clicked == id) {
-    var height_to_add = 385 - inside_box.scrollHeight; // unresize LOL
+    var height_to_add = 385 - scrollHeight; // unresize LOL
     last_clicked = null;
     paddingToAdd = -5;
   }
   else {
-    var height_to_add = inside_box.scrollHeight - parseInt(inside_box.style.height, 10);
+    var height_to_add = scrollHeight - parseInt(inside_box.height(), 10); // height actually seems to work OK still...
     last_clicked = id;
   }
-  $(box).animate({ width: "+=0", height: "+=" + height_to_add, paddingTop: "+=" + paddingToAdd });
-  $(inside_box).animate({ width: "+=0", height: "+=" + height_to_add });
+  box.animate({ width: "+=0", height: "+=" + height_to_add, paddingTop: "+=" + paddingToAdd });
+  inside_box.animate({ width: "+=0", height: "+=" + height_to_add });
   // $(image).animate({ maxWidth: "+=20", maxHeight: "+=20" }); // wurks for max and for img too, or could set maxHeight ?? only makes sense if we're adjusting width which we're not
   // also if we do the image bigger then height_wanted isn't enough for McLintock hrm...
 }
