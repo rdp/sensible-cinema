@@ -3,9 +3,7 @@
 <% end %>
 
 <% host_to_urls = urls.group_by &.human_readable_company %> <!-- they're already sorted by prime vs. not from SQL query :| -->
- <% host_to_urls.each{ |host, urls_for_host|  
-  urls_for_host.sort_by!{|u| u.name} # put series' back together, what?
-%>
+ <% host_to_urls.each{ |host, urls_for_host|  %>
   <div>
   <hr/>
   <h3 style="font-family: 'Patua One', cursive;">
@@ -46,14 +44,18 @@
 
   <br/> 
   <% if episodes.size > 0 %>
-    <div style="clear: both;"></div>
+    <br/>
     <div style="margin-bottom: 10px;"><h3>We edit TV series episodes, too!</h3></div>
-    <div style="clear: both;"></div>
-    <% episodes.each_with_index{ |url, idx|  %>
-       <% if idx > 0 && (url.name != episodes[idx - 1].name) %>
+    <br/>
+    <% episodes.sort_by!{|u| u.name} # put series' back together, huh wuh?
+       by_series = episodes.group_by{|u| u.name} %>
+    
+    <% by_series.each{ |series, episodes| %>
+         <h4><%= series %></h4>
+         <% episodes.each{ |url| %>
+           <%= render "views/_box_movie.ecr" %>
+         <% } %>
          <div style="clear: both;"></div>
-       <% end %>
-      <%= render "views/_box_movie.ecr" %>
     <% } %>
   <% end %>
   <div style="clear: both;"></div>
