@@ -101,7 +101,7 @@ Like and share our <a href=https://www.facebook.com/Play-it-My-Way-1812282865478
   <!-- Nav tabs -->
   <ul class="nav nav-pills" role="tablist">
     <% settings.each_with_index{|setting, idx| %>
-      <li role="presentation" <%= "class='active'" if idx == 0 %>><a href="#tab_<%= idx %>" id="tab_link_id_<%= idx %>" aria-controls="home" role="tab" data-toggle="tab" style="border: dotted 1px;">
+      <li role="presentation" <%= "class='active'" if idx == 0 %>><a href="#tab_<%= idx %>" id="tab_link_id_<%= idx %>" aria-controls="home" role="tab" data-toggle="tab" style="border: dotted 1px; padding: 5px;">
         <span style="font-size:larger;"><%= setting[:title] %> (<%= setting[:urls].size %>)</span></a>
       </li>
     <% } %>
