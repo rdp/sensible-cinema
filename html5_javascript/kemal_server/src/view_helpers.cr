@@ -27,7 +27,7 @@ end
 
 def chrome_desktop?(env)
   ua = env.request.headers["User-Agent"]? 
-  if ua =~ /Chrome|CriOS/ && ua !~ /Aviator|ChromePlus|coc_|Dragon|Edge|Flock|Iron|Kinza|Maxthon|MxNitro|Nichrome|OPR|Perk|Rockmelt|Seznam|Sleipnir|Spark|UBrowser|Vivaldi|WebExplorer|YaBrow/
+  if ua =~ /Chrome|CriOS/ && ua !~ /Aviator|ChromePlus|coc_|Dragon|Edge|Flock|Iron|Kinza|Maxthon|MxNitro|Nichrome|OPR|Perk|Rockmelt|Seznam|Sleipnir|Spark|UBrowser|Vivaldi|WebExplorer|YaBrow/ && !mobile?(env)
     true
   else
     false
