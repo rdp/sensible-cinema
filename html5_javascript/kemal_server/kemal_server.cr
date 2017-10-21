@@ -475,7 +475,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     # wrong title since it was using ours that didn't know it yet
     youtube_id = real_url.split("/")[-1]
     youtube_url = "https://www.youtube.com/watch?v=#{youtube_id}"
-    title_from_download_url, _ = get_title_and_sanitized_standardized_canonical_url youtube_url # The Crayon Song Gets Ruined - YouTube
+    title, _ = get_title_and_sanitized_standardized_canonical_url youtube_url # The Crayon Song Gets Ruined - YouTube
     sanitized_url = sanitize_html("https://playitmyway.org/youtube_pimw_edited/" + youtube_id)
   else
     title_from_download_url, sanitized_url = get_title_and_sanitized_standardized_canonical_url real_url
@@ -777,7 +777,9 @@ def download_youtube_image_if_none(db_url)
   if !db_url.image_local_filename.present? && db_url.url =~ /youtube_pimw_edited/
     # we can get an image fer free! :) The default ratio they seem to offer "wide horizon" unfortunately, though we might be able to do better XXXX
     youtube_id = db_url.url.split("/")[-1]
-    db_url.download_image_url_and_save "http://img.youtube.com/vi/#{youtube_id}/0.jpg"
+    image_url = "http://img.youtube.com/vi/#{youtube_id}/0.jpg"
+    puts "downloading auto image_url=#{image_url}"
+    db_url.download_image_url_and_save image_url
   end
 end
 
