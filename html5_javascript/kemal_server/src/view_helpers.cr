@@ -27,14 +27,11 @@ end
 
 def chrome_desktop?(env)
   ua = env.request.headers["User-Agent"]? 
-  if ua =~ /Chrome/CriOS/ && ua !~ /(Aviator|ChromePlus|coc_|Dragon|Edge|Flock|Iron|Kinza|Maxthon|MxNitro|Nichrome|OPR|Perk|Rockmelt|Seznam|Sleipnir|Spark|UBrowser|Vivaldi|WebExplorer|YaBrow/
+  if ua =~ /Chrome|CriOS/ && ua !~ /Aviator|ChromePlus|coc_|Dragon|Edge|Flock|Iron|Kinza|Maxthon|MxNitro|Nichrome|OPR|Perk|Rockmelt|Seznam|Sleipnir|Spark|UBrowser|Vivaldi|WebExplorer|YaBrow/
     true
   else
     false
   end
-}
-
-
 end
 
 def my_android?(env)
