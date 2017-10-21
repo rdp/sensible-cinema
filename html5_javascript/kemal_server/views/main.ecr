@@ -103,7 +103,7 @@ settings = [{title: "Movies Ready To Go", urls: all_urls_done}, {urls: non_done,
   <!-- Nav tabs -->
   <ul class="nav nav-pills" role="tablist">
     <% settings.each_with_index{|setting, idx| %>
-      <li role="presentation" <%= "class='active'" if idx == 0 %>><a href="#tab_<%= idx %>" id="tab_link_id_<%= idx %>" aria-controls="home" role="tab" data-toggle="tab" style="border: dotted 1px; padding: 5px;">
+      <li role="presentation" <%= "class='active'" if idx == 0 %>><a href="#tab_<%= idx %>" id="tab_link_id_<%= idx %>" aria-controls="home" role="tab" data-toggle="tab" style="border: dotted 1px; margin: 5px;">
         <span style="font-size:larger;"><%= setting[:title] %> (<%= setting[:urls].size %>)</span></a>
       </li>
     <% } %>
