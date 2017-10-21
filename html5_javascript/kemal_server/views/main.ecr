@@ -53,7 +53,8 @@ Relax and enjoy your movies without the stuff you don't want -- filters are free
       <input type="submit" value="Clicking here" onclick="installExtension(); return false;"/>
       <script>
         function installExtension() {
-           chrome.webstore.install(null, function() { /* success */}, function() { /* failure huh? */}); 
+           chrome.webstore.install("https://chrome.google.com/webstore/detail/ionkpaepibbmmhcijkhmamakpeclkdml", 
+             function() { console.log("installed it");}, function() { console.log("rejected it");}); 
         }
     </form> Installation and edits are free!
   </span>
