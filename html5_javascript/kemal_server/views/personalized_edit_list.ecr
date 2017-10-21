@@ -37,7 +37,7 @@
 
 <% categories.each_with_index{ |category, index| tags_and_enableds = tags_by_category[category] %>
   <% human_category = humanize_category(category) %>
-  <img src=/images/<%= category %>.png style="max-width: 100px; max-height: 150px;"/>
+  <img src=/images/<%= category %>.png style="max-width: 100px; max-height: 100px;"/>
   <h2 style="display: inline;"><%= human_category.capitalize %></h2>
 <br/>
   <input id="unused" type="checkbox" checked onchange='updateSelectAll(<%= tags_by_category[category].map{|tag, enabled| tag.id }.pretty_inspect %>, this.checked);'
