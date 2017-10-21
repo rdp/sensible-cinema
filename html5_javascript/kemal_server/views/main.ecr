@@ -121,6 +121,7 @@ settings = {
   prime_shows: {title: "Prime series", urls: non_youtube.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number > 0}, message: "TV Series for free with prime"},
   all_movies: {title: "All movies", urls: non_youtube.select{|u| u.episode_number == 0}, message: "All movies"},
   all_shows: {title: "All series", urls: non_youtube.select{|u| u.episode_number > 0}, message: "All TV series"},
+  all_movies: {title: "All everything", urls: all_urls_done, message: "Everything we have edited!"},
   non_done: {title: "Videos in the works (please support us!)", urls: all_urls_half_way + all_urls_just_started, message: "Things we want to get to, with your help."}
 } %>
 
@@ -140,7 +141,7 @@ settings = {
   <div class="tab-content">
     <% settings.each_with_index{ |name, setting, idx| %>
       <div role="tabpanel" class="tab-pane active" id="tab_<%= idx %>">
-        <%= settings[name][:message] %>
+        <h3><%= settings[name][:message] %></h3>
         <%= urls = setting[:urls]; render "views/_list_movies.ecr" %>
       </div>
     <% } %>
