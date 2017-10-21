@@ -477,16 +477,14 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     youtube_url = "https://www.youtube.com/watch?v=#{youtube_id}"
     title_from_download_url, _ = get_title_and_sanitized_standardized_canonical_url youtube_url # The Crayon Song Gets Ruined - YouTube
     sanitized_url = sanitize_html("https://playitmyway.org/youtube_pimw_edited/" + youtube_id)
-    puts "from utube=#{youtube_url} got title=#{title_from_download_url}"
   else
-  puts "non utube"
     title_from_download_url, sanitized_url = get_title_and_sanitized_standardized_canonical_url real_url
+    if title == ""
+      title = title_from_download_url # only use if not provided via manual
+    end
   end
 
-  if title == ""
-    title = title_from_download_url # only use if not provided via manual
-  end
-  puts "using sanitized_url=#{sanitized_url} real_url=#{real_url}"
+  puts "adding sanitized_url=#{sanitized_url} real_url=#{real_url}"
   url_or_nil = Url.get_only_or_nil_by_urls_and_episode_number(sanitized_url, episode_number)
   if url_or_nil
     add_to_flash(env, "a movie with that url/episode already exists, editing that instead...") # not sure if we could ever get here anymore but shouldn't hurt...
