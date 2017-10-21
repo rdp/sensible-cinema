@@ -268,12 +268,10 @@ post "/save_tag/:url_id" do |env|
   raise "start can't be zero, use 0.1s if you want something start at the beginning" if tag.start == 0
   raise "start is after or equal to end? please use browser back button to correct..." if (tag.start >= tag.endy) # before_save filter LOL
   raise "tag is more than 15 minutes long? This should not typically be expected?" if tag.endy - tag.start > 60*15
-  if url.total_time > 0
-    if tag.duration > url.total_time - 1
-      raise "attempted to save a tag that is the entire length of the movie'ish? that should not be expected?"
-    end
+  if tag.duration > url.total_time - 1
+    raise "attempted to save a tag that is the entire length of the movie'ish? that should not be expected?"
   end
-  if url.total_time > 0 && (tag.endy > url.total_time)
+  if tag.endy > url.total_time
     raise "tag goes past end of movie?"
   end
   raise "got some timestamp negative?" if tag.start < 0 || tag.endy < 0 # should be impossible :|
@@ -512,6 +510,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     url.episode_number = episode_number
     url.editing_status = editing_phases[:just_started]
     raise "unknown status #{url.editing_status}" unless editing_phases.values.includes?(url.editing_status)
+    raise "need duration" unless duration > 0
     url.total_time = duration
     if episode_number > 0
       Url.all.select{|url2| url2.name == title}.first(1).each{ |url2| # shouldn't include self yet...
