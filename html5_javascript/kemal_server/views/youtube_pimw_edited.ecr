@@ -9,7 +9,7 @@
   volume:<input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)" style="max-width: 100px; display:inline;"></input>
   <div id="current_time_id" style="display: inline;"></div>
   <br/>
-  seek:<input id="seek-control-id" type="range" min="0" max="100" step="1" oninput="seekTo(this.value)" style="max-width: 150px; display:inline;"></input><!-- not sure how to not super seek here on drag :| -->
+  seek:<input id="seek-control-id" type="range" min="0" max="100" step="1" onmouseup="seekTo(this.value);" ontouchend="seekTo(this.value);" style="max-width: 150px; display:inline;"></input><!-- not sure how to not super seek here on drag :| -->
   res: <div id="quality_div_id" style="display: inline;"></div>
   <!-- no seek ability in fullscreen? grr<a href='' onclick="toggleFullScreen(); return false">fullscreen</a> -->
   </h3>
@@ -42,8 +42,6 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
 <a href=/privacy>Privacy policy (including youtube's)</a>.
 
 <script>
-// speed, quality (don't care), and a timer
-
     function SetVolume(val)
     {
       youtube_pimw_player.setVolume(val);
@@ -72,7 +70,6 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
       else
         return minutes + "m " + seconds + "s";
     }
-    
     
     function updateTime() {
       current_time_id.innerHTML=timeStampToHumanHere(youtube_pimw_player.getCurrentTime(), 0) + "/" + timeStampToHumanHere(youtube_pimw_player.getDuration(), 1);
@@ -119,7 +116,6 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
       }
     });
   }
-  // a.height "100%" youtube_pimw_player.getIframe()
 
 function onPlayerReady(event) {
   console.log("youtube_player ready and setup! auto playing...");
@@ -136,7 +132,7 @@ function onPlayerReady(event) {
   // inject copy of plugin FTW :|  
   var my_awesome_script = document.createElement('script');
   my_awesome_script.setAttribute('src','https://playitmyway.org/plugin_javascript/edited_generic_player.js');
-document.head.appendChild(my_awesome_script);
+  document.head.appendChild(my_awesome_script);
 }
 
 function onPlayerStateChange(event) {        
