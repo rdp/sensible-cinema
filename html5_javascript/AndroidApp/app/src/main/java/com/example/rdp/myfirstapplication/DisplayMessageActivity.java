@@ -5,6 +5,7 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.PermissionRequest;
@@ -13,6 +14,8 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import static android.webkit.PermissionRequest.RESOURCE_PROTECTED_MEDIA_ID;
 
@@ -29,6 +32,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
         final String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        final ProgressBar pbar = (ProgressBar) findViewById(R.id.pB1);
 
         myWebView = (WebView) findViewById(R.id.webView1);
         WebSettings webSettings = myWebView.getSettings();
@@ -56,6 +60,16 @@ public class DisplayMessageActivity extends AppCompatActivity {
             @Override
             public void onPermissionRequest(PermissionRequest request) {
                 request.grant(new String[]{RESOURCE_PROTECTED_MEDIA_ID});
+            }
+            public void onProgressChanged(WebView view, int progress) {
+                if(progress < 100 && pbar.getVisibility() == ProgressBar.GONE){
+                    pbar.setVisibility(ProgressBar.VISIBLE);
+                }
+
+                pbar.setProgress(progress);
+                if(progress == 100) {
+                    pbar.setVisibility(ProgressBar.GONE);
+                }
             }
         });
 
@@ -90,12 +104,24 @@ public class DisplayMessageActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() { // allow android button to navigate within webview
+    public void onBackPressed() { // allow android left button to navigate within webview
         if (myWebView.canGoBack()) {
             myWebView.goBack();
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        myWebView.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        myWebView.onResume();
     }
 
     @Override
