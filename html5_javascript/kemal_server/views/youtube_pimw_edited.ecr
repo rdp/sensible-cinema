@@ -10,7 +10,8 @@
   <div id="current_time_id" style="display: inline;"></div>
   <br/>
   seek:<input id="seek-control-id" type="range" min="0" max="100" step="1" onmouseup="seekTo(this.value);" ontouchend="seekTo(this.value);" style="max-width: 150px; display:inline;"></input><!-- not sure how to not super seek here on drag :| -->
-  res: <div id="quality_div_id" style="display: inline;"></div>
+  res: <div id="quality_div_id" style="display: inline;"></div> 
+  <a href=# onclick="youtube_pimw_player.setPlaybackQuality(youtube_pimw_player.getAvailableQualityLevels()[0]); return false; /* XXXX cue off actual video size */">HD</a>.
   <!-- no seek ability in fullscreen? grr<a href='' onclick="toggleFullScreen(); return false">fullscreen</a> -->
   </h3>
   
