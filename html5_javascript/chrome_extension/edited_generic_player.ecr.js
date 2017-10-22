@@ -1468,7 +1468,7 @@ function seekToTime(ts, callback) {
   // some shenanigans to pretend to work around this...
   if (!isYoutubePimw()) {
     doPause();
-  } // youtube seems to retain it grrate
+  } // youtube seems to retain it good!
   rawSeekToTime(ts); 
   seek_timer = setInterval(function() {
       console.log("seek_timer interval [i.e. still seeking...]");
