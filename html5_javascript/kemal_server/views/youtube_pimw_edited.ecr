@@ -129,7 +129,7 @@ function onPlayerReady(event) {
   setTimeout(function() { // get doesn't seem to work immediately :\
     // sometimes this doesn't work if run ja
     document.getElementById('vol-control-id').value = youtube_pimw_player.getVolume();
-    }, 50);
+    }, 200);
 
   setInterval(updateTime, 1000); // only 2/sec because if they happen to do their "own" seek this could interfere and "seek to no where" (well, still could but more rare? :\ )
 
