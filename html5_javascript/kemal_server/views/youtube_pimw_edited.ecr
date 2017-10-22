@@ -45,6 +45,7 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
 <script>
     function SetVolume(val)
     {
+      console.log("setting volume=" + val);
       youtube_pimw_player.setVolume(val);
       window.localStorage.setItem("youtube_volume", val); // for restarts
     }
