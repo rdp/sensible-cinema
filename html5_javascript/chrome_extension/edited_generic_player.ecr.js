@@ -1486,7 +1486,7 @@ function seekToTime(ts, callback) {
         var seconds_buffered = getSecondsBufferedAhead();
 
         if (seconds_buffered > 2) { // usually 4 or 6...
-          console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " ts=" + ts + " length=" + twoDecimals(ts - start_time) + " buffered_ahead=" + twoDecimals(seconds_buffered) + " start=" + twoDecimals(start_time));
+          console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " ts=" + ts + " length_was=" + twoDecimals(ts - start_time) + " buffered_ahead=" + twoDecimals(seconds_buffered) + " start=" + twoDecimals(start_time) + " cur_time_actually=" + getCurrentTime());
           if (!isYoutubePimw()) {
             if (!current_pause_state) { // youtube loses 0.05 with these shenanigans needed on amazon, so attempt avoid :|
               doPlay();
