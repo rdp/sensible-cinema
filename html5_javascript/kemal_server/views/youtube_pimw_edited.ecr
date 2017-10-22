@@ -47,7 +47,7 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
     function SetVolume(val)
     {
       youtube_pimw_player.setVolume(val);
-      //window.localStorage.setItem("youtube_volume", val);
+      window.localStorage.setItem("youtube_volume", val); // for restarts
     }
     
     function seekTo(val) {
@@ -123,9 +123,9 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
 
 function onPlayerReady(event) {
   console.log("youtube_player ready and setup! auto playing...");
- // SetVolume(window.localStorage.getItem("youtube_volume") || 50); // default isn't 100? is? huh?
+  SetVolume(window.localStorage.getItem("youtube_volume") || 50); // default isn't 100? or seemed to be once...
   <% if !mobile?(env) && url %>
-    event.target.playVideo();
+    event.target.playVideo(); // otherwise it can get in this weird pause state 
   <% end %>
   
   setTimeout(function() { // get doesn't seem to work immediately :\
