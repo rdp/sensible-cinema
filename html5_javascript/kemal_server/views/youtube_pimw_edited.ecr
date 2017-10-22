@@ -123,7 +123,6 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
 
 function onPlayerReady(event) {
   console.log("youtube_player ready and setup! auto playing...");
-  window.localStorage
  // SetVolume(window.localStorage.getItem("youtube_volume") || 50); // default isn't 100? is? huh?
   <% if !mobile?(env) && url %>
     event.target.playVideo();
