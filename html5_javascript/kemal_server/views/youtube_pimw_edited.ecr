@@ -125,9 +125,9 @@ function onPlayerReady(event) {
     event.target.playVideo(); // otherwise it can get in this weird pause state 
   <% end %>
   
+  SetVolume(window.localStorage.getItem("youtube_volume") || 50); // default isn't 100? or seemed to be once...
   setTimeout(function() { // get doesn't seem to work immediately :\
     // sometimes this doesn't work if run ja
-    SetVolume(window.localStorage.getItem("youtube_volume") || 50); // default isn't 100? or seemed to be once...
     document.getElementById('vol-control-id').value = youtube_pimw_player.getVolume();
     }, 50);
 
