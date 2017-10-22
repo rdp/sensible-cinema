@@ -592,7 +592,7 @@ function seekToBeforeSkip(delta) {
   var desired_time = getCurrentTime() + delta;
   var tag = areWeWithin(skips, desired_time);  
   if (tag) {
-    var before_time = tag.start - (getCurrentTime()) - 2;
+    var before_time = tag.start - getCurrentTime() - 5; // youtube with 2 would fail here :\
     console.log("would have sought to middle of " + JSON.stringify(tag) + " going back further instead to=" + before_time);
     seekToBeforeSkip(before_time); // method, in case we run into another'un right there ... :|
   }
