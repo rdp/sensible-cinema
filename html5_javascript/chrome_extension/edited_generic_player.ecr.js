@@ -1469,7 +1469,7 @@ function seekToTime(ts, callback) {
   // some shenanigans to pretend to work around this...
   if (!isYoutubePimw()) {
     doPause();
-  } // youtube seems to retain it good!
+  } // youtube seems to retain it!
   rawSeekToTime(ts);
   old_ts = ts;
   seek_timer = setInterval(function() {

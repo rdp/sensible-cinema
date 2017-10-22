@@ -1732,9 +1732,10 @@ function getSecondsBufferedAhead() {
   return seconds_buffered;
 }
 
+var old_ts;
 function seekToTime(ts, callback) {
   if (seek_timer) {
-    console.log("still seeking from previous, not trying that again...");
+    console.log("still seeking from previous to=" + old_ts + ", not trying that again... new=" + ts);
     return;
   }
   
@@ -1751,10 +1752,11 @@ function seekToTime(ts, callback) {
   // some shenanigans to pretend to work around this...
   if (!isYoutubePimw()) {
     doPause();
-  } // youtube seems to retain it grrate
-  rawSeekToTime(ts); 
+  } // youtube seems to retain it!
+  rawSeekToTime(ts);
+  old_ts = ts;
   seek_timer = setInterval(function() {
-      console.log("seek_timer interval [i.e. still seeking...]");
+      console.log("seek_timer interval [i.e. still seeking...] to=" + ts);
       if (isYoutubePimw()) {
         // var done_buffering = (youtube_pimw_player.getPlayerState() == YT.PlayerState.CUED);
         // it stays always as state "paused" ???? :|
@@ -1783,8 +1785,10 @@ function seekToTime(ts, callback) {
         } else {
           console.log("waiting for it to finish buffering after seek seconds_buffered=" + seconds_buffered);
         }
-      }   
-  }, 50);
+      } else {
+        console.log("not done seeking paused=" + isPaused() + "desired=" + ts);
+      }
+  }, 25);
 }
 
 function twoDecimals(thisNumber) {
