@@ -592,8 +592,9 @@ function seekToBeforeSkip(delta) {
   var desired_time = getCurrentTime() + delta;
   var tag = areWeWithin(skips, desired_time);  
   if (tag) {
-    console.log("would have sought to middle of " + JSON.stringify(tag) + " going back further instead");
-    seekToBeforeSkip(tag.start - (getCurrentTime()) - 2); // method, in case we run into another'un right there ... :|
+    var before_time = tag.start - (getCurrentTime()) - 2;
+    console.log("would have sought to middle of " + JSON.stringify(tag) + " going back further instead to=" + before_time);
+    seekToBeforeSkip(before_time); // method, in case we run into another'un right there ... :|
   }
   else {
     seekToTime(desired_time);
