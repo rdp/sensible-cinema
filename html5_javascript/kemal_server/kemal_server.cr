@@ -43,7 +43,9 @@ before_all do |env|
 end
 
 static_headers do |response, filepath, filestat|
-  response.headers.add("Cache-Control", "max-age=86400") # one day, I was sick of seeing my own requests during dev LOL
+  if filepath =~ /\.(jpg|png)/
+    response.headers.add("Cache-Control", "max-age=86400") # one day, I was sick of seeing my own requests during dev LOL
+  end
 end
 
 # https://github.com/crystal-lang/crystal/issues/3997 crystal doesn't effectively call GC full whaat? 
