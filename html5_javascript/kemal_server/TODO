@@ -17,6 +17,7 @@ some IP (post business license)
   mention "my own full screen"
   record me remote controlling to start playback + mention "mirror"able to a TV :|
   mention "could grab the mp4 stream and redirect it to your home" LOL
+  youtube fullscreen me
   
 say in plugin "we're in beta"
   
@@ -97,11 +98,12 @@ mention more options for TV: long mouse cable, remote desktop, position a little
 
 youtube: some way to get from youtube.com to mine (low prio though...maybe just need an "add to play it my way" popup.html?)
   just if I do private edits? :|
+  list "more" to watch underneath (make black less terrifyingly large if not logged in?)
+  fix for slower phones
+  volume thing in youtube is awful/ugly :|
+  fullscreen "slide up" from bottom :\
 
 == meh sometime ==
-
-youtube:
-  list "more" to watch underneath (make black less terrifyingly large if not logged in?)
 
 move /installation all inline
 
@@ -140,20 +142,10 @@ some preliminary facebook ads [?]
 
 listen to all greg's'...
 
-finish somehow grooming youtube_pimw_edited true fullscreen (desktop users might...care...maybe...)
-
 Melissa wanted more fields ("age appropriate")
   have somebody 5th pass everything for the synopses :|
 
-youtube HD button for mobile? :| pimw_edited
-
 attempt a real iOS app
-
-youtube: redirect to edited somehow, from youtube.com stuffs :|
-  show list of other youtubes below all? At least link...
-  ask forum if I can mute? https://productforums.google.com/forum/#!forum/youtube
-
-fix youtube for slower phones :|
 
 tell crystal their servers shucks under stress test :|
 
@@ -162,7 +154,6 @@ edge plugin (for underpowered HTPC boxes )
 
 IP:
   copy some vids (from youtube to the other place)
-  my own "fullscreen" for youtube so that it can go smaller and larger within fullscreen (maximize my own div that contains the youtube api iframe for it...)  
 
 personalize: defaults
 me edit princess bride?
@@ -285,22 +276,11 @@ can filter previews/trailers *this is really annoying*
 
 Add instructions for all sorts of weird stuff, like using Safari on mac (bookmarklet?) Safari on iOS, edge, FF...
 
-youtube drag better for phones (seeks)
-
 decide and/or do personalized edits but publically usable :| woot
-
-youtube can I mute it?
-
-seeking in youtube seem awrful with a mouse :|
-
-volume thing in youtube is awful/ugly :|
 
 a real user profile adjust page LOL
 
 an app that says "start this movie playing" (on that desktop computer) so they don't have to remote control anything
-
-require them to approve youtube consent (cookie?) login??
-  check responses/leave my own :|
 
 listen through this: https://developers.google.com/youtube/youtube_player_demo?csw=1
 
@@ -373,7 +353,6 @@ series -> their own page [so you can just review that instead...]
 "auto get" amazon second url, prime type for series' 
 
 private list of edits are shareable...or does that only make sense in the other model?
-during adds show "nothing" somehow...or less...youtube 15.'s but it's not enough...
 resurrect "fake" netflix playback :|
 logout say something like "successfully logged out, click here if you'd like to disable one click login"
 can upload file for image
