@@ -1,6 +1,6 @@
 <h2><%= url ? url.name + " (Edited)" : "youtube not in our edited system yet, please click 'unedited' in the black box below the movie to add it!" %></h2>
 
-<div id="player_with_controls">
+<div id="player_with_controls" style="width: 100%;"> <!-- width for fullscreen needed it -->
   <div id="ytplayer_div"></div>
   <br/>
 
@@ -11,8 +11,8 @@
   <br/>
   seek:<input id="seek-control-id" type="range" min="0" max="100" step="1" onmouseup="seekTo(this.value);" ontouchend="seekTo(this.value);" style="max-width: 150px; display:inline;"></input><!-- not sure how to not super seek here on drag :| -->
   res: <div id="quality_div_id" style="display: inline;"></div> 
-  <a href=# onclick="youtube_pimw_player.setPlaybackQuality(youtube_pimw_player.getAvailableQualityLevels()[0]); return false; /* XXXX cue off actual video size */">HD</a>.
-  <!-- no seek ability in fullscreen? grr<a href='' onclick="toggleFullScreen(); return false">fullscreen</a> -->
+  <a href=# onclick="youtube_pimw_player.setPlaybackQuality(youtube_pimw_player.getAvailableQualityLevels()[0]); return false; /* XXXX cue off actual video size */">use max</a>.
+  <a href='' onclick="toggleFullScreen(); return false">fullscreen</a>
   </h3>
   
 </div>
@@ -85,8 +85,8 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
         exitFullScreen(); // from plugin
         return;
       }
-      // var iframe = document.getElementById("player_with_controls");
-      var iframe = youtube_pimw_player.getIframe();
+      var iframe = document.getElementById("player_with_controls");
+      // var iframe = youtube_pimw_player.getIframe(); // no seek controls :\
 
       var requestFullScreen = iframe.requestFullScreen || iframe.mozRequestFullScreen || iframe.webkitRequestFullScreen;
       if (requestFullScreen) {
