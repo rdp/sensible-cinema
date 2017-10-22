@@ -121,13 +121,14 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
 
 function onPlayerReady(event) {
   console.log("youtube_player ready and setup! auto playing...");
-  SetVolume(window.localStorage.getItem("youtube_volume") || 50); // default isn't 100? or seemed to be once...
   <% if !mobile?(env) && url %>
     event.target.playVideo(); // otherwise it can get in this weird pause state 
   <% end %>
   
   setTimeout(function() { // get doesn't seem to work immediately :\
     document.getElementById('vol-control-id').value = youtube_pimw_player.getVolume();
+    // sometimes this doesn't work if run ja
+    SetVolume(window.localStorage.getItem("youtube_volume") || 50); // default isn't 100? or seemed to be once...
     }, 50);
 
   setInterval(updateTime, 1000); // only 2/sec because if they happen to do their "own" seek this could interfere and "seek to no where" (well, still could but more rare? :\ )
