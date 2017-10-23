@@ -185,10 +185,11 @@ settings = [
   {title: "Free With Prime TV Series", urls: non_youtube.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number > 0}, message: "TV Series for free with prime"},
   {title: "All Movies", urls: non_youtube.select{|u| u.episode_number == 0}, message: "All movies"},
   {title: "All Series", urls: non_youtube.select{|u| u.episode_number > 0}, message: "All TV series"},
-  {title: "Free Movies (with ads)", urls: non_youtube.select{|url| url.rental_cost == -1 }, message: "These are free to watch edited, even without Prime! If you do have Prime they'll show without ads."},
+  {title: "Free Movies (with ads)", urls: non_youtube.select{|url| url.rental_cost == -1 }, message: "These are free to watch edited (with ads), even without Prime! If you do have Prime they'll show without ads."},
   {title: "Everything", urls: all_urls_done, message: "Everything we have edited!"},
-  {title: "Videos in the works (please support us!)", urls: (all_urls_half_way + all_urls_just_started), message: "Things we want to get to, with your contributions!"}
+  {title: "Videos in the works (please support us!)", urls: (all_urls_half_way + all_urls_just_started), message: "Things we want to get to, with your support!"}
 ] 
+
 if chrome_desktop?(env)
   settings.unshift(pay_movies, youtubes);
 else
