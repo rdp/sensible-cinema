@@ -68,7 +68,7 @@ Relax and enjoy your movies without anything you don't want -- our service is fr
 <a href="#all_buttons" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">How does it work?</a>
 <div id="all_buttons" class="collapse">
   We tag the content in movies: profanity, violence, nudity, etc.  From our list, you can choose what you want to see or not.
-  Then, when you buy or rent or stream a movie, our app will edit out the parts you chose.  Sit back and relax while you enjoy your movies!  
+  Then, when you buy or rent or stream a movie, our free app will edit out the parts you chose.  Sit back and relax while you enjoy your movies!  
   Our program and filters are free! (Rental and subscription costs are on you.)
   Basically you <a href=/installation>install</a> our chrome app, or android app, we take care of the rest, click the install button for details!
   <br/>
@@ -177,10 +177,7 @@ Relax and enjoy your movies without anything you don't want -- our service is fr
 <% 
 non_youtube = all_urls_done.reject{|u| u.url =~ /youtube_pimw_edited/}
 pay_movies = {title: "New Releases (Rent/Purchase)", urls: non_youtube.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number == 0}, message: "Movies and new releases for rent/purchase."}
-youtube_message = "You can watch these youtubes edited right now, on your current device, free!  To watch full length movies, install our <a href=/installation>app</a>, edits are free!"
-if (chrome_desktop?(env))
-  youtube_message = "You can watch these youtubes right now, on your current device, free!  Install our chrome app, at the top, to watch full length movies, edits are free!"
-end
+youtube_message = "You can watch these youtubes edited right now, on your current device, free!  To watch full length movies, install our free <a href=/installation>app</a>!"
 youtubes = {title: "Free Youtubes", urls: all_urls_done.select{|u| u.url =~ /youtube_pimw_edited/}, message: youtube_message}
 settings = [
   {title: "TV Series (Rent/Purchase)", urls: non_youtube.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number > 0}, message: "TV Series for rent/buy"},
