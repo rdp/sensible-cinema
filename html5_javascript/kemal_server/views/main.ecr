@@ -257,9 +257,9 @@ var last_clicked;
 function expandBoxOrOpen(id) {
   var x =  $("[id=" + id + "_details]");
   x.toggle();
-  
-    $.ajax({
-        url : '/single_movie_lower/' + id,
+  var actual_id =  id.split(/_/).pop();
+    $.ajax({        
+        url : '/single_movie_lower/' + actual_id,
         type: 'GET',
         success: function(data){
             x.html(data);
