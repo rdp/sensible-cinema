@@ -70,7 +70,7 @@ Relax and enjoy your movies without anything you don't want -- filters are free!
   We tag the content in movies: profanity, violence, nudity, etc.  From our list, you can choose what you want to see or not.
   Then, when you buy or rent or stream a movie, our app will edit out the parts you chose.  Sit back and relax while you enjoy your movies!  
   Our program and filters are free! (Rental and subscription costs are on you.)
-  Basically you install our chrome app, or android app, we take care of the rest.
+  Basically you <a href=/installation>install</a> our chrome app, or android app, we take care of the rest, click the install button for details!
   <br/>
   <a href="#awesome" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">Why is this awesome?</a>
   <div id="awesome" class="collapse">
@@ -177,7 +177,7 @@ Relax and enjoy your movies without anything you don't want -- filters are free!
 <% 
 non_youtube = all_urls_done.reject{|u| u.url =~ /youtube_pimw_edited/}
 pay_movies = {title: "New Releases (Rent/Purchase)", urls: non_youtube.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number == 0}, message: "Movies and new releases for rent/purchase."}
-youtube_message = "You can watch these youtubes edited right now, on your current device, free!  Install our <a href=/installation>chrome app</a> on desktop (or android app) to watch full length movies, edits are free!"
+youtube_message = "You can watch these youtubes edited right now, on your current device, free!  Install our <a href=/installation>chrome app</a> on desktop (or <a href=/installation>android app</a> on mobile) to watch full length movies, edits are free!"
 if (chrome_desktop?(env))
   youtube_message = "You can watch these youtubes right now, on your current device, free!  Install our chrome app, at the top, to watch full length movies, edits are free!"
 end

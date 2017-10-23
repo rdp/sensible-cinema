@@ -5,12 +5,16 @@
 <h2>Installation:</h2>
 <br>
 <% if mobile?(env) %>
-    First, you can watch our free <a href=/>edited youtubes</a> right now on your mobile device!  Want to watch full length movies too?  
-    Our chrome app currently is supported on the chrome web browser (on a computer, or laptop or chromebook, any OS).  
-    So grab one of them and come on back here (playitmyway.org) :)
-    Or if you have an android device, install our android app!
+    First, you can watch our free <a href=/>edited youtubes</a> right now on your mobile device!  Want to watch full length movies too? 
+    <% if android_mobile?(env) %>
+      Install our <a href=/app-release.apk>android app</a>! 
+    <% else %>
+      Looks like you're on an IOS device, we hope to someday be able to support that as well, you can <a href=/add_movie>vote</a> for it!
+    <% end %>
     <br/>
-    IOS device? We hope to someday be able to support that as well, you can <a href=/add_movie>vote</a> for it!
+    Our chrome desktop app currently is supported on the chrome web browser (on any computer, laptop or chromebook).  
+    So grab one of them and come on back here (playitmyway.org) :)
+    <br/>
     <br/>
     Feel free to browse our collection in the meantime, and come back on a computer the next chance you get, to stream some awesome edited movies!
     <br/>
