@@ -72,7 +72,7 @@ function alertIfNoExtension() { // for the _box
   <% end %>
   if (!pluginFullyInstalled()) {
     <% if mobile?(env) %>
-      var out = confirm("Edited movie playback only works on desktop/laptop computers/android devices today. You can watch edited youtubes on your current device though!  Click OK to see movie page unedited, cancel to go to installation instructions");
+      var out = confirm("You can watch edited youtubes on your current device, but not edited movies, which require chrome browser on a desktop.  Click OK to see movie page unedited, or cancel to go to installation instructions");
       if (!out) {
         window.open("/installation");
         return false; // too confusing otherwise :| XXXX open two tabs still??
