@@ -1,66 +1,33 @@
-<!-- UNUSED NOW -->
-
 <h2>Installation:</h2>
 <br>
 <% if mobile?(env) %>
-  Our chrome extension currently is only supported on the chrome web browser (on a computer, or laptop or chromebook, Windows, Linux or OS X).  So grab one of them and come on back here :)</h2>
- Enter your email address to send yourself an email with a link to it so you can find it more easily later: 
-  <form action=/send_me_mail method=POST >
-    <input type="text" name="email_to_send_to" placeholder="yourname@site.com" />
-    <input type="submit" value="Send me an email!">
-  </form>
+    First, you can watch our free edited youtubes right now on your mobile device!  Want to watch full length movies too?  
+    Our chrome app currently is supported on the chrome web browser (on a computer, or laptop or chromebook, any OS).  
+    So grab one of them and come on back here :)
+    Or if you have an android device, we have a working player for that as well.  Ios? We hope to someday be able to support that as well, feel free to <a href=/add_movie>vote</a> for it!
+    <br/>
+    Feel free to browse our collection in the meantime, and come back on your computer to try it out and stream some awesome edited movies!  Click <a href=/installation>here</a> to email yourself a link so you can find us more easily.
+    <br/>
+    Either google "play it my way movies", or enter your email address here, we'll send your an email with a link to our address: 
+    <form action=/send_me_mail method=POST >
+      <input type="text" name="email_to_send_to" placeholder="yourname@site.com" />
+      <input type="submit" value="Send me an email!">
+    </form>
+   <% else %>
+        <% if chrome_desktop?(env) %>
+          <span style="font-size: larger;">Install Play It My Way by <a href="#" onclick="installExtension(); return false;">clicking here</link>!  Installation is free!</span>
+        <% else %>
+          <!-- some other kind of desktop... -->
+          <h2>In order for our chrome app to work, you'll need to first switch to the <a href=https://www.google.com/chrome/>Chrome web browser</a>, then come back to this site (playitmyway.org)!</h2>
+        <% end %>
+        <br/>
+    <% end %>
+    
+    
+    <script>
+              function installExtension() {
+             chrome.webstore.install("https://chrome.google.com/webstore/detail/ionkpaepibbmmhcijkhmamakpeclkdml", 
+               function() { console.log("installed it");}, function() { console.log("rejected it");}); 
+          }
 
-(or just remember our url:  "playitmyway.org" :)
-<br/>
-We hope to someday support even more platforms, and appreciate your patience!
-<!-- XXXX add a movie of it working?? -->
-<br/>
-<br/>
-<br/>
-<% end %>
-
-Currently, Play It My Way works on the chrome desktop web browser on a computer/laptop that it supports (Windows, OS X, Linux, Chromebooks).  So you need to install the chrome extension and you're good to go.  
-<br/>
-
-<% if !mobile?(env) %>
-
-<h2>Installing the program</h2>
-
-<div id="switch_to_chrome" style="display: none;">
-<h2>In order for our player to work, you'll need to first switch to the <a href=https://www.google.com/chrome/>Chrome web browser</a>, then come back here!
-</div>
-
-<div id="install_chrome_extension_message_id" style=""> 
-<h2>Install the edited playback software by <a href=https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml target="_blank"> <!-- sooo confusing without target _blank --> clicking here to install our chrome extension</a> (click the "Add to Chrome" button) then come back to this web site to start playing it your way by clicking here to see the list of edited movies!</h2>
-</div>
-
-<div id="success_chrome_extension_id" style="display: none;"><font face="verdana" color="green">
-  <br/>You successfully installed the <a href=https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml target="_blank">chrome extension</a>, now <a href=/>get watching! Start playing it your way!</a>
- </font>
-</div>
-
-<% end %>
-
-<br/>Want to watch it on your TV?  You can also use a cable to connect your computer/laptop to your TV and watch it there.  You could for instance run a long (<a href='https://smile.amazon.com/AmazonBasics-High-Speed-HDMI-Cable-Standard/dp/B014I8T0YQ/ref=sr_1_3?ie=UTF8&qid=1489783144&sr=8-3&keywords=10%27+hdmi'>10'</a>, <a href='https://smile.amazon.com/BlueRigger-Speed-Ethernet-Supports-Return/dp/B003XM73P2'>25'</a> or <a href='https://smile.amazon.com/High-Speed-HDMI-Cable-Supports-Specification/dp/B00RYRJYDG/ref=sr_1_2?ie=UTF8&qid=1499106979&sr=8-2&keywords=50+foot+hdmi'>50'</a>) HDMI cable from your computer to your TV, buy yourself a <a href=https://smile.amazon.com/gp/product/B013WJRG5C/ref=ox_sc_act_title_1?smid=A7LHUY529ERHL&psc=1 >bluetooth mouse</a> and watch in HD.  Another option might be a "Home Theater PC" that supports the Chrome web browser, or repurposing an old laptop/desktop as a dedicated viewing device.
-<br/>
-
-<%= render "views/_installed_js.ecr" %>
-
-<script>
-
-if (!isChrome()) {
-   document.getElementById('switch_to_chrome').style.display = 'block';
-}
-
-function markAsGoodChromeExtension() { // an override
-  isInstalled = true;
-  document.getElementById('install_chrome_extension_message_id').style.display = 'none';
-  document.getElementById('success_chrome_extension_id').style.display = 'block';
-}
-
-</script>
-
-<% if admin?(env) %>
-Admin: on a different browser? simply trivially run this!!!
-   var my_awesome_script = document.createElement('script'); my_awesome_script.setAttribute('src','https://playitmyway.org/plugin_javascript/edited_generic_player.js'); document.head.appendChild(my_awesome_script);
-<% end %>
+          </script>

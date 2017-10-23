@@ -101,27 +101,7 @@ Relax and enjoy your movies without anything you don't want -- filters are free!
   
   <a href="#how_install" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">How do I install it?</a>
   <div id="how_install" class="collapse">
-   <% if mobile?(env) %>
-     First, you can watch our free edited youtubes right now on your mobile device!  Want to watch full length movies too?  
-    Our chrome app currently is supported on the chrome web browser (on a computer, or laptop or chromebook, any OS).  
-    So grab one of them and come on back here :)
-    <br/>
-    Feel free to browse our collection in the meantime, and come back on your computer to try it out and stream some awesome edited movies!  Click <a href=/installation>here</a> to email yourself a link so you can find us more easily.
-    <br/>
-    Either google "play it my way movies", or enter your email address here, we'll send your an email with a link to our address: 
-    <form action=/send_me_mail method=POST >
-      <input type="text" name="email_to_send_to" placeholder="yourname@site.com" />
-      <input type="submit" value="Send me an email!">
-    </form>
-   <% else %>
-        <% if chrome_desktop?(env) %>
-          <span style="font-size: larger;">Install Play It My Way by <a href="#" onclick="installExtension(); return false;">clicking here</link>!  Installation is free!</span>
-        <% else %>
-          <!-- some other kind of desktop... -->
-          <h2>In order for our chrome app to work, you'll need to first switch to the <a href=https://www.google.com/chrome/>Chrome web browser</a>, then come back to this site (playitmyway.org)!</h2>
-        <% end %>
-        <br/>
-    <% end %>
+    Click <a href=/installation>here</a> for instructions.
   </div>
   
   <a href="#tv" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">How do I watch it on my TV?</a>
@@ -173,7 +153,7 @@ Relax and enjoy your movies without anything you don't want -- filters are free!
   
   <a href="#netflix" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">Can it edit Netflix?</a>
   <div id="netflix" class="collapse">
-    Well...to be clear, we started down that road once and even got a working prototype, but we decided not not longer include that functionality because it seems like its use might violate parts of the Netflix customer Terms of Use ("no injection of code" or something, which is how we control their player).  We hope to launch a "Netflix" drive someday and convince them of the utility of this program :) If that doesnt' work, we hope to eventually create some kind of work around.  For now we will recommend to our users that they purchase their streamed media from other sources that seem to allow it (ex: Amazon).  Hopefully someday, feel free to <a href=/add_movie>vote</a> for this feature!
+    Well...to be clear, we started down that road once, and even created a working prototype, but we decided to no longer include that functionality because it seems like its use might violate parts of the Netflix customer Terms of Use ("no injection of code" or something, which is how we control their player).  We hope to launch a "Netflix" drive someday and convince them of the utility of this program :) If that doesnt' work, we hope to eventually create some kind of work around.  For now we will recommend to our users that they purchase their streamed media from other sources that seem to allow it (ex: Amazon).  Hopefully someday, feel free to <a href=/add_movie>vote</a> for this feature!
   </div>
 
 </div>
