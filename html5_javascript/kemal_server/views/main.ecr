@@ -203,14 +203,15 @@ end
   <ul class="nav nav-pills" role="tablist">
     <% settings.each_with_index{ |setting, idx| %>
       <li role="presentation"  <%= "class='active'" if idx == 0 %> >
-        <a href="#tab_<%= idx %>" id="tab_link_id_<%= idx %>" aria-controls="home" role="tab" data-toggle="tab" style="border: dotted 1px; margin: 5px;">
+        <a href="#tab_<%= idx %>" onclick="go_to_start_boxes();" id="tab_link_id_<%= idx %>" aria-controls="home" role="tab" data-toggle="tab" style="border: dotted 1px; margin: 5px;">
         <span style="font-size:larger;"><%= setting[:title] %> (<%= setting[:urls].size %>)</span></a>
       </li>
     <% } %>
   </ul>
-
+  
   </div> <!-- end bg image -->
   
+  <a href="#start_boxes"></a>
   <!-- Tab panes -->
   <div class="tab-content">
     <% settings.each_with_index{ |setting, idx| %>
@@ -222,25 +223,11 @@ end
   </div>
 
 <script>
-
-loaded = false;
-
-$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-  var target = $(e.target).attr("href") // just activated tab string like "#tab_1"
-  if (target == "#tab_1" && !loaded && false) {
-    loaded = true;
-    // $("#tab_1").html('Loading...'); //
-    $.ajax({
-        url : '/movies_in_works?by_self=true',
-        type: 'GET',
-        success: function(data){
-            $('#tab_1').html(data);
-        }
-    }); 
+function go_to_start_boxes() {
+  $('html, body').animate({
+        scrollTop: $("#start_boxes").offset().top
+    }, 2000);
   }
-  return false;
-});
-
 </script>
 
 <br>You can <a href=/add_movie >vote</a> for a movie you'd like to see done next!  
