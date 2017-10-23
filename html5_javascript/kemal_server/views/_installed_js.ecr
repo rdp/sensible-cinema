@@ -72,8 +72,13 @@ function alertIfNoExtension() { // for the _box
   <% end %>
   if (!pluginFullyInstalled()) {
     <% if mobile?(env) %>
-      alert("Edited movie playback only works on desktop/laptop computers/android devices today. You can watch edited youtubes though!  Click OK to see the movie page, but playback will not be edited yet...");
-      return true;
+      var out = confirm("Edited movie playback only works on desktop/laptop computers/android devices today. You can watch edited youtubes on your current device though!  Click OK to see movie page unedited, cancel to go to installation instructions");
+      if (!out) {
+        window.open("/installation");
+        return false; // too confusing otherwise :| XXXX open two tabs still??
+      } else {
+        return true;
+      }
     <% else %>
       // desktop
       var out = confirm("You need to install the chrome extension to watch the video edited, which it appears you have not installed yet, please do that first.  Click OK to go to installation instructions, cancel to continue to see movie page unedited...");
