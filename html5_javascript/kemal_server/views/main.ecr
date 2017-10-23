@@ -257,6 +257,16 @@ var last_clicked;
 function expandBoxOrOpen(id) {
   var x =  $("[id=" + id + "_details]");
   x.toggle();
+  
+    $.ajax({
+        url : '/single_movie_lower/' + id,
+        type: 'GET',
+        success: function(data){
+            x.html(data);
+        }
+        // ...
+    });
+ 
 
   var box = $("[id=" + id + "]");
   box.css("display", "block"); // make visible in case not :\ show didn't work??

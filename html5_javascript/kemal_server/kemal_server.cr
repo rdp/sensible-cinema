@@ -577,11 +577,16 @@ end
 
 get "/movies_in_works" do |env|
   urls = get_all_urls.reject{|url| url.editing_status == editing_phases[:done_second_pass] }
-  if env.params.query["by_self"]?
+  if env.params.query["by_self"]? # the default uh think?
     render "views/_list_movies.ecr"
   else
     render "views/_list_movies.ecr", "views/layout.ecr"
   end
+end
+
+get "/single_movie_lower/:url_id" do |env|
+  url = get_url_from_url_id(env)
+  render "views/single_movie_lower.ecr" # no layout
 end
 
 get "/go_admin" do |env|
