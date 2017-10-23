@@ -63,118 +63,118 @@ Relax and enjoy your movies without the stuff you don't want -- filters are free
 </div>
 
 <div style="clear: both; margin-bottom: 10px;"></div>
-<a href="#demo" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">How does it work?</a>
-<div id="demo" class="collapse">
+<a href="#all_buttons" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">How does it work?</a>
+<div id="all_buttons" class="collapse">
   We tag the content in movies: profanity, violence, nudity, etc.  From our list, you can choose what you want to see or not.
   Then, when you buy or rent or stream a movie, our app will edit out the parts you chose.  Sit back and relax while you enjoy your movies!  
   Our program and filters are free! (Rental and subscription costs are on you however.)
   Basically you install our chrome app, or android app, we take care of the rest.
-</div>
-<a href="#awesome" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">Why is this awesome?</a>
-<div id="awesome" class="collapse">
-<ul>
-  <li>You can stream edited from several online sites (Amazon, Youtube, etc.).  The good news about that is that it means if you have Amazon prime, then many of our edited movies are "free streaming to you." (If you don't have prime don't worry, we also support a large number of "rent/buy" movies, including new releases!).  You can also get a free Prime 30 day subscription if you'd like to binge watch something :)
-  </li>
-  <li>It opens up the possibility of more movies you or your family can watch, another "entertainment option" as it were.  You can watch movies without worrying about what might accidentally be in them.  Sit back and relax!  Want to watch a movie and tailor it for the youngest in the room so the whole family can watch together? Now you can!  Find something that bothers you in a movie? You can tag it and edit it out for just yourself. Find an a movie not yet in our system, for instance a more rare movie? You can <a href=/add_movie>vote</a> for it!
-  </li>
-  <li>We provide rankings for how wolesome movies are, so you can search out wholesome entertainment for you and your family!
-  </li>
-  <li>Our system lets you watch new releases edited online, even from disney etc!  Plus want to watch an obscure older film, that nobody else knows about so it will likely take some time to make it to the top of the list? You can <a href=/add_movie>vote for it</a>.
-</ul>
-</div>
-
-<a href="#cost" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">How much does it cost?</a>
-<div id="cost" class="collapse">
-Play It My Way (the cost for the filter) is free!  We could use your support to donate via patroen, or our kickstarter, but use it and enjoy!
-<br/>
-However, we don't actually stream you the movies, so there are two prices, the cost of streaming it (rental, purchase or subscription to some provider like Amazon), and the cost for the filter (free).
-<br/>The cost to stream is variable depending on which service you use (Amazon Prime is free, for instance, and there are other options like renting or purchasing, etc.).
-<br/>
-Since the filters are free, the only thing you have to pay for is the streaming, and if you already have subscriptions in place, that might be nothing.
-<br/>
-Installation is always free.
-<br/>
-We will be holding a Kickstarter soon, like our <a href=https://www.facebook.com/Play-it-My-Way-1812282865478777/#! >facebook page</a> so you can get notifications when we begin, we'd love your support!
-</div>
-
-<a href="#how_install" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">How do I install it?</a>
-<div id="how_install" class="collapse">
- <% if mobile?(env) %>
-   First, you can watch our free edited youtubes right now on your mobile device!  Want to watch full length movies too?  
-  Our chrome app currently is supported on the chrome web browser (on a computer, or laptop or chromebook, any OS).  
-  So grab one of them and come on back here :)
+  <a href="#awesome" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">Why is this awesome?</a>
+  <div id="awesome" class="collapse">
+  <ul>
+    <li>You can stream edited from several online sites (Amazon, Youtube, etc.).  The good news about that is that it means if you have Amazon prime, then many of our edited movies are "free streaming to you." (If you don't have prime don't worry, we also support a large number of "rent/buy" movies, including new releases!).  You can also get a free Prime 30 day subscription if you'd like to binge watch something :)
+    </li>
+    <li>It opens up the possibility of more movies you or your family can watch, another "entertainment option" as it were.  You can watch movies without worrying about what might accidentally be in them.  Sit back and relax!  Want to watch a movie and tailor it for the youngest in the room so the whole family can watch together? Now you can!  Find something that bothers you in a movie? You can tag it and edit it out for just yourself. Find an a movie not yet in our system, for instance a more rare movie? You can <a href=/add_movie>vote</a> for it!
+    </li>
+    <li>We provide rankings for how wolesome movies are, so you can search out wholesome entertainment for you and your family!
+    </li>
+    <li>Our system lets you watch new releases edited online, even from disney etc!  Plus want to watch an obscure older film, that nobody else knows about so it will likely take some time to make it to the top of the list? You can <a href=/add_movie>vote for it</a>.
+  </ul>
+  </div>
+  
+  <a href="#cost" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">How much does it cost?</a>
+  <div id="cost" class="collapse">
+  Play It My Way (the cost for the filter) is free!  We could use your support to donate via patroen, or our kickstarter, but use it and enjoy!
   <br/>
-  Feel free to browse our collection in the meantime, and come back on your computer to try it out and stream some awesome edited movies!  Click <a href=/installation>here</a> to email yourself a link so you can find us more easily.
+  However, we don't actually stream you the movies, so there are two prices, the cost of streaming it (rental, purchase or subscription to some provider like Amazon), and the cost for the filter (free).
+  <br/>The cost to stream is variable depending on which service you use (Amazon Prime is free, for instance, and there are other options like renting or purchasing, etc.).
   <br/>
-  Either google "play it my way movies", or enter your email address here, we'll send your an email with a link to our address: 
-  <form action=/send_me_mail method=POST >
-    <input type="text" name="email_to_send_to" placeholder="yourname@site.com" />
-    <input type="submit" value="Send me an email!">
-  </form>
- <% else %>
-      <% if chrome_desktop?(env) %>
-        <span style="font-size: larger;">Install Play It My Way by <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/itemID">
-clicking here</link>!  Installation is free!</span>
-      <% else %>
-        <!-- some other kind of desktop... -->
-        <h2>In order for our chrome app to work, you'll need to first switch to the <a href=https://www.google.com/chrome/>Chrome web browser</a>, then come back to this site (playitmyway.org)!</h2>
-      <% end %>
-      <br/>
-  <% end %>
-</div>
-
-<a href="#tv" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">How do I watch it on my TV?</a>
-<div id="tv" class="collapse">
-  One option is to plug into your TV another connection, one from your computer/laptop to your TV and watch it there.  It works in HD.
-  You could for instance run a long (<a href='https://smile.amazon.com/AmazonBasics-High-Speed-HDMI-Cable-Standard/dp/B014I8T0YQ/ref=sr_1_3?ie=UTF8&qid=1489783144&sr=8-3&keywords=10%27+hdmi'>10'</a>, <a href='https://smile.amazon.com/BlueRigger-Speed-Ethernet-Supports-Return/dp/B003XM73P2'>25'</a> or <a href='https://smile.amazon.com/High-Speed-HDMI-Cable-Supports-Specification/dp/B00RYRJYDG/ref=sr_1_2?ie=UTF8&qid=1499106979&sr=8-2&keywords=50+foot+hdmi'>50'</a>) HDMI cable from your computer to your TV.
-  You can remote control your computer from your couch using the <a href=https://support.google.com/chrome/answer/1649523?co=GENIE.Platform%3DDesktop&hl=en >chrome remote desktop app</a> on your mobile device.
+  Since the filters are free, the only thing you have to pay for is the streaming, and if you already have subscriptions in place, that might be nothing.
   <br/>
-  Another option is to purchase an "android tv" (around $40) and install the Play It My Way Android App.
+  Installation is always free.
   <br/>
-  Another option might be to purchase a "Home Theater PC" that supports the Chrome web browser, or repurposing an old laptop/desktop as a dedicated viewing device.
+  We will be holding a Kickstarter soon, like our <a href=https://www.facebook.com/Play-it-My-Way-1812282865478777/#! >facebook page</a> so you can get notifications when we begin, we'd love your support!
+  </div>
+  
+  <a href="#how_install" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">How do I install it?</a>
+  <div id="how_install" class="collapse">
+   <% if mobile?(env) %>
+     First, you can watch our free edited youtubes right now on your mobile device!  Want to watch full length movies too?  
+    Our chrome app currently is supported on the chrome web browser (on a computer, or laptop or chromebook, any OS).  
+    So grab one of them and come on back here :)
+    <br/>
+    Feel free to browse our collection in the meantime, and come back on your computer to try it out and stream some awesome edited movies!  Click <a href=/installation>here</a> to email yourself a link so you can find us more easily.
+    <br/>
+    Either google "play it my way movies", or enter your email address here, we'll send your an email with a link to our address: 
+    <form action=/send_me_mail method=POST >
+      <input type="text" name="email_to_send_to" placeholder="yourname@site.com" />
+      <input type="submit" value="Send me an email!">
+    </form>
+   <% else %>
+        <% if chrome_desktop?(env) %>
+          <span style="font-size: larger;">Install Play It My Way by <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/itemID">
+  clicking here</link>!  Installation is free!</span>
+        <% else %>
+          <!-- some other kind of desktop... -->
+          <h2>In order for our chrome app to work, you'll need to first switch to the <a href=https://www.google.com/chrome/>Chrome web browser</a>, then come back to this site (playitmyway.org)!</h2>
+        <% end %>
+        <br/>
+    <% end %>
+  </div>
+  
+  <a href="#tv" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">How do I watch it on my TV?</a>
+  <div id="tv" class="collapse">
+    One option is to plug into your TV another connection, one from your computer/laptop to your TV and watch it there.  It works in HD.
+    You could for instance run a long (<a href='https://smile.amazon.com/AmazonBasics-High-Speed-HDMI-Cable-Standard/dp/B014I8T0YQ/ref=sr_1_3?ie=UTF8&qid=1489783144&sr=8-3&keywords=10%27+hdmi'>10'</a>, <a href='https://smile.amazon.com/BlueRigger-Speed-Ethernet-Supports-Return/dp/B003XM73P2'>25'</a> or <a href='https://smile.amazon.com/High-Speed-HDMI-Cable-Supports-Specification/dp/B00RYRJYDG/ref=sr_1_2?ie=UTF8&qid=1499106979&sr=8-2&keywords=50+foot+hdmi'>50'</a>) HDMI cable from your computer to your TV.
+    You can remote control your computer from your couch using the <a href=https://support.google.com/chrome/answer/1649523?co=GENIE.Platform%3DDesktop&hl=en >chrome remote desktop app</a> on your mobile device.
+    <br/>
+    Another option is to purchase an "android tv" (around $40) and install the Play It My Way Android App.
+    <br/>
+    Another option might be to purchase a "Home Theater PC" that supports the Chrome web browser, or repurposing an old laptop/desktop as a dedicated viewing device.
+  </div>
+  
+  <a href="#legal" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">So is this legal?</a>
+  <div id="legal" class="collapse">
+  
+  The (Family Movie Act of 2005 (FMA) ("EXEMPTION FROM INFRINGEMENT FOR SKIPPING AUDIO AND VIDEO CONTENT IN MOTION PICTURES") says in regards to filtering that  a private household can make (or use a technology to make) limited portions of the audio or video content “imperceptible” as long as it comes from an authorized copy of the film and doesn’t create a permanent altered copy.
+  Play It My Way  doesn’t create a permanent altered copy (there have been a few court cases that have ruled that changing playback “in flight” doesn’t create a new “version” of the film), and rather than streaming movies on our site (and having to worry about all of the licensing/distributing/other hooplah there) we only filter movies that you can already stream legally through other services.  These streaming services have paid their dues to Hollywood, and the law protects your right to skip or mute limited portions of it. We only provide the technology that allows you to do this automatically, and stay out of the streaming business.
+  We try to respect the Terms of Use of companies and only filter movies from streaming services who seem to allow our program in their Terms of Use. We also only support legal streaming services so that the studios always get their dues (and even more dues with more customers). We also refuse to skip ads for the same reason, see below. We even attempt to obey copyright laws by writing our own reviews and using our own tags and not copying other websites' content. That being said, we are not lawyers, take our advice with a grain of salt, and only do which you think is moral, ethical, fair and legal. We encourage you to examine the issues yourself, including Terms of Uses, and only use this program if you feel it respects them. 
+  In short, we believe that we are legal, but without legal advice we hesitate to say so definitively.
+  <br/>
+  <br/>Some studios have mentioned before in legal proceedings that they're not averse to "secondary editing" (given that no "second copies" are created or distributed).  (i.e. like what Play It My Way provides, a second copy is never created).  Historically studios also have seemed to be OK to allow airplanes to pay them money to watch officially "edited" versions of movies, so hopefully they'll be all right with letting people pay them money to watch edited versions in this instance as well.  In essence, we are allowing film makers to target more target audiences, and make more.  Hopefully they're OK with that.
+  <br/>We attempt to obey copyright laws by writing our own reviews and our own tags and not copying other websites' content.
+  <br/>In short, we believe Play it my Way to be legal, though we're not lawyers to tell for sure.
+  <br/>We'll be up front with you, we don't have any formal contracts or agreements with the movie studios, nor with Amazon, nor Google, in this endeavor.  It's just a browser plugin that "helps you playback" your movies, so you can control which portions it shows.  We encourage our users to purchase movies legally and stream them legally and privately, and we believe you should have the ability to playback only the portions you want, of movies you have the rights to watch.  Using a browser plugin to watch movies edited doesn't seem incompatible with the terms of use of some major streaming companies.  Though if companies contact us and tell us to stop, we'll stop, and send our customers elsewhere :)
+  <br/>We did write a <a href=https://docs.google.com/document/d/1Ybcu-UlzU8Awz3no5uMVq9DrdBEyzAYnlZmHoWu7Poo/edit?usp=sharing>letter</a> to Amazon (to their "contact us partnership" portal) saying "hey, we're going to do this, let us know if you want us to stop" and haven't since heard back.  Though certainly we're small fish at this point.  If at some point they do get back to us and respond, we hope it will be something in the affirmative (we mostly just bring them traffic after all).  If they respond in the negative, we will try to find another provider that is more accommodating and send our paying customers there :) For us it seems it makes Amazon's movies/prime movies an even more compelling offering, and their Terms of Use don't seem to forbid it as an option, and that's where it stands today.  We also don't have a contract with the movies studios or with google for its chrome web browser, though it does use a chrome extension to provide the editing playback today.  We believe it is just "scripting" a legally streamed playback.  Hopefully everyone ends up OK with this arrangement.  
+  We couldn't actually figure out how to contact the Movie Studios to get their feedback on this, but hope they'll also be amenable, as well.
+  </div>
+  
+  
+  <a href="#ethical" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">So is watching edited movies moral? Ethical?</a>
+  <div id="ethical" class="collapse">
+  
+  We flatter ourselves by believing so.  Let us tell you our take on it.  Imagine you're going to a play in a theater, but, feeling a bit under the weather that day, and you know an upcoming scene might make you a bit sick.  Is it OK to walk out for that scene then come back? Or is it OK to "look at the floor" in the theater and not watch when something happens in a movie that you're not comfortable with?  Is it OK to walk out during the closing credits of a movie and effectively "skip" those last few scrolling credits?  We think so.  But again, ony do what feels right to you here :)  For some parents, it's OK to watch unedited movies themselves, but then if they want to watch them with their kids, to dial down the intensity a little.  This also works well for that.  Power to the people! :)
+  <br/>Another take on it: for instance if it's a PG movie but you just want to be able to watch and "avoid any surprises" (for instance, the one single profanity in it) you might consider that an ethical option.  Or to create a "toned down" version of scary scenes of a Disney film, so that little kids don't have nightmares but can still "watch with the family" you might consider that an ethical option.
+  <br/>Another take on it: sometimes Hollywood inserts some bad scene just to "get a rating" as it were.  Why not watch it comfortably without that bad scene?  They want your money in the end, and you're, in essence, giving it to them by watching their movie, albeit edited.  My other theory is that maybe Hollywood producers just "don't realize" the tastes and affections of some people out there (to them, profanity is hum drum, for instance).  We are providing the ability of the masses to tailor-fit movies to themselves instead of everyone having to fit in one bucket for a release, as it were.  But do whatever you feel is appropriate and ethical, and also allows others the same privilege :)
+  <br/>Does using this send a wrong message to Hollywood?
+  <br/>There's definitely a debate as to whether you should watch some "dirty" films, edited, at all.  That's your call of course.  Some films, even edited, still have a "dark feeling" about them, so use your best judgement even with edited versions.  We provide an "wholesomeness" rating for each movie, which may be useful to you in your quest for wholesome recreation.  We'll leave that one as a personal decision, if you feel we shouldn't then don't let us force you, just don't watch the movie.  For those that "want" to watch these movies cleaned up, we do offer this as an option.  As to whether it sends the wrong message to Hollywood, my personal hope is that we can show them "yes lots of people are watching these edited, you should tap into this market!" that kind of message.  Maybe we'll be able to show them, or maybe we'll end up sending the wrong message, we hope not.  But we're not sure either.
+  
+  </div>
+  
+  
+  <a href="#uninstall" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">How do I uninstall it?</a>
+  <div id="uninstall" class="collapse">
+    Right click on the little icon in the upper right, choose "remove from Chrome." We're sorry to see you go, please leave us some feedback so we can improve for future users!<br/>
+    <img src=/uninstall.png width="250px" />
+  </div>
+  
+  
+  <a href="#netflix" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">Can it edit Netflix?</a>
+  <div id="netflix" class="collapse">
+    Well...to be clear, we started down that road once and even got a working prototype, but we decided not not longer include that functionality because it seems like its use might violate parts of the Netflix customer Terms of Use ("no injection of code" or something, which is how we control their player).  We hope to launch a "Netflix" drive someday and convince them of the utility of this program :) If that doesnt' work, we hope to eventually create some kind of work around.  For now we will recommend to our users that they purchase their streamed media from other sources that seem to allow it (ex: Amazon).  Hopefully someday, feel free to <a href=/add_movie>vote</a> for this feature!
+  </div>
+
 </div>
-
-<a href="#legal" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">So is this legal?</a>
-<div id="legal" class="collapse">
-
-The (Family Movie Act of 2005 (FMA) ("EXEMPTION FROM INFRINGEMENT FOR SKIPPING AUDIO AND VIDEO CONTENT IN MOTION PICTURES") says in regards to filtering that  a private household can make (or use a technology to make) limited portions of the audio or video content “imperceptible” as long as it comes from an authorized copy of the film and doesn’t create a permanent altered copy.
-Play It My Way  doesn’t create a permanent altered copy (there have been a few court cases that have ruled that changing playback “in flight” doesn’t create a new “version” of the film), and rather than streaming movies on our site (and having to worry about all of the licensing/distributing/other hooplah there) we only filter movies that you can already stream legally through other services.  These streaming services have paid their dues to Hollywood, and the law protects your right to skip or mute limited portions of it. We only provide the technology that allows you to do this automatically, and stay out of the streaming business.
-We try to respect the Terms of Use of companies and only filter movies from streaming services who seem to allow our program in their Terms of Use. We also only support legal streaming services so that the studios always get their dues (and even more dues with more customers). We also refuse to skip ads for the same reason, see below. We even attempt to obey copyright laws by writing our own reviews and using our own tags and not copying other websites' content. That being said, we are not lawyers, take our advice with a grain of salt, and only do which you think is moral, ethical, fair and legal. We encourage you to examine the issues yourself, including Terms of Uses, and only use this program if you feel it respects them. 
-In short, we believe that we are legal, but without legal advice we hesitate to say so definitively.
-<br/>
-<br/>Some studios have mentioned before in legal proceedings that they're not averse to "secondary editing" (given that no "second copies" are created or distributed).  (i.e. like what Play It My Way provides, a second copy is never created).  Historically studios also have seemed to be OK to allow airplanes to pay them money to watch officially "edited" versions of movies, so hopefully they'll be all right with letting people pay them money to watch edited versions in this instance as well.  In essence, we are allowing film makers to target more target audiences, and make more.  Hopefully they're OK with that.
-<br/>We attempt to obey copyright laws by writing our own reviews and our own tags and not copying other websites' content.
-<br/>In short, we believe Play it my Way to be legal, though we're not lawyers to tell for sure.
-<br/>We'll be up front with you, we don't have any formal contracts or agreements with the movie studios, nor with Amazon, nor Google, in this endeavor.  It's just a browser plugin that "helps you playback" your movies, so you can control which portions it shows.  We encourage our users to purchase movies legally and stream them legally and privately, and we believe you should have the ability to playback only the portions you want, of movies you have the rights to watch.  Using a browser plugin to watch movies edited doesn't seem incompatible with the terms of use of some major streaming companies.  Though if companies contact us and tell us to stop, we'll stop, and send our customers elsewhere :)
-<br/>We did write a <a href=https://docs.google.com/document/d/1Ybcu-UlzU8Awz3no5uMVq9DrdBEyzAYnlZmHoWu7Poo/edit?usp=sharing>letter</a> to Amazon (to their "contact us partnership" portal) saying "hey, we're going to do this, let us know if you want us to stop" and haven't since heard back.  Though certainly we're small fish at this point.  If at some point they do get back to us and respond, we hope it will be something in the affirmative (we mostly just bring them traffic after all).  If they respond in the negative, we will try to find another provider that is more accommodating and send our paying customers there :) For us it seems it makes Amazon's movies/prime movies an even more compelling offering, and their Terms of Use don't seem to forbid it as an option, and that's where it stands today.  We also don't have a contract with the movies studios or with google for its chrome web browser, though it does use a chrome extension to provide the editing playback today.  We believe it is just "scripting" a legally streamed playback.  Hopefully everyone ends up OK with this arrangement.  
-We couldn't actually figure out how to contact the Movie Studios to get their feedback on this, but hope they'll also be amenable, as well.
-</div>
-
-
-<a href="#ethical" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">So is watching edited movies moral? Ethical?</a>
-<div id="ethical" class="collapse">
-
-We flatter ourselves by believing so.  Let us tell you our take on it.  Imagine you're going to a play in a theater, but, feeling a bit under the weather that day, and you know an upcoming scene might make you a bit sick.  Is it OK to walk out for that scene then come back? Or is it OK to "look at the floor" in the theater and not watch when something happens in a movie that you're not comfortable with?  Is it OK to walk out during the closing credits of a movie and effectively "skip" those last few scrolling credits?  We think so.  But again, ony do what feels right to you here :)  For some parents, it's OK to watch unedited movies themselves, but then if they want to watch them with their kids, to dial down the intensity a little.  This also works well for that.  Power to the people! :)
-<br/>Another take on it: for instance if it's a PG movie but you just want to be able to watch and "avoid any surprises" (for instance, the one single profanity in it) you might consider that an ethical option.  Or to create a "toned down" version of scary scenes of a Disney film, so that little kids don't have nightmares but can still "watch with the family" you might consider that an ethical option.
-<br/>Another take on it: sometimes Hollywood inserts some bad scene just to "get a rating" as it were.  Why not watch it comfortably without that bad scene?  They want your money in the end, and you're, in essence, giving it to them by watching their movie, albeit edited.  My other theory is that maybe Hollywood producers just "don't realize" the tastes and affections of some people out there (to them, profanity is hum drum, for instance).  We are providing the ability of the masses to tailor-fit movies to themselves instead of everyone having to fit in one bucket for a release, as it were.  But do whatever you feel is appropriate and ethical, and also allows others the same privilege :)
-<br/>Does using this send a wrong message to Hollywood?
-<br/>There's definitely a debate as to whether you should watch some "dirty" films, edited, at all.  That's your call of course.  Some films, even edited, still have a "dark feeling" about them, so use your best judgement even with edited versions.  We provide an "wholesomeness" rating for each movie, which may be useful to you in your quest for wholesome recreation.  We'll leave that one as a personal decision, if you feel we shouldn't then don't let us force you, just don't watch the movie.  For those that "want" to watch these movies cleaned up, we do offer this as an option.  As to whether it sends the wrong message to Hollywood, my personal hope is that we can show them "yes lots of people are watching these edited, you should tap into this market!" that kind of message.  Maybe we'll be able to show them, or maybe we'll end up sending the wrong message, we hope not.  But we're not sure either.
-
-</div>
-
-
-<a href="#uninstall" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">How do I uninstall it?</a>
-<div id="uninstall" class="collapse">
-  Right click on the little icon in the upper right, choose "remove from Chrome." We're sorry to see you go, please leave us some feedback so we can improve for future users!<br/>
-  <img src=/uninstall.png width="250px" />
-</div>
-
-
-<a href="#netflix" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">Can it edit Netflix?</a>
-<div id="netflix" class="collapse">
-  Well...to be clear, we started down that road once and even got a working prototype, but we decided not not longer include that functionality because it seems like its use might violate parts of the Netflix customer Terms of Use ("no injection of code" or something, which is how we control their player).  We hope to launch a "Netflix" drive someday and convince them of the utility of this program :) If that doesnt' work, we hope to eventually create some kind of work around.  For now we will recommend to our users that they purchase their streamed media from other sources that seem to allow it (ex: Amazon).  Hopefully someday, feel free to <a href=/add_movie>vote</a> for this feature!
-</div>
-
 
 <div id="success_chrome_extension_id" style="display: none;">
   <font face="verdana" color="green">
