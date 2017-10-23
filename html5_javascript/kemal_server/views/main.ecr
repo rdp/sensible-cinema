@@ -211,7 +211,7 @@ end
   
   </div> <!-- end bg image -->
   
-  <a href="#start_boxes"></a>
+  <a href="#start_boxes" id="start_boxes_id"></a>
   <!-- Tab panes -->
   <div class="tab-content">
     <% settings.each_with_index{ |setting, idx| %>
@@ -225,7 +225,7 @@ end
 <script>
 function go_to_start_boxes() {
   $('html, body').animate({
-        scrollTop: $("#start_boxes").offset().top
+        scrollTop: $("#start_boxes_id").offset().top
     }, 2000);
   }
 </script>
