@@ -385,7 +385,6 @@ def logged_in?(env)
   env.session.int?("user_id") ? true : false
 end
 
-
 get "/logout" do |env|
   if is_dev?
     logout_session(env)
@@ -394,11 +393,7 @@ get "/logout" do |env|
     add_to_flash(env, "already logged out")
     env.redirect "/"
   else
-    begin
-      render "views/logout.ecr", "views/layout.ecr"
-    ensure
-      logout_session(env) # don't make them click logout *twice* :\
-    end
+    render "views/logout.ecr", "views/layout.ecr"
   end
 end
 
@@ -649,6 +644,7 @@ post "/subscribe" do |env|
   # TODO use a better email addy once it works/can work??
   system("sendemail -f freeldssheetmusic@gmail.com -t #{email} -u 'Link to the edited movie site' -m 'Here is the link! https://playitmyway.org see you soon! Want to get email updates? Create an account here: https://playitmyway.org/login ' -s smtp.gmail.com -o tls=yes -xu freeldssheetmusic@gmail.com -xp #{File.read("email_pass").strip} -s smtp.gmail.com:587")
   add_to_flash env, "Success, send an invitation email to #{email}, you should see an email in your inbox now!"
+  logout_session(env) # don't log them in, that's pretty unexpected...
   env.redirect "/"
 end
 

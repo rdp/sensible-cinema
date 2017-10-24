@@ -23,7 +23,7 @@ Click here to <a id="logout_amazon">Logout</a> of our site via amazon (i.e. disa
 
 document.getElementById('logout_amazon').onclick = function() {
     amazon.Login.logout();
-    console.log("amazon logout hopefully successfull fwiw..."); // XXXX
+    console.log("amazon logout hopefully successfull fwiw..."); // this just clears some javascript variables apparently
     window.location.href = "/logout_session"; // redir
 };
 
@@ -32,11 +32,11 @@ function logout_facebook() {
     if (response.status == 'connected') {
       FB.logout(function(response) {
         console.log("facebook logout ended fwiw...");
-        window.location.href = "/logout_session"; // redir
       });
     } else {
       alert("attempted to logout via facebook, not logged in to facebook?" + response.status + " " + response);
     }
+    window.location.href = "/logout_session"; // either way clear session
   });
 };
 
