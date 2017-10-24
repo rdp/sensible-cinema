@@ -540,7 +540,7 @@ function isWatchingAdd() {
     // guess this > 0 check is for ancient ones I used to add manually [?] youtubes [?]
     // TODO remove them... :|
     // withinDelta 10 is for amazon at the end, weird stuff LOL
-    if (current_json.url.total_time > 0 && !withinDelta(current_json.url.total_time, videoDuration(), 10)) {
+    if (current_json.url.total_time > 0 && !withinDelta(current_json.url.total_time, videoDuration(), 10.5)) { // amazon can be 10.01 or something if you go to the end
       logOnce("watching add? Or possibly hit X after starting movie amazon expected=" + current_json.url.total_time + " got_duration=" + videoDuration()); // we get NaN for video_element.duration after hit video x in amazon :| [?]
       return true;
       // and do nothing
