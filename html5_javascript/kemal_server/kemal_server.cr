@@ -394,8 +394,11 @@ get "/logout" do |env|
     add_to_flash(env, "already logged out")
     env.redirect "/"
   else
-    logout_session(env) # don't make them click logout *twice* :\
-    render "views/logout.ecr", "views/layout.ecr"
+    begin
+      render "views/logout.ecr", "views/layout.ecr"
+    ensure
+      logout_session(env) # don't make them click logout *twice* :\
+    end
   end
 end
 
