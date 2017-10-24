@@ -80,7 +80,10 @@ function isEmail() {
    FB.init({
     appId            : '187254001787158',
       xfbml: true,
-      version: 'v2.8'
+      version: 'v2.8',
+                status     : true, // check the login status upon init?
+          cookie     : true, // set sessions cookies to allow your server to access the session?
+
     });
     console.log("in fb async init");
   };
