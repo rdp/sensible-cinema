@@ -170,7 +170,7 @@ alter table tag_edit_list_to_tag drop column action; -- hope nobody had any cust
 alter table users CHANGE user_id amazon_id VARCHAR(1024) NOT NULL DEFAULT '';
 alter table users add facebook_id VARCHAR(1024) NOT NULL DEFAULT '';
 -- last login type alter table users drop column type;
-ALTER TABLE users ADD CONSTRAINT unique_email_user_id UNIQUE (email, user_id);
+ALTER TABLE users ADD CONSTRAINT unique_email_user_id UNIQUE (email);
 
 -- and output to screen to show success...
 select * from urls;
