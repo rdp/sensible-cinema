@@ -642,7 +642,9 @@ post "/subscribe" do |env|
 
   # https://askubuntu.com/a/13118/20972
   # TODO use a better email addy once it works/can work??
-  system("sendemail -f freeldssheetmusic@gmail.com -t #{email} -u 'Link to the edited movie site' -m 'Here is the link! https://playitmyway.org see you soon! Want to get email updates? Create an account here: https://playitmyway.org/login ' -s smtp.gmail.com -o tls=yes -xu freeldssheetmusic@gmail.com -xp #{File.read("email_pass").strip} -s smtp.gmail.com:587")
+  password = File.read("email_pass").strip
+  username = File.read("email_full_user").strip
+  system("sendemail -xu #{username} -f #{username} -t #{email} -u 'Link to the edited movie site' -m 'Here is the link! https://playitmyway.org welcome aboard!' -s smtp.gmail.com -o tls=yes -xp #{password} -s smtp.gmail.com:587")
   add_to_flash env, "Success, send an invitation email to #{email}, you should see an email in your inbox now!"
   logout_session(env) # don't log them in, that's pretty unexpected...
   env.redirect "/"
