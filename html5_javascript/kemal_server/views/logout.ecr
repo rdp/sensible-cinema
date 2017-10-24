@@ -1,7 +1,6 @@
 <% if logged_in_user(env).type == "amazon" %>
 
-  
-  <div id="amazon-root"></div>
+<div id="amazon-root"></div>
 <script type="text/javascript">
 
   window.onAmazonLoginReady = function() {
@@ -26,11 +25,12 @@ document.getElementById('logout_amazon').onclick = function() {
     amazon.Login.logout();
     console.log("amazon logout hopefully successfull fwiw..."); // this just clears some javascript variables apparently
     window.location.href = "/logout_session"; // redir
-
 };
 </script>
+
 <% else %>
 
+<!-- assume facebook -->
 <script>
 
 function logout_facebook() {
@@ -38,11 +38,12 @@ function logout_facebook() {
     if (response.status == 'connected') {
       FB.logout(function(response) {
         console.log("facebook logout succeeded [?] fwiw...");
+        window.location.href = "/logout_session"; // either way clear session :\
       });
     } else {
-      console.log("attempted to logout via facebook, not logged in to facebook?" + response.status + " " + response);
+      alert("attempted to logout via facebook, not logged in to facebook?" + response.status + " " + response);
+      window.location.href = "/logout_session"; // either way clear session :\
     }
-    window.location.href = "/logout_session"; // either way clear session :\
   });
 };
 
