@@ -1700,7 +1700,7 @@ function getCurrentTime() {
 }
 
 function doPause() {
-  console.log("doing doPause paused=" + video_element.paused);
+  console.log("doing doPause paused=" + video_element.paused + " buffered=" + getSecondsBufferedAhead());
   if (isYoutubePimw()) {
     youtube_pimw_player.pauseVideo();
   } else {
@@ -1733,10 +1733,19 @@ function getSecondsBufferedAhead() {
 }
 
 var old_ts;
+var video_ever_initialized = false; // can't do seeks "off the bat" in amazon :(
 function seekToTime(ts, callback) {
   if (seek_timer) {
-    console.log("still seeking from previous to=" + old_ts + ", not trying that again... new=" + ts);
+    console.log("still seeking from previous to=" + old_ts + ", not trying that again... requested=" + ts);
     return;
+  }
+  if (!video_ever_initialized) {
+    if (video_element.readyState == 1) {
+      console.log("imagining video never initialized yet...");
+      return;
+    } else {
+      video_ever_initialized = true;
+    }
   }
   
   if (ts < 0) {
@@ -1746,7 +1755,7 @@ function seekToTime(ts, callback) {
   var current_pause_state = isPaused();
   // try and avoid freezes after seeking...if it was playing first...
   var start_time = getCurrentTime();
-  console.log("seeking to " + timeStampToHuman(ts) + " from=" + timeStampToHuman(start_time));
+  console.log("seeking to " + timeStampToHuman(ts) + " from=" + timeStampToHuman(start_time) + " state=" + video_element.readyState);
   // [amazon] if this is far enough away from current, it also implies a "play" call...oddly. I mean seriously that is bizarre.
   // however if it close enough, then we need to call play
   // some shenanigans to pretend to work around this...
@@ -1756,7 +1765,6 @@ function seekToTime(ts, callback) {
   rawSeekToTime(ts);
   old_ts = ts;
   seek_timer = setInterval(function() {
-      console.log("seek_timer interval [i.e. still seeking...] to=" + ts);
       if (isYoutubePimw()) {
         // var done_buffering = (youtube_pimw_player.getPlayerState() == YT.PlayerState.CUED);
         // it stays always as state "paused" ???? :|
@@ -1786,7 +1794,7 @@ function seekToTime(ts, callback) {
           console.log("waiting for it to finish buffering after seek seconds_buffered=" + seconds_buffered);
         }
       } else {
-        console.log("not done seeking paused=" + isPaused() + "desired=" + ts);
+        console.log("seek_timer interval [i.e. still seeking...] paused=" + isPaused() + " desired=" + ts + " state=" + video_element.readyState + " cur_time=" + getCurrentTime());
       }
   }, 25);
 }
