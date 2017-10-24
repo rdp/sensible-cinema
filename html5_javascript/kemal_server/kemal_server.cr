@@ -18,11 +18,12 @@ class CustomHandler < Kemal::Handler # don't know how to interrupt it from a bef
   def call(env)
     puts "start #{env.request.path} #{Time.now}"
     query = env.request.query
-    if (env.request.path =~ /delete|nuke|personalized|edit/ || env.request.method == "POST") && !logged_in?(env) && !env.request.path.starts_with?("/youtube_pimw_edited/") && !env.request.path.starts_with?("send_me_email")
+    path = env.request.path
+    if (path =~ /delete|nuke|personalized|edit/ || env.request.method == "POST") && !logged_in?(env) && !path.starts_with?("/youtube_pimw_edited/") && !path.starts_with?("send_me_email")
       if env.request.method == "GET"
-        env.session.string("redirect_to_after_login", "#{env.request.path}?#{env.request.query}") 
+        env.session.string("redirect_to_after_login", "#{path}?#{env.request.query}") 
       end # else too hard
-      add_to_flash env, "Please login to unleash the Play it My Way's full awesomeness, first, here:"
+      add_to_flash env, "Please login to unleash the Play it My Way's full awesomeness (#{path}), first, here:"
       env.redirect "/login" 
     elsif env.request.host !~ /localhost|playitmyway/
       # sometimes some crawlers were calling https://freeldssheetmusic.org as if it were this, weird, attempt redirect for SEO
