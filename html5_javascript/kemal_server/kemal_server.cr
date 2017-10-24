@@ -19,7 +19,7 @@ class CustomHandler < Kemal::Handler # don't know how to interrupt it from a bef
     puts "start #{env.request.path} #{Time.now}"
     query = env.request.query
     path = env.request.path
-    if (path =~ /delete|nuke|personalized|edit/ || env.request.method == "POST") && !logged_in?(env) && !path.starts_with?("/youtube_pimw_edited/") && !path.starts_with?("send_me_email")
+    if (path =~ /delete|nuke|personalized|edit/ || env.request.method == "POST") && !logged_in?(env) && !path.starts_with?("/youtube_pimw_edited/") && !path.starts_with?("/subscribe")
       if env.request.method == "GET"
         env.session.string("redirect_to_after_login", "#{path}?#{env.request.query}") 
       end # else too hard
@@ -634,8 +634,7 @@ get "/personalized_edit_list/:url_id" do |env|
   render "views/personalized_edit_list.ecr", "views/layout.ecr"
 end
 
-post "/send_me_mail" do |env|
-  puts "made it in"
+post "/subscribe" do |env|
   email = env.params.body["email_to_send_to"]
   setup_user_and_session("", "", "", email, "email", env)
 
