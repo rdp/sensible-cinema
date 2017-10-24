@@ -18,7 +18,7 @@ class CustomHandler < Kemal::Handler # don't know how to interrupt it from a bef
   def call(env)
     puts "start #{env.request.path} #{Time.now}"
     query = env.request.query
-    if (env.request.path =~ /delete|nuke|personalized|edit/ || env.request.method == "POST") && !logged_in?(env) && !env.request.path.starts_with?("/youtube_pimw_edited/")
+    if (env.request.path =~ /delete|nuke|personalized|edit/ || env.request.method == "POST") && !logged_in?(env) && !env.request.path.starts_with?("/youtube_pimw_edited/") && !env.request.path.starts_with?("send_me_email")
       if env.request.method == "GET"
         env.session.string("redirect_to_after_login", "#{env.request.path}?#{env.request.query}") 
       end # else too hard
