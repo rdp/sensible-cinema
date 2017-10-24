@@ -37,7 +37,7 @@ function logout_facebook() {
   FB.getLoginStatus(function(response) {
     if (response.status == 'connected') {
       FB.logout(function(response) {
-        alert("facebook logout succeededfwiw..." + response.status);
+        alert("facebook logout succeeded fwiw..." + response.status);
         window.location.href = "/logout_session"; // either way clear session :\
       });
     } else {
@@ -67,11 +67,11 @@ Logged in with facebook? click here to <a href=# id=logout_facebook onclick="log
 
 <script>
   window.fbAsyncInit = function() {
-   FB.init({
+   /*FB.init({
     appId            : '187254001787158',
       xfbml: true,
       version: 'v2.8'
-    });
+    });*/
     document.getElementById('logout_facebook').click();
   };
 
