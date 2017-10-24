@@ -37,11 +37,11 @@ function logout_facebook() {
   FB.getLoginStatus(function(response) {
     if (response.status == 'connected') {
       FB.logout(function(response) {
-        alert("facebook logout succeeded fwiw..." + response.status);
+        console.log("facebook logout succeeded fwiw..." + response.status);
         window.location.href = "/logout_session"; // either way clear session :\
       });
     } else {
-      alert("attempted to logout via facebook, not logged in to facebook?" + response.status + " " + response);
+      console.log("attempted to logout via facebook, not logged in to facebook?" + response.status + " " + response);
       window.location.href = "/logout_session"; // either way clear session :\
     }
   });
