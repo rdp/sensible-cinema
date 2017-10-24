@@ -644,8 +644,12 @@ post "/subscribe" do |env|
   # TODO use a better email addy once it works/can work??
   password = File.read("email_pass").strip
   username = File.read("email_full_user").strip
-  system("sendemail -xu #{username} -f #{username} -t #{email} -u 'Link to the edited movie site' -m 'Here is the link! https://playitmyway.org welcome aboard!' -s smtp.gmail.com -o tls=yes -xp #{password} -s smtp.gmail.com:587")
-  add_to_flash env, "Success, send an invitation email to #{email}, you should see an email in your inbox now!"
+  out = system("sendemail -xu #{username} -f #{username} -t #{email} -u 'Link to the edited movie site' -m 'Here is the link! https://playitmyway.org welcome aboard!  We hope you enjoy some awesome edited movies from our site!' -s smtp.gmail.com -o tls=yes -xp #{password} -s smtp.gmail.com:587")
+  if out
+    add_to_flash env, "Success, send an invitation email to #{email}, you should see an email in your inbox now!"
+  else
+    add_to_flash env, "Unable to send email, please mention this to us playitmywaymovies@gmail.com"
+  end
   logout_session(env) # don't log them in, that's pretty unexpected...
   env.redirect "/"
 end
