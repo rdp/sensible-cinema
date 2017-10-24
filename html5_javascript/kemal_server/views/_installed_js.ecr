@@ -66,14 +66,14 @@ function pluginFullyInstalled() {
   return isInstalled;
 }
 
-function alertIfNoExtension() { // for the _box
+function alertIfNoExtension() { // for the movie_box
   <% if my_android?(env) %>
-    return true; // :\
+    return true; // :\ XXXX
   <% end %>
   if (!pluginFullyInstalled()) {
     <% if mobile?(env) %>
-      var out = confirm("You can watch edited youtubes on your current device, but not edited movies (like this one), which require app installation.  "
-      "Click OK to see installation instructions, or cancel to go to movie page (unedited)");
+      var out = confirm("You can watch edited youtubes on your current device, but not edited movies (like this one), which require app installation.  " +
+        "Click OK to see installation instructions, or cancel to go to movie page (unedited)");
       if (out) {
         window.open("/installation");
         return false; // too confusing otherwise :|
@@ -82,7 +82,8 @@ function alertIfNoExtension() { // for the _box
       }
     <% else %>
       // desktop
-      var out = confirm("You need to install the chrome extension to watch the video edited, which it appears you have not installed yet, please do that first.  Click OK to go to installation instructions, cancel to continue to see movie page unedited...");
+      var out = confirm("You need to install the chrome extension to watch the video edited, which it appears you have not installed yet, please do that first.  " +
+        "Click OK to go to installation instructions, cancel to continue to see movie page unedited...");
       if (out) {
         window.open("/installation");
         return false; // too confusing otherwise :| XXXX open two tabs still??
