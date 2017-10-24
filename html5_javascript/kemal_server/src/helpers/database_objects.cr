@@ -708,6 +708,7 @@ class User
     if existing.size == 1
       out = existing[0]
       out.name = name # update it in case they were email only
+      out.type = type
       out.email_subscribe = email_subscribe # update profile :)
       if amazon_id.size > 0
         out.amazon_id = amazon_id # why do we even save these anymore?
