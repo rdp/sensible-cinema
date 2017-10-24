@@ -1,11 +1,12 @@
-<div id="amazon-root"></div>
+<% if logged_in_user(env).type == "amazon" %>
+
+  
+  <div id="amazon-root"></div>
 <script type="text/javascript">
 
   window.onAmazonLoginReady = function() {
     amazon.Login.setClientId('amzn1.application-oa2-client.faf94452d819408f83ce8a93e4f46ec6');
-  <% if logged_in_user(env).type == "amazon" %>
     document.getElementById('logout_amazon').click();
-  <% end %>
   };
   (function(d) {
     var a = d.createElement('script'); a.type = 'text/javascript';
@@ -25,18 +26,23 @@ document.getElementById('logout_amazon').onclick = function() {
     amazon.Login.logout();
     console.log("amazon logout hopefully successfull fwiw..."); // this just clears some javascript variables apparently
     window.location.href = "/logout_session"; // redir
+
 };
+</script>
+<% else %>
+
+<script>
 
 function logout_facebook() {
   FB.getLoginStatus(function(response) {
     if (response.status == 'connected') {
       FB.logout(function(response) {
-        console.log("facebook logout ended fwiw...");
+        console.log("facebook logout succeeded [?] fwiw...");
       });
     } else {
-      alert("attempted to logout via facebook, not logged in to facebook?" + response.status + " " + response);
+      console.log("attempted to logout via facebook, not logged in to facebook?" + response.status + " " + response);
     }
-    window.location.href = "/logout_session"; // either way clear session
+    window.location.href = "/logout_session"; // either way clear session :\
   });
 };
 
@@ -58,7 +64,6 @@ Logged in with facebook? click here to <a href=# id=logout_facebook onclick="log
 <br/>
 
 <script>
-<% if logged_in_user(env).type == "facebook" %>
   window.fbAsyncInit = function() {
    FB.init({
     appId            : '187254001787158'
@@ -67,6 +72,6 @@ Logged in with facebook? click here to <a href=# id=logout_facebook onclick="log
     });
     document.getElementById('logout_facebook').click();
   };
-<% end %>
 
 </script>
+<% end %>
