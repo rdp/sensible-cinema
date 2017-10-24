@@ -675,7 +675,7 @@ class User
     # don't save admin, that's just manual on purpose :|
     with_db do |conn|
       if @id == 0
-        @id = conn.exec("insert into users (amazon_id, facebook_id, name, email, type, email_subscribe, editor) values (?, ?, ?, ?, ?, ?)", amazon_id, facebook_id, name, email, type, email_subscribe, editor).last_insert_id.to_i32
+        @id = conn.exec("insert into users (amazon_id, facebook_id, name, email, type, email_subscribe, editor) values (?, ?, ?, ?, ?, ?, ?)", amazon_id, facebook_id, name, email, type, email_subscribe, editor).last_insert_id.to_i32
       else
        conn.exec "update users set amazon_id = ?, facebook_id = ?, name = ?, email = ?, type = ?, email_subscribe = ?, editor = ? where id = ?", amazon_id, facebook_id, name, email, type, email_subscribe, editor, id
       end
