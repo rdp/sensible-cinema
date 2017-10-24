@@ -184,7 +184,7 @@ class Url
   
   def tag_edit_lists(env)
     if logged_in?(env)
-      query("select * from tag_edit_list where url_id=? and user_id = ?", id, user_id(env)) do |rs|
+      query("select * from tag_edit_list where url_id = ? and user_id = ?", id, our_user_id(env)) do |rs| # this is user_id *in that table* not the user table
         TagEditList.from_rs rs
       end
     else
@@ -199,7 +199,7 @@ class Url
   end
   
   def tags_by_type
-    tags.group_by{|t| t.default_action}
+    tags.group_by{|t| t.default_action }
   end
 
   def destroy_no_cascade
@@ -646,7 +646,8 @@ end
 class User
   JSON.mapping({
     id: Int32,
-    user_id: String,
+    amazon_id: String,
+    facebook_id: String,
     name: String,
     email: String,
     type: String,
@@ -656,7 +657,8 @@ class User
   })
   DB.mapping({
     id: Int32,
-    user_id: String,
+    amazon_id: String,
+    facebook_id: String,
     name: String,
     email: String,
     type: String,
@@ -665,7 +667,7 @@ class User
     admin: Bool
   })
 
-  def initialize(@user_id, @name, @email, @type, @email_subscribe, @editor, @admin) # no id
+  def initialize(@amazon_id, @facebook_id, @name, @email, @type, @email_subscribe, @editor, @admin) # no id on purpose
     @id = 0
   end
 
@@ -673,9 +675,9 @@ class User
     # don't save admin, that's just manual on purpose :|
     with_db do |conn|
       if @id == 0
-        @id = conn.exec("insert into users (user_id, name, email, type, email_subscribe, editor) values (?, ?, ?, ?, ?, ?)", user_id, name, email, type, email_subscribe, editor).last_insert_id.to_i32
+        @id = conn.exec("insert into users (amazon_id, facebook_id, name, email, type, email_subscribe, editor) values (?, ?, ?, ?, ?, ?)", amazon_id, facebook_id, name, email, type, email_subscribe, editor).last_insert_id.to_i32
       else
-       conn.exec "update users set user_id = ?, name = ?, email = ?, type = ?, email_subscribe = ?, editor = ? where id = ?", user_id, name, email, type, email_subscribe, editor, id
+       conn.exec "update users set amazon_id = ?, facebook_id = ?, name = ?, email = ?, type = ?, email_subscribe = ?, editor = ? where id = ?", amazon_id, facebook_id, name, email, type, email_subscribe, editor, id
       end
     end
   end
@@ -698,22 +700,28 @@ class User
     end
   end
 
-  def self.from_update_or_new_db(user_id, name, email, type, email_subscribe)
-    existing = query("SELECT * from users where email = ? and user_id = ?", email, user_id) do |rs| # distinguish facebook from amazon for now...too confusing not too since we store the user_id :|
+  def self.from_update_or_new_db(amazon_id, facebook_id, name, email : String, type, email_subscribe)
+    existing = query("SELECT * from users where email = ?", email) do |rs| 
       User.from_rs(rs);
     end
     raise "huh" if existing.size > 1
     if existing.size == 1
       out = existing[0]
-      out.name = name
-      raise "auth mismatch?" unless out.type == type
-      out.email_subscribe = email_subscribe
-      out.create_or_update # update
+      out.name = name # update it in case they were email only
+      out.email_subscribe = email_subscribe # update profile :)
+      if amazon_id.size > 0
+        out.amazon_id = amazon_id # why do we even save these anymore?
+      elsif facebook_id.size > 0
+        out.facebook_id = facebook_id
+      else
+        # email only == OK
+      end
+      out.create_or_update # update in our case
       out
     else
       editor = false # must manually promote them these days
       admin = false
-      out = User.new(user_id, name, email, type, email_subscribe, editor, admin)
+      out = User.new(amazon_id, facebook_id, name, email, type, email_subscribe, editor, admin)
       out.create_or_update # create
       out
     end

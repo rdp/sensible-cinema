@@ -2,6 +2,7 @@
 drop table if exists tag_edit_list_to_tag;
 drop table if exists tag_edit_list;
 drop table if exists tags;
+drop table if exists edits;
 drop table if exists urls;
 drop table if exists users;
 
@@ -165,6 +166,10 @@ alter table urls drop column community_contrib;
 alter table tag_edit_list_to_tag add column enabled BOOL DEFAULT true;
 update tag_edit_list_to_tag set enabled = false where action = 'do_nothing';
 alter table tag_edit_list_to_tag drop column action; -- hope nobody had any custom actions!
+
+alter table users CHANGE user_id amazon_id VARCHAR(1024) NOT NULL DEFAULT '';
+alter table users add facebook_id VARCHAR(1024) NOT NULL DEFAULT '';
+-- last login type alter table users drop column type;
 
 -- and output to screen to show success...
 select * from urls;

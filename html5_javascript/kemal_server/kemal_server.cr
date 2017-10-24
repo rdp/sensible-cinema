@@ -352,7 +352,7 @@ get "/login_from_facebook" do |env|
   # we can trust it...
   details = JSON.parse download("https://graph.facebook.com/v2.8/me?fields=email,name&access_token=#{access_token}") # public_profile, user_friends also available, though not through /me [?]
   # {"email" => "rogerpack2005@gmail.com", "name" => "Roger Pack", "id" => "10155234916333140"}
-  setup_user_and_session(details["id"].as_s, details["name"].as_s, details["email"].as_s, "facebook", env)
+  setup_user_and_session("", details["id"].as_s, details["name"].as_s, details["email"].as_s, "facebook", env)
 end
 
 get "/login_from_amazon" do |env| # amazon changes the url to this with some GET params after successful auth
@@ -360,13 +360,13 @@ get "/login_from_amazon" do |env| # amazon changes the url to this with some GET
   raise "access token does not belong to us?" unless out["aud"] == "amzn1.application-oa2-client.faf94452d819408f83ce8a93e4f46ec6"
   details = JSON.parse download("https://api.amazon.com/user/profile", HTTP::Headers{"Authorization" => "bearer " + env.params.query["access_token"]})
   # {"user_id":"amzn1.account.cwYYXX","name":"Roger Pack","email":"rogerpack2005@gmail.com"}
-  setup_user_and_session(details["user_id"].as_s, details["name"].as_s, details["email"].as_s, "amazon", env) # XX don't even need to specify amazon since the user id's are different and we use that today...FWIW.
+  setup_user_and_session(details["user_id"].as_s, "", details["name"].as_s, details["email"].as_s, "amazon", env) # XX don't even need to specify amazon since the user id's are different and we use that today...FWIW.
 end
 
-def setup_user_and_session(user_id, name, email, type, env)
+def setup_user_and_session(amazon_id, facebook_id, name, email, type, env)
   email_subscribe = env.params.query["email_subscribe"] == "true"
-  user = User.from_update_or_new_db(user_id, name, email, type, email_subscribe)
-  env.session.int("user_id", user.id) # if save whole session, we can *never* get updates from admin session to theirs :|
+  user = User.from_update_or_new_db(amazon_id, facebook_id, name, email, type, email_subscribe)
+  env.session.int("user_id", user.id) # if save whole session, we can *never* get user updates from admin session back to theirs :|
   add_to_flash(env, "Successfully logged in, welcome #{user.name}!")
   if env.session.string?("redirect_to_after_login") 
     env.redirect env.session.string("redirect_to_after_login")
@@ -600,7 +600,7 @@ end
 def login_test_admin(env)
     env.params.query["email_subscribe"] = "false"
     add_to_flash env, "logged in special as test user"
-    setup_user_and_session("test_user_id", "test_user_name", "test@test.com", "facebook", env) # match row from test db.init.sql
+    setup_user_and_session("test_user_amazon_id", "test_user_facebook_id", "test_user_name", "test@test.com", "facebook", env) # match row from test db.init.sql
 end
 
 get "/login" do |env|
@@ -616,7 +616,7 @@ end
 
 get "/delete_tag_edit_list/:url_id" do |env|
   url_id = env.params.url["url_id"].to_i
-  tag_edit_list = TagEditList.get_existing_by_url_id url_id, user_id(env)
+  tag_edit_list = TagEditList.get_existing_by_url_id url_id, our_user_id(env)
   tag_edit_list.destroy_tag_edit_list_to_tags
   tag_edit_list.destroy_no_cascade
   add_to_flash env, "deleted one tag edit list"
@@ -625,8 +625,8 @@ end
 
 get "/personalized_edit_list/:url_id" do |env|
   url_id = env.params.url["url_id"].to_i
-  tag_edit_list = TagEditList.get_only_by_url_id_or_nil url_id, user_id(env)
-  tag_edit_list ||= TagEditList.new url_id, user_id(env)
+  tag_edit_list = TagEditList.get_only_by_url_id_or_nil url_id, our_user_id(env)
+  tag_edit_list ||= TagEditList.new url_id, our_user_id(env)
   # and not save yet :|
   show_tag_details =  env.params.query["show_tag_details"]?
     
@@ -635,6 +635,8 @@ end
 
 post "/send_me_mail" do |env|
   email = env.params.body["email_to_send_to"]
+  setup_user_and_session("", "", "", email, "email", env)
+
   # https://askubuntu.com/a/13118/20972
   # TODO use a better email addy once it works/can work??
   system("sendemail -f freeldssheetmusic@gmail.com -t #{email} -u 'Link to the edited movie site' -m 'Here is the link! https://playitmyway.org see you soon! Want to get email updates? Create an account here: https://playitmyway.org/login ' -s smtp.gmail.com -o tls=yes -xu freeldssheetmusic@gmail.com -xp #{File.read("email_pass").strip} -s smtp.gmail.com:587")
@@ -647,10 +649,10 @@ post "/save_tag_edit_list" do |env|
   url_id = params["url_id"].to_i
   url = Url.get_only_by_id(url_id) # little weird here...
   if params["id"]?
-    tag_edit_list = TagEditList.get_existing_by_url_id url_id, user_id(env)
+    tag_edit_list = TagEditList.get_existing_by_url_id url_id, our_user_id(env)
     raise "wrong id? you gave #{params["id"]} expected #{tag_edit_list.id}" unless params["id"].to_i == tag_edit_list.id
   else
-    tag_edit_list = TagEditList.new url_id, user_id(env)
+    tag_edit_list = TagEditList.new url_id, our_user_id(env)
   end
 
   tag_edit_list.description = resanitize_html params["description"]
@@ -675,7 +677,7 @@ end
 
 def save_local_javascript(db_url, log_message, env) # actually just json these days...
   File.open("edit_descriptors/log.txt", "a") do |f|
-    f.puts log_message + " user:#{user_id(env)} ... " + db_url.name_with_episode
+    f.puts log_message + " user:#{our_user_id(env)} ... " + db_url.name_with_episode
   end
   as_json = json_for(db_url, env)
   escaped_url_no_slashes = URI.escape db_url.url
@@ -691,8 +693,8 @@ def is_dev?
   File.exists?("./this_is_development")
 end
 
-def user_id(env)
-  logged_in_user(env).id # could use user_id here but...that's somebody else's ID dunno...weird'ish...
+def our_user_id(env)
+  logged_in_user(env).id
 end
 
 def logged_in_user(env)
