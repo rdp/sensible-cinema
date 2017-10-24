@@ -62,9 +62,10 @@ Logged in with facebook? click here to <a href=# id=logout_facebook onclick="log
   window.fbAsyncInit = function() {
    FB.init({
     appId            : '187254001787158'
+      xfbml: true,
+      version: 'v2.8'
     });
     document.getElementById('logout_facebook').click();
-    // guess amazon might not be loaded yet here
   };
 <% end %>
 
