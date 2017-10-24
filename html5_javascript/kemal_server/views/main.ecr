@@ -161,7 +161,7 @@ Relax and enjoy your movies while we filter out the stuff you don't want, for fr
   </font>
 </div>
 </a>
-<% if !logged_in?(env) %>
+<% if !logged_in?(env) && !admin?(env) %>
 <br/>
  Enter your email address to get announcements of new movies!
   <form action=/subscribe method=POST >
