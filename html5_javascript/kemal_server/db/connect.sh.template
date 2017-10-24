@@ -1,2 +1,4 @@
-cat ./db/connection_string_local_box_no_commit.txt
-mysql -u user -p db_name # will prompt for pass..
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cat $DIR/connection_string_local_box_no_commit.txt
+set -x
+mysql -u replace_user replace_db_name -p # will prompt for pass..
