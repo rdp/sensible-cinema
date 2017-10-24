@@ -161,13 +161,16 @@ Relax and enjoy your movies while we filter out the stuff you don't want, for fr
   </font>
 </div>
 </a>
-
+<% if !logged_in?(env) %>
 <br/>
- Enter your email address and get announcements of new movies!
+ Enter your email address to get announcements of new movies!
   <form action=/subscribe method=POST >
     <input type="text" name="email_to_send_to" placeholder="yourname@site.com" />
     <input type="submit" value="Sign up!">
   </form>
+
+<% end %>  
+  
 <h2 style="font-family: 'Patua One', cursive;">Edited Movie List</h2>
 
 <% 
