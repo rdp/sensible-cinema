@@ -634,6 +634,7 @@ get "/personalized_edit_list/:url_id" do |env|
 end
 
 post "/send_me_mail" do |env|
+  puts "made it in"
   email = env.params.body["email_to_send_to"]
   setup_user_and_session("", "", "", email, "email", env)
 
