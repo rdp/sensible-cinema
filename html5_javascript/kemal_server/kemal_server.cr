@@ -353,7 +353,8 @@ get "/login_from_facebook" do |env|
   # we can trust it...
   details = JSON.parse download("https://graph.facebook.com/v2.8/me?fields=email,name&access_token=#{access_token}") # public_profile, user_friends also available, though not through /me [?]
   # {"email" => "rogerpack2005@gmail.com", "name" => "Roger Pack", "id" => "10155234916333140"}
-  setup_user_and_session("", details["id"].as_s, details["name"].as_s, details["email"].as_s, "facebook", env.params.query["email_subscribe"] == "true", env)
+  user = setup_user_and_session("", details["id"].as_s, details["name"].as_s, details["email"].as_s, "facebook", env.params.query["email_subscribe"] == "true", env)
+  add_to_flash(env, "Successfully logged in via facebook, welcome #{user.name}!")
 end
 
 get "/login_from_amazon" do |env| # amazon changes the url to this with some GET params after successful auth
@@ -361,20 +362,23 @@ get "/login_from_amazon" do |env| # amazon changes the url to this with some GET
   raise "access token does not belong to us?" unless out["aud"] == "amzn1.application-oa2-client.faf94452d819408f83ce8a93e4f46ec6"
   details = JSON.parse download("https://api.amazon.com/user/profile", HTTP::Headers{"Authorization" => "bearer " + env.params.query["access_token"]})
   # {"user_id":"amzn1.account.cwYYXX","name":"Roger Pack","email":"rogerpack2005@gmail.com"}
-  setup_user_and_session(details["user_id"].as_s, "", details["name"].as_s, details["email"].as_s, "amazon", env.params.query["email_subscribe"] == "true", env) # XX don't even need to specify amazon since the user id's are different and we use that today...FWIW.
+  user = setup_user_and_session(details["user_id"].as_s, "", details["name"].as_s, details["email"].as_s, "amazon", env.params.query["email_subscribe"] == "true", env) # XX don't even need to specify amazon since the user id's are different and we use that today...FWIW.
+  add_to_flash(env, "Successfully logged in via Amazon, welcome #{user.name}!")
 end
 
 def setup_user_and_session(amazon_id, facebook_id, name, email, type, email_subscribe, env)
   user = User.from_update_or_new_db(amazon_id, facebook_id, name, email, type, email_subscribe)
   env.session.int("user_id", user.id) # if save whole session, we can *never* get user updates from admin session back to theirs :|
-  add_to_flash(env, "Successfully logged in, welcome #{user.name}!")
   if env.session.string?("redirect_to_after_login") 
     env.redirect env.session.string("redirect_to_after_login")
     env.session.delete_string("redirect_to_after_login")
   else
-    add_to_flash(env, "If you were entering information, please use your browser's back button (hit it several times) to resend it");
+    if editor?(env)
+      add_to_flash(env, "If you were entering information, please use your browser's back button (hit it several times) to resend it");
+    end
     env.redirect "/"
   end
+  user
 end
 
 def logged_in?(env)
