@@ -67,7 +67,7 @@ function addEditUi() {
       <br/>
       <a href=# onclick="openPersonalizedEditList(); return false">Personalize which parts you edit out</a>
       <br/>
-      Feedback? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
+      We're still in Beta, did we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
       <div style="display: inline-block"> <!-- prevent line feed before this div -->
         <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable if flagged as editor -->
            <a href=# onclick="toggleAddNewTagStuff(); return false;">[add tag]</a>
