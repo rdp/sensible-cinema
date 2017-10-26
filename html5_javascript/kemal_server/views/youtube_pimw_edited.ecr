@@ -122,7 +122,7 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
 function onPlayerReady(event) {
   console.log("youtube_player ready and setup! auto playing...");
   <% if !mobile?(env) && url %>
-    event.target.playVideo(); // otherwise it can get in this weird pause state 
+//    event.target.playVideo(); // otherwise it can get in this weird pause state on mobile...
   <% end %>
   
   var start_vol = window.localStorage.getItem("youtube_volume") || 50; // default isn't 100? or seemed to be once...
