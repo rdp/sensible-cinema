@@ -1,6 +1,5 @@
 == overall roadmap ==
 
-LLC
 kickstarter
   movie, tweak,
   fire!
@@ -11,6 +10,10 @@ start editing youtubes them/me :)
   lawyers first?
   
 == somewhat random list ==
+
+LLC "transfer to"/setup bank account
+
+re-edit cokeville
 
 get installation feedback from humans again
   and TV feedback :\
@@ -27,23 +30,13 @@ decide when private edits :\
 
 android:
   publish!
-  allow login :|
-  make WebView can go fullscreen
-    add "fullscreen" new button for humanz to use their full screen!
-  adjust UA so it is sometimes prettier (tried, failed)
-  link to "see all your purchased movies" (if that works by now LOL)
-  link to re-watch latest [?]
-  reload button? :\
-  Prettier front page, prettier icons
-  submit to kindle fires? LOL
-  experiment with "uninstall all chrome" :\
-  real android TV app?
   
 hbo tab?
 
-figure out how to collect emails :\
+figure out how to collect emails/logins?
 
 faster main page?? :\ better?
+  button "go back to the top" :\
 
 kickstarter
   decide on prizes
@@ -56,8 +49,24 @@ right before kickstarter:
   double check still on prime?
   and also add those amazon second url's in there, soooo annoying...
 
-
 == meh sometime ==
+
+android app:
+  allow login for them! :|
+  make WebView can go fullscreen
+    add "fullscreen" new button for humanz to use their full screen!
+  adjust UA so it is sometimes prettier (tried, failed)
+  link to "see all your purchased movies" (if that works by now LOL)
+  link to re-watch latest [?]
+  reload button? :\
+  Prettier front page, prettier icons
+  submit to kindle fires? LOL
+  experiment with "uninstall all chrome" :\
+  real android TV app?
+
+did alerts not show up in windows?
+
+should say "rent to watch edited" I think again 
 
 better "updated at" option et al for sorting :|
 
@@ -88,18 +97,13 @@ don't show youtubes at top of "todo next" tab :\
 
 another button for "just new releases"
 
-better website speed
-  better size too? :\
-  
-buy mac(book) see if looks OK there
+mac(book) see if looks OK there
 
 buy iphone, control computer with it :\ (user-agent?)
 
 integrate with "real" amazon API so I can get the rental numbers right :|
 
 get bank account, move to its own linode server :|
-
-show details -> hide details
 
 some way "signup for news as we get more"? some call to action
 
@@ -241,6 +245,8 @@ make it look finer-er on mobile
 can filter previews/trailers *this is really annoying*
 
 == todo never LOL ==
+
+show details -> hide details
 
 Add instructions for all sorts of weird stuff, like using Safari on mac (bookmarklet?) Safari on iOS, edge, FF...
 
