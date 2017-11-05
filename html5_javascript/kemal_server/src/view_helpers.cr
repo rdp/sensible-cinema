@@ -65,8 +65,15 @@ def humanize_category(category)
     category
 end
 
-def tags_by_category(url)
-  url.tags.group_by{|tag| tag.category}.select{|category, tags| tags.size > 1 }.map{|category, tags| 
+struct Bool
+  def <=>(other : Bool)
+    self == other ? 0 : -1
+  end
+end
+
+def tags_by_category_with_size(url)
+  url.tags.group_by{|tag| tag.category}.select{|category, tags| tags.size > 1 }.to_a.sort_by{|cat, tags| cat == "movie-content"}
+    .map{ |category, tags| 
     category = humanize_category(category)
     "#{category}: #{tags.size}"
   }.join(", ")

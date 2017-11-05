@@ -8,7 +8,7 @@
             <%= if_present_with_break url.editing_notes, "" %>
             <% if url.tag_count > 0 %>
               What you can edit out: 
-              <%= tags_by_category(url) %> <!-- if this blows up its a tag with unknown category -->
+              <%= tags_by_category_with_size(url) %> <!-- if this blows up its a tag with unknown category -->
             <% end %>
             <br/>
             <%= if_present_with_break url.cost_string, "Price:" %>
