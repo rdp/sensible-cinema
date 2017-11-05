@@ -191,11 +191,7 @@ settings = [
   {type: :in_the_works, title: "Videos in the works (please support us!)", urls: (all_urls_half_way + all_urls_just_started), message: "Things we want to get to, with your support!"}
 ] 
 
-if chrome_desktop?(env)
-  settings.unshift(pay_movies, youtubes);
-else
-  settings.unshift(youtubes, pay_movies);
-end
+settings.unshift(youtubes, pay_movies)
 
 %>
   <!-- Nav tabs -->
