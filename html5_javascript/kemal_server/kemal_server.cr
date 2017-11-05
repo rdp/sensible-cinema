@@ -796,11 +796,11 @@ post "/save_url" do |env|
   env.redirect "/view_url/" + db_url.id.to_s
 end
 
-def download_youtube_image_if_possible(db_url)
+def download_outube_image_if_possible(db_url)
   if !db_url.image_local_filename.present? && db_url.url =~ /youtube_pimw_edited/
     # we can get an image fer free! :) The default ratio they seem to offer "wide horizon" unfortunately, though we might be able to do better XXXX
     youtube_id = HTML.unescape(db_url.url).split("/")[-1]
-    image_url = "http://img.youtube.com/vi/#{youtube_id}/0.jpg"
+    image_url = "http://img.youtube.com/vi/#{youtube_id}/0.jpg" # default 480x360, ours targets 450 today so...enuf uh suppose
     puts "downloading auto image_url=#{image_url}"
     db_url.download_image_url_and_save image_url
   end
