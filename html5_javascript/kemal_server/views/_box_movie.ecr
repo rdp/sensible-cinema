@@ -12,19 +12,19 @@
                  alert('after opening the series, click play button for episode <%= url.episode_number %> (<%= url.episode_name %>)');
               <% end %>
             ">
-            <%= url.image_tag "id='box_movie_#{url.id}_image' style='max-height: 300px; max-width: 300px; filter: drop-shadow(5px 5px 5px #222); padding: 5px; margin-left: auto; margin-right: auto; display: block; margin-bottom: 5px;'", ImageSize::VerySmall %>
+              <%= url.image_tag "id='box_movie_#{url.id}_image' style='max-height: 300px; max-width: 300px; filter: drop-shadow(5px 5px 5px #222); padding: 5px; margin-left: auto; margin-right: auto; display: block; margin-bottom: 5px;'", ImageSize::VerySmall %>
               Watch <%= url.name_with_episode %>
-              <% if url.editing_status == editing_phases[:done_second_pass] %>
-                 edited now!
-              <% elsif url.tag_count == 0 %>
-                (not started, click here to watch unedited anyway)
-              <% elsif url.editing_status == editing_phases[:done_first_pass] %>
-                (edited: done with first pass, but not finalized)
-              <% else %>
-                (edits incomplete, work in progress, click here to watch anyway)
-              <% end %>
-              <br/>
             </a>
+            <% if url.editing_status == editing_phases[:done_second_pass] %>
+               edited now!
+            <% elsif url.tag_count == 0 %>
+              (not started, click here to watch unedited anyway)
+            <% elsif url.editing_status == editing_phases[:done_first_pass] %>
+              (edited: done with first pass, but not finalized)
+            <% else %>
+              (edits incomplete, work in progress, click here to watch anyway)
+            <% end %>
+            <br/>
           </div>
           <div style="text-align: center;">		  
            Or <a href=/personalized_edit_list/<%=url.id%>>personalize edits</a> your way!
