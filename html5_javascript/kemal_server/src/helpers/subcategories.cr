@@ -20,7 +20,7 @@ def subcategory_map
     "movie note for viewer": "movie-content -- movie note/message for viewer",
     "movie content other": "movie-content -- other",
 
-    "loud noise": "profanity -- loud noise/screaming",
+    "loud noise": "profanity -- loud noise/screaming/yelling",
     "raucous music": "profanity -- raucous music",
     "personal insult mild": "profanity -- insult (\"moron\", \"idiot\" etc.)",
     "personal attack mild": "profanity -- attack command (\"shut up\" etc.)",
