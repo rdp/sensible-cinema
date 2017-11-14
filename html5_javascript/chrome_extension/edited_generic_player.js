@@ -158,7 +158,7 @@ sub cat:
     
       <option value="movie content other">movie-content -- other</option>    
     
-      <option value="loud noise">profanity -- loud noise/screaming</option>    
+      <option value="loud noise">profanity -- loud noise/screaming/yelling</option>    
     
       <option value="raucous music">profanity -- raucous music</option>    
     
@@ -205,6 +205,8 @@ sub cat:
       <option value="d word">profanity -- d word</option>    
     
       <option value="h word">profanity -- h word</option>    
+    
+      <option value="h word in context">profanity -- h word original meaning</option>    
     
       <option value="s word">profanity -- s word</option>    
     

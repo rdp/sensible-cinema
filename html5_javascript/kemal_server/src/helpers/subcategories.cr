@@ -44,6 +44,7 @@ def subcategory_map
     "a word": "profanity -- a.. (and/or followed by anything)",
     "d word": "profanity -- d word",
     "h word": "profanity -- h word",
+    "h word in context": "profanity -- h word original meaning",
     "s word": "profanity -- s word",
     "f word": "profanity -- f-bomb expletive",
     "f word sex connotation": "profanity -- f-bomb sexual connotation",
