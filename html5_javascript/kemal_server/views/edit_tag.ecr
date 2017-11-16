@@ -30,6 +30,10 @@ If there are any categories missing let us know!
 <% end %>
 <br/>
 <a href=/view_url/<%= url.id %>><< back to movie edit page</a> (changes made here will be lost)
+<br/>
+<% if previous_tag %>
+  <a href=/edit_tag/<%= previous_tag.id %> >edit previous tag </a>
+<% end %>
 
 <script>
 document.getElementById('category_select').value = '<%= tag.category %>';

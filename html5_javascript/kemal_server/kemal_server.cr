@@ -234,6 +234,10 @@ end
 get "/edit_tag/:tag_id" do |env|
   tag = Tag.get_only_by_id(env.params.url["tag_id"])
   url = tag.url
+  previous_tags = url.tags.reject{|t| t.start >= tag.start}
+  if previous_tags.size > 0
+    previous_tag = previous_tags[-1] # :\
+  end
   render "views/edit_tag.ecr", "views/layout.ecr"
 end
 
@@ -257,6 +261,7 @@ get "/new_empty_tag/:url_id" do |env|
   tag.start = 1.0
   tag.endy = url.total_time
   add_to_flash env, "this tag is not yet saved, hit the save button when you are done"
+  previous_tag = nil # :\
   render "views/edit_tag.ecr", "views/layout.ecr"
 end
 
