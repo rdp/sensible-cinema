@@ -324,6 +324,8 @@ sub cat:
     
       <option value="suspenseful fight &quot;will they win?&quot;">suspense -- suspenseful fight &quot;will they win?&quot;</option>    
     
+      <option value="creepy">suspense -- creepy/horror/unsettling</option>    
+    
       <option value="suspense other">suspense -- other</option>    
     
 </select>

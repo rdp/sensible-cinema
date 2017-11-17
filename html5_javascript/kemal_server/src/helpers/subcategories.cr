@@ -107,6 +107,7 @@ def subcategory_map
 
     "frightening/startling scene/event": "suspense -- frightening/startling scene/event",
     "suspenseful fight \"will they win?\"": "suspense -- suspenseful fight \"will they win?\"",
+    "creepy": "suspense -- creepy/horror/unsettling",
     "suspense other": "suspense -- other"
   }
 end
