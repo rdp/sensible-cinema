@@ -22,12 +22,14 @@ update_icon = function(request, sender, sendResponse) {
 };
 
 function createNotification(notification_desired) { // shared with plugin.js
-  var notification = new Notification(notification_desired.title, {body: notification_desired.body}); // auto shows it
-  notification.onclose = function() { console.log("closed?!?");}; // doesn't work "well" OS X (only when they really choose close, not auto disappear :| ) requireInteraction doesn't help either?? TODO report to chrome, when fixed update my SO answer :)
+  var notification = new Notification(notification_desired.title, {body: notification_desired.body, tag: notification_desired.tag.id}); // auto shows it
+  notification.onclose = function() { console.log("notification onclose");}; 
+  // doesn't work "well" OS X (only when they really choose close, not auto disappear :| ) requireInteraction doesn't help either?? TODO report to chrome, when fixed update my SO answer :)
   notification.onclick = function(event) {
     event.preventDefault(); // prevent the browser from focusing the Notification's tab
     window.open('https://playitmyway.org/view_tag/' + notification_desired.tag.id, '_blank'); // also opens and sets active
   }
+  setTimeout(function() {notification.close();}, 5000);
 }
 
 chrome.runtime.onMessage.addListener(update_icon); // from contentscripts.js 

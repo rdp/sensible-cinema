@@ -89,7 +89,7 @@ function addEditUi() {
         
       <!-- no method for seek forward since it'll at worst seek too far forward --> 
       <input type='button' onclick="seekToBeforeSkip(-30); return false;" value='-30s'/>
-      <input type='button' onclick="seekToTime(getCurrentTime() + 30); return false;" value='+30s'/> 
+      <input type='button' onclick="seekToTime(getCurrentTime() - 2); return false;" value='-2s'/> 
       <input type='button' onclick="seekToBeforeSkip(-5); return false;" value='-5s'/>
       <input type='button' onclick="seekToTime(getCurrentTime() + 5); return false;" value='+5s'/> 
       <input type='button' onclick="stepFrameBack(); return false;" value='frame-'/>
@@ -253,8 +253,9 @@ function checkIfShouldDoActionAndUpdateUI() {
     if (tag) {
       // was the seek to within an edit? Since this was a "rewind" let's actually go to *before* the bad spot, so the -10 button can work from UI
       console.log("they just seeked backward to within a skip, rewinding more...");
+      blankScreenIfWithinHeartOfSkip(tag, cur_time);
       seekToBeforeSkip(0);
-      return;
+      return; // don't skip forward now...
     }
   }
   last_timestamp = cur_time;
@@ -284,17 +285,19 @@ function checkIfShouldDoActionAndUpdateUI() {
   tag = areWeWithin(skips, cur_time);
   if (tag) {
     timestamp_log("seeking", cur_time, tag);
-    optionally_show_notification(tag); // show it now so it can notify while it seeks :)
+    optionally_show_notification(tag); // show it now so it can notify while it seeks :) [NB for longer seeks it shows it over and over but notification tag has our back :\ ]
     seekToTime(tag.endy); // just seek (works fine in amazon, and seems to even work ok these days in youtube...
+    blankScreenIfWithinHeartOfSkip(tag, cur_time);
   }
   
   tag = areWeWithin(yes_audio_no_videos, cur_time);
   tag = tag || areWeWithin(mute_audio_no_videos, cur_time);
+
   if (tag) {
     // use style.visibility here so it retains the space on screen it would have otherwise used...
     if (video_element.style.visibility != "hidden") {
       timestamp_log("hiding video leaving audio ", cur_time, tag);
-      video_element.style.visibility="hidden";
+      video_element.style.visibility = "hidden";
     }
     extra_message += "doing a no video yes audio";
     notify_if_new(tag);
@@ -428,6 +431,16 @@ function checkIfShouldDoActionAndUpdateUI() {
   removeIfNotifyEditsHaveEnded(cur_time); // gotta clean this up sometime, and also support "rewind and renotify" so just notify once on init...
 }
 
+function blankScreenIfWithinHeartOfSkip(skip_tag, cur_time) {
+    // if it's trying to seek out of something baaad then don't show a still frame of the bad stuff right in its middle!
+    if (!withinDelta(skip_tag.start, cur_time, 0.05)) { // don't show black blip on normal seek from start
+      if (video_element.style.visibility != "hidden") {
+        console.log("blanking it because within skip");
+        video_element.style.visibility = "hidden"; // it'll unhide it for us soon...
+      }
+    }
+}
+
 function removeIfNotifyEditsHaveEnded(cur_time) {
   for (var tag of currently_in_process_tags.keys()) {
     if (!areWeWithin([tag], cur_time)) {
@@ -465,6 +478,9 @@ function optionally_show_notification(seek_tag) {
       exitFullScreen(); // not sure what else to do here so they can see it TODO test etc :|
     }
     var maxTitleSize = 40; // max 45 for title OS X (49 for body), 40 for being able to add ellipsis
+    if (window.navigator.userAgent.indexOf("Windows NT") != -1) {
+      maxTitleSize = 25; // seems smaller, chrome windows
+    }
     // search backward for first space to split on...
     for (var i = maxTitleSize; i > 0; i--) {
       var char = popup.charAt(i);
