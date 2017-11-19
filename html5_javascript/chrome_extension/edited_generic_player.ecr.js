@@ -428,6 +428,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   updateHTML(document.getElementById('tag_details_second_line'), second_line);
   
   updateHTML(document.getElementById("playback_rate"), twoDecimals(getPlaybackRate()) + "x");
+  // XXXX cleanup the below wasn't working enough huh?
   removeIfNotifyEditsHaveEnded(cur_time); // gotta clean this up sometime, and also support "rewind and renotify" so just notify once on init...
 }
 
