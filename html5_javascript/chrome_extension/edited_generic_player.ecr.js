@@ -1031,11 +1031,11 @@ function reloadForCurrentUrl() {
     getRequest(function(json_string) {
       loadSucceeded(json_string);     
       link.innerHTML = "Reloaded!";
-      setTimeout(function() {link.innerHTML = "Reload tags";}, 3000);
+      setTimeout(function() {link.innerHTML = "Reload tags";}, 5000);
     }, loadFailed);
   }
   else {
-    alert("not reloading, possibly none loaded or in middle of a test edit [hit browser reload button if the latter]");
+    alert("not reloading, possibly no edits loaded or in middle of a test edit=" + inMiddleOfTestingTimer + "[hit Reload tags if the latter]");
   }
 }
 
