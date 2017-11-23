@@ -227,7 +227,7 @@ function areWeWithin(thisTagArray, cur_time) {
     var tag = thisTagArray[i];
     var start_time = tag.start;
     var end_time = tag.endy;
-    if(cur_time > start_time && cur_time < end_time && !withinDelta(cur_time, end_time, 0.0001)) { // avoid seeking at 4123.819999 will_end:4123.82 in 9.99999429041054e-7s
+    if(cur_time >= start_time && cur_time < end_time && !withinDelta(cur_time, end_time, 0.0001)) { // avoid seeking at 4123.819999 will_end:4123.82 in 9.99999429041054e-7s infinite loop
       return tag;
     }
   }
@@ -250,7 +250,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   var cur_time = getCurrentTime();
   var tag;
   if (cur_time < last_timestamp) {
-    console.log("Something (possibly pimw) just sought backwards to=" + cur_time + " from=" + last_timestamp);
+    console.log("Something (possibly pimw) just sought backwards to=" + cur_time + " from=" + last_timestamp + "to=" + timeStampToHuman(cur_time) + " from=" + timeStampToHuman(last_timestamp));
     tag = areWeWithin(skips, cur_time); 
     if (tag) {
       // was the seek to within an edit? Since this was a "rewind" let's actually go to *before* the bad spot, so the traditional +-10 buttons can work from UI
@@ -308,7 +308,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   else {
     if (video_element.style.visibility != "" && i_hid_it) {
       video_element.style.visibility=""; // non hidden :)
-      console.log("unhiding video with cur_time=" + cur_time);
+      console.log("unhiding video with cur_time=" + cur_time + " " + timeStampToHuman(cur_time));
       i_hid_it = false;
     }
   }
