@@ -276,6 +276,8 @@ sub cat:
     
       <option value="underwear">physical -- clad in underwear</option>    
     
+      <option value="light cleavage">physical -- light cleavage/barely revealing</option>    
+    
       <option value="revealing cleavage">physical -- revealing cleavage</option>    
     
       <option value="partial nudity">physical -- partial nudity &#40;ex: excessive cleavage&#41;</option>    
