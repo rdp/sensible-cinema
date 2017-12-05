@@ -311,7 +311,7 @@ post "/save_tag/:url_id" do |env|
   tag.default_enabled = (params["default_enabled"] == "true") # the string :|
   tag.save
   if tag2 = tag.overlaps_any? url.tags
-    add_to_flash(env, "appears this tag might accidentally have an overlap with a different tag that starts at #{seconds_to_human tag2.start} and ends at #{seconds_to_human tag2.endy} please make sure this is expected.")
+    add_to_flash(env, "appears this tag might accidentally [or purposefully] have an overlap with a different tag that starts at #{seconds_to_human tag2.start} and ends at #{seconds_to_human tag2.endy}, expected?")
   end
   if is_update
     save_local_javascript url, "updated tag", env

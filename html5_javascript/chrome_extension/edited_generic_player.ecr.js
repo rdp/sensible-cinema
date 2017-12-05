@@ -438,9 +438,11 @@ function checkIfShouldDoActionAndUpdateUI() {
 
 function blankScreenIfWithinHeartOfSkip(skip_tag, cur_time) {
     // if it's trying to seek out of something baaad then don't show a still frame of the bad stuff right in its middle!
-    if (!withinDelta(skip_tag.start, cur_time, 0.05)) { // don't show black blip on normal seek from playing continuous...
+    var continuous_playback = withinDelta(skip_tag.start, cur_time, 0.05); // don't show black blip on normal seek from playing continuous...
+    var just_after_bad_stuff = areWeWithin(skips, cur_time - 0.05) ||  areWeWithin(yes_audio_no_videos, cur_time - 0.05); // don't show bad still screen if trying to put two edits back to back...
+    if (just_after_bad_stuff || !continuous_playback) { 
       if (video_element.style.visibility != "hidden") {
-        console.log("blanking it because within skip");
+        console.log("blanking it because within heart of skip or just_after_bad_stuff");
         video_element.style.visibility = "hidden"; // it'll unhide it for us soon...
       } else {
         console.log("already hidden so not blanking it even though we're in the heart of a skip");
@@ -620,7 +622,7 @@ function seekToBeforeSkip(delta) {
   var tag = areWeWithin(skips, desired_time);  
   if (tag) {
     var new_delta = tag.start - cur_time - 5; // youtube with 2 would fail here seeking backward and loop forever :\ 
-    console.log("would have sought to middle of " + JSON.stringify(tag) + " going back further instead new_delta=" + new_delta + " cur_time=" + cur_time);
+    console.log("would have sought to middle of " + twoDecimals(tag.start) + " -> " + twoDecimals(tag.endy) + " going back further instead old_delta=" + delta + " new_delta=" + new_delta + " cur_time=" + cur_time);
     seekToBeforeSkip(new_delta); // in case we run into another'un right there ... :|
   }
   else {
