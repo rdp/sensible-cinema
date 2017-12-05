@@ -19,9 +19,8 @@
                edited now!
             <% elsif url.tag_count == 0 %>
               (not started, click here to watch unedited anyway)
-            <% elsif url.editing_status == editing_phases[:done_first_pass] %>
-              (edited: done with first pass, but not finalized)
-            <% else %>
+            <% else # first or second pass
+             %>
               (edits incomplete, work in progress, click here to watch anyway)
             <% end %>
             <br/>

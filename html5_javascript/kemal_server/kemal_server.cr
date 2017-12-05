@@ -692,7 +692,7 @@ end
 
 def save_local_javascript(db_url, log_message, env) # actually just json these days...
   File.open("edit_descriptors/log.txt", "a") do |f|
-    f.puts log_message + " user:#{our_user_id(env)} ... " + db_url.name_with_episode
+    f.puts log_message + " worker:#{our_user_id(env)} ... " + db_url.name_with_episode
   end
   as_json = json_for(db_url, env)
   escaped_url_no_slashes = URI.escape db_url.url
