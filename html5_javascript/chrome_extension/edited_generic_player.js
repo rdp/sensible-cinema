@@ -545,7 +545,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       // was the seek to within an edit? Since this was a "rewind" let's actually go to *before* the bad spot, so the traditional +-10 buttons can work from UI
       console.log("they just seeked backward to within a skip, rewinding more..."); // tag already gets logged in seekToBeforeSkip
       blankScreenIfWithinHeartOfSkip(tag, cur_time);
-      seekToBeforeSkip(0, doneWithPossibleHeartBlank);
+      seekToBeforeSkip(0, doneWithPossibleHeartBlankUnlessImpending);
       return; // don't keep going which would do a skip forward...
     }
   }
@@ -579,14 +579,14 @@ function checkIfShouldDoActionAndUpdateUI() {
     optionally_show_notification(tag); // show it now so it can notify while it seeks :) [NB for longer seeks it shows it over and over but notification tag has our back :\ ]
     blankScreenIfWithinHeartOfSkip(tag, cur_time);
     blankScreenIfWithinHeartOfSkip(tag, tag.endy); // warn it
-    seekToTime(tag.endy, doneWithPossibleHeartBlank); // just seek (works fine in amazon, and seems to even work ok these days in youtube...actually only if it's buffered :|
+    seekToTime(tag.endy, doneWithPossibleHeartBlankUnlessImpending); // just seek (works fine in amazon, and seems to even work ok these days in youtube...actually only if it's buffered :|
   }
   
   tag = areWeWithin(yes_audio_no_videos, cur_time);
   tag = tag || areWeWithin(mute_audio_no_videos, cur_time);
 
   if (tag) {
-    // use style.display here so it retains the space on screen it would have otherwise used... [for non-amazon basically LOL]
+    // could use style.display here so it retains the space on screen it would have otherwise used... [for non-amazon basically LOL]
     if (video_element.style.display != "none") {
       timestamp_log("hiding video leaving audio ", cur_time, tag);
       video_element.style.display = "none";
@@ -726,31 +726,31 @@ function checkIfShouldDoActionAndUpdateUI() {
   removeIfNotifyEditsHaveEnded(cur_time); // gotta clean this up sometime, and also support "rewind and renotify" so just notify once on init...
 }
 
-var heart_blanked_it = false;
+var i_heart_blanked_it = false;
 
 function blankScreenIfWithinHeartOfSkip(skip_tag, cur_time) {
     // if it's trying to seek out of something baaad then don't show a still frame of the bad stuff right in its middle!
     var within_heart_of_skip = !withinDelta(skip_tag.start, cur_time, 0.05); // don't show black blips on normal seek from playing continuous...
     if (within_heart_of_skip) { 
       if (video_element.style.display != "none") {
-        console.log("blanking it because within_heart_of_skip=" + within_heart_of_skip);
+        console.log("heartblanking it because within_heart_of_skip=" + within_heart_of_skip);
         video_element.style.display = "none"; // have to use or it hoses us and auto-shows [?]
-        heart_blanked_it = true;
       } else {
-        console.log("already heartblank=" + heart_blanked_it + " so not blanking it even though we're in the heart of a skip");
+        console.log("already video_element.style.display=" + video_element.style.display + " so not changing that even though we're in the heart of a skip");
       }
+      i_heart_blanked_it = true;
     } else {
       console.log("not blanking it because it's normal playing continuous beginning of skip..." + skip_tag.start);
     }
 }
 
-function doneWithPossibleHeartBlank() {
+function doneWithPossibleHeartBlankUnlessImpending() {
     var cur_time = getCurrentTime();
     var just_before_bad_stuff = areWeWithin(skips, cur_time + 0.05) ||  areWeWithin(yes_audio_no_videos, cur_time + 0.05); // if about to skip, don't show blip of bad stuff if two edits back to back
-    if (!just_before_bad_stuff && heart_blanked_it) {
+    if (!just_before_bad_stuff && i_heart_blanked_it) {
       console.log("unheart blanking it");
       video_element.style.display="block"; // non none :)
-      heart_blanked_it = false;
+      i_heart_blanked_it = false;
     }
 }
 
@@ -905,9 +905,9 @@ function checkStatus() { // called 100 fps
       }
 
       if (!video_ever_initialized) {
-        if (video_element.readyState == 1 || video_element.style.display == "none") { // XXX does this stuff work on youtube at all? huh?
+        if (video_element.readyState == 1 || video_element.style.visibility == "hidden") { // XXX does this stuff work on youtube at all? huh?
           // seems necessary to let it "come alive" first in amazon before we can hide it, even if within heart of seek <sigh> I guess... :|
-          console.log("appears video never initialized yet...doing nothing! readyState=" + video_element.readyState + " vis=" + video_element.style.display);
+          console.log("appears video never initialized yet...doing nothing! readyState=" + video_element.readyState + " vis=" + video_element.style.visibility);
           return;
         } else {
           console.log("video is firstly initialized readyState=" + video_element.readyState + " vis=" + video_element.style.display);
