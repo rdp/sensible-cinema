@@ -613,13 +613,14 @@ function checkStatus() { // called 100 fps
         i_set_it_to_add = false;
       }
 
+      // seems necessary to let it "come alive" first in amazon before we can hide it, even if within heart of seek <sigh> I guess... :|
+      // an initial blip is OK, just trying not to crash here [and I think the old way had a blip too...]
       if (!video_ever_initialized) {
-        if (video_element.readyState == 1 || video_element.style.visibility == "hidden") { // XXX does this stuff work on youtube at all? huh?
-          // seems necessary to let it "come alive" first in amazon before we can hide it, even if within heart of seek <sigh> I guess... :|
-          console.log("appears video never initialized yet...doing nothing! readyState=" + video_element.readyState + " vis=" + video_element.style.visibility);
+        if (video_element.readyState != 4 || video_element.offsetWidth == 0) { // XXX does this stuff work on youtube at all? huh?
+          console.log("appears video never initialized yet...doing nothing! readyState=" + video_element.readyState + " width=" + video_element.offsetWidth);
           return;
         } else {
-          console.log("video is firstly initialized readyState=" + video_element.readyState + " vis=" + video_element.style.visibility);
+          console.log("video is firstly initialized readyState=" + video_element.readyState + " width=" + video_element.offsetWidth);
           video_ever_initialized = true;
         }
       }
