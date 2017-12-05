@@ -197,11 +197,10 @@ settings = [
   <!-- Nav tabs -->
   <ul class="nav nav-pills" role="tablist">
     <% settings.each_with_index{ |setting, idx| %>
-      <li role="presentation"  <%= "class='active'" if idx == 0 %> >
+      <li role="presentation"  <%= "class='active'" if idx == 0 %> style=" width:100%;">
         <a href="#tab_<%= setting[:type] %>" onclick="go_to_start_boxes();" id="tab_link_id_<%= idx %>" aria-controls="home" role="tab" data-toggle="tab" style="border: dotted 1px; margin: 5px;">
         <span style="font-size:larger;"><%= setting[:title] %> (<%= setting[:urls].size %>)</span></a>
       </li>
-      <br/>
     <% } %>
   </ul>
   
