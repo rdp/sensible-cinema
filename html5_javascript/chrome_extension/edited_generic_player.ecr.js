@@ -611,7 +611,7 @@ function checkStatus() { // called 100 fps
         if (video_element.readyState != 4 || video_element.offsetWidth == 0 && video_element.paused) { // XXX does this stuff work on youtube at all? huh?
           tag = areWeWithin(skips, cur_time); 
           if (tag) {
-            // blank already console.logs:
+            // blank already console.logs: XXXX this doesn't actually work <sniff>
             blankScreenIfWithinHeartOfSkip(tag, cur_time);
           } else {
             console.log("appears video never initialized yet...doing nothing! readyState=" + video_element.readyState + " width=" + video_element.offsetWidth);
