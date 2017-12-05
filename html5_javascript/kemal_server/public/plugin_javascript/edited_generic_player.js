@@ -565,7 +565,7 @@ function checkIfShouldDoActionAndUpdateUI() {
     timestamp_log("seeking forward", cur_time, tag);
     optionally_show_notification(tag); // show it now so it can notify while it seeks :) [NB for longer seeks it shows it over and over but notification tag has our back :\ ]
     blankScreenIfWithinHeartOfSkip(tag, cur_time);
-    blankScreenIfWithinHeartOfSkip(tag, tag.endy); // warn it
+    blankScreenIfWithinHeartOfSkip(tag, tag.endy); // warn it to start a blank now, otherwise when it gets there it's already too late
     seekToTime(tag.endy, doneWithPossibleHeartBlankUnlessImpending); // just seek (works fine in amazon, and seems to even work ok these days in youtube...actually only if it's buffered :|
   }
   
@@ -734,7 +734,7 @@ function blankScreenIfWithinHeartOfSkip(skip_tag, cur_time) {
 
 function doneWithPossibleHeartBlankUnlessImpending() {
     var cur_time = getCurrentTime();
-    var just_before_bad_stuff = areWeWithin(skips, cur_time + 0.05) ||  areWeWithin(yes_audio_no_videos, cur_time + 0.05); // if about to skip, don't show blip of bad stuff if two edits back to back
+    var just_before_bad_stuff = areWeWithin(skips, cur_time + 0.01) ||  areWeWithin(yes_audio_no_videos, cur_time + 0.01); // if about to skip, don't show blip of bad stuff if two skip edits back to back
     if (!just_before_bad_stuff && i_heart_blanked_it) {
       console.log("unheart blanking it");
       video_element.style.display="block"; // non none :)
@@ -902,7 +902,7 @@ function checkStatus() { // called 100 fps
         if (video_element.readyState != 4 || video_element.offsetWidth == 0 && video_element.paused) { // XXX does this stuff work on youtube at all? huh?
           tag = areWeWithin(skips, cur_time); 
           if (tag) {
-            // blank already logs:
+            // blank already console.logs: XXXX this doesn't actually work <sniff>
             blankScreenIfWithinHeartOfSkip(tag, cur_time);
           } else {
             console.log("appears video never initialized yet...doing nothing! readyState=" + video_element.readyState + " width=" + video_element.offsetWidth);
