@@ -586,7 +586,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   tag = tag || areWeWithin(mute_audio_no_videos, cur_time);
 
   if (tag) {
-    // use style.display here so it retains the space on screen it would have otherwise used...
+    // use style.display here so it retains the space on screen it would have otherwise used... [for non-amazon basically LOL]
     if (video_element.style.display != "none") {
       timestamp_log("hiding video leaving audio ", cur_time, tag);
       video_element.style.display = "none";
@@ -1098,7 +1098,7 @@ function collapseAddTagStuff() {
   hideDiv(document.getElementById("tag_details_div_id"));
 }
 
-function isAddtagStuffblock() {
+function isAddtagStuffVisible() {
   return document.getElementById("tag_details_div_id").style.display != "none";
 }
 
@@ -1287,7 +1287,7 @@ function saveEditButton() {
   document.getElementById('age_maybe_ok_id').value = "0";
   document.getElementById('impact_to_movie_id').value = "0";
   setImpactIfMute(); // reset if mute :|
-  document.getElementById('tag_none_id').value = '0'; // reset
+  document.getElementById('tag_hidden_id').value = '0'; // reset
   document.getElementById('default_enabled_id').value = 'true';
   
   setTimeout(reloadForCurrentUrl, 1000); // reload to get it "back" from the server after saved...
@@ -1639,7 +1639,7 @@ function mouseJustMoved(event) {
   
     clearTimeout(mouse_move_timer); // in case previously set
     if (mouse_within_all_pimw_stuff) {
-      if (!isAddtagStuffblock()) {
+      if (!isAddtagStuffVisible()) {
         mouse_move_timer = setTimeout(hideAllPimwStuff, 10000); // sometimes the mouse gets "stuck" "left" in that corner and
         // there really is no mouse notification after that but it's gone, so hide it eventually...
       } // else they might be hovering there to adjust stuff, so don't tick off editors :)

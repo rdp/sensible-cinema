@@ -807,7 +807,7 @@ function collapseAddTagStuff() {
   hideDiv(document.getElementById("tag_details_div_id"));
 }
 
-function isAddtagStuffblock() {
+function isAddtagStuffVisible() {
   return document.getElementById("tag_details_div_id").style.display != "none";
 }
 
@@ -996,7 +996,7 @@ function saveEditButton() {
   document.getElementById('age_maybe_ok_id').value = "0";
   document.getElementById('impact_to_movie_id').value = "0";
   setImpactIfMute(); // reset if mute :|
-  document.getElementById('tag_none_id').value = '0'; // reset
+  document.getElementById('tag_hidden_id').value = '0'; // reset
   document.getElementById('default_enabled_id').value = 'true';
   
   setTimeout(reloadForCurrentUrl, 1000); // reload to get it "back" from the server after saved...
@@ -1348,7 +1348,7 @@ function mouseJustMoved(event) {
   
     clearTimeout(mouse_move_timer); // in case previously set
     if (mouse_within_all_pimw_stuff) {
-      if (!isAddtagStuffblock()) {
+      if (!isAddtagStuffVisible()) {
         mouse_move_timer = setTimeout(hideAllPimwStuff, 10000); // sometimes the mouse gets "stuck" "left" in that corner and
         // there really is no mouse notification after that but it's gone, so hide it eventually...
       } // else they might be hovering there to adjust stuff, so don't tick off editors :)
