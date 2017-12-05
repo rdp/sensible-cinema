@@ -253,8 +253,8 @@ function checkIfShouldDoActionAndUpdateUI() {
     if (tag) {
       // was the seek to within an edit? Since this was a "rewind" let's actually go to *before* the bad spot, so the traditional +-10 buttons can work from UI
       console.log("they just seeked backward to within a skip, rewinding more..."); // tag already gets logged in seekToBeforeSkip
-      seekToBeforeSkip(0);
       blankScreenIfWithinHeartOfSkip(tag, cur_time);
+      seekToBeforeSkip(0, doneWithPossibleHeartBlank);
       return; // don't keep going which would do a skip forward...
     }
   }
@@ -286,28 +286,28 @@ function checkIfShouldDoActionAndUpdateUI() {
   if (tag) {
     timestamp_log("seeking forward", cur_time, tag);
     optionally_show_notification(tag); // show it now so it can notify while it seeks :) [NB for longer seeks it shows it over and over but notification tag has our back :\ ]
-    seekToTime(tag.endy); // just seek (works fine in amazon, and seems to even work ok these days in youtube...
     blankScreenIfWithinHeartOfSkip(tag, cur_time);
-    blankScreenIfWithinHeartOfSkip(tag, tag.endy);
+    blankScreenIfWithinHeartOfSkip(tag, tag.endy); // warn it
+    seekToTime(tag.endy, doneWithPossibleHeartBlank); // just seek (works fine in amazon, and seems to even work ok these days in youtube...actually only if it's buffered :|
   }
   
   tag = areWeWithin(yes_audio_no_videos, cur_time);
   tag = tag || areWeWithin(mute_audio_no_videos, cur_time);
 
   if (tag) {
-    // use style.visibility here so it retains the space on screen it would have otherwise used...
-    if (video_element.style.visibility != "hidden") {
+    // use style.display here so it retains the space on screen it would have otherwise used... [for non-amazon basically LOL]
+    if (video_element.style.display != "none") {
       timestamp_log("hiding video leaving audio ", cur_time, tag);
-      video_element.style.visibility = "hidden";
+      video_element.style.display = "none";
       i_hid_it = true;
     }
     extra_message += "doing a no video yes audio";
     notify_if_new(tag);
   }
   else {
-    if (video_element.style.visibility != "" && i_hid_it) {
+    if (video_element.style.display != "block" && i_hid_it) {
       console.log("unhiding video with cur_time=" + cur_time + " " + timeStampToHuman(cur_time));
-      video_element.style.visibility=""; // non hidden :)
+      video_element.style.display="block"; // non none :)
       i_hid_it = false;
     }
   }
@@ -422,10 +422,10 @@ function checkIfShouldDoActionAndUpdateUI() {
     if (!next_future_tag.default_enabled) {
       second_line += "(disabled)";
     }
-    document.getElementById("open_next_tag_id").style.visibility = "visible";
+    document.getElementById("open_next_tag_id").style.display = "block";
   }
   else {
-    document.getElementById("open_next_tag_id").style.visibility = "hidden";
+    document.getElementById("open_next_tag_id").style.display = "none";
     second_line = "<br>";
   }
   updateHTML(document.getElementById('tag_details_second_line'), second_line);
@@ -435,19 +435,31 @@ function checkIfShouldDoActionAndUpdateUI() {
   removeIfNotifyEditsHaveEnded(cur_time); // gotta clean this up sometime, and also support "rewind and renotify" so just notify once on init...
 }
 
+var heart_blanked_it = false;
+
 function blankScreenIfWithinHeartOfSkip(skip_tag, cur_time) {
     // if it's trying to seek out of something baaad then don't show a still frame of the bad stuff right in its middle!
     var within_heart_of_skip = !withinDelta(skip_tag.start, cur_time, 0.05); // don't show black blips on normal seek from playing continuous...
-    var just_after_bad_stuff = areWeWithin(skips, cur_time - 0.05) ||  areWeWithin(yes_audio_no_videos, cur_time - 0.05); // don't show bad still screen if trying to put two edits back to back...
-    if (just_after_bad_stuff || within_heart_of_skip) { 
-      if (video_element.style.visibility != "hidden") {
-        console.log("blanking it because within_heart_of_skip=" + within_heart_of_skip + " or just_after_bad_stuff=" + just_after_bad_stuff);
-        video_element.style.visibility = "hidden"; // it'll unhide it for us soon...
+    if (within_heart_of_skip) { 
+      if (video_element.style.display != "none") {
+        console.log("blanking it because within_heart_of_skip=" + within_heart_of_skip);
+        video_element.style.display = "none"; // have to use or it hoses us and auto-shows [?]
+        heart_blanked_it = true;
       } else {
-        console.log("already blank so not blanking it even though we're in the heart of a skip");
+        console.log("already heartblank=" + heart_blanked_it + " so not blanking it even though we're in the heart of a skip");
       }
     } else {
       console.log("not blanking it because it's normal playing continuous beginning of skip..." + skip_tag.start);
+    }
+}
+
+function doneWithPossibleHeartBlank() {
+    var cur_time = getCurrentTime();
+    var just_before_bad_stuff = areWeWithin(skips, cur_time + 0.05) ||  areWeWithin(yes_audio_no_videos, cur_time + 0.05); // if about to skip, don't show blip of bad stuff if two edits back to back
+    if (!just_before_bad_stuff && heart_blanked_it) {
+      console.log("unheart blanking it");
+      video_element.style.display="block"; // non none :)
+      heart_blanked_it = false;
     }
 }
 
@@ -602,12 +614,12 @@ function checkStatus() { // called 100 fps
       }
 
       if (!video_ever_initialized) {
-        if (video_element.readyState == 1 || video_element.style.visibility == "hidden") { // XXX does this stuff work on youtube at all? huh?
+        if (video_element.readyState == 1 || video_element.style.display == "none") { // XXX does this stuff work on youtube at all? huh?
           // seems necessary to let it "come alive" first in amazon before we can hide it, even if within heart of seek <sigh> I guess... :|
-          console.log("appears video never initialized yet...doing nothing! readyState=" + video_element.readyState + " vis=" + video_element.style.visibility);
+          console.log("appears video never initialized yet...doing nothing! readyState=" + video_element.readyState + " vis=" + video_element.style.display);
           return;
         } else {
-          console.log("video is firstly initialized readyState=" + video_element.readyState + " vis=" + video_element.style.visibility);
+          console.log("video is firstly initialized readyState=" + video_element.readyState + " vis=" + video_element.style.display);
           video_ever_initialized = true;
         }
       }
@@ -628,17 +640,17 @@ function timestamp_log(message, cur_time, tag) {
   console.log(local_message);
 }
 
-function seekToBeforeSkip(delta) {
+function seekToBeforeSkip(delta, callback) {
   var cur_time = getCurrentTime();
   var desired_time = cur_time + delta;
   var tag = areWeWithin(skips, desired_time);  
   if (tag) {
     var new_delta = tag.start - cur_time - 5; // youtube with 2 would fail here seeking backward and loop forever :\ 
     console.log("would have sought to middle of " + twoDecimals(tag.start) + " -> " + twoDecimals(tag.endy) + " going back further instead old_delta=" + delta + " new_delta=" + new_delta + " cur_time=" + cur_time);
-    seekToBeforeSkip(new_delta); // in case we run into another'un right there ... :|
+    seekToBeforeSkip(new_delta, callback); // in case we run into another'un right there ... :|
   }
   else {
-    seekToTime(desired_time);
+    seekToTime(desired_time, callback);
   }
 }
 
@@ -673,7 +685,6 @@ function videoDuration() {
   }
 }
 
-
 function isPaused() {
   if (isYoutubePimw()) {
     var paused = 2;
@@ -688,10 +699,7 @@ function doPlay() {
   if (isYoutubePimw()) {
     youtube_pimw_player.playVideo();
   } else {
-    var old =  video_element.style.visibility;
-    video_element.play(); // implies video_element.style.visibility = "visible"
-    console.log("vis old=" +old + " new=" +  video_element.style.visibility);
-    setTimeout(function() {      console.log("vis2 old=" +old + " new=" +  video_element.style.visibility);}, 10);
+    video_element.play(); // implies video_element.style.visibility = "visible" after...enough time to see the video :(
   }
 }
 
@@ -799,7 +807,7 @@ function collapseAddTagStuff() {
   hideDiv(document.getElementById("tag_details_div_id"));
 }
 
-function isAddtagStuffVisible() {
+function isAddtagStuffblock() {
   return document.getElementById("tag_details_div_id").style.display != "none";
 }
 
@@ -988,7 +996,7 @@ function saveEditButton() {
   document.getElementById('age_maybe_ok_id').value = "0";
   document.getElementById('impact_to_movie_id').value = "0";
   setImpactIfMute(); // reset if mute :|
-  document.getElementById('tag_hidden_id').value = '0'; // reset
+  document.getElementById('tag_none_id').value = '0'; // reset
   document.getElementById('default_enabled_id').value = 'true';
   
   setTimeout(reloadForCurrentUrl, 1000); // reload to get it "back" from the server after saved...
@@ -1059,7 +1067,7 @@ function reloadForCurrentUrl() {
 function loadSucceeded(json_string) {
   parseSuccessfulJson(json_string);
   getEditsFromCurrentTagList();
-  startWatcherTimerSingleton(); // don't know what to display before this...so leave everything hidden until now
+  startWatcherTimerSingleton(); // don't know what to display before this...so leave everything none until now
   old_current_url = getStandardizedCurrentUrl();
   old_episode = liveEpisodeNumber();
   if (liveEpisodeNumber() != expected_episode_number) {
@@ -1340,7 +1348,7 @@ function mouseJustMoved(event) {
   
     clearTimeout(mouse_move_timer); // in case previously set
     if (mouse_within_all_pimw_stuff) {
-      if (!isAddtagStuffVisible()) {
+      if (!isAddtagStuffblock()) {
         mouse_move_timer = setTimeout(hideAllPimwStuff, 10000); // sometimes the mouse gets "stuck" "left" in that corner and
         // there really is no mouse notification after that but it's gone, so hide it eventually...
       } // else they might be hovering there to adjust stuff, so don't tick off editors :)
@@ -1460,7 +1468,7 @@ function getCurrentTime() {
 }
 
 function doPause() {
-  console.log("doing doPause paused=" + video_element.paused + " buffered=" + getSecondsBufferedAhead());
+  console.log("doing doPause paused=" + video_element.paused + " buffered=" + twoDecimals(getSecondsBufferedAhead()));
   if (isYoutubePimw()) {
     youtube_pimw_player.pauseVideo();
   } else {
@@ -1469,7 +1477,7 @@ function doPause() {
 }
 
 function rawSeekToTime(ts) {
-  console.log("doing rawSeekToTime=" + ts);
+  console.log("doing rawSeekToTime=" + twoDecimals(ts));
   if (isYoutubePimw()) {
     var allowSeekAhead = true;
     youtube_pimw_player.seekTo(ts, allowSeekAhead); // no callback option
@@ -1488,6 +1496,8 @@ function getSecondsBufferedAhead() {
     var seconds_buffered = youtube_pimw_player.getDuration() * youtube_pimw_player.getVideoLoadedFraction() - getCurrentTime();
   } else if (video_element.buffered.length == 1) { // the normal case I think...
     var seconds_buffered = (video_element.buffered.end(0) - video_element.buffered.start(0)); // wait is this end guaranteed to be after our current???
+  } else {
+    var seconds_buffered = -1;
   }
   return seconds_buffered;
 }
@@ -1506,7 +1516,7 @@ function seekToTime(ts, callback) {
   var current_pause_state = isPaused();
   // try and avoid freezes after seeking...if it was playing first...
   var start_time = getCurrentTime();
-  console.log("seeking to " + timeStampToHuman(ts) + " from=" + timeStampToHuman(start_time) + " state=" + video_element.readyState + " to_ts=" + ts);
+  console.log("seeking to " + timeStampToHuman(ts) + " from=" + timeStampToHuman(start_time) + " state=" + video_element.readyState + " to_ts=" + twoDecimals(ts));
   // [amazon] if this is far enough away from current, it also implies a "play" call...oddly. I mean seriously that is bizarre.
   // however if it close enough, then we need to call play
   // some shenanigans to pretend to work around this...
