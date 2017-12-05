@@ -531,25 +531,12 @@ var i_changed_audio_percent = false;
 var i_hid_it = false; // make us "unhide" it only if we hid it, so that hiding because seeked into skip middle does its own hiding...don't mess with that one...
 var last_speed_value = null;
 var last_audio_percent = null;
-var last_timestamp = 0;
 var i_unfullscreened_it_element = null;
 var i_paused_it = null;
 
 function checkIfShouldDoActionAndUpdateUI() {
   var cur_time = getCurrentTime();
   var tag;
-  if (cur_time < last_timestamp) {
-    console.log("Something (possibly pimw) just sought backwards to=" + cur_time + " from=" + last_timestamp + "to=" + timeStampToHuman(cur_time) + " from=" + timeStampToHuman(last_timestamp));
-    tag = areWeWithin(skips, cur_time); 
-    if (tag) {
-      // was the seek to within an edit? Since this was a "rewind" let's actually go to *before* the bad spot, so the traditional +-10 buttons can work from UI
-      console.log("they just seeked backward to within a skip, rewinding more..."); // tag already gets logged in seekToBeforeSkip
-      blankScreenIfWithinHeartOfSkip(tag, cur_time);
-      seekToBeforeSkip(0, doneWithPossibleHeartBlankUnlessImpending);
-      return; // don't keep going which would do a skip forward...
-    }
-  }
-  last_timestamp = cur_time;
   
   tag = areWeWithin(mutes, cur_time);
   tag = tag || areWeWithin(mute_audio_no_videos, cur_time);
@@ -724,6 +711,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   updateHTML(document.getElementById("playback_rate"), twoDecimals(getPlaybackRate()) + "x");
   // XXXX cleanup the below wasn't working enough huh?
   removeIfNotifyEditsHaveEnded(cur_time); // gotta clean this up sometime, and also support "rewind and renotify" so just notify once on init...
+  addPluginEnabledText();
 }
 
 var i_heart_blanked_it = false;
@@ -884,7 +872,8 @@ function isWatchingAdd() {
 }
 
 var i_set_it_to_add = false;
-var video_ever_initialized = false; // can't do seeks "off the bat" in amazon [while still obscured] -> crash!
+var video_ever_initialized = false; // can't do seeks "off the bat" in amazon [while still obscured] -> spinner then crash!
+var last_timestamp = 0;
 
 function checkStatus() { // called 100 fps
   // avoid unmuting videos playing that we don't even control [like youtube main page] with this if...
@@ -904,21 +893,41 @@ function checkStatus() { // called 100 fps
         i_set_it_to_add = false;
       }
 
+      var tag;
+      var cur_time = getCurrentTime();
       // seems necessary to let it "come alive" first in amazon before we can hide it, even if within heart of seek <sigh> I guess... :|
       // an initial blip is OK, just trying not to crash here [and I think the old way had a blip too...]
       if (!video_ever_initialized) {
-        if (video_element.readyState != 4 || video_element.offsetWidth == 0) { // XXX does this stuff work on youtube at all? huh?
-          console.log("appears video never initialized yet...doing nothing! readyState=" + video_element.readyState + " width=" + video_element.offsetWidth);
+        // paused because offsetWidth is still 0 is we blankScreenIfWithinHeartOfSkip already :\
+        if (video_element.readyState != 4 || video_element.offsetWidth == 0 && video_element.paused) { // XXX does this stuff work on youtube at all? huh?
+          tag = areWeWithin(skips, cur_time); 
+          if (tag) {
+            // blank already logs:
+            blankScreenIfWithinHeartOfSkip(tag, cur_time);
+          } else {
+            console.log("appears video never initialized yet...doing nothing! readyState=" + video_element.readyState + " width=" + video_element.offsetWidth);
+          }
           return;
         } else {
           console.log("video is firstly initialized readyState=" + video_element.readyState + " width=" + video_element.offsetWidth);
           video_ever_initialized = true;
         }
       }
+      if (cur_time < last_timestamp) {
+        console.log("Something (possibly pimw) just sought backwards to=" + cur_time + " from=" + last_timestamp + "to=" + timeStampToHuman(cur_time) + " from=" + timeStampToHuman(last_timestamp));
+        tag = areWeWithin(skips, cur_time); 
+        if (tag) {
+          // was the seek to within an edit? Since this was a "rewind" let's actually go to *before* the bad spot, so the traditional +-10 buttons can work from UI
+          console.log("they just seeked backward to within a skip, rewinding more..."); // tag already gets logged in seekToBeforeSkip
+          blankScreenIfWithinHeartOfSkip(tag, cur_time);
+          seekToBeforeSkip(0, doneWithPossibleHeartBlankUnlessImpending);
+          return; // don't keep going which would do a skip forward...
+        }
+      }
+      last_timestamp = cur_time;
 
       // GO!
       checkIfShouldDoActionAndUpdateUI();      
-      addPluginEnabledText();
     }
   }
 
