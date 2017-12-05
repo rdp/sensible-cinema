@@ -237,14 +237,12 @@ function areWeWithin(thisTagArray, cur_time) {
 var i_muted_it = false; // attempt to let them still control their mute button :|
 var i_changed_its_speed = false; // attempt to let them still control speed manually if desired
 var i_changed_audio_percent = false;
-var i_hid_it = false; // allow our own hiding to be persevered while seeking out of a skip :\
-
+var i_hid_it = false; // make us "unhide" it only if we hid it, so that hiding because seeked into skip middle does its own hiding...don't mess with that one...
 var last_speed_value = null;
 var last_audio_percent = null;
 var last_timestamp = 0;
 var i_unfullscreened_it_element = null;
 var i_paused_it = null;
-
 
 function checkIfShouldDoActionAndUpdateUI() {
   var cur_time = getCurrentTime();
@@ -290,7 +288,7 @@ function checkIfShouldDoActionAndUpdateUI() {
     optionally_show_notification(tag); // show it now so it can notify while it seeks :) [NB for longer seeks it shows it over and over but notification tag has our back :\ ]
     seekToTime(tag.endy); // just seek (works fine in amazon, and seems to even work ok these days in youtube...
     blankScreenIfWithinHeartOfSkip(tag, cur_time);
-    //blankScreenIfWithinHeartOfSkip(tag, tag.endy);
+    blankScreenIfWithinHeartOfSkip(tag, tag.endy);
   }
   
   tag = areWeWithin(yes_audio_no_videos, cur_time);
@@ -308,8 +306,8 @@ function checkIfShouldDoActionAndUpdateUI() {
   }
   else {
     if (video_element.style.visibility != "" && i_hid_it) {
-      video_element.style.visibility=""; // non hidden :)
       console.log("unhiding video with cur_time=" + cur_time + " " + timeStampToHuman(cur_time));
+      video_element.style.visibility=""; // non hidden :)
       i_hid_it = false;
     }
   }
@@ -439,14 +437,14 @@ function checkIfShouldDoActionAndUpdateUI() {
 
 function blankScreenIfWithinHeartOfSkip(skip_tag, cur_time) {
     // if it's trying to seek out of something baaad then don't show a still frame of the bad stuff right in its middle!
-    var continuous_playback = withinDelta(skip_tag.start, cur_time, 0.05); // don't show black blip on normal seek from playing continuous...
+    var within_heart_of_skip = !withinDelta(skip_tag.start, cur_time, 0.05); // don't show black blips on normal seek from playing continuous...
     var just_after_bad_stuff = areWeWithin(skips, cur_time - 0.05) ||  areWeWithin(yes_audio_no_videos, cur_time - 0.05); // don't show bad still screen if trying to put two edits back to back...
-    if (just_after_bad_stuff || !continuous_playback) { 
+    if (just_after_bad_stuff || within_heart_of_skip) { 
       if (video_element.style.visibility != "hidden") {
-        console.log("blanking it because within heart of skip=" + !continuous_playback + " or just_after_bad_stuff=" + just_after_bad_stuff);
+        console.log("blanking it because within_heart_of_skip=" + within_heart_of_skip + " or just_after_bad_stuff=" + just_after_bad_stuff);
         video_element.style.visibility = "hidden"; // it'll unhide it for us soon...
       } else {
-        console.log("already hidden so not blanking it even though we're in the heart of a skip");
+        console.log("already blank so not blanking it even though we're in the heart of a skip");
       }
     } else {
       console.log("not blanking it because it's normal playing continuous beginning of skip..." + skip_tag.start);
@@ -626,7 +624,7 @@ function checkStatus() { // called 100 fps
 }
 
 function timestamp_log(message, cur_time, tag) {
-  local_message = message + " at " + twoDecimals(cur_time) + " start:" + tag.start + " will_end:" + tag.endy + " in " + twoDecimals(tag.endy - cur_time) + "s";;
+  local_message = "edit:" + message + " at " + twoDecimals(cur_time) + " start:" + twoDecimals(tag.start) + " will_end:" + twoDecimals(tag.endy) + " in " + twoDecimals(tag.endy - cur_time) + "s";;
   console.log(local_message);
 }
 
@@ -690,7 +688,10 @@ function doPlay() {
   if (isYoutubePimw()) {
     youtube_pimw_player.playVideo();
   } else {
-    video_element.play();
+    var old =  video_element.style.visibility;
+    video_element.play(); // implies video_element.style.visibility = "visible"
+    console.log("vis old=" +old + " new=" +  video_element.style.visibility);
+    setTimeout(function() {      console.log("vis2 old=" +old + " new=" +  video_element.style.visibility);}, 10);
   }
 }
 
