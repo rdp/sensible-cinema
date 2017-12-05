@@ -290,6 +290,7 @@ function checkIfShouldDoActionAndUpdateUI() {
     optionally_show_notification(tag); // show it now so it can notify while it seeks :) [NB for longer seeks it shows it over and over but notification tag has our back :\ ]
     seekToTime(tag.endy); // just seek (works fine in amazon, and seems to even work ok these days in youtube...
     blankScreenIfWithinHeartOfSkip(tag, cur_time);
+    //blankScreenIfWithinHeartOfSkip(tag, tag.endy);
   }
   
   tag = areWeWithin(yes_audio_no_videos, cur_time);
@@ -442,7 +443,7 @@ function blankScreenIfWithinHeartOfSkip(skip_tag, cur_time) {
     var just_after_bad_stuff = areWeWithin(skips, cur_time - 0.05) ||  areWeWithin(yes_audio_no_videos, cur_time - 0.05); // don't show bad still screen if trying to put two edits back to back...
     if (just_after_bad_stuff || !continuous_playback) { 
       if (video_element.style.visibility != "hidden") {
-        console.log("blanking it because within heart of skip or just_after_bad_stuff");
+        console.log("blanking it because within heart of skip=" + !continuous_playback + " or just_after_bad_stuff=" + just_after_bad_stuff);
         video_element.style.visibility = "hidden"; // it'll unhide it for us soon...
       } else {
         console.log("already hidden so not blanking it even though we're in the heart of a skip");
@@ -582,6 +583,7 @@ function isWatchingAdd() {
 }
 
 var i_set_it_to_add = false;
+var video_ever_initialized = false; // can't do seeks "off the bat" in amazon [while still obscured] -> crash!
 
 function checkStatus() { // called 100 fps
   // avoid unmuting videos playing that we don't even control [like youtube main page] with this if...
@@ -600,6 +602,18 @@ function checkStatus() { // called 100 fps
         setSmiley();
         i_set_it_to_add = false;
       }
+
+      if (!video_ever_initialized) {
+        if (video_element.readyState == 1 || video_element.style.visibility == "hidden") { // XXX does this stuff work on youtube at all? huh?
+          // seems necessary to let it "come alive" first in amazon before we can hide it, even if within heart of seek <sigh> I guess... :|
+          console.log("appears video never initialized yet...doing nothing! readyState=" + video_element.readyState + " vis=" + video_element.style.visibility);
+          return;
+        } else {
+          console.log("video is firstly initialized readyState=" + video_element.readyState + " vis=" + video_element.style.visibility);
+          video_ever_initialized = true;
+        }
+      }
+
       // GO!
       checkIfShouldDoActionAndUpdateUI();      
       addPluginEnabledText();
@@ -1116,7 +1130,6 @@ function loadFailed(status) {
   startWatcherTimerSingleton(); // so it can check if episode changes to one we like magically LOL [amazon...]
 }
 
-
 function parseSuccessfulJson(json_string) {
   current_json = JSON.parse(json_string);
   url = current_json.url;
@@ -1479,22 +1492,10 @@ function getSecondsBufferedAhead() {
 }
 
 var old_ts;
-var video_ever_initialized = false; // can't do seeks "off the bat" in amazon :(
 function seekToTime(ts, callback) {
   if (seek_timer) {
     console.log("still seeking from previous to=" + old_ts + ", not trying that again... requested=" + ts);
     return;
-  }
-  if (!video_ever_initialized) {
-    // XXX move this "up" to...I think doing any edits at all...somehow...
-    if (video_element.readyState == 1 || video_element.style.visibility == "hidden") { // XXX does this stuff work on youtube at all? huh?
-      // allow for hidden so if we're in the middle of a seek, it needs to come alive briefly before *we* seek out of there...or seeks can't work...hrm...
-      console.log("appears video never initialized yet...ignoring skip command! readyState=" + video_element.readyStat + " vis=" + video_element.style.visibility);
-      return;
-    } else {
-      console.log("video is initialized readyState=" + video_element.readyState + " vis=" + video_element.style.visibility);
-      video_ever_initialized = true;
-    }
   }
   
   if (ts < 0) {
