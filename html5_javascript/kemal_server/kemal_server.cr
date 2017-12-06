@@ -238,6 +238,10 @@ get "/edit_tag/:tag_id" do |env|
   if previous_tags.size > 0
     previous_tag = previous_tags[-1] # :\
   end
+  next_tags = url.tags.reject{|t| t.start > tag.start}
+  if next_tags.size > 0
+    next_tag = next_tags[0]
+  end
   render "views/edit_tag.ecr", "views/layout.ecr"
 end
 
@@ -261,7 +265,7 @@ get "/new_empty_tag/:url_id" do |env|
   tag.start = 1.0
   tag.endy = url.total_time
   add_to_flash env, "this tag is not yet saved, hit the save button when you are done"
-  previous_tag = nil # :\
+  previous_tag = next_tag = nil # :\
   render "views/edit_tag.ecr", "views/layout.ecr"
 end
 
@@ -322,7 +326,7 @@ post "/save_tag/:url_id" do |env|
   end
 
   if tag2 = tag.overlaps_any? url.tags
-    add_to_flash(env, "appears this tag might accidentally [or purposefully] have an overlap with a different tag that starts at #{seconds_to_human tag2.start} and ends at #{seconds_to_human tag2.endy}, expected?")
+    add_to_flash(env, "appears this tag might accidentally [or purposefully] have an overlap with a different #{tag2.default_action} tag that starts at #{seconds_to_human tag2.start} and ends at #{seconds_to_human tag2.endy}, expected?")
   end
   env.redirect "/edit_tag/#{tag.id}" # so they can add details...
 end

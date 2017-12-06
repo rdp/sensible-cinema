@@ -6,38 +6,35 @@ kickstarter
 
 == todo list (me ja) ==
 
-== somewhat random list ==
+fix seeks into skips :\
 
-edit greg's
+edit greg's one movie [sync?]
+
 start editing youtubes them/me :)
-
-safe seek
-
-plug in new monitor M
-
-setup iphone
+  finish editing his youtube
+  
+setup iphone, just to try it out on there...various ;)
 
 LLC "transfer to"/setup bank account
 
 get installation feedback from humans again
-  and TV feedback :\
+  with TV feedback :\
 
 GoT failure!
   fix 10s :\
+  hbo tab
 
 decide when private edits :\
 
 3rd passes--at least some normal human :|
 
-android:
-  publish!
-  
-hbo tab?
+== meh sometime ==
 
 figure out how to collect emails/logins?
 
-faster main page?? :\ better?
-  button "go back to the top" :\
+safe seek
+
+plug in new monitor M
 
 kickstarter
   decide on prizes
@@ -45,14 +42,11 @@ kickstarter
   get people to review fauxstarter before launch...
   Add some persuasive text for "non primers" as it were :|
     more market research non primers :|
-
-right before kickstarter:
   double check still on prime?
   and also add those amazon second url's in there, soooo annoying...
 
-== meh sometime ==
-
-double check everything has "amazon second urls" and fully groomed as well... :|
+faster main page?? :\ better?
+  button "go back to the top" :\
 
 melissa wants a new "age" thing
 
@@ -60,11 +54,13 @@ mention vudu transferrable
 
 mention "made for TV" "edited for airplane"
 
-buy TV
-  just pick up speakers from granny's from now?
+pick up speakers from granny's
   
 android app (all):
+  publish!!!
+  Does it say something wrong in the android app on main page install instructions?
   allow login for them! :|
+  do notifications work?
   make a "real" demo movie for them :|
   make WebView can go fullscreen
     add "fullscreen" new button for humanz to use their full screen!
@@ -77,7 +73,8 @@ android app (all):
   experiment with "uninstall all chrome" :\
   real android TV app?
 
-should say "rent to watch edited" I think again 
+should say "rent to watch edited" I think again main page [?]
+  add back in description?
 
 better X for sorting :|
 
@@ -92,13 +89,7 @@ youtube: some way to get from youtube.com to mine (low prio though...maybe just 
   fullscreen "slide up" from bottom :\
   sup awesome seeks if it's not in cache I think it's unreliable possibly if too far forward [?]
 
-add back in description?
-
-Does it say something wrong in the android app on main page install instructions?
-
-more differentiate us vs. "them"
-
-email feedback is a screwy page freelds :\
+more differentiate us vs. "them=" [vidangel]
 
 facebook "like" buttons somewhere/possible :\
 
@@ -110,15 +101,14 @@ another button for "just new releases"
 
 mac(book) see if looks OK there
 
-buy iphone, control computer with it :\ (user-agent?)
+buy iphone, control computer with it :\
+  try youtube/normal/user-agent?
 
 integrate with "real" amazon API so I can get the rental numbers right :|
 
 get bank account, move to its own linode server :|
 
-some way "signup for news as we get more"? some call to action
-
-it should say "skipping" or something for very long skips :|
+some way "signup for news as we get more"?
 
 some preliminary facebook ads [?]
   need base, maybe...like...some...
@@ -128,56 +118,36 @@ listen to all greg's'...
 Melissa wanted more fields ("age appropriate")
   have somebody 5th pass everything for the synopses :|
 
-attempt a real iOS app
-
 personalize: defaults
 
 some subcats are non comprehensible by humans...and yet...hmm...some are though...
-
-make auto subs do "disabled" right/better (dang should be disabled..) :\
 
 the extension popup.html is awful text on non-amazon, and broken link :|
 
 us: edit ben-hur, maybe others on our list/owned (lego movie, incredibles [m. prof's?]) princess bride
 
-soft launch looks like: easy links...ycombinator...reddit [? more?]
-  groom google?? first?
+soft launch looks like: easy links...ycombinator...reddit [? more?] betterlogic
 
 extension: episode to episode was saying "watching ad?" amazon broken here :|
-easier chrome install (if they're on chrome I guess LOL)
-faq: mention wireless mouse,
-some kind of "most recent" ordering, in general cleanup UI [?]
-  updated_at...
+
+faq: mention chrome remote desktop
+
 better search'ish :|
+
 try out chromecast et al.
-list for "watch later" for them :)
 
 extension: name based on playlist currently selected
 
-only show the age dropdown if "required" for that tag type? or flash it red if the right type...
-
 add: "family friendly for all ages" review or tag
-avatar season 1 aren't coming right somehow still?? gah...
-simplify the series' somehow they are super confusing today...
 auto detect when shtuff goes off prime somehow?
 link from personalized to watch edited? groom that flow more anyway...
 saner url's :| more human
 
 groom the "sell it to them edited" options :|
-  split it out into its own columns?
-
-on edit_tag "next tag and previous" buttons :)
-
-overlaps with tag starting -> violence tag starting
-
-make R-rated "opt in"?
 
 watch edited on view_url doesn't warn if wrong :|
 
-don't use access tokens as GET params, barely wonky...
-
 all pages groom, main page persuasive/beautiful/catchy [nik?] 
-  more "family" somehow...text, also image
 
 Try and go everywhere with ads/pub...
 
@@ -190,16 +160,11 @@ break questions out to their own thing, we want to be pro-family don't we?? :)
 
 allow them to pay us [finally] LOL
 
-facebook "like" this edited movie page...
-  google+ button :|
-
 add youtube preview ID's :|
   and inline previews :|
   on amazon previews it says nothing, should say unedited [?] LOL [or allow for editing them?]
 
 allow user reviews [star rating, other rating, every rating is a single rating] synopsis?
-
-more pay me donation options/amazon reseller account...
 
 the "give a free one away to get a credit" promo
 
@@ -207,16 +172,33 @@ promo: "free for a year if you win this contest, re-share!" LOL
 
 advertise? facebook? flds? faux seo?
 
-add an "edited" tag underneath images in the amazon "watchlist"
-
 if they came from google say something "spezal" LOL
   even possible these days?
   maybe if "cookie x not set"?
 
-make it look finer-er on mobile
-  also it's too wide there??
+double check everything has "amazon second urls" and fully groomed as well... :|
   
-== todo never LOL ==
+================= todo never LOL =======================
+
+buy TV (if people want me to research it ever LOL)
+
+make auto subs do "disabled" right/better (dang should be disabled..) :\
+
+list for "watch later" for them :)
+
+make R-rated "opt in"?
+
+add an "edited" tag underneath images in the amazon "watchlist"
+
+it could say "skipping" or something for very long skips :|
+
+attempt a real iOS app
+
+only show the age dropdown if "required" for that tag type? or flash it red if the right type...
+
+don't use access tokens as GET params, barely wonky...
+
+email feedback is a screwy page freelds :\
 
 tell crystal their servers shucks under stress test :|
 
@@ -276,10 +258,6 @@ select by genre/original rating :|
   maybe just a search, flds style? :)
 
 "sort by uplifting level" etc. ASK for more uplifting on facebook, do more
-sortable index?
-  once I get started :)
-  most recent at top??
-    I'd like it anyway...:)
 
 figure out a way to do DB backups...though...actually..that other git is good, it would more be for freelds LOL
 
@@ -294,13 +272,10 @@ try to negotiate with various sites [vudu etc.] that have junky ToS ... maybe we
 
 groom the chrome plugin page...and get people to vote for it?
 
-crystal: can sort compare Bool's
+crystal:
   double check, sockets should have some ping/timeout thing so I don't get stuck with old connections...at least that...
   slam it with wrk, everything barfs all over the place :(
   stack traces come out ugly?
-  100% hang? <sniff>
-  better JSON docs??
-  fix kemal to not have arrays or strings yikes!
 
 on amazon indexes list which ones are "editable" and also on its main page list "editable/which episodes editable" whoa!
 

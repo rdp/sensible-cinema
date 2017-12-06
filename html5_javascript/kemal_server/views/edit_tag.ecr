@@ -33,6 +33,11 @@ If there are any categories missing let us know!
 <br/>
 <% if previous_tag %>
   <a href=/edit_tag/<%= previous_tag.id %> >edit previous tag </a>
+  <br/>
+<% end %>
+<% if next_tag %>
+  <a href=/edit_tag/<%= next_tag.id %> >edit next tag </a>
+  <br/>
 <% end %>
 
 <script>
