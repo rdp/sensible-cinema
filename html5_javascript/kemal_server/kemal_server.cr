@@ -238,7 +238,7 @@ get "/edit_tag/:tag_id" do |env|
   if previous_tags.size > 0
     previous_tag = previous_tags[-1] # :\
   end
-  next_tags = url.tags.reject{|t| t.start > tag.start}
+  next_tags = url.tags.select{|t| t.start > tag.start}
   if next_tags.size > 0
     next_tag = next_tags[0]
   end
