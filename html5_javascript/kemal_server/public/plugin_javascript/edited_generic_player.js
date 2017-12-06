@@ -711,7 +711,6 @@ function checkIfShouldDoActionAndUpdateUI() {
   updateHTML(document.getElementById("playback_rate"), twoDecimals(getPlaybackRate()) + "x");
   // XXXX cleanup the below wasn't working enough huh?
   removeIfNotifyEditsHaveEnded(cur_time); // gotta clean this up sometime, and also support "rewind and renotify" so just notify once on init...
-  addPluginEnabledText();
 }
 
 var i_heart_blanked_it = false;
@@ -893,29 +892,23 @@ function checkStatus() { // called 100 fps
         i_set_it_to_add = false;
       }
 
-      var tag;
-      var cur_time = getCurrentTime();
+      addPluginEnabledText();
+
       // seems necessary to let it "come alive" first in amazon before we can hide it, even if within heart of seek <sigh> I guess... :|
-      // an initial blip is OK, just trying not to crash here [and I think the old way had a blip too...]
+      // an initial blip is OK [this should be super rare, and was "hard" to avoid], just try not to crash for now...
       if (!video_ever_initialized) {
-        // paused because offsetWidth is still 0 is we blankScreenIfWithinHeartOfSkip already :\
-        if (video_element.readyState != 4 || video_element.offsetWidth == 0 && video_element.paused) { // XXX does this stuff work on youtube at all? huh?
-          tag = areWeWithin(skips, cur_time); 
-          if (tag) {
-            // blank already console.logs: XXXX this doesn't actually work <sniff>
-            blankScreenIfWithinHeartOfSkip(tag, cur_time);
-          } else {
-            console.log("appears video never initialized yet...doing nothing! readyState=" + video_element.readyState + " width=" + video_element.offsetWidth);
-          }
+        if (video_element.readyState != 4 || video_element.offsetWidth == 0) { // XXX does this stuff work on youtube at all? huh?
+          console.log("appears video never initialized yet...doing nothing! readyState=" + video_element.readyState + " width=" + video_element.offsetWidth);
           return;
         } else {
           console.log("video is firstly initialized readyState=" + video_element.readyState + " width=" + video_element.offsetWidth);
           video_ever_initialized = true;
         }
       }
+      var cur_time = getCurrentTime();
       if (cur_time < last_timestamp) {
         console.log("Something (possibly pimw) just sought backwards to=" + cur_time + " from=" + last_timestamp + "to=" + timeStampToHuman(cur_time) + " from=" + timeStampToHuman(last_timestamp));
-        tag = areWeWithin(skips, cur_time); 
+        var tag = areWeWithin(skips, cur_time); 
         if (tag) {
           // was the seek to within an edit? Since this was a "rewind" let's actually go to *before* the bad spot, so the traditional +-10 buttons can work from UI
           console.log("they just seeked backward to within a skip, rewinding more..."); // tag already gets logged in seekToBeforeSkip
