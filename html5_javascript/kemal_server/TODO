@@ -4,18 +4,16 @@ kickstarter
   movie, tweak,
   fire!
 
-== todo list (me personally) ==
+== todo list (me ja) ==
+
+== somewhat random list ==
 
 edit greg's
 start editing youtubes them/me :)
-  
-== somewhat random list ==
 
 safe seek
 
-mention "you could use it for pointing out things, sharing things between people, chatting as the movie goes on in realtime"
-
-plug in new monitor
+plug in new monitor M
 
 setup iphone
 
@@ -25,7 +23,7 @@ get installation feedback from humans again
   and TV feedback :\
 
 GoT failure!
-  fix 10s for all first :\
+  fix 10s :\
 
 decide when private edits :\
 
@@ -54,15 +52,20 @@ right before kickstarter:
 
 == meh sometime ==
 
+double check everything has "amazon second urls" and fully groomed as well... :|
+
 melissa wants a new "age" thing
 
 mention vudu transferrable
 
-buy TV's
+mention "made for TV" "edited for airplane"
+
+buy TV
   just pick up speakers from granny's from now?
   
-android app:
+android app (all):
   allow login for them! :|
+  make a "real" demo movie for them :|
   make WebView can go fullscreen
     add "fullscreen" new button for humanz to use their full screen!
   adjust UA so it is sometimes prettier (tried, failed)
@@ -74,11 +77,9 @@ android app:
   experiment with "uninstall all chrome" :\
   real android TV app?
 
-did alerts not show up in windows?
-
 should say "rent to watch edited" I think again 
 
-better "updated at" option et al for sorting :|
+better X for sorting :|
 
 make the edits just stay always on the video page, for easier editing et al :|
 
@@ -129,28 +130,15 @@ Melissa wanted more fields ("age appropriate")
 
 attempt a real iOS app
 
-tell crystal their servers shucks under stress test :|
-
-edge plugin (for underpowered HTPC boxes )
-  should be legal! 
-
-IP:
-  copy some vids (from youtube to the other place)
-
 personalize: defaults
-me edit princess bride?
 
 some subcats are non comprehensible by humans...and yet...hmm...some are though...
-
-us: edit ben-hur, maybe others on our list/owned (lego movie, incredibles [m. prof's?])
-  finish 3rd pass charly
-  3rd pass new york doll
 
 make auto subs do "disabled" right/better (dang should be disabled..) :\
 
 the extension popup.html is awful text on non-amazon, and broken link :|
 
-if two edits start at exact same time, it doesn't detect overlap :|
+us: edit ben-hur, maybe others on our list/owned (lego movie, incredibles [m. prof's?]) princess bride
 
 soft launch looks like: easy links...ycombinator...reddit [? more?]
   groom google?? first?
@@ -191,42 +179,23 @@ don't use access tokens as GET params, barely wonky...
 all pages groom, main page persuasive/beautiful/catchy [nik?] 
   more "family" somehow...text, also image
 
-== post kickstarter started ==
 Try and go everywhere with ads/pub...
-
-== post kickstarter meh but yes, someday, unordered ==
-extension: a save's reload should cancel outstanding tests...so in essence if they click save, cancel outstanding tests right then :|
 
 add multiple tags "new releases" "enjoyable by whole family"
 add an "edited" moniker underneath each image?
-make R rated a check box opt in?
 
 break questions out to their own thing, we want to be pro-family don't we?? :)
 
-figure out why query {"SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type asc, create_timestamp desc, name, episode_number"} took 00:00:00.0634933
-  takes 0.06 in crystal and 0.01 in mysql console :|
-
-"celebrate our grand opening like this post for a free month!"
+"celebrate our grand opening like this post for a free subscription!"
 
 allow them to pay us [finally] LOL
 
-impact to story finish rename
-  purchase_cost -> purchase_cost_hd
-  something on the personalized list :|
-  default_action => action
-
-Unedited needs to start but then go away unless that mouse is super close :|
-  add a "dismiss" button for *edited* as well..?
-
-google+ button :|
-  facebook "like" this edited movie page...
+facebook "like" this edited movie page...
+  google+ button :|
 
 add youtube preview ID's :|
   and inline previews :|
-
-on amazon previews it says "success!..." LOL
-
-https://twitch.amazon.com/prime?ref_=sm_w_tup_ntp_t_all&redirectRoute=aXNfdGhpc19teV9uYW1l broken :|
+  on amazon previews it says nothing, should say unedited [?] LOL [or allow for editing them?]
 
 allow user reviews [star rating, other rating, every rating is a single rating] synopsis?
 
@@ -240,23 +209,38 @@ advertise? facebook? flds? faux seo?
 
 add an "edited" tag underneath images in the amazon "watchlist"
 
-seasons have their own page, really [so one link]
-  or at least their own div or something LOL
-
-double check everything has "amazon second urls" and fully groomed as well... :|
-
 if they came from google say something "spezal" LOL
   even possible these days?
   maybe if "cookie x not set"?
 
 make it look finer-er on mobile
   also it's too wide there??
-
-can filter previews/trailers *this is really annoying*
-
+  
 == todo never LOL ==
 
-There is a tiny blip of audio let me know if that bugs too much and I can look into it.
+tell crystal their servers shucks under stress test :|
+
+edge plugin (for underpowered HTPC boxes )
+  should be legal! 
+
+IP:
+  copy some vids (from youtube to the other place)
+
+figure out why query {"SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type asc, create_timestamp desc, name, episode_number"} took 00:00:00.0634933
+  takes 0.06 in crystal and 0.01 in mysql console :|
+
+impact to story finish rename
+  purchase_cost -> purchase_cost_hd
+  something on the personalized list :|
+  default_action => action
+
+https://twitch.amazon.com/prime?ref_=sm_w_tup_ntp_t_all&redirectRoute=aXNfdGhpc19teV9uYW1l broken :|
+
+youtube button for "next edited" [?]
+
+did alerts not show up in windows?
+
+There is a tiny blip of audio (between back to back skips).  And also right when you start within a skip tiny blip of video (meh)
 
 show details -> hide details
 

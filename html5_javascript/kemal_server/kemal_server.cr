@@ -278,7 +278,7 @@ post "/save_tag/:url_id" do |env|
   endy = params["endy"].strip
   tag.start = url.human_to_seconds start
   tag.endy = url.human_to_seconds endy
-  # somewhat duplicated in javascript :|
+  # some logic here is duplicated in javascript [which has more?]
   raise "start can't be zero, use 0.1s if you want something start at the beginning" if tag.start == 0
   raise "start is after or equal to end? please use browser back button to correct..." if (tag.start >= tag.endy) # before_save filter LOL
   raise "tag is more than 15 minutes long? This should not typically be expected?" if tag.endy - tag.start > 60*15
@@ -309,17 +309,21 @@ post "/save_tag/:url_id" do |env|
   end
   raise "needs details" unless tag.details.present?
   tag.default_enabled = (params["default_enabled"] == "true") # the string :|
+  
   tag.save
-  if tag2 = tag.overlaps_any? url.tags
-    add_to_flash(env, "appears this tag might accidentally [or purposefully] have an overlap with a different tag that starts at #{seconds_to_human tag2.start} and ends at #{seconds_to_human tag2.endy}, expected?")
-  end
+  
+  # do git stuff after tag.save to make it propagate "fastuh"
   if is_update
     save_local_javascript url, "updated tag", env
     add_to_flash(env, "Success! updated tag at #{seconds_to_human tag.start} duration #{tag.duration}s, recommend clicking reload tags or doing a browser refresh...")
   else
     save_local_javascript url, "created tag", env
     add_to_flash(env, "Success! created new tag at #{seconds_to_human tag.start} duration #{tag.duration}s, you can tweak details and close this page now.")
-end
+  end
+
+  if tag2 = tag.overlaps_any? url.tags
+    add_to_flash(env, "appears this tag might accidentally [or purposefully] have an overlap with a different tag that starts at #{seconds_to_human tag2.start} and ends at #{seconds_to_human tag2.endy}, expected?")
+  end
   env.redirect "/edit_tag/#{tag.id}" # so they can add details...
 end
 

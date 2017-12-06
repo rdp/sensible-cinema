@@ -861,9 +861,13 @@ function doTimeoutEarly (id) {
   func();
 }
 
+function cancelCurrentTest() {
+  doTimeoutEarly(inMiddleOfTestingTimer); // the timeout func also nulls it out for us
+}
+
 function testCurrentFromUi() {
   if (inMiddleOfTestingTimer) {
-    doTimeoutEarly(inMiddleOfTestingTimer); // nulls it out for us
+    cancelCurrentTest();
   }
   if (humanToTimeStamp(document.getElementById('endy').value) == 0) {
     document.getElementById('endy').value = getCurrentVideoTimestampHuman(); // assume they wanted to test till "right now" I did this a couple of times :)
@@ -974,6 +978,7 @@ function openNextTagButton() {
   }
 }
 
+
 function saveEditButton() {
   if (!doubleCheckValues()) {
     return;
@@ -987,6 +992,7 @@ function saveEditButton() {
 
   document.getElementById('create_new_tag_form_id').action = "https://" + request_host + "/save_tag/" + url.id;
   document.getElementById('create_new_tag_form_id').submit();
+  setTimeout(reloadForCurrentUrl, 1000); // reload to get it "back" from the server after saved...longest I've seen like like 60ms
 
   // reset so people don't think they can tweak and resave...
   document.getElementById('start').value = timeStampToHuman(0);
@@ -1002,8 +1008,6 @@ function saveEditButton() {
   document.getElementById('tag_hidden_id').value = '0'; // reset
   document.getElementById('default_enabled_id').value = 'true';
   
-  setTimeout(reloadForCurrentUrl, 1000); // reload to get it "back" from the server after saved...
-  setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server after saved...
 }
 
 function doneMoviePage() {
@@ -1052,18 +1056,21 @@ function loadForNewUrl() {
 }
 
 function reloadForCurrentUrl() {
-  if (url != null && !inMiddleOfTestingTimer) {
+  if (url != null) {
     console.log("reloading...");
     var link = document.getElementById('reload_tags_a_id');
     link.innerHTML = "Reloading...";
     getRequest(function(json_string) {
+      if (inMiddleOfTestingTimer) {
+        cancelCurrentTest(); // assume...they were testing start ts of something long, got it right, hit save, now it's loaded, cancel middle of edit [ :\ ]
+      }
       loadSucceeded(json_string);     
       link.innerHTML = "Reloaded!";
       setTimeout(function() {link.innerHTML = "Reload tags";}, 5000);
     }, loadFailed);
   }
   else {
-    alert("not reloading, possibly no edits loaded or in middle of a test edit=" + inMiddleOfTestingTimer + "[hit Reload tags if the latter]");
+    alert("not reloading, possibly no edits loaded?"); // amazon went to next episode??
   }
 }
 
@@ -1497,7 +1504,7 @@ function rawSeekToTime(ts) {
 function getSecondsBufferedAhead() {
   if (isYoutubePimw()) {
     var seconds_buffered = youtube_pimw_player.getDuration() * youtube_pimw_player.getVideoLoadedFraction() - getCurrentTime();
-  } else if (video_element.buffered.length == 1) { // the normal case I think...
+  } else if (video_element.buffered.length > 0) { // the normal case I think...
     var seconds_buffered = (video_element.buffered.end(0) - video_element.buffered.start(0)); // wait is this end guaranteed to be after our current???
   } else {
     var seconds_buffered = -1;
