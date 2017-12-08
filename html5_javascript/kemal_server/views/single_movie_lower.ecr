@@ -1,16 +1,16 @@
             <%= if_present_with_break url.details %>
-            <%= if_present_with_break url.wholesome_uplifting_level, "Wholesome level:" %>
-            <%= if_present_with_break url.wholesome_review, "Wholesome review:" %>
-            <%= if_present_with_break url.good_movie_rating, "Good movie level:" %>
-            <%= if_present_with_break url.review, "Good movie review:" %>
-            <%= if_present_with_break url.original_rating, "Original rating:" %>
-            <%= if_present_with_break "#{url.genre} (#{url.human_duration})", "Genre:" %>
             <%= if_present_with_break url.editing_notes, "" %>
             <% if url.tag_count > 0 %>
               What you can edit out: 
               <%= tags_by_category_with_size(url) %> <!-- if this blows up its a tag with unknown category -->
             <% end %>
             <br/>
+            <%= if_present_with_break url.wholesome_uplifting_level, "Wholesome level:" %>
+            <%= if_present_with_break url.wholesome_review, "Wholesome review:" %>
+            <%= if_present_with_break url.good_movie_rating, "Good movie level:" %>
+            <%= if_present_with_break url.review, "Good movie review:" %>
+            <%= if_present_with_break url.original_rating, "Original rating:" %>
+            <%= if_present_with_break "#{url.genre} (#{url.human_duration})", "Genre:" %>
             <%= if_present_with_break url.cost_string, "Price:" %>
             <div style="text-align: center;">		  
               <a href="/view_url/<%= url.id %>">Movie page</a>
