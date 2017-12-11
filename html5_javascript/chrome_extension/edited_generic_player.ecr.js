@@ -269,18 +269,8 @@ function checkIfShouldDoActionAndUpdateUI() {
     }
   }
   
-  tag = areWeWithin(skips, cur_time);
-  if (tag) {
-    timestamp_log("seeking forward", cur_time, tag);
-    optionally_show_notification(tag); // show it now so it can notify while it seeks :) [NB for longer seeks it shows it over and over but notification tag has our back :\ ]
-    blankScreenIfWithinHeartOfSkip(tag, cur_time);
-    blankScreenIfWithinHeartOfSkip(tag, tag.endy); // warn it to start a blank now, otherwise when it gets there it's already too late
-    seekToTime(tag.endy, doneWithPossibleHeartBlankUnlessImpending); // just seek (works fine in amazon, and seems to even work ok these days in youtube...actually only if it's buffered :|
-  }
-  
   tag = areWeWithin(yes_audio_no_videos, cur_time);
   tag = tag || areWeWithin(mute_audio_no_videos, cur_time);
-
   if (tag) {
     // use style.visibility here so it retains the space on screen it would have otherwise used...(for non amazon LOL) and to not confuse the seektoheart logic :|
     if (video_element.style.visibility != "hidden") {
@@ -296,9 +286,25 @@ function checkIfShouldDoActionAndUpdateUI() {
       console.log("unhiding video with cur_time=" + cur_time + " " + timeStampToHuman(cur_time));
       video_element.style.visibility=""; // non hidden :)
       i_hid_it = false;
-      doneWithPossibleHeartBlankUnlessImpending(); // in case it heart blanked it to start (or seek into) one of these and needs to un now...hmm maybe could do after set visibility to hidden? either...
+      //  case it heart blanked it to start (or seek into) this one and needs to un now...
+      doneWithPossibleHeartBlankUnlessImpending(true);
+      // case it is "ending" a blank, straight to a skip, you want to do a blank...
+      var about_to_blank = areWeWithin(all_no_show_video_tags(), cur_time + 0.02);
+      if (about_to_blank) {
+        blankScreenIfWithinHeartOfSkip(about_to_blank, cur_time);
+      }
     }
   }
+  
+  tag = areWeWithin(skips, cur_time); // do after unhiding so it can use 'right now' to know if should heart blank :|
+  if (tag) {
+    timestamp_log("seeking forward", cur_time, tag);
+    optionally_show_notification(tag); // show it now so it can notify while it seeks :) [NB for longer seeks it shows it over and over [bug] but notification tag has our back'ish for now :\ ]
+    blankScreenIfWithinHeartOfSkip(tag, cur_time);
+    blankScreenIfWithinHeartOfSkip(tag, tag.endy); // warn it to start a blank now, for the gap, otherwise when it gets there it's already too late
+    seekToTime(tag.endy, doneWithPossibleHeartBlankUnlessImpending);
+  }
+  
   
   tag = areWeWithin(make_video_smallers, cur_time);
   if (tag) {
@@ -426,8 +432,8 @@ function checkIfShouldDoActionAndUpdateUI() {
 var i_heart_blanked_it = false;
 
 function blankScreenIfWithinHeartOfSkip(skipish_tag, cur_time) {
-  // if it's trying to seek out of something baaad then don't show a still frame of the bad stuff right in its middle!
-  var within_heart_of_skipish = !withinDelta(skipish_tag.start, cur_time, 0.05); // don't show black blips on normal seek from playing continuous...
+  // if it's trying to seek out of something baaad then don't show a still frame of the bad stuff in the meanwhile
+  var within_heart_of_skipish = !withinDelta(skipish_tag.start, cur_time, 0.05); // but don't show black blips on normal seek from playing continuous...
   if (within_heart_of_skipish) { 
     if (video_element.style.display != "none") {
       console.log("heartblanking it because within_heart_of_skipish=" + within_heart_of_skipish + " start=" + skipish_tag.start + " cur_time=" + cur_time);
@@ -441,14 +447,14 @@ function blankScreenIfWithinHeartOfSkip(skipish_tag, cur_time) {
   }
 }
 
-function all_non_video_tags() {
-  return skips + yes_audio_no_videos + mute_audio_no_videos;
+function all_no_show_video_tags() {
+  return skips.concat(yes_audio_no_videos).concat(mute_audio_no_videos); // can't use +
 }
 
-function doneWithPossibleHeartBlankUnlessImpending() {
+function doneWithPossibleHeartBlankUnlessImpending() { // do as its "whole own thing" (versus aumenting yes_audio_no_video) since it *has* to use style.display...I guess...
   var cur_time = getCurrentTime();
   // 0.02 cuz if it's "the next 0.01" then count it, plus some rounding error :)
-  var just_before_bad_stuff = areWeWithin(all_non_video_tags, cur_time + 0.02); // if about to re-non-video, don't show blip of bad stuff if two such edits back to back
+  var just_before_bad_stuff = areWeWithin(all_no_show_video_tags(), cur_time + 0.02); // if about to re-non-video, don't show blip of bad stuff if two such edits back to back
   if (!just_before_bad_stuff) {
     if (i_heart_blanked_it) {
       console.log("unheart blanking it");
