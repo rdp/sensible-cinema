@@ -665,12 +665,13 @@ function refreshVideoElement() {
   video_element = findFirstVideoTagOrNull() || video_element; // refresh it in case changed, but don't switch to null between clips, I don't think our code handles nulls very well...
   if (video_element != old_video_element) {
     console.log("video element changed...");
-    video_element.addEventListener("seeking", // only add once :)
+    // only add event thing once :)
+    video_element.addEventListener("seeking",  // there is also seeked and timeupdate hrm :) [this is fired first, timestamp is "already updated" FWIW... ]
       function() { 
-        console.log("seeked time=" + getCurrentTime()); 
-        //checkStatus();
+        console.log("seeking event detected time=" + getCurrentTime());
+        checkStatus(); // do it "fast/immediately" in case need to blank [saves 0.007 yes!]
       }
-    ); 
+    );
   }
 }
 

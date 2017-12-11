@@ -2,6 +2,8 @@
 // content script runs on every page...and once again on each embedded iframe...
 // we mostly use this to bootstrap the real player...
 
+console.log("PIMW content script loading..."); // try and see how soon it loads...
+
 function loadScript(url, callback)
 {
     // Adding the script tag to the head as suggested before
@@ -126,7 +128,7 @@ function autoStartIfShould() {
         injectEditedPlayerOnce();
         clearInterval(interval);
       }
-    }, 50);  // initial delay 50ms but not too bad :)
+    }, 50);  // initial delay 50ms but me thinks not too bad, still responsive enough :)
   }
   else if (url.includes("netflix.com/") || url.includes("hulu.com/")) {
     console.log("doing nothing netflix hulu :|");
@@ -196,4 +198,4 @@ function getRequest (url, success, error) {
   xhr.send(); 
 }
 
-onReady(autoStartIfShould);
+onReady(autoStartIfShould); // takes like 5s for onReady whoa!
