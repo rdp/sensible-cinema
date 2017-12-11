@@ -4,12 +4,14 @@ can it "survive starting within a skip" (sicario) (audio+video blip OK)
 does the text show up on an amazon page
 skip followed by skip -> no intermediate video (audio blip OK for now LOL)
   rogue nation
-  skip -> skip
-    check
-  skip -> yes_audio_no_video (and no_audio_no_video)
-  yes_audio_no_video -> skip
+    skip -> skip
+      check
+    skip -> yes_audio_no_video (and no_audio_no_video)
+    yes_audio_no_video -> skip
+    https://playitmyway.org/edit_tag/7189 -> https://playitmyway.org/edit_tag/7190
   
-  https://playitmyway.org/edit_tag/7189 -> https://playitmyway.org/edit_tag/7190
+if seek -> skip auto blank
+  seek -> no_video auto blank
   
 == used to ==
 

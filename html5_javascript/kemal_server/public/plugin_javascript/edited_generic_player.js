@@ -587,7 +587,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       console.log("unhiding video with cur_time=" + cur_time + " " + timeStampToHuman(cur_time));
       video_element.style.visibility=""; // non hidden :)
       i_hid_it = false;
-      doneWithPossibleHeartBlankUnlessImpending(); // in case it started one of these at the beginning or middle of when it entered this section...
+      doneWithPossibleHeartBlankUnlessImpending(); // in case it heart blanked it to start (or seek into) one of these and needs to un now...hmm maybe could do after set visibility to hidden? either...
     }
   }
   
@@ -732,10 +732,14 @@ function blankScreenIfWithinHeartOfSkip(skipish_tag, cur_time) {
   }
 }
 
+function all_non_video_tags() {
+  return skips + yes_audio_no_videos + mute_audio_no_videos;
+}
+
 function doneWithPossibleHeartBlankUnlessImpending() {
   var cur_time = getCurrentTime();
   // 0.02 cuz if it's "the next 0.01" then count it, plus some rounding error :)
-  var just_before_bad_stuff = areWeWithin(skips, cur_time + 0.02) ||  areWeWithin(yes_audio_no_videos, cur_time + 0.02); // if about to skip/blank, don't show blip of bad stuff if two skip edits back to back
+  var just_before_bad_stuff = areWeWithin(all_non_video_tags, cur_time + 0.02); // if about to re-non-video, don't show blip of bad stuff if two such edits back to back
   if (!just_before_bad_stuff) {
     if (i_heart_blanked_it) {
       console.log("unheart blanking it");
