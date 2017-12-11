@@ -9,6 +9,7 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
+var video_element;
 var extra_message = "";
 var inMiddleOfTestingTimer;
 var current_json, url;
@@ -573,7 +574,7 @@ function checkIfShouldDoActionAndUpdateUI() {
     notify_if_new(tag);
   }
   else {
-    if (video_element.style.visibility != "" && i_hid_it) {
+    if (video_element.style.visibility != "" && i_hid_it && video_element.readyState == 4) { // need readyState in case seeking out of yes_audio_no_video don't want to show still frame while seek completes :|
       console.log("unhiding video with cur_time=" + cur_time + " " + timeStampToHuman(cur_time));
       video_element.style.visibility=""; // non hidden :)
       i_hid_it = false;
@@ -924,8 +925,12 @@ function checkStatus() { // called 100 fps
       }
       var cur_time = getCurrentTime();
       if (cur_time < last_timestamp) {
-        console.log("Something (possibly pimw) just sought backwards to=" + cur_time + " from=" + last_timestamp + "to=" + timeStampToHuman(cur_time) + " from=" + timeStampToHuman(last_timestamp));
-        var tag = areWeWithin(skips, cur_time); 
+        console.log("Something (possibly)pimw just sought backwards to=" + cur_time + " from=" + last_timestamp + "to=" + timeStampToHuman(cur_time) + " from=" + timeStampToHuman(last_timestamp) + " readyState=" + video_element.readyState);
+        var tag = areWeWithin(all_no_show_video_tags(), cur_time);
+        if (tag) {
+          blankScreenIfWithinHeartOfSkip(tag, cur_time);
+        }
+        tag = areWeWithin(skips, cur_time); // just skips for this one (also happens to avoid infinite loop...["seek to before skip oh it's the current location..., repeat"])
         if (tag) {
           // was the seek to within an edit? Since this was a "rewind" let's actually go to *before* the bad spot, so the traditional +-10 buttons can work from UI
           console.log("they just seeked backward to within a skip, rewinding more..."); // tag already gets logged in seekToBeforeSkip
@@ -942,8 +947,22 @@ function checkStatus() { // called 100 fps
   }
 
   checkIfEpisodeChanged();
-  video_element = findFirstVideoTagOrNull() || video_element; // refresh it in case changed, but don't switch to null between clips, I don't think our code handles nulls very well...
+  refreshVideoElement();
   setEditedControlsToMovieRight(); // in case something changed [i.e. amazon moved their video element into "on screen" :| ]
+}
+
+function refreshVideoElement() {
+  var old_video_element = video_element;
+  video_element = findFirstVideoTagOrNull() || video_element; // refresh it in case changed, but don't switch to null between clips, I don't think our code handles nulls very well...
+  if (video_element != old_video_element) {
+    console.log("video element changed...");
+    video_element.addEventListener("seeking", // only add once :)
+      function() { 
+        console.log("seeked time=" + getCurrentTime()); 
+        //checkStatus();
+      }
+    ); 
+  }
 }
 
 function timestamp_log(message, cur_time, tag) {
@@ -1627,7 +1646,7 @@ function startWatcherTimerSingleton() {
 }
 
 function startOnce() {
-  video_element = findFirstVideoTagOrNull();
+  refreshVideoElement();
 
   if (video_element == null) {
     // maybe could get here if they raw load the javascript?
@@ -1824,7 +1843,7 @@ function getSecondsBufferedAhead() {
 var old_ts;
 function seekToTime(ts, callback) {
   if (seek_timer) {
-    console.log("still seeking from previous to=" + old_ts + ", not trying that again... requested=" + ts);
+    console.log("still seeking from previous_requested=" + old_ts + ", not trying that again...new_requested=" + ts);
     return;
   }
   
