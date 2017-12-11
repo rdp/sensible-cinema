@@ -716,29 +716,30 @@ function checkIfShouldDoActionAndUpdateUI() {
 var i_heart_blanked_it = false;
 
 function blankScreenIfWithinHeartOfSkip(skip_tag, cur_time) {
-    // if it's trying to seek out of something baaad then don't show a still frame of the bad stuff right in its middle!
-    var within_heart_of_skip = !withinDelta(skip_tag.start, cur_time, 0.05); // don't show black blips on normal seek from playing continuous...
-    if (within_heart_of_skip) { 
-      if (video_element.style.display != "none") {
-        console.log("heartblanking it because within_heart_of_skip=" + within_heart_of_skip);
-        video_element.style.display = "none"; // have to use or it hoses us and auto-shows [?]
-      } else {
-        console.log("already video_element.style.display=" + video_element.style.display + " so not changing that even though we're in the heart of a skip");
-      }
-      i_heart_blanked_it = true;
+  // if it's trying to seek out of something baaad then don't show a still frame of the bad stuff right in its middle!
+  var within_heart_of_skip = !withinDelta(skip_tag.start, cur_time, 0.05); // don't show black blips on normal seek from playing continuous...
+  if (within_heart_of_skip) { 
+    if (video_element.style.display != "none") {
+      console.log("heartblanking it because within_heart_of_skip=" + within_heart_of_skip);
+      video_element.style.display = "none"; // have to use or it hoses us and auto-shows [?]
     } else {
-      console.log("not blanking it because it's normal playing continuous beginning of skip..." + skip_tag.start);
+      console.log("already video_element.style.display=" + video_element.style.display + " so not changing that even though we're in the heart of a skip");
     }
+    i_heart_blanked_it = true;
+  } else {
+    console.log("not blanking it because it's normal playing continuous beginning of skip..." + skip_tag.start);
+  }
 }
 
 function doneWithPossibleHeartBlankUnlessImpending() {
-    var cur_time = getCurrentTime();
-    var just_before_bad_stuff = areWeWithin(skips, cur_time + 0.01) ||  areWeWithin(yes_audio_no_videos, cur_time + 0.01); // if about to skip, don't show blip of bad stuff if two skip edits back to back
-    if (!just_before_bad_stuff && i_heart_blanked_it) {
-      console.log("unheart blanking it");
-      video_element.style.display="block"; // non none :)
-      i_heart_blanked_it = false;
-    }
+  var cur_time = getCurrentTime();
+  // 0.02 cuz if it's "the next 0.01" then count it, plus some rounding error :)
+  var just_before_bad_stuff = areWeWithin(skips, cur_time + 0.02) ||  areWeWithin(yes_audio_no_videos, cur_time + 0.02); // if about to skip/blank, don't show blip of bad stuff if two skip edits back to back
+  if (!just_before_bad_stuff && i_heart_blanked_it) {
+    console.log("unheart blanking it");
+    video_element.style.display="block"; // non none :)
+    i_heart_blanked_it = false;
+  }
 }
 
 function removeIfNotifyEditsHaveEnded(cur_time) {
@@ -853,9 +854,8 @@ function logOnce(to_log) {
 
 function isWatchingAdd() {
   if (url != null) {
-    // guess this > 0 check is for ancient ones I used to add manually [?] youtubes [?]
-    // TODO remove them... :|
-    // withinDelta 10 is for amazon at the end, weird stuff LOL
+    // guess this > 0 check is for amazon when it has "lost" its video?
+    // withinDelta 10 is amazon at the end weird stuff LOL
     if (current_json.url.total_time > 0 && !withinDelta(current_json.url.total_time, videoDuration(), 10.5)) { // amazon can be 10.01 or something if you go to the end
       logOnce("watching add? Or possibly hit X after starting movie amazon expected=" + current_json.url.total_time + " got_duration=" + videoDuration()); // we get NaN for video_element.duration after hit video x in amazon :| [?]
       return true;
@@ -867,7 +867,6 @@ function isWatchingAdd() {
   } else {
     return false; // ??
   }
-  
 }
 
 var i_set_it_to_add = false;
