@@ -198,4 +198,5 @@ function getRequest (url, success, error) {
   xhr.send(); 
 }
 
-onReady(autoStartIfShould); // takes like 5s for onReady whoa!
+// onReady(autoStartIfShould); // takes like 5s for onReady whoa!
+autoStartIfShould(); 
