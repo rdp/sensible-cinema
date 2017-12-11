@@ -282,20 +282,21 @@ function checkIfShouldDoActionAndUpdateUI() {
   tag = tag || areWeWithin(mute_audio_no_videos, cur_time);
 
   if (tag) {
-    // could use style.display here so it retains the space on screen it would have otherwise used... [for non-amazon basically LOL]
-    if (video_element.style.display != "none") {
+    // use style.visibility here so it retains the space on screen it would have otherwise used...(for non amazon LOL) and to not confuse the seektoheart logic :|
+    if (video_element.style.visibility != "hidden") {
       timestamp_log("hiding video leaving audio ", cur_time, tag);
-      video_element.style.display = "none";
+      video_element.style.visibility = "hidden";
       i_hid_it = true;
     }
     extra_message += "doing a no video yes audio";
     notify_if_new(tag);
   }
   else {
-    if (video_element.style.display != "block" && i_hid_it) {
+    if (video_element.style.visibility != "" && i_hid_it) {
       console.log("unhiding video with cur_time=" + cur_time + " " + timeStampToHuman(cur_time));
-      video_element.style.display="block"; // non none :)
+      video_element.style.visibility=""; // non hidden :)
       i_hid_it = false;
+      doneWithPossibleHeartBlankUnlessImpending(); // in case it started one of these at the beginning or middle of when it entered this section...
     }
   }
   
@@ -424,19 +425,19 @@ function checkIfShouldDoActionAndUpdateUI() {
 
 var i_heart_blanked_it = false;
 
-function blankScreenIfWithinHeartOfSkip(skip_tag, cur_time) {
+function blankScreenIfWithinHeartOfSkip(skipish_tag, cur_time) {
   // if it's trying to seek out of something baaad then don't show a still frame of the bad stuff right in its middle!
-  var within_heart_of_skip = !withinDelta(skip_tag.start, cur_time, 0.05); // don't show black blips on normal seek from playing continuous...
-  if (within_heart_of_skip) { 
+  var within_heart_of_skipish = !withinDelta(skipish_tag.start, cur_time, 0.05); // don't show black blips on normal seek from playing continuous...
+  if (within_heart_of_skipish) { 
     if (video_element.style.display != "none") {
-      console.log("heartblanking it because within_heart_of_skip=" + within_heart_of_skip);
+      console.log("heartblanking it because within_heart_of_skipish=" + within_heart_of_skipish + " start=" + skipish_tag.start + " cur_time=" + cur_time);
       video_element.style.display = "none"; // have to use or it hoses us and auto-shows [?]
     } else {
       console.log("already video_element.style.display=" + video_element.style.display + " so not changing that even though we're in the heart of a skip");
     }
     i_heart_blanked_it = true;
   } else {
-    console.log("not blanking it because it's normal playing continuous beginning of skip..." + skip_tag.start);
+    console.log("not blanking it because it's normal playing continuous beginning of skip..." + skipish_tag.start);
   }
 }
 
@@ -444,10 +445,17 @@ function doneWithPossibleHeartBlankUnlessImpending() {
   var cur_time = getCurrentTime();
   // 0.02 cuz if it's "the next 0.01" then count it, plus some rounding error :)
   var just_before_bad_stuff = areWeWithin(skips, cur_time + 0.02) ||  areWeWithin(yes_audio_no_videos, cur_time + 0.02); // if about to skip/blank, don't show blip of bad stuff if two skip edits back to back
-  if (!just_before_bad_stuff && i_heart_blanked_it) {
-    console.log("unheart blanking it");
-    video_element.style.display="block"; // non none :)
-    i_heart_blanked_it = false;
+  if (!just_before_bad_stuff) {
+    if (i_heart_blanked_it) {
+      console.log("unheart blanking it");
+      video_element.style.display="block"; // non none :)
+      i_heart_blanked_it = false;
+    } else {
+      console.log("doneWithPossibleHeartBlankUnlessImpending nothing to do (i.e. didn't run into a heart when performed last seekish");
+    }
+  }
+  else {
+    console.log("not unheart blanking it, we're about to enter another bad stuff section...start=" + timeStampToHuman(just_before_bad_stuff.start) + " cur_time=" + timeStampToHuman(cur_time));
   }
 }
 
@@ -638,7 +646,7 @@ function checkStatus() { // called 100 fps
 }
 
 function timestamp_log(message, cur_time, tag) {
-  local_message = "edit:" + message + " at " + twoDecimals(cur_time) + " start:" + twoDecimals(tag.start) + " will_end:" + twoDecimals(tag.endy) + " in " + twoDecimals(tag.endy - cur_time) + "s";;
+  local_message = "edit:" + message + " at " + twoDecimals(cur_time) + " start:" + twoDecimals(tag.start) + " will_end:" + twoDecimals(tag.endy) + " " + timeStampToHuman(tag.endy) + " in " + twoDecimals(tag.endy - cur_time) + "s";;
   console.log(local_message);
 }
 
@@ -1586,7 +1594,7 @@ var addEvent = function(object, type, callback) {
     }
 };
 
-function displayDiv(div) {
+function displayDiv(div) { // who needs jQuery :)
   div.style.display = "block";
 }
 
