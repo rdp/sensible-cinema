@@ -1643,7 +1643,8 @@ function mouseJustMoved(event) {
   var cursorY = event.pageY;
   var mouse_within_all_pimw_stuff = pointWithinElement(cursorX, cursorY, all_pimw_stuff);
   var mouse_within_video = pointWithinElement(cursorX, cursorY, video_element);
-  if (!mouse_move_timer || (mouse_within_video && document.hasFocus())) {
+  var enough_focus = isAmazon() || document.hasFocus(); // only do this for youtube :|
+  if (!mouse_move_timer || (mouse_within_video && enough_focus)) {
     displayDiv(all_pimw_stuff);
   
     clearTimeout(mouse_move_timer); // in case previously set
