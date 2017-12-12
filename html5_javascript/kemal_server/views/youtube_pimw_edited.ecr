@@ -8,8 +8,8 @@
     <!-- play -->
     <a href='' onclick="youtube_pimw_player.playVideo(); return false">&#9654;</a>&nbsp;&nbsp;<a href='' onclick="youtube_pimw_player.pauseVideo(); return false">&#9612;&#9612;</a>
     Seek:<input id="seek-control-id" type="range" min="0" max="100" step="1" onmouseup="seekToPercentage(this.value);" ontouchend="seekToPercentage(this.value);" style="max-width: 150px; display:inline;"></input><!-- not sure how to not super seek here on drag :| -->
-    <a href='' onclick="seekToPercentageDelta(-10); return false">-10s</a>
-    <a href='' onclick="seekToPercentageDelta(10); return false">+10s</a>
+    <a href='' onclick="seekToDelta(-10); return false">-10s</a>
+    <a href='' onclick="seekToDelta(10); return false">+10s</a>
     <!-- time -->
     <div id="current_time_id" style="display: inline;"></div>  
     <!-- fullscreen -->
@@ -72,7 +72,7 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
       document.getElementById('hd_checkbox_id').checked = to_this;
     }
     
-    function seekToPercentageDelta(delta) {
+    function seekToDelta(delta) {
       youtube_pimw_player.seekTo(youtube_pimw_player.getCurrentTime() + delta);
     }
     
