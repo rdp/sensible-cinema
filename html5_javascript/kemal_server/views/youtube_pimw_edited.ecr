@@ -61,7 +61,7 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
       console.log("checkbox changed=" + to_this);
       window.localStorage.setItem("hd_checkbox_checked", to_this);
       if (to_this) {
-        var desired=youtube_pimw_player.getAvailableQualityLevels()[0];
+        var desired = youtube_pimw_player.getAvailableQualityLevels()[0];
         youtube_pimw_player.setPlaybackQuality(desired);
         console.log("setting it to HD=" + youtube_pimw_player.getPlaybackQuality() + " desired=" + desired); // even setting this to 1080p does "nothing" if the viewing window is too small
       }
@@ -91,18 +91,23 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
         return minutes + "m " + seconds + "s";
     }
     
+    var seek_dragger = document.getElementById('seek-control-id');
+    var seek_dragger_being_dragged = false;
     function updateTime() {
       document.getElementById('current_time_id').innerHTML = timeStampToHumanHere(youtube_pimw_player.getCurrentTime(), 0) + "/" + timeStampToHumanHere(youtube_pimw_player.getDuration(), 0);
-      var seek_dragger = document.getElementById('seek-control-id');
-      var a = document.activeElement;
-      console.log("active=" + a + a.id + " seek=" + seek_dragger + seek_dragger.id);
-      if (seek_dragger.id == a.id) {
-        console.log("a match!");
-      }
-
       seek_dragger.value = youtube_pimw_player.getCurrentTime() / youtube_pimw_player.getDuration() * 100; 
       document.getElementById('quality_div_id').innerHTML = youtube_pimw_player.getPlaybackQuality();
     }
+    
+    seek_dragger.addEventListen("mousedown", function() {
+      seek_dragger_being_dragged = true;
+      console.log("start drag");
+    });
+
+    seek_dragger.addEventListen("mouseup", function() {
+      seek_dragger_being_dragged = false;
+      console.log("end drag");
+    });
     
     function toggleFullScreen() {
       var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
@@ -120,6 +125,9 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
       }
     }
 
+    mouseup
+    
+    
   // Load the IFrame Player API code asynchronously.
   var tag = document.createElement('script');
   tag.src = "https://www.youtube.com/player_api";
