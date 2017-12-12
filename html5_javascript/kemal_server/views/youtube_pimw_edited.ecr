@@ -5,7 +5,7 @@
   <h3>
     <!-- play -->
     <a href='' onclick="youtube_pimw_player.playVideo(); return false">&#9654;</a>&nbsp;&nbsp;<a href='' onclick="youtube_pimw_player.pauseVideo(); return false">&#9612;&#9612;</a>
-    seek:<input id="seek-control-id" type="range" min="0" max="100" step="1" onmouseup="seekTo(this.value);" ontouchend="seekTo(this.value);" style="max-width: 150px; display:inline;"></input><!-- not sure how to not super seek here on drag :| -->
+    Seek:<input id="seek-control-id" type="range" min="0" max="100" step="1" onmouseup="seekTo(this.value);" ontouchend="seekTo(this.value);" style="max-width: 150px; display:inline;"></input><!-- not sure how to not super seek here on drag :| -->
     <!-- time -->
     <div id="current_time_id" style="display: inline;"></div>  
     <!-- fullscreen -->
@@ -15,9 +15,9 @@
     Volume:<input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)" style="max-width: 100px; display:inline;"></input>
     <!-- TODO put volume percent? -->
     <br/>
-    res: <div id="quality_div_id" style="display: inline;"></div> 
+    Resolution: <div id="quality_div_id" style="display: inline;"></div> 
     <input id="hd_checkbox_id" type="checkbox" onchange="hd_checkbox_changed(this.checked);">
-    <a href=# onclick="hd_checkbox_changed(true); return false; /* XXXX cue off actual display size */">use max resolution</a>.
+    <a href=# onclick="hd_checkbox_changed(true); return false; /* XXXX cue off actual display size */">use max</a>.
   </h3>
   
 </div>
@@ -95,7 +95,9 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
     var seek_dragger_being_dragged = false;
     function updateTime() {
       document.getElementById('current_time_id').innerHTML = timeStampToHumanHere(youtube_pimw_player.getCurrentTime(), 0) + "/" + timeStampToHumanHere(youtube_pimw_player.getDuration(), 0);
-      seek_dragger.value = youtube_pimw_player.getCurrentTime() / youtube_pimw_player.getDuration() * 100; 
+      if (!seek_dragger_being_dragged) {
+        seek_dragger.value = youtube_pimw_player.getCurrentTime() / youtube_pimw_player.getDuration() * 100; 
+      }
       document.getElementById('quality_div_id').innerHTML = youtube_pimw_player.getPlaybackQuality();
     }
     
