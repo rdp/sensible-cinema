@@ -150,10 +150,13 @@ function onPlayerReady(event) {
   setTimeout(function() {
       // sometimes this doesn't work if run ja [?]
       document.getElementById('vol-control-id').value = youtube_pimw_player.getVolume();
+    }, 500);
+    
+    setTimeout(function() {
       if (start_hd && start_hd == "true") {  
         hd_checkbox_changed(start_hd); // needed apparently
-      } // default unchecked
-    }, 500);
+      } // default unchecked      
+    }, 1500); // doesn't even take at 500ms what XXXX
 
   setInterval(updateTime, 1000); // only 1/sec because if they happen to do their "own" seek this could interfere and "seek to no where" (well, still could but more rare? :\  TODO
 
