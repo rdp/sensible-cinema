@@ -59,11 +59,11 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
 
     function hd_checkbox_changed(to_this) {
       console.log("checkbox changed=" + to_this);
-      window.localStorage.setItem("hd_checkbox_checked", to_this); // for restarts
+      window.localStorage.setItem("hd_checkbox_checked", to_this);
       if (to_this) {
         var desired=youtube_pimw_player.getAvailableQualityLevels()[0];
         youtube_pimw_player.setPlaybackQuality(desired);
-        console.log("setting it to HD=" + youtube_pimw_player.getPlaybackQuality() + " desired=" + desired);
+        console.log("setting it to HD=" + youtube_pimw_player.getPlaybackQuality() + " desired=" + desired); // even setting this to 1080p does "nothing" if the viewing window is too small
       }
       document.getElementById('hd_checkbox_id').checked = to_this;
     }
@@ -92,8 +92,9 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
     }
     
     function updateTime() {
-      current_time_id.innerHTML=timeStampToHumanHere(youtube_pimw_player.getCurrentTime(), 0) + "/" + timeStampToHumanHere(youtube_pimw_player.getDuration(), 0);
-      document.getElementById('seek-control-id').value = youtube_pimw_player.getCurrentTime() / youtube_pimw_player.getDuration() * 100; 
+      document.getElementById('current_time_id').innerHTML = timeStampToHumanHere(youtube_pimw_player.getCurrentTime(), 0) + "/" + timeStampToHumanHere(youtube_pimw_player.getDuration(), 0);
+      var seek_dragger = document.getElementById('seek-control-id');
+      seek_dragger.value = youtube_pimw_player.getCurrentTime() / youtube_pimw_player.getDuration() * 100; 
       document.getElementById('quality_div_id').innerHTML = youtube_pimw_player.getPlaybackQuality();
     }
     
@@ -112,7 +113,6 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
         requestFullScreen.bind(iframe)();
       }
     }
-    
 
   // Load the IFrame Player API code asynchronously.
   var tag = document.createElement('script');
@@ -138,7 +138,7 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
   }
 
 function onPlayerReady(event) {
-  console.log("youtube_player ready and setup! auto playing...");
+  console.log("youtube_player onPlayerReady! auto playing...");
   <% if !mobile?(env) && url %>
     event.target.playVideo(); // otherwise it can get in this weird pause state on android at least...
   <% end %>
