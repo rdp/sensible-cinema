@@ -603,6 +603,7 @@ var last_timestamp = 0;
 
 function videoNotBuffering() {
   if (isYoutubePimw()) {
+    // -1 – unstarted 0 – ended 1 – playing 2 – paused 3 – buffering 5 – video cued assume paused means not buffering? huh wuh? XXXX experiment...
     return youtube_pimw_player.getPlayerState() == YT.PlayerState.PAUSED || youtube_pimw_player.getPlayerState() == YT.PlayerState.PLAYING;
   } else {
     return video_element.readyState == 4; // it's HAVE_NOTHING, HAVE_METADATA, HAVE_CURRENT_DATA [i.e. 1 frame], HAVE_FUTURE_DATA [i.e. 2 frames], HAVE_ENOUGH_DATA == 4 [i.e. lots of data buffered]
@@ -632,7 +633,7 @@ function checkStatus() { // called 100 fps
       // seems necessary to let it "come alive" first in amazon before we can hide it, even if within heart of seek <sigh> I guess... :|
       // an initial blip [video] is OK [this should be super rare, and is "hard" to avoid], just try not to crash for now...
       if (!video_ever_initialized) {
-        if (video_element.readyState != 4 || video_element.offsetWidth == 0) { // XXX does this stuff work on youtube at all? huh?
+        if (!videoNotBuffering() || video_element.offsetWidth == 0) {
           console.log("appears video never initialized yet...doing nothing! readyState=" + video_element.readyState + " width=" + video_element.offsetWidth);
           return;
         } else {
