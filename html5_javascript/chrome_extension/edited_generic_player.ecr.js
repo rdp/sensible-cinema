@@ -721,7 +721,7 @@ function videoDuration() {
   if (isYoutubePimw()) {
     return youtube_pimw_player.getDuration();
   } else {
-    return video_element.duration; // and hope they're not near the end :|
+    return video_element.duration; // and hope they're not near the end, otherwise should be -10
   }
 }
 

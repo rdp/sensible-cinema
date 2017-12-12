@@ -84,7 +84,7 @@ get "/youtube_pimw_edited/:youtube_id" do |env|
   if url
     env.response.title = url.name
   end
-  render "views/youtube_pimw_edited.ecr", "views/layout.ecr"
+  render "views/youtube_pimw_edited.ecr" #, "views/layout.ecr"
 end
 
 get "/redo_all_thumbnails" do |env|

@@ -11,8 +11,11 @@ though there was a lot of pre-existing art (including edited youtube API/google,
  sudo apt install crystal build-essential libssl-dev jhead imagemagick fish -y # need cookie key, sessions dir, ssl dev key  
  shards install  
  \# add swap, need 1.5G anyway...  
- sudo apt install mysql-server -y # create db/connectionXX file  
+ sudo apt install mysql-server -y 
  sudo /etc/init.d/mysql start  
+ # create db/connectionXX file  
+ db$ cp connection_string_local_box_no_commit.txt.template connection_string_local_box_no_commit.txt
+ $ touch this_is_development
 
 # OS X
 
