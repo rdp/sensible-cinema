@@ -146,19 +146,16 @@ function onPlayerReady(event) {
   var start_vol = window.localStorage.getItem("youtube_volume") || 50; // default isn't 100? or seemed to be once...
   SetVolume(start_vol);
   document.getElementById('vol-control-id').value = start_vol; // waiting for 500ms seems whack but..but...
+  var start_hd = window.localStorage.getItem("hd_checkbox_checked");
   setTimeout(function() {
-    // sometimes this doesn't work if run ja [?]
-    document.getElementById('vol-control-id').value = youtube_pimw_player.getVolume();
+      // sometimes this doesn't work if run ja [?]
+      document.getElementById('vol-control-id').value = youtube_pimw_player.getVolume();
+      if (start_hd && start_hd == "true") {  
+        hd_checkbox_changed(start_hd); // needed apparently
+      } // default unchecked
     }, 500);
 
-  var start_hd = window.localStorage.getItem("hd_checkbox_checked");
-  if (start_hd && start_hd == "true") {  
-    hd_checkbox_changed(start_hd); // needed apparently
-  } else {
-    document.getElementById('hd_checkbox_id').checked = false;
-  }
-
-  setInterval(updateTime, 1000); // only 2/sec because if they happen to do their "own" seek this could interfere and "seek to no where" (well, still could but more rare? :\ )
+  setInterval(updateTime, 1000); // only 1/sec because if they happen to do their "own" seek this could interfere and "seek to no where" (well, still could but more rare? :\  TODO
 
   // inject copy of plugin FTW :|  
   var my_awesome_script = document.createElement('script');
