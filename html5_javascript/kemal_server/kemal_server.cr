@@ -81,7 +81,7 @@ get "/youtube_pimw_edited/:youtube_id" do |env|
   in_system = sanitize_html("https://playitmyway.org/youtube_pimw_edited/" + youtube_id) # hacky way to be able to look it up to display stuff about it in the ecr
   url = Url.get_only_or_nil_by_urls_and_episode_number(in_system, 0)
   if url
-    env.response.title = url.name + " (pimw edited)"
+    env.response.title = "Edited: " + url.name
   end
   render "views/youtube_pimw_edited.ecr" #, "views/layout.ecr"
 end
