@@ -18,12 +18,8 @@ skip followed by skip -> no intermediate video (audio blip OK for now LOL)
     seek "out of no_video" -> not show bad stuff
       check4
     single seek, normal start -> not black it at all
-  
-== used to ==
-
-so the old way happened to say "skip -> blank + skip but no skip" LOL
-https://www.youtube.com/watch?v=Vpg9yizPP_g big buck
-
+      check4
+      
 == TV ==
 
 cast to fire TV? chromecast? apple tv? roku?
@@ -79,6 +75,11 @@ azuile possibly junk
   streaming stick geeky side?
 
  Minix ($179)
+
+ == old start working ==
+
+so the old way happened to say "skip -> blank + skip but no skip" LOL
+https://www.youtube.com/watch?v=Vpg9yizPP_g big buck
 
 == skewed ?? ==
 yes breaking bad

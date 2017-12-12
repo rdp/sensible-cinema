@@ -412,10 +412,10 @@ function checkIfShouldDoActionAndUpdateUI() {
     if (!next_future_tag.default_enabled) {
       second_line += "(disabled)";
     }
-    document.getElementById("open_next_tag_id").style.display = "block";
+    document.getElementById("open_next_tag_id").style.visibility = "visible";
   }
   else {
-    document.getElementById("open_next_tag_id").style.display = "none";
+    document.getElementById("open_next_tag_id").style.visibility = "hidden";
     second_line = "<br>";
   }
   updateHTML(document.getElementById('tag_details_second_line'), second_line);
