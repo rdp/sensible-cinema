@@ -10,7 +10,8 @@
   <br/>
   seek:<input id="seek-control-id" type="range" min="0" max="100" step="1" onmouseup="seekTo(this.value);" ontouchend="seekTo(this.value);" style="max-width: 150px; display:inline;"></input><!-- not sure how to not super seek here on drag :| -->
   res: <div id="quality_div_id" style="display: inline;"></div> 
-  <a href=# onclick="youtube_pimw_player.setPlaybackQuality(youtube_pimw_player.getAvailableQualityLevels()[0]); return false; /* XXXX cue off actual video size */">use max</a>.
+  <input id="hd_checkbox_id" type="checkbox" onchange="hd_checkbox_changed(this.checked);">
+  <a href=# onclick="youtube_pimw_player.setPlaybackQuality(youtube_pimw_player.getAvailableQualityLevels()[0]); return false; /* XXXX cue off actual video size */">use max resolution</a>.
   </h3>
   
 </div>
@@ -48,6 +49,14 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
       console.log("setting volume=" + val);
       youtube_pimw_player.setVolume(val);
       window.localStorage.setItem("youtube_volume", val); // for restarts
+    }
+
+    function hd_checkbox_changed(to_this) {
+      console.log("checkbox changed=" + to_this);
+      window.localStorage.setItem("hd_checkbox_checked", to_this); // for restarts
+      if (to_this) {
+        youtube_pimw_player.setPlaybackQuality(youtube_pimw_player.getAvailableQualityLevels()[0]);
+      }
     }
     
     function seekTo(val) {
@@ -132,6 +141,12 @@ function onPlayerReady(event) {
     // sometimes this doesn't work if run ja [?]
     document.getElementById('vol-control-id').value = youtube_pimw_player.getVolume();
     }, 500);
+
+  var start_hd = window.localStorage.getItem("hd_checkbox_checked");
+  if (start_hd) {
+    document.getElementById('hd_checkbox_id').checked = start_hd;
+    hd_checkbox_changed(start_hd); // needed?
+  }
 
   setInterval(updateTime, 1000); // only 2/sec because if they happen to do their "own" seek this could interfere and "seek to no where" (well, still could but more rare? :\ )
 
