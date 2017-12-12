@@ -3,15 +3,13 @@
   <br/>
 
   <h3>
+    <!-- play -->
+    <a href='' onclick="youtube_pimw_player.playVideo(); return false">&#9654;</a>&nbsp;&nbsp;<a href='' onclick="youtube_pimw_player.pauseVideo(); return false">&#9612;&#9612;</a>
     seek:<input id="seek-control-id" type="range" min="0" max="100" step="1" onmouseup="seekTo(this.value);" ontouchend="seekTo(this.value);" style="max-width: 150px; display:inline;"></input><!-- not sure how to not super seek here on drag :| -->
     <!-- time -->
     <div id="current_time_id" style="display: inline;"></div>  
     <!-- fullscreen -->
     <a href='' onclick="toggleFullScreen(); return false">fullscreen</a>
-    <br/>
-
-    <!-- play -->
-    <a href='' onclick="youtube_pimw_player.playVideo(); return false">&#9654;</a>&nbsp;&nbsp;<a href='' onclick="youtube_pimw_player.pauseVideo(); return false">&#9612;&#9612;</a>
 
     <br/>
     volume:<input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)" style="max-width: 100px; display:inline;"></input>
