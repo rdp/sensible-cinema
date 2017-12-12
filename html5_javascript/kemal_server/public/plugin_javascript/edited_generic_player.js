@@ -574,7 +574,7 @@ function checkIfShouldDoActionAndUpdateUI() {
     notify_if_new(tag);
   }
   else {
-    if (video_element.style.visibility != "" && i_hid_it && video_element.readyState == 4) { // need readyState in case seeking out of yes_audio_no_video don't want to show still frame while seek completes :|
+    if (video_element.style.visibility != "" && i_hid_it && videoNotBuffering()) { // need videoNotBuffering() in case seeking out of yes_audio_no_video don't want to show still frame while seek completes :|
       console.log("unhiding video with cur_time=" + cur_time + " " + timeStampToHuman(cur_time));
       video_element.style.visibility=""; // non hidden :)
       i_hid_it = false;
@@ -892,6 +892,15 @@ var i_set_it_to_add = false;
 var video_ever_initialized = false; // can't do seeks "off the bat" in amazon [while still obscured] -> spinner then crash!
 var last_timestamp = 0;
 
+function videoNotBuffering() {
+  if (isYoutubePimw()) {
+    // -1 – unstarted 0 – ended 1 – playing 2 – paused 3 – buffering 5 – video cued assume paused means not buffering? huh wuh? XXXX experiment...
+    return youtube_pimw_player.getPlayerState() == YT.PlayerState.PAUSED || youtube_pimw_player.getPlayerState() == YT.PlayerState.PLAYING;
+  } else {
+    return video_element.readyState == 4; // it's HAVE_NOTHING, HAVE_METADATA, HAVE_CURRENT_DATA [i.e. 1 frame], HAVE_FUTURE_DATA [i.e. 2 frames], HAVE_ENOUGH_DATA == 4 [i.e. lots of data buffered]
+  }
+}
+
 function checkStatus() { // called 100 fps
   // avoid unmuting videos playing that we don't even control [like youtube main page] with this if...
   if (url != null) {
@@ -913,9 +922,9 @@ function checkStatus() { // called 100 fps
       addPluginEnabledText();
 
       // seems necessary to let it "come alive" first in amazon before we can hide it, even if within heart of seek <sigh> I guess... :|
-      // an initial blip is OK [this should be super rare, and was "hard" to avoid], just try not to crash for now...
+      // an initial blip [video] is OK [this should be super rare, and is "hard" to avoid], just try not to crash for now...
       if (!video_ever_initialized) {
-        if (video_element.readyState != 4 || video_element.offsetWidth == 0) { // XXX does this stuff work on youtube at all? huh?
+        if (!videoNotBuffering() || video_element.offsetWidth == 0) {
           console.log("appears video never initialized yet...doing nothing! readyState=" + video_element.readyState + " width=" + video_element.offsetWidth);
           return;
         } else {
@@ -1012,7 +1021,7 @@ function videoDuration() {
   if (isYoutubePimw()) {
     return youtube_pimw_player.getDuration();
   } else {
-    return video_element.duration; // and hope they're not near the end :|
+    return video_element.duration; // and hope they're not near the end, otherwise should be -10
   }
 }
 
@@ -1866,12 +1875,11 @@ function seekToTime(ts, callback) {
   old_ts = ts;
   seek_timer = setInterval(function() {
       if (isYoutubePimw()) {
-        // var done_buffering = (youtube_pimw_player.getPlayerState() == YT.PlayerState.CUED);
-        // it stays always as state "paused" ???? :|
-        var done_buffering = true;
+        console.log("seeking youtube_player_state=" + youtube_pimw_player.getPlayerState());
+        var done_buffering = (youtube_pimw_player.getPlayerState() == YT.PlayerState.PAUSED); // This "might" mean done buffering :| [we pause it ourselves first...hmm...maybe don't have to?]
       } else {
         var HAVE_ENOUGH_DATA_HTML5 = 4;
-        var done_buffering = (video_element.readyState == HAVE_ENOUGH_DATA_HTML5);
+        var done_buffering = videoNotBuffering();
       }
       if ((isPaused() && done_buffering) || !isPaused()) {
         var seconds_buffered = getSecondsBufferedAhead();
