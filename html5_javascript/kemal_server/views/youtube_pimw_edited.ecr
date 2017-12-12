@@ -12,7 +12,8 @@
     <a href='' onclick="toggleFullScreen(); return false">fullscreen</a>
 
     <br/>
-    volume:<input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)" style="max-width: 100px; display:inline;"></input>
+    Volume:<input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)" style="max-width: 100px; display:inline;"></input>
+    <!-- TODO put volume percent? -->
     <br/>
     res: <div id="quality_div_id" style="display: inline;"></div> 
     <input id="hd_checkbox_id" type="checkbox" onchange="hd_checkbox_changed(this.checked);">
