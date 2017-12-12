@@ -63,6 +63,7 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
         console.log("setting it to HD");
         youtube_pimw_player.setPlaybackQuality(youtube_pimw_player.getAvailableQualityLevels()[0]);
       }
+      document.getElementById('hd_checkbox_id').checked = to_this;
     }
     
     function seekTo(val) {
@@ -149,8 +150,7 @@ function onPlayerReady(event) {
     }, 500);
 
   var start_hd = window.localStorage.getItem("hd_checkbox_checked");
-  if (start_hd && start_hd == "true") {
-    document.getElementById('hd_checkbox_id').checked = start_hd;
+  if (start_hd && start_hd == "true") {  
     hd_checkbox_changed(start_hd); // needed apparently
   } else {
     document.getElementById('hd_checkbox_id').checked = false;
