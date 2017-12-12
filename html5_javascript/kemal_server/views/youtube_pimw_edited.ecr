@@ -99,12 +99,12 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
       document.getElementById('quality_div_id').innerHTML = youtube_pimw_player.getPlaybackQuality();
     }
     
-    seek_dragger.addEventListen("mousedown", function() {
+    seek_dragger.addEventListener("mousedown", function() {
       seek_dragger_being_dragged = true;
       console.log("start drag");
     });
 
-    seek_dragger.addEventListen("mouseup", function() {
+    seek_dragger.addEventListener("mouseup", function() {
       seek_dragger_being_dragged = false;
       console.log("end drag");
     });
