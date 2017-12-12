@@ -44,7 +44,9 @@
 		  <span style="font-size: 30px;"><%= out = env.session.string("flash"); env.session.delete_string("flash"); out %> </span>
 		</p>
   <% end %>
-  
+
+<% if show_nav %>  
+
 <nav class="navbar navbar-default" style="margin-bottom: 0px;">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -88,6 +90,9 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
+<% end %>
+
   <%= content %>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </div>

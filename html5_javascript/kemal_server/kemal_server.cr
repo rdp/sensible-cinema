@@ -83,7 +83,7 @@ get "/youtube_pimw_edited/:youtube_id" do |env|
   if url
     env.response.title = "Edited: " + url.name
   end
-  render "views/youtube_pimw_edited.ecr" #, "views/layout.ecr"
+  render "views/youtube_pimw_edited.ecr", "views/layout_no_nav.ecr"
 end
 
 get "/redo_all_thumbnails" do |env|
@@ -241,7 +241,7 @@ get "/edit_tag/:tag_id" do |env|
   if next_tags.size > 0
     next_tag = next_tags[0]
   end
-  render "views/edit_tag.ecr", "views/layout.ecr"
+  render "views/edit_tag.ecr", "views/layout_yes_nav.ecr"
 end
 
 class HTTP::Server::Response
@@ -265,7 +265,7 @@ get "/new_empty_tag/:url_id" do |env|
   tag.endy = url.total_time
   add_to_flash env, "this tag is not yet saved, hit the save button when you are done"
   previous_tag = next_tag = nil # :\
-  render "views/edit_tag.ecr", "views/layout.ecr"
+  render "views/edit_tag.ecr", "views/layout_yes_nav.ecr"
 end
 
 post "/save_tag/:url_id" do |env|
@@ -335,24 +335,24 @@ get "/edit_url/:url_id" do |env|
     add_to_flash(env, "Thanks, you rock! Please fill in the rest of details and your review about the movie, set everything...then email us, and feel free to move on to the next!")
   end
   url = get_url_from_url_id(env)
-  render "views/edit_url.ecr", "views/layout.ecr"
+  render "views/edit_url.ecr", "views/layout_yes_nav.ecr"
 end
 
 get "/mass_upload_from_subtitle_file/:url_id" do |env|
   url = get_url_from_url_id(env)
-  render "views/mass_upload_from_subtitle_file.ecr", "views/layout.ecr"
+  render "views/mass_upload_from_subtitle_file.ecr", "views/layout_yes_nav.ecr"
 end
 
 get "/add_new_tag/:url_id" do |env|
   url = get_url_from_url_id(env)
-  render "views/add_new_tag.ecr", "views/layout.ecr"
+  render "views/add_new_tag.ecr", "views/layout_yes_nav.ecr"
 end
 
 get "/view_url/:url_id" do |env|
   url = get_url_from_url_id(env)
   show_tag_details =  env.params.query["show_tag_details"]?
   env.response.title = url.name_with_episode + " Edited"
-  render "views/view_url.ecr", "views/layout.ecr"
+  render "views/view_url.ecr", "views/layout_yes_nav.ecr"
 end
 
 get "/login_from_facebook" do |env|
@@ -405,7 +405,7 @@ get "/logout" do |env|
     add_to_flash(env, "already logged out")
     env.redirect "/"
   else
-    render "views/logout.ecr", "views/layout.ecr"
+    render "views/logout.ecr", "views/layout_yes_nav.ecr"
   end
 end
 
@@ -585,7 +585,7 @@ get "/" do |env| # index home
   all_urls_half_way = all_urls.select{|url| url.editing_status == editing_phases[:done_first_pass] }
   all_urls_just_started = all_urls.select{|url| url.editing_status == editing_phases[:just_started] }
   start = Time.now
-  out = render "views/main.ecr", "views/layout.ecr"
+  out = render "views/main.ecr", "views/layout_yes_nav.ecr"
   puts "view took #{Time.now - start}"  # pre view takes as long as first query :|
   out
 end
@@ -595,7 +595,7 @@ get "/movies_in_works" do |env|
   if env.params.query["by_self"]? # the default uh think?
     render "views/_list_movies.ecr"
   else
-    render "views/_list_movies.ecr", "views/layout.ecr"
+    render "views/_list_movies.ecr", "views/layout_yes_nav.ecr"
   end
 end
 
@@ -625,7 +625,7 @@ get "/login" do |env|
     add_to_flash env, "already logged in!"
     env.redirect "/"
   else
-    render "views/login.ecr", "views/layout.ecr"
+    render "views/login.ecr", "views/layout_yes_nav.ecr"
   end
 end
 
@@ -645,7 +645,7 @@ get "/personalized_edit_list/:url_id" do |env|
   # and not save yet :|
   show_tag_details =  env.params.query["show_tag_details"]?
     
-  render "views/personalized_edit_list.ecr", "views/layout.ecr"
+  render "views/personalized_edit_list.ecr", "views/layout_yes_nav.ecr"
 end
 
 post "/subscribe" do |env|
