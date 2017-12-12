@@ -57,10 +57,14 @@ function checkIfChromeExtensionInstalled() {
   }
 }
 
-if (isChrome()) {
-  checkIfChromeExtensionInstalled();
-  timer = setInterval(checkIfChromeExtensionInstalled, 1000); // catch when they do install it, and elsewise, really no loss :}
-} // else don't call those and get an undefined blow up
+<% if my_android?(env) %>
+  markAsGoodChromeExtension(); // I think this loads late enough...
+<% else %>
+  if (isChrome()) {
+    checkIfChromeExtensionInstalled();
+    timer = setInterval(checkIfChromeExtensionInstalled, 1000); // catch when they do install it, and elsewise, really no loss :}
+  } // else don't call those and get an undefined blow up
+<% end %>
 
 function pluginFullyInstalled() {
   return isInstalled;
