@@ -591,7 +591,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   tag = areWeWithin(skips, cur_time); // do after unhiding so it can use 'right now' to know if should heart blank :|
   if (tag) {
     timestamp_log("seeking forward", cur_time, tag);
-    optionally_show_notification(tag); // show it now so it can notify while it seeks :) [NB for longer seeks it shows it over and over [bug] but notification tag has our back'ish for now :\ ]
+    notify_if_new(tag); // show it now so it can notify while it seeks :) [NB for longer seeks it shows it over and over [bug] but notification tag has our back'ish for now :\ ]
     blankScreenIfWithinHeartOfSkip(tag, cur_time);
     blankScreenIfWithinHeartOfSkip(tag, tag.endy); // warn it to start a blank now, for the gap, otherwise when it gets there it's already too late
     seekToTime(tag.endy, doneWithPossibleHeartBlankUnlessImpending);
@@ -807,10 +807,10 @@ function optionally_show_notification(seek_tag) {
       if (char == " " || char == "") { // "" means "past end" for shorter ones...
         var title = popup.substring(0, i);
         var body = popup.substring(i); 
-        // XXXX if body too large still split to second notification? have to wait for previous to close?
+        // XXXX if body too large still split to second notification?
         break;
       }
-    }          
+    }
     if (popup.length > maxTitleSize) {
       title += " ...";
       // body = "... " + body;

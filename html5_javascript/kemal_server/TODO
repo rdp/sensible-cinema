@@ -5,7 +5,7 @@ kickstarter (ready, fire)
 
 == todo list (me ja) ==
 
-start editing youtubes them/me :) [does it still work?]
+start editing youtubes them/me :)
   finish editing greg dances with wolves :)
   
 setup iphone, just to try it out on there...various ;)
@@ -22,8 +22,6 @@ decide when private edits :\
 == meh sometime ==
 
 that one button goes down (editor) :\
-
-does it work with youtube "at all"?
 
 edit greg's one movie [sync? :| ]
 
@@ -66,7 +64,7 @@ pick up speakers from granny's
   
 android app (all):
   publish!!!
-  Does it say something wrong in the android app on main page install instructions?
+  Does it say something wrong in the android app on main page install instructions? (possibly fixed)
   allow login for them! :|
   do notifications work?
   make a "real" demo movie for them :|
@@ -89,15 +87,13 @@ better X for sorting :|
 make the edits just stay always on the video page, for easier editing et al :|
 
 youtube: some way to get from youtube.com to mine (low prio though...maybe just need an "add to play it my way" popup.html?)
-  some seeking weirdness?
+  notifications show up in multiple?!
+  some seeking weirdness? dragging esp.
   just if I do private edits? :|
   list "more" to watch underneath (make black less terrifyingly large if not logged in?)
   fix for slower phones
-  volume thing in youtube is awful/ugly :|
-  fullscreen "slide up" from bottom :\
-  sup awesome seeks if it's not in cache I think it's unreliable possibly if too far forward [?]
 
-more differentiate us vs. "them=" [vidangel]
+more differentiate us vs. "them=" [vidangel] ?
 
 facebook "like" buttons somewhere/possible :\
 
@@ -109,12 +105,12 @@ another button for "just new releases"
 
 mac(book) see if looks OK there
 
-buy iphone, control computer with it :\
+iphone: control computer with it :\
   try youtube/normal/user-agent?
 
 integrate with "real" amazon API so I can get the rental numbers right :|
 
-get bank account, move to its own linode server :|
+move to its own linode server :|
 
 some way "signup for news as we get more"?
 
