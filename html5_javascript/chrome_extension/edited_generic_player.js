@@ -858,7 +858,7 @@ function createNotification(notification_desired) { // shared with background.js
   setTimeout(function() {
     notification.close();
   }, 
-  5000);
+  10000);
 }
 
 function updateHTML(div, new_value) {

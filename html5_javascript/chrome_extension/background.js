@@ -32,7 +32,7 @@ function createNotification(notification_desired) { // shared with edited_generi
   setTimeout(function() {
     notification.close();
   }, 
-  5000);
+  10000);
 }
 
 chrome.runtime.onMessage.addListener(update_icon); // from contentscripts.js 
