@@ -1,3 +1,4 @@
+echo "this does not refresh plugins/copy_of_plugin_for_youtube"
 git pull && (git cam "$1" || git cam "a commit")  # this one can fail if none, that's OK
 git pom 
 echo "waiting for server to rebuild.."
