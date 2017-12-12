@@ -17,6 +17,7 @@ skip followed by skip -> no intermediate video (audio blip OK for now LOL)
       check
     seek "out of no_video" -> not show bad stuff
       check
+    single seek, normal start -> not black it at all
   
 == used to ==
 

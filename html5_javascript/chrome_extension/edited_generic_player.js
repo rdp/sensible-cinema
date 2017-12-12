@@ -597,7 +597,6 @@ function checkIfShouldDoActionAndUpdateUI() {
     seekToTime(tag.endy, doneWithPossibleHeartBlankUnlessImpending);
   }
   
-  
   tag = areWeWithin(make_video_smallers, cur_time);
   if (tag) {
     // assume youtube :|
@@ -769,7 +768,7 @@ function removeIfNotifyEditsHaveEnded(cur_time) {
   }
 }
 
-function notify_if_new(tag) {
+function notify_if_new(tag) { // we have to do our own timeout'ish instead of just relying on Notification tags so that if it's a 20s yes_audio_no_video we'll just show it the first 10s...or maybe tags should have worked?
   if (currently_in_process_tags.get(tag)) {
     // already in there, do nothing
   } else {
@@ -821,7 +820,7 @@ function optionally_show_notification(seek_tag) {
 
 function sendNotification(notification_desired) {
   if (isYoutubePimw()) {
-      // can't rely on background.js existing at all :|
+      // can't rely on background.js at all :|
       // so just send it here...
 
       if (!("Notification" in window)) {
@@ -849,12 +848,17 @@ function sendNotification(notification_desired) {
 }
 
 function createNotification(notification_desired) { // shared with background.js
-  var notification = new Notification(notification_desired.title, {body: notification_desired.body}); // auto shows it
-  notification.onclose = function() { console.log("closed?!?");}; // doesn't work "well" OS X (only when they really choose close, not auto disappear :| ) requireInteraction doesn't help either?? TODO report to chrome, when fixed update my SO answer :)
+  var notification = new Notification(notification_desired.title, {body: notification_desired.body, tag: notification_desired.tag.id}); // auto shows it
+  notification.onclose = function() { console.log("notification onclose");};
+  // doesn't work "well" OS X (only when they really choose close, not auto disappear :| ) requireInteraction doesn't help either?? TODO report to chrome, when fixed update my SO answer :)
   notification.onclick = function(event) {
     event.preventDefault(); // prevent the browser from focusing the Notification's tab
     window.open('https://playitmyway.org/view_tag/' + notification_desired.tag.id, '_blank'); // also opens and sets active
   }
+  setTimeout(function() {
+    notification.close();
+  }, 
+  5000);
 }
 
 function updateHTML(div, new_value) {
