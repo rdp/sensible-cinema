@@ -146,9 +146,9 @@ function onPlayerReady(event) {
   var start_hd = window.localStorage.getItem("hd_checkbox_checked");
   if (start_hd) {
     document.getElementById('hd_checkbox_id').checked = start_hd;
-    hd_checkbox_changed(start_hd); // needed?
+    hd_checkbox_changed(start_hd);
   } else {
-      document.getElementById('hd_checkbox_id').checked = false;
+    document.getElementById('hd_checkbox_id').checked = false;
   }
 
   setInterval(updateTime, 1000); // only 2/sec because if they happen to do their "own" seek this could interfere and "seek to no where" (well, still could but more rare? :\ )
