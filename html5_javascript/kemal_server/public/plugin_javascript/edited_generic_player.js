@@ -579,7 +579,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       video_element.style.visibility=""; // non hidden :)
       i_hid_it = false;
       //  case it heart blanked it to start (or seek into) this one and needs to un now...
-      doneWithPossibleHeartBlankUnlessImpending(true);
+      doneWithPossibleHeartBlankUnlessImpending();
       // case it is "ending" a blank, straight to a skip, you want to do a blank...
       var about_to_blank = areWeWithin(all_no_show_video_tags(), cur_time + 0.02);
       if (about_to_blank) {
