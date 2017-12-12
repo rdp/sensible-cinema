@@ -9,9 +9,10 @@
 
   <br/>
   seek:<input id="seek-control-id" type="range" min="0" max="100" step="1" onmouseup="seekTo(this.value);" ontouchend="seekTo(this.value);" style="max-width: 150px; display:inline;"></input><!-- not sure how to not super seek here on drag :| -->
+  <br/>
   res: <div id="quality_div_id" style="display: inline;"></div> 
   <input id="hd_checkbox_id" type="checkbox" onchange="hd_checkbox_changed(this.checked);">
-  <a href=# onclick="youtube_pimw_player.setPlaybackQuality(youtube_pimw_player.getAvailableQualityLevels()[0]); return false; /* XXXX cue off actual video size */">use max resolution</a>.
+  <a href=# onclick="hd_checkbox_changed(true); return false; /* XXXX cue off actual display size */">use max resolution</a>.
   </h3>
   
 </div>
@@ -146,7 +147,7 @@ function onPlayerReady(event) {
   var start_hd = window.localStorage.getItem("hd_checkbox_checked");
   if (start_hd && start_hd == "true") {
     document.getElementById('hd_checkbox_id').checked = start_hd;
-    //hd_checkbox_changed(start_hd);
+    hd_checkbox_changed(start_hd); // needed apparently
   } else {
     document.getElementById('hd_checkbox_id').checked = false;
   }
