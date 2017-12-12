@@ -144,9 +144,9 @@ function onPlayerReady(event) {
     }, 500);
 
   var start_hd = window.localStorage.getItem("hd_checkbox_checked");
-  if (start_hd) {
+  if (start_hd && start_hd == "true") {
     document.getElementById('hd_checkbox_id').checked = start_hd;
-    hd_checkbox_changed(start_hd);
+    //hd_checkbox_changed(start_hd);
   } else {
     document.getElementById('hd_checkbox_id').checked = false;
   }
