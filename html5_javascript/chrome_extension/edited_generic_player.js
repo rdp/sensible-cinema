@@ -18,6 +18,7 @@ var mutes, skips, yes_audio_no_videos, do_nothings, mute_audio_no_videos, make_v
 var seek_timer;
 var all_pimw_stuff;
 var currently_in_process_tags = new Map();
+var old_current_url;
 
 function addEditUi() {
   
@@ -578,13 +579,8 @@ function checkIfShouldDoActionAndUpdateUI() {
       console.log("unhiding video with cur_time=" + cur_time + " " + timeStampToHuman(cur_time));
       video_element.style.visibility=""; // non hidden :)
       i_hid_it = false;
-      //  case it heart blanked it to start (or seek into) this one and needs to un now...
-      doneWithPossibleHeartBlankUnlessImpending();
-      // case it is "ending" a blank, straight to a skip, you want to do a blank...
-      var about_to_blank = areWeWithin(all_no_show_video_tags(), cur_time + 0.02);
-      if (about_to_blank) {
-        blankScreenIfWithinHeartOfSkip(about_to_blank, cur_time);
-      }
+      //  case it heart blanked it to start (or seek into) this one and needs to un now...(or if it needs to start a blank before the next one...)
+      doneWithPossibleHeartBlankUnlessImpending(true);
     }
   }
   
@@ -593,7 +589,7 @@ function checkIfShouldDoActionAndUpdateUI() {
     timestamp_log("seeking forward", cur_time, tag);
     notify_if_new(tag); // show it now so it can notify while it seeks :) [NB for longer seeks it shows it over and over [bug] but notification tag has our back'ish for now :\ ]
     blankScreenIfWithinHeartOfSkip(tag, cur_time);
-    blankScreenIfWithinHeartOfSkip(tag, tag.endy); // warn it to start a blank now, for the gap, otherwise when it gets there it's already too late
+    blankScreenIfImpending(tag.endy);  // warn it to start a blank now, for the gap, otherwise when it gets there it's already too late
     seekToTime(tag.endy, doneWithPossibleHeartBlankUnlessImpending);
   }
   
@@ -726,23 +722,35 @@ function blankScreenIfWithinHeartOfSkip(skipish_tag, cur_time) {
   // if it's trying to seek out of something baaad then don't show a still frame of the bad stuff in the meanwhile
   var within_heart_of_skipish = !withinDelta(skipish_tag.start, cur_time, 0.05); // but don't show black blips on normal seek from playing continuous...
   if (within_heart_of_skipish) { 
-    if (video_element.style.display != "none") {
-      console.log("heartblanking it because within_heart_of_skipish=" + within_heart_of_skipish + " start=" + skipish_tag.start + " cur_time=" + cur_time);
-      video_element.style.display = "none"; // have to use or it hoses us and auto-shows [?]
-    } else {
-      console.log("already video_element.style.display=" + video_element.style.display + " so not changing that even though we're in the heart of a skip");
-    }
-    i_heart_blanked_it = true;
+    startHeartBlank(skipish_tag, cur_time);
   } else {
     console.log("not blanking it because it's normal playing continuous beginning of skip..." + skipish_tag.start);
   }
 }
 
-function all_no_show_video_tags() {
-  return skips.concat(yes_audio_no_videos).concat(mute_audio_no_videos); // can't use +
+function blankScreenIfImpending(cur_time) { // basically for pre-emptively knowing when skips will end :|
+  var just_before_bad_stuff = areWeWithin(all_no_show_video_tags(), cur_time + 0.02); // if about to re-non-video, don't show blip of bad stuff if two such edits back to back
+  if (just_before_bad_stuff) {
+    console.log("starting heartblank straight will be impending");
+    startHeartBlank(just_before_bad_stuff, cur_time);
+  }
 }
 
-function doneWithPossibleHeartBlankUnlessImpending() { // do as its "whole own thing" (versus aumenting yes_audio_no_video) since it *has* to use style.display...I guess...
+function all_no_show_video_tags() {
+  return skips.concat(yes_audio_no_videos).concat(mute_audio_no_videos); // can't use + here :|
+}
+
+function startHeartBlank(skipish_tag, cur_time) {
+  if (video_element.style.display != "none") {
+    console.log("heartblanking it start=" + skipish_tag.start + " cur_time=" + cur_time);
+    video_element.style.display = "none"; // have to use or it hoses us and auto-shows [?]
+    i_heart_blanked_it = true;
+  } else {
+    console.log("already video_element.style.display=" + video_element.style.display + " so not changing that even though we're in the heart of a skip");
+  }
+}
+
+function doneWithPossibleHeartBlankUnlessImpending(start_heart_blank_if_close) { // do as its "whole own thing" (versus aumenting yes_audio_no_video) since it *has* to use style.display...I guess that means needs its own :|...
   var cur_time = getCurrentTime();
   // 0.02 cuz if it's "the next 0.01" then count it, plus some rounding error :)
   var just_before_bad_stuff = areWeWithin(all_no_show_video_tags(), cur_time + 0.02); // if about to re-non-video, don't show blip of bad stuff if two such edits back to back
@@ -756,7 +764,12 @@ function doneWithPossibleHeartBlankUnlessImpending() { // do as its "whole own t
     }
   }
   else {
-    console.log("not unheart blanking it, we're about to enter another bad stuff section...start=" + timeStampToHuman(just_before_bad_stuff.start) + " cur_time=" + timeStampToHuman(cur_time));
+    if (start_heart_blank_if_close) {
+      console.log("start_heart_blank_if_close'ing");
+      startHeartBlank(just_before_bad_stuff, cur_time);
+    } else {
+      console.log("not unheart blanking it, we're about to enter another bad stuff section...start=" + timeStampToHuman(just_before_bad_stuff.start) + " cur_time=" + timeStampToHuman(cur_time));
+    }
   }
 }
 
@@ -948,7 +961,8 @@ function checkStatus() { // called 100 fps
           // was the seek to within an edit? Since this was a "rewind" let's actually go to *before* the bad spot, so the traditional +-10 buttons can work from UI
           console.log("they just seeked backward to within a skip, rewinding more..."); // tag already gets logged in seekToBeforeSkip
           blankScreenIfWithinHeartOfSkip(tag, cur_time);
-          seekToBeforeSkip(0, doneWithPossibleHeartBlankUnlessImpending);
+          var delta_right_now = 0;
+          seekToBeforeSkip(delta_right_now, doneWithPossibleHeartBlankUnlessImpending);
           return; // don't keep going which would do a skip forward...
         }
       }
