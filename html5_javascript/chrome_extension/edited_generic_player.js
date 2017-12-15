@@ -919,6 +919,7 @@ function videoNotBuffering() {
 }
 
 function checkStatus() { // called 100 fps
+
   // avoid unmuting videos playing that we don't even control [like youtube main page] with this if...
   if (url != null) {
     if (isWatchingAdd()) {
@@ -984,9 +985,9 @@ function refreshVideoElement() {
   if (video_element != old_video_element) {
     console.log("video element changed...");
     // only add event thing once :)
-    video_element.addEventListener("seeking",  // there is also seeked and timeupdate hrm :) [this is fired first, timestamp is "already updated" FWIW... ]
+    video_element.addEventListener("seeking",  // there is also seeked and timeupdate (timeupdate typically not granular enough for much)
       function() { 
-        console.log("seeking event detected time=" + getCurrentTime());
+        console.log("seeking event detected time=" + getCurrentTime()); // time will already be updated
         checkStatus(); // do it "fast/immediately" in case need to blank [saves 0.007 yes!]
       }
     );
@@ -1669,7 +1670,8 @@ function checkIfEpisodeChanged() {
 var clean_stream_timer;
 
 function startWatcherTimerSingleton() {
-  clean_stream_timer = clean_stream_timer || setInterval(checkStatus, 1000/100); // 100 fps since that's the granularity of our time entries :|
+  var fps = 100; // 100 fps since that's the granularity of our time entries :|
+  clean_stream_timer = clean_stream_timer || setInterval(checkStatus, 1000/fps);
   // guess we just never turn it off on purpose :)
 }
 
