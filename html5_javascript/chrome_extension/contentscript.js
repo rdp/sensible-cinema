@@ -110,7 +110,7 @@ function autoStartIfShould() {
   }
   // youtube_pimw "already has it" hard coded
   // but want the demo movie still :|
-  if (url.includes("play.google.com") || url.includes("amazon.com") || (url.includes("playitmyway.org") && !url.includes("youtube_pimw_edited"))) {
+  if (url.includes("play.google.com") || url.includes("amazon.com") || (url.includes("playitmyway.org") && !url.includes("edited_youtube"))) {
     if (inIframe()) { 
       // avoid google iframes popup after it says <smiley> and reset it back even though it is playing OK
       console.log("not setting plugin text to ... from an iframe");
@@ -124,7 +124,7 @@ function autoStartIfShould() {
     var interval = setInterval(function(){
       var video_element = findFirstVideoTagOrNull();
       if (video_element != null) {
-        console.log("big 3 found video tag [or pimw auto], injecting...");
+        console.log("big 3 found video tag [or pimw non youtube], injecting...");
         injectEditedPlayerOnce();
         clearInterval(interval);
       }
