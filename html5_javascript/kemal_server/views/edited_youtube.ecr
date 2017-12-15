@@ -95,10 +95,10 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
       document.getElementById('quality_div_id').innerHTML = youtube_pimw_player.getPlaybackQuality();
     }
     
-    addListenerMulti(seek_dragger, "mouseup touchend", function() {
-      seek_dragger_being_dragged = false;
-      console.log("end drag");
-      seekToPercentage(this.value);
+    
+    seek_dragger.addEventListener("mousedown touchstart", function() {
+      seek_dragger_being_dragged = true;
+      console.log("start drag");
     });
     
     addListenerMulti(seek_dragger, "mousemove touchmove", function() {
@@ -106,12 +106,13 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
         document.getElementById('current_time_id').innerHTML = timeStampToHumanHere(desired_time_seconds, 0) + "/" + timeStampToHumanHere(youtube_pimw_player.getDuration(), 0);
         // but don't seek yet :)
     });
-    
-    
-    seek_dragger.addEventListener("mousedown touchstart", function() {
-      seek_dragger_being_dragged = true;
-      console.log("start drag");
+
+    addListenerMulti(seek_dragger, "mouseup touchend", function() {
+      seek_dragger_being_dragged = false;
+      console.log("end drag");
+      seekToPercentage(this.value);
     });
+    
 
     function toggleFullScreen() {
       var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
