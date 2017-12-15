@@ -619,7 +619,8 @@ function checkIfShouldDoActionAndUpdateUI() {
         // can't refullscreen it "programmatically" at least in chrome, so punt!
       }
       if (current_json.editor) {
-        document.getElementById("ytplayer_wrapper_div_id").style.height = "60%";  // make UI easier to use <sigh>          
+        document.getElementById("ytplayer_wrapper_div_id").style.height = "70%";  // make UI easier to use <sigh>          
+        document.getElementById("youtube_name_header_id").style.display = "none";
       }
     }
   }
