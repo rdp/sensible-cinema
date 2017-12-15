@@ -276,6 +276,8 @@ sub cat:
     
       <option value="revealing clothing">physical -- revealing clothing &#40;scantily clad&#41;</option>    
     
+      <option value="tight clothing">physical -- tight clothing &#40;revealing because tight&#41;</option>    
+    
       <option value="underwear">physical -- clad in underwear</option>    
     
       <option value="swimsuit">physical -- swimsuit</option>    

@@ -80,6 +80,7 @@ def subcategory_map
 
     "art nudity": "physical -- art based nudity",
     "revealing clothing": "physical -- revealing clothing (scantily clad)",
+    "tight clothing": "physical -- tight clothing (revealing because tight)",
     "underwear": "physical -- clad in underwear",
     "swimsuit": "physical -- swimsuit",
     "light cleavage": "physical -- light cleavage/barely revealing",
