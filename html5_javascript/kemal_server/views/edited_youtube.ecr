@@ -195,7 +195,7 @@ function onPlayerReady(event) {
       } // default unchecked      
     }, 1500); // doesn't even take at 500ms what XXXX
 
-  setInterval(updateTime, 1000); // only 1/sec because if they happen to do their "own" seek this could interfere and "seek to no where" (well, still could but more rare? :\  TODO
+  setInterval(updateTime, 250); // only 1/sec because if they happen to do their "own" seek this could interfere and "seek to no where" (well, still could but more rare? :\  TODO
 
   // inject copy of plugin FTW :|  
   var my_awesome_script = document.createElement('script');
