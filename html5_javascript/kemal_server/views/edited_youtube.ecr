@@ -84,20 +84,7 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
     function setTime(val) {
       youtube_pimw_player.setVolume(val);
     }
-    
-    function timeStampToHumanHere(timestamp, tenth_digits) {
-      var hours = Math.floor(timestamp / 3600);
-      timestamp -= hours * 3600;
-      var minutes  = Math.floor(timestamp / 60);
-      timestamp -= minutes * 60;
-      var seconds = timestamp.toFixed(tenth_digits); //  -> "12.3" or "2.3"
-      // padding is "hard" apparently in javascript LOL
-      if (hours > 0)
-        return hours + "h " + minutes + "m " + seconds + "s";
-      else
-        return minutes + "m " + seconds + "s";
-    }
-    
+       
     var seek_dragger = document.getElementById('seek-control-id');
     var seek_dragger_being_dragged = false;
     function updateTime() {
@@ -107,13 +94,18 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
       }
       document.getElementById('quality_div_id').innerHTML = youtube_pimw_player.getPlaybackQuality();
     }
-    seek_dragger.addEventListener("mouseup", function() {
+    
+    addListenerMulti(seek_dragger, "mouseup touchend", function() {
       seekToPercentage(this.value);
     });
-    seek_dragger.addEventListener("touchend", function() {
-      seekToPercentage(this.value);
+    
+    addListenerMulti(seek_dragger, "touchmove mousemove", function() {
+        var desired_time_seconds = youtube_pimw_player.getDuration() / 100.0 * val;
+        document.getElementById('current_time_id').innerHTML = timeStampToHumanHere(desired_time_seconds, 0) + "/" + timeStampToHumanHere(youtube_pimw_player.getDuration(), 0);
+        // but don't seek yet :)
     });
-        
+    
+    
     seek_dragger.addEventListener("mousedown", function() {
       seek_dragger_being_dragged = true;
       console.log("start drag");
@@ -137,6 +129,26 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
       var requestFullScreen = iframe.requestFullScreen || iframe.mozRequestFullScreen || iframe.webkitRequestFullScreen;
       if (requestFullScreen) {
         requestFullScreen.bind(iframe)();
+      }
+    }
+    
+    function timeStampToHumanHere(timestamp, tenth_digits) {
+      var hours = Math.floor(timestamp / 3600);
+      timestamp -= hours * 3600;
+      var minutes  = Math.floor(timestamp / 60);
+      timestamp -= minutes * 60;
+      var seconds = timestamp.toFixed(tenth_digits); //  -> "12.3" or "2.3"
+      // padding is "hard" apparently in javascript LOL
+      if (hours > 0)
+        return hours + "h " + minutes + "m " + seconds + "s";
+      else
+        return minutes + "m " + seconds + "s";
+    }
+    
+    function addListenerMulti(element, eventNames, listener) {
+      var events = eventNames.split(' ');
+      for (var i=0, iLen=events.length; i<iLen; i++) {
+        element.addEventListener(events[i], listener, false);
       }
     }
 
