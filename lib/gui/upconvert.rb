@@ -96,7 +96,7 @@ module SensibleSwing
 		# SCREEN_X is replaced later.
         LocalStorage[UpConvertKey] = "hqdn3d=%s:%s:%s:%s,scale=SCREEN_X:-10:0:0:2" % [luma_spatial, chroma_spatial, luma_tmp, chroma_tmp]
         # hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp]
-        LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=7.0"
+        LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=7.0" # 9 is lanczos
         LocalStorage[UpConvertEnglish] = "DVD"
     end
 	
