@@ -320,7 +320,8 @@ function checkIfShouldDoActionAndUpdateUI() {
       var iframe = youtube_pimw_player.getIframe();
       if (iframe.height == "200") {
         console.log("back to normal size cur_time=" + cur_time);
-        iframe.height = "70%"; // XXXX save away instead
+        // if you modify this also modify edited_youtube.ecr to match
+        iframe.height = "100%"; // XXXX save away instead??
         iframe.width = "100%";
         // can't refullscreen it "programmatically" at least in chrome, so punt!
       }
