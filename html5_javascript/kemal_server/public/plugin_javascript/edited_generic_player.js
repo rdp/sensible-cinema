@@ -614,9 +614,12 @@ function checkIfShouldDoActionAndUpdateUI() {
       if (iframe.height == "200") {
         console.log("back to normal size cur_time=" + cur_time);
         // if you modify this also modify edited_youtube.ecr to match
-        iframe.height = "100%"; // XXXX save away instead??
+        iframe.height = "100%"; // XXXX save away instead?? :|
         iframe.width = "100%";
         // can't refullscreen it "programmatically" at least in chrome, so punt!
+      }
+      if (current_json.editor) {
+        iframe.height = "50%"; // make UI easier to use <sigh>          
       }
     }
   }
