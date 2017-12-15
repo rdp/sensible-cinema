@@ -96,7 +96,7 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
     }
     
     
-    seek_dragger.addEventListener("mousedown touchstart", function() {
+    addListenerMulti(seek_dragger, "mousedown touchstart", function() {
       seek_dragger_being_dragged = true;
       console.log("start drag");
     });
