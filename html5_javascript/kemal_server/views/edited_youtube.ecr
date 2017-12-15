@@ -8,10 +8,10 @@
     <!-- play -->
     <a href='' onclick="youtube_pimw_player.playVideo(); return false">&#9654;</a>&nbsp;&nbsp;<a href='' onclick="youtube_pimw_player.pauseVideo(); return false">&#9612;&#9612;</a>
     Seek:<input id="seek-control-id" type="range" min="0" max="100" step="1" style="max-width: 150px; display:inline;"></input><!-- not sure how to not super seek here on drag :| -->
-    <a href='' onclick="seekToDelta(-10); return false">-10s</a>
-    <a href='' onclick="seekToDelta(10); return false">+10s</a>
     <!-- time -->
     <div id="current_time_id" style="display: inline;"></div>  
+    <a href='' onclick="seekToDelta(-10); return false">-10s</a>
+    <a href='' onclick="seekToDelta(10); return false">+10s</a>
     <!-- fullscreen -->
     <a href='' onclick="toggleFullScreen(); return false">fullscreen</a>
 
@@ -94,7 +94,6 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
       }
       document.getElementById('quality_div_id').innerHTML = youtube_pimw_player.getPlaybackQuality();
     }
-    
     
     addListenerMulti(seek_dragger, "mousedown touchstart", function() {
       seek_dragger_being_dragged = true;
