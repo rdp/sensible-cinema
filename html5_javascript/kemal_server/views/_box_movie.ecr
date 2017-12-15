@@ -3,7 +3,7 @@
           <div style="text-align: center;">
             <a href="<%= url.url %>" target="_blank" 
               onclick="
-               <% if url.url !~ /youtube_pimw_edited/ %>
+               <% if url.url !~ /edited_youtube/ %>
                  if (!alertIfNoExtension()) return false;
               <% else %>
                 <!-- let mobile/firefox through -->

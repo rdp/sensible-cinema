@@ -19,7 +19,7 @@ class CustomHandler < Kemal::Handler # don't know how to interrupt it from a bef
     puts "start #{env.request.path} #{Time.now}"
     query = env.request.query
     path = env.request.path
-    if (path =~ /delete|nuke|personalized|edit/ || env.request.method == "POST") && !logged_in?(env) && !path.starts_with?("/youtube_pimw_edited/") && !path.starts_with?("/subscribe")
+    if (path =~ /delete|nuke|personalized|edit/ || env.request.method == "POST") && !logged_in?(env) && !path.starts_with?("/edited_youtube/") && !path.starts_with?("/subscribe")
       if env.request.method == "GET"
         env.session.string("redirect_to_after_login", "#{path}?#{env.request.query}") 
       end # else too hard
@@ -76,14 +76,14 @@ end
 
 require "./straight_forward.cr"
 
-get "/youtube_pimw_edited/:youtube_id" do |env|
+get "/edited_youtube/:youtube_id" do |env|
   youtube_id = env.params.url["youtube_id"]
-  in_system = sanitize_html("https://playitmyway.org/youtube_pimw_edited/" + youtube_id) # hacky way to be able to look it up to display stuff about it in the ecr
+  in_system = sanitize_html("https://playitmyway.org/edited_youtube/" + youtube_id) # hacky way to be able to look it up to display stuff about it in the ecr
   url = Url.get_only_or_nil_by_urls_and_episode_number(in_system, 0)
   if url
     env.response.title = "Edited: " + url.name
   end
-  render "views/youtube_pimw_edited.ecr", "views/layout_no_nav.ecr"
+  render "views/edited_youtube.ecr", "views/layout_no_nav.ecr"
 end
 
 get "/redo_all_thumbnails" do |env|
@@ -481,7 +481,7 @@ get "/new_manual_url" do |env|
   if real_url =~ /youtube.com/
     raise "expected normal youtube url like https://www.youtube.com/watch?v=9VH8lvZ-Z1g" unless real_url.includes?("?v=")
     youtube_id = real_url.split("?v=")[-1]
-    real_url = "https://playitmyway.org/youtube_pimw_edited/" + youtube_id
+    real_url = "https://playitmyway.org/edited_youtube/" + youtube_id
     env.redirect real_url # they can add it from there, with duration :)
   else
     create_new_and_redir(real_url, episode_number, "", "", 0.0, env)
@@ -492,12 +492,12 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
   if real_url =~ /youtu.be/
     raise "use non shortened youtube. url's for now instead"
   end
-  if real_url =~ /youtube_pimw_edited/
+  if real_url =~ /edited_youtube/
     # wrong title since it was using ours that didn't know it yet
     youtube_id = real_url.split("/")[-1]
     youtube_url = "https://www.youtube.com/watch?v=#{youtube_id}"
     title, _ = get_title_and_sanitized_standardized_canonical_url youtube_url # The Crayon Song Gets Ruined - YouTube
-    sanitized_url = sanitize_html("https://playitmyway.org/youtube_pimw_edited/" + youtube_id)
+    sanitized_url = sanitize_html("https://playitmyway.org/edited_youtube/" + youtube_id)
   else
     title_from_download_url, sanitized_url = get_title_and_sanitized_standardized_canonical_url real_url
     if title == ""
@@ -809,7 +809,7 @@ post "/save_url" do |env|
 end
 
 def download_youtube_image_if_possible(db_url)
-  if !db_url.image_local_filename.present? && db_url.url =~ /youtube_pimw_edited/
+  if !db_url.image_local_filename.present? && db_url.url =~ /edited_youtube/
     # we can get an image fer free! :) The default ratio they seem to offer "wide horizon" unfortunately, though we might be able to do better XXXX
     youtube_id = HTML.unescape(db_url.url).split("/")[-1]
     image_url = "http://img.youtube.com/vi/#{youtube_id}/0.jpg" # default 480x360, ours targets 450 today so...enuf uh suppose
