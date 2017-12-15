@@ -7,7 +7,7 @@
   <h3>
     <!-- play -->
     <a href='' onclick="youtube_pimw_player.playVideo(); return false">&#9654;</a>&nbsp;&nbsp;<a href='' onclick="youtube_pimw_player.pauseVideo(); return false">&#9612;&#9612;</a>
-    Seek:<input id="seek-control-id" type="range" min="0" max="100" step="1" onmouseup="seekToPercentage(this.value);" ontouchend="seekToPercentage(this.value);" style="max-width: 150px; display:inline;"></input><!-- not sure how to not super seek here on drag :| -->
+    Seek:<input id="seek-control-id" type="range" min="0" max="100" step="1" style="max-width: 150px; display:inline;"></input><!-- not sure how to not super seek here on drag :| -->
     <a href='' onclick="seekToDelta(-10); return false">-10s</a>
     <a href='' onclick="seekToDelta(10); return false">+10s</a>
     <!-- time -->
@@ -37,7 +37,7 @@ input,select {
 <div style="height: 760px; max-width: 620px; background: black;" id="show_your_instructions_here_id"> <!-- plugin binds here -->
 </div>
 
-<p>Seeing closed captions? To turn them off go to <a href=youtube.com>youtube.com</a> and watch something and turn them off there.
+<p>Seeing closed captions? To toggle them off go to <a href=youtube.com>youtube.com</a> and watch something and turn them off there.
 
 <h3>Create new other (youtube)</h3>
 Enter url of movie here:
@@ -101,13 +101,19 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
     var seek_dragger = document.getElementById('seek-control-id');
     var seek_dragger_being_dragged = false;
     function updateTime() {
-      document.getElementById('current_time_id').innerHTML = timeStampToHumanHere(youtube_pimw_player.getCurrentTime(), 0) + "/" + timeStampToHumanHere(youtube_pimw_player.getDuration(), 0);
       if (!seek_dragger_being_dragged) {
         seek_dragger.value = youtube_pimw_player.getCurrentTime() / youtube_pimw_player.getDuration() * 100; 
+        document.getElementById('current_time_id').innerHTML = timeStampToHumanHere(youtube_pimw_player.getCurrentTime(), 0) + "/" + timeStampToHumanHere(youtube_pimw_player.getDuration(), 0);
       }
       document.getElementById('quality_div_id').innerHTML = youtube_pimw_player.getPlaybackQuality();
     }
-    
+    seek_dragger.addEventListener("mouseup", function() {
+      seekToPercentage(this.value);
+    });
+    seek_dragger.addEventListener("touchend", function() {
+      seekToPercentage(this.value);
+    });
+        
     seek_dragger.addEventListener("mousedown", function() {
       seek_dragger_being_dragged = true;
       console.log("start drag");
