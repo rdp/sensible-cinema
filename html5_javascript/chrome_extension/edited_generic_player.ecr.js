@@ -60,7 +60,7 @@ function addEditUi() {
   
   <div id="load_succeeded_div_id" style='display: none;'>
     <div id="currently_playing_it_your_way_id" style="color: rgb(188, 188, 188);">
-      <svg style="font: 50px 'Arial'; height: 50px;" viewBox="0 0 350 50">
+      <svg id="big_edited_text_svg_id" style="font: 50px 'Arial'; height: 50px;" viewBox="0 0 350 50">
         <text style="fill: none; stroke: white; stroke-width: 0.5px; stroke-linejoin: round;" y="40" x="175" id="big_edited_text_id">Edited</text>
       </svg>
        <br/>
@@ -1264,7 +1264,10 @@ function parseSuccessfulJson(json_string) {
     big_edited.innerHTML = "Partially edited...";
     big_edited.setAttribute("x", "0");
   }
-  
+  if (current_json.editor) {
+    document.getElementById("big_edited_text_svg_id").style.display = "none"; // hide it so more space for editors :|
+  }
+
   console.log("finished parsing response successful JSON");
 }
 
