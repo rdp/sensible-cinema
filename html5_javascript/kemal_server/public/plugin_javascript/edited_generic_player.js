@@ -190,15 +190,17 @@ sub cat:
     
       <option value="deity reference">profanity -- deity use appropriate but non religious context like &quot;in this game you are G...&quot;</option>    
     
-      <option value="deity exclamation mild">profanity -- deity exclamation mild like Good L...,</option>    
+      <option value="deity exclamation mild">profanity -- deity exclamation mild like Good L...</option>    
     
-      <option value="deity greek">profanity -- deity greek &#40;Zeus, etc.&#41;</option>    
-    
-      <option value="deity foreign language">profanity -- deity different language, like Allah or French equivalents, etc</option>    
+      <option value="deity exclamation euphemized">profanity -- deity euphemized like &#39;oh my gosh&#39;</option>    
     
       <option value="deity exclamation harsh">profanity -- deity exclamation harsh, name of the Lord &#40;omg, etc.&#41;</option>    
     
       <option value="deity expletive">profanity -- deity expletive &#40;es: goll durn, the real words&#41;</option>    
+    
+      <option value="deity greek">profanity -- deity greek &#40;Zeus, etc.&#41;</option>    
+    
+      <option value="deity foreign language">profanity -- deity different language, like Allah or French equivalents, etc</option>    
     
       <option value="personal insult harsh">profanity -- insult harsh &#40;son of a ..... etc.&#41;</option>    
     
