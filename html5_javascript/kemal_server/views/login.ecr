@@ -1,21 +1,14 @@
 <div id="amazon-root"></div>
-<script type="text/javascript">
-
-  window.onAmazonLoginReady = function() {
-    amazon.Login.setClientId('amzn1.application-oa2-client.faf94452d819408f83ce8a93e4f46ec6');
-  };
-  (function(d) {
-    var a = d.createElement('script'); a.type = 'text/javascript';
-    a.async = true; a.id = 'amazon-login-sdk';
-    a.src = 'https://api-cdn.amazon.com/sdk/login1.js';
-    d.getElementById('amazon-root').appendChild(a);
-  })(document);
-
-</script>
 
 You need to login in order to view videos personalized.
 <br/>
 To make logging in easy, you can use one of these third party login providers:
+
+<br/>
+<br/>
+<input id="checkbox_subscribe" type="checkbox" checked>
+Subscribe me to monthly announcement emails (lists of newly edited movies, etc.).
+
 <br/>
 Login with amazon here:
 <br/>
@@ -25,32 +18,10 @@ Login with amazon here:
     width="156" height="32" />
 </a>
 
-<script type="text/javascript">
-
-  document.getElementById('LoginWithAmazon').onclick = function() {
-    options = { scope : 'profile', popup: true }; // popup doesn't work in...nativve iOS apps [LOL] but if set to false, you have to do extra hoops yikes!
-    amazon.Login.authorize(options, 'https://playitmyway.org/login_from_amazon?email_subscribe=' + isEmail());
-    return false;
-  };
-
-</script>
-
 <br/>
 Or login with facebook here:
 <div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=187254001787158";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
 <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false" onlogin="logged_in();" scope="public_profile,email,user_friends" ></div> <!-- get gender for free somehow --> <!-- user_birthday too complicated, add later, force relogin... -->
-
-<br/>
-<br/>
-<input id="checkbox_subscribe" type="checkbox" checked>
-Subscribe me to monthly announcement emails (lists of newly edited movies, etc.).
 
 <script>
   function statusChangeCallback(response) {
@@ -84,3 +55,36 @@ function isEmail() {
   };
 
 </script>
+
+
+<script type="text/javascript">
+
+  window.onAmazonLoginReady = function() {
+    amazon.Login.setClientId('amzn1.application-oa2-client.faf94452d819408f83ce8a93e4f46ec6');
+  };
+  (function(d) {
+    var a = d.createElement('script'); a.type = 'text/javascript';
+    a.async = true; a.id = 'amazon-login-sdk';
+    a.src = 'https://api-cdn.amazon.com/sdk/login1.js';
+    d.getElementById('amazon-root').appendChild(a);
+  })(document);
+
+</script>
+
+<script type="text/javascript">
+
+  document.getElementById('LoginWithAmazon').onclick = function() {
+    options = { scope : 'profile', popup: true }; // popup doesn't work in...nativve iOS apps [LOL] but if set to false, you have to do extra hoops yikes!
+    amazon.Login.authorize(options, 'https://playitmyway.org/login_from_amazon?email_subscribe=' + isEmail());
+    return false;
+  };
+
+</script>
+
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=187254001787158";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
