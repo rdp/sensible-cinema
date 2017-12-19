@@ -385,9 +385,6 @@ def setup_user_and_session(amazon_id, facebook_id, name, email, type, email_subs
     env.redirect env.session.string("redirect_to_after_login")
     env.session.delete_string("redirect_to_after_login")
   else
-    if editor?(env)
-      add_to_flash(env, "If you were entering information, please use your browser's back button (hit it several times) to resend it");
-    end
     env.redirect "/"
   end
   user

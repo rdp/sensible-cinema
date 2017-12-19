@@ -186,7 +186,7 @@ settings = [
   {type: :all_movies, title: "All Movies", urls: non_youtubes.select{|u| u.episode_number == 0}, message: "All movies"},
   {type: :all_series, title: "All Series", urls: non_youtubes.select{|u| u.episode_number > 0}, message: "All TV series"},
   {type: :free_movies, title: "Free Movies (with ads)", urls: non_youtubes.select{|url| url.rental_cost == -1 }, message: "These are free to watch edited (with ads), even without Prime! If you do have Prime they'll show without ads."},
-  # {type: :everything, title: "Everything", urls: all_urls_done, message: "Everything we have edited!"},
+  # to cluttered on desktop {type: :everything, title: "Everything", urls: all_urls_done, message: "Everything we have edited!"},
   {type: :in_the_works, title: "Videos in the works (please support us!)", urls: (all_urls_half_way + all_urls_just_started), message: "Things we want to get to, with your support!"}
 ] 
 
