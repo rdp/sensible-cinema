@@ -10,11 +10,11 @@ if (typeof clean_stream_timer !== 'undefined') {
 }
 
 var video_element;
-var extra_message = "";
+var extra_message;
 var inMiddleOfTestingTimer;
 var current_json, url;
 var mouse_move_timer;
-var mutes, skips, yes_audio_no_videos, do_nothings, mute_audio_no_videos, make_video_smallers, change_speeds, set_audio_percents, pause_videos;
+var mutes, skips, yes_audio_no_videos, do_nothings, mute_audio_no_videos, make_video_smallers, change_speeds, set_audio_percents;
 var seek_timer;
 var all_pimw_stuff;
 var currently_in_process_tags = new Map();

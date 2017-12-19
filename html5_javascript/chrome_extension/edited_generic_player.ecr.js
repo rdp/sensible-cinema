@@ -9,7 +9,7 @@ if (typeof clean_stream_timer !== 'undefined') {
 }
 
 var video_element;
-var extra_message = "";
+var extra_message;
 var inMiddleOfTestingTimer;
 var current_json, url;
 var mouse_move_timer;
