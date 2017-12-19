@@ -134,8 +134,8 @@ function doubleCheckValues() {
   return true;
 }
 
-function tagsCreated() {
-  // they call this when we're ready to setup stuff, since otherwise the right divs aren't in place yet :|
+function editDropdownsCreated() {
+  // they call this when we're ready to setup variables in the dropdowns, since otherwise the right divs aren't in place yet in plugin
   
   document.getElementById('action_sel').addEventListener('change', setImpactIfMute, false);
   // setImpactIfMute(); // the default is mute so set up origin as we'd anticipate :| except can't because resets it from edit_tag.cr :\

@@ -33,11 +33,11 @@ function addEditUi() {
   all_pimw_stuff.style.position = 'absolute';
   
   all_pimw_stuff.innerHTML = `
-   <!-- our own styles, # is id -->
+   <!-- our own styles, # means id -->
   <style>
     #all_pimw_stuff_id a:link { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
     #all_pimw_stuff_id a:visited { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
-    #all_pimw_stuff_id { text-align: right;}  
+    #all_pimw_stuff_id { text-align: right;}
   </style>
   
   <!-- no pre-load message here since...we don't start the watcher thread until after the first fail or success to give us the right coords, and possibly annoying... -->
@@ -54,7 +54,7 @@ function addEditUi() {
     </div>
   </div>
 
-  <div id=server_down_div_id style='display: none;' style='font-size: 14px;'>
+  <div id=server_down_div_id style='display: none;' style='font-size: 14px;'> <!-- big -->
     Play it my way Server down, please alert us and try again later...
   </div>
   
@@ -77,7 +77,7 @@ function addEditUi() {
     </div>
     <div id="tag_details_div_id"  style='display: none;'>
       <div id='tag_layer_top_section'>
-        <span id="tag_details_top_line"> <!-- currently: muting, 0m32s --></span>
+        <span id="tag_details_top_line"> <!-- "currently: muting, 0m32s" --></span>
         <span id="tag_details_second_line" /> <!-- next will be at x for y -->
       </div>
       <form target="_blank" action="filled_in_later_if_you_see_this_it_may_mean_an_onclick_method_threw" method="POST" id="create_new_tag_form_id">
@@ -89,7 +89,7 @@ function addEditUi() {
         <br/>
         
         
-      <!-- no method for seek forward since it'll at worst seek too far forward --> 
+      <!-- no special method for seek forward since it'll at worst seek to a skip then skip --> 
       <input type='button' onclick="seekToBeforeSkip(-30); return false;" value='-30s'/>
       <input type='button' onclick="seekToTime(getCurrentTime() - 2); return false;" value='-2s'/> 
       <input type='button' onclick="seekToBeforeSkip(-5); return false;" value='-5s'/>
@@ -103,8 +103,7 @@ function addEditUi() {
       <span ><a id='playback_rate' href=# onclick="setPlaybackRate(1.0); return false">1.00x</a></span> <!--XX remove link -->
       <input type='button' onclick="increasePlaybackRate(); return false;" value='&gt;&gt;'/>
       <input type='button' onclick="doPause(); return false;" value='&#9612;&#9612;'/>
-      <input type='button' onclick="playButtonClicked(); return false;" value='&#9654;'>
-      
+      <input type='button' onclick="playButtonClicked(); return false;" value='&#9654;'>      
       
        <br/>
         <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
@@ -119,7 +118,7 @@ function addEditUi() {
       
       <a id=reload_tags_a_id href=# onclick="reloadForCurrentUrl(); return false;" </a>Reload tags</a>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <a href=# onclick="getSubtitleLink(); return false;" </a>Get movie subtitles</a>
+      <a href=# onclick="getSubtitleLink(); return false;" </a>Get subtitles</a>
         <input type='submit' value='Done with movie' onclick="doneMoviePage(); return false;">
       <br/>
       <input type='button' onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
@@ -129,7 +128,7 @@ function addEditUi() {
   
   addMouseAnythingListener(mouseJustMoved);
   mouseJustMoved({pageX: 0, pageY: 0}); // start its timer, prime it :|
-  tagsCreated(); // from shared javascript, means "the HTML elements are in there"
+  editDropdownsCreated(); // from shared javascript, means "the HTML elements are in there"
   if (isYoutubePimw()) {
     // assume it can never change to a different type of movie...I doubt it :|
     $("#action_sel option[value='yes_audio_no_video']").remove();
@@ -146,7 +145,7 @@ function playButtonClicked() {
   }
 }
 
-function getStandardizedCurrentUrl() { // duplicated with other .js
+function getStandardizedCurrentUrl() { // duplicated with conentscript .js
   var current_url = currentUrlNotIframe();
   if (document.querySelector('link[rel="canonical"]') != null && !isYoutube()) {
     // -> canonical, the crystal code does this for everything so guess we should do here as well...ex youtube it strips off any &t=2 or something...
