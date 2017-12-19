@@ -376,30 +376,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       setAudioVolumePercent(last_audio_percent);
     }
   }
-  
-  tag = areWeWithin(pause_videos, cur_time);
-  if (tag) {
-    var pause_tag = tag; // save it :\
-    // "should" be right at beginning hrm...todo seek back to beginning if they seek to within it, first? hrm...
-    if (!i_paused_it) {
-      i_paused_it = true;
-      if (!isPaused()) {
-        doPause();
-      } // else ??
-      setTimeout(function() {
-        seekToTime(pause_tag.endy);
-      }, (pause_tag.endy - pause_tag.start)*1000);
-    }
-    extra_message += "pausing";
-  } else {
-    if (i_paused_it) {
-      i_paused_it = false;
-      if (isPaused()) {
-        doPlay();
-      } // else how? but it's already playing anyway... :\
-    }
-  }
-  
+
   var top_line = "";
   if (extra_message != "") {
     top_line = "Currently:" + extra_message; // prefix
@@ -1011,8 +988,6 @@ function currentEditArray() {
       return change_speeds;
     case 'set_audio_volume':
       return set_audio_percents;
-    case 'pause_video':
-      return pause_videos;
     default:
       alert('internal error 1...' + currentTestAction()); // hopefully never get here...
   }
@@ -1289,7 +1264,6 @@ function setTheseTagsAsTheOnesToUse(tags) {
   make_video_smallers = [];
   change_speeds = [];
   set_audio_percents = [];
-  pause_videos = [];
   for (var i = 0; i < tags.length; i++) {
     var tag = tags[i];
     var push_to_array;
@@ -1308,8 +1282,6 @@ function setTheseTagsAsTheOnesToUse(tags) {
         push_to_array = change_speeds;
       } else if (tag.default_action == 'set_audio_volume') {
         push_to_array = set_audio_percents;
-      } else if (tag.default_action == 'pause_video') {
-        push_to_array = pause_videos;
       } else { alert("please report failure 1 " + tag.default_action); }
     } else {
       push_to_array = do_nothings;
