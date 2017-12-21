@@ -934,9 +934,9 @@ function createFauxTagForCurrentUI() {
     start: humanToTimeStamp(document.getElementById('start').value),
     endy: humanToTimeStamp(document.getElementById('endy').value),
     default_action: currentTestAction(),
-    is_test_tag: true,
+    is_test_tag: true, // just for debugging in the console purposes :)
     popup_text_after: document.getElementById('popup_text_after_id').value,
-    default_enabled: true,
+    default_enabled: document.getElementById('default_enabled_id').value == 'true',
     details: document.getElementById('details_input_id').value,
     id: parseInt(document.getElementById('tag_hidden_id').value) // not that we use it LOL
   }
@@ -949,12 +949,12 @@ function loadTagIntoUI(tag) {
   document.getElementById('endy').value = timeStampToHuman(tag.endy);
   document.getElementById('details_input_id').value = tag.details;
   document.getElementById('popup_text_after_id').value = tag.popup_text_after;
-  document.getElementById('category_select').value = tag.category; // XXXX rename
+  document.getElementById('category_select').value = tag.category; // XXXX rename :|
   document.getElementById('subcategory_select_id').value = tag.subcategory;
   document.getElementById('age_maybe_ok_id').value = tag.age_maybe_ok;
   document.getElementById('impact_to_movie_id').value = tag.impact_to_movie;
-  document.getElementById('tag_hidden_id').value = tag.id;
   document.getElementById('default_enabled_id').value = tag.default_enabled;
+  document.getElementById('tag_hidden_id').value = tag.id;
 }
 
 function testCurrentFromUi() {
@@ -965,6 +965,10 @@ function testCurrentFromUi() {
     document.getElementById('endy').value = getCurrentVideoTimestampHuman(); // assume they wanted to test till "right now" I did this a couple of times :)
   }
   var faux_tag = createFauxTagForCurrentUI();
+  if (!faux_tag.enabled) {
+    alert("tag is set to disabled, hard to test, please toggle on temporarily!");
+    return;
+  }
   if (faux_tag.start == 0) {
     alert("appears your start time is zero, which is not allowed, if you want one that starts near the beginning enter 0.1s");
     return;
@@ -980,7 +984,10 @@ function testCurrentFromUi() {
   if (currentTestAction() == "change_speed" && !getEndSpeedOrAlert(faux_tag.details)) {
     return;
   }
-  current_tags_to_use.push(faux_tag);
+  var shouldAdd = document.getElementById('tag_hidden_id').value == '0';
+  if (shouldAdd) {
+    current_tags_to_use.push(faux_tag);
+  } // else it's "already in the list" and will be overridden at request time
   
   var rewindSeconds = 2;
   var start = faux_tag.start - rewindSeconds;
@@ -1000,9 +1007,13 @@ function testCurrentFromUi() {
     if (isPaused()) {
       doPlay(); // seems like we want it like this...
     }
-    inMiddleOfTestingTimer = makeTimeout(function() { // we call this early to cancel if they hit it a second time...
-      console.log("popping " + JSON.stringify(faux_tag));
-      current_tags_to_use.pop();
+    inMiddleOfTestingTimer = makeTimeout(function() { // we call this function early to cancel if they hit it a second time...
+      if (shouldAdd) {
+        console.log("popping " + JSON.stringify(faux_tag));
+        current_tags_to_use.pop();
+      } else {
+        console.log("not popping since was already in there'ish");
+      }
       removeTimeout(inMiddleOfTestingTimer);
       inMiddleOfTestingTimer = null;
     }, wait_time_millis);
@@ -1019,7 +1030,6 @@ function openPreviousTagButton() {
     var next_tag = getNextTagAfterOrWithin(timeSearch);
     if (next_tag && (next_tag.endy < getCurrentTime())) {
       loadTagIntoUI(next_tag);
-      window.open("https://" + request_host + "/edit_tag/" + next_tag.id); // do both for now :)
       return;
     }
     else {
@@ -1033,7 +1043,6 @@ function openNextTagButton() {
   var next_tag = getNextTagAfterOrWithin(getCurrentTime());
   if (next_tag) {
     loadTagIntoUI(next_tag);
-    window.open("https://" + request_host + "/edit_tag/" + next_tag.id);
   }
   else {
     alert("didn't find a tag the current times seem to match??"); // this should be impossible...
