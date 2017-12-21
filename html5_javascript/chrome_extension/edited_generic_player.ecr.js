@@ -110,9 +110,9 @@ function addEditUi() {
         <br/>
        action:
         <%= pre_details = "tag details"; pre_popup = "popup text"; io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared.ecr", io2; io2.to_s %> <!-- render full filename cuz macro -->
-        <input type='submit' value='Save Tag' onclick="saveEditButton(); return false;">
         <button type="reset" value="Reset" onclick="reloadAndResetForm(); return false;">Reset</button>
         <input type='button' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
+        <input type='submit' value='Save Tag' onclick="saveEditButton(); return false;">
         <br/>
         <input type='submit' value='Re-Edit Prev Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">
         <input type='submit' value='Re-Edit Next Tag (or current)' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
@@ -962,6 +962,7 @@ function loadTagIntoUI(tag) {
   document.getElementById('popup_text_after_id').value = tag.popup_text_after;
   document.getElementById('category_select').value = tag.category; // XXXX rename :|
   document.getElementById('subcategory_select_id').value = tag.subcategory;
+  document.getElementById('subcategory_select_id').dispatchEvent(new Event('change')); // so it'll do the right size, needed apparently :|
   document.getElementById('age_maybe_ok_id').value = tag.age_maybe_ok;
   document.getElementById('impact_to_movie_id').value = tag.impact_to_movie;
   document.getElementById('default_enabled_id').value = tag.default_enabled;
@@ -995,8 +996,8 @@ function testCurrentFromUi() {
   if (currentTestAction() == "change_speed" && !getEndSpeedOrAlert(faux_tag.details)) {
     return;
   }
-  var shouldAdd = document.getElementById('tag_hidden_id').value == '0';
-  if (shouldAdd) {
+  var unsavedTag = document.getElementById('tag_hidden_id').value == '0';
+  if (unsavedTag) {
     current_tags_to_use.push(faux_tag);
   } // else it's "already in the list" and will be overridden at request time
   
@@ -1016,10 +1017,11 @@ function testCurrentFromUi() {
     
     wait_time_millis = (length + rewindSeconds + 0.5) * 1000;
     if (isPaused()) {
+      console.log("testCurrentFromUi doing play");
       doPlay(); // seems like we want it like this...
     }
     inMiddleOfTestingTimer = makeTimeout(function() { // we call this function early to cancel if they hit it a second time...
-      if (shouldAdd) {
+      if (unsavedTag) {
         console.log("popping " + JSON.stringify(faux_tag));
         current_tags_to_use.pop();
       } else {
