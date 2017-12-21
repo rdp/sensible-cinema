@@ -228,6 +228,10 @@ function areWeWithin(thisAction, cur_time) {
     if (tag.default_action != thisAction) {
       continue;
     }
+    var editor_tag_id = parseInt(document.getElementById('tag_hidden_id').value = '0');
+    if (editor_tag_id == tag.id) {
+      tag = createFauxTagForCurrent(); // use that instead, just for this tag...
+    }
     if(areWeWithinTag(tag, cur_time)) {
       return tag;
     }
@@ -917,13 +921,7 @@ function cancelCurrentTest() {
   doTimeoutEarly(inMiddleOfTestingTimer); // the timeout func also nulls it out for us
 }
 
-function testCurrentFromUi() {
-  if (inMiddleOfTestingTimer) {
-    cancelCurrentTest();
-  }
-  if (humanToTimeStamp(document.getElementById('endy').value) == 0) {
-    document.getElementById('endy').value = getCurrentVideoTimestampHuman(); // assume they wanted to test till "right now" I did this a couple of times :)
-  }
+function createFauxTagForCurrent() {
   var faux_tag = {
     start: humanToTimeStamp(document.getElementById('start').value),
     endy: humanToTimeStamp(document.getElementById('endy').value),
@@ -932,7 +930,19 @@ function testCurrentFromUi() {
     popup_text_after: document.getElementById('popup_text_after_id').value,
     default_enabled: true,
     details: document.getElementById('details_input_id').value
+    // id ?
   }
+  return faux_tag;
+}
+
+function testCurrentFromUi() {
+  if (inMiddleOfTestingTimer) {
+    cancelCurrentTest();
+  }
+  if (humanToTimeStamp(document.getElementById('endy').value) == 0) {
+    document.getElementById('endy').value = getCurrentVideoTimestampHuman(); // assume they wanted to test till "right now" I did this a couple of times :)
+  }
+  var faux_tag = createFauxTagForCurrent();
   if (faux_tag.start == 0) {
     alert("appears your start time is zero, which is not allowed, if you want one that starts near the beginning enter 0.1s");
     return;
@@ -1039,8 +1049,7 @@ function saveEditButton() {
   document.getElementById('impact_to_movie_id').value = "0";
   setImpactIfMute(); // reset if mute :|
   document.getElementById('tag_hidden_id').value = '0'; // reset
-  document.getElementById('default_enabled_id').value = 'true';
-  
+  document.getElementById('default_enabled_id').value = 'true';  
 }
 
 function doneMoviePage() {
