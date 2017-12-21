@@ -25,6 +25,7 @@
 
 <h2 id="youtube_name_header_id"><%= url ? url.name + " (Edited)" : "youtube not in our edited system yet, please click 'unedited' in the black box below the movie to add it!" %></h2>
 
+Legal disclaimer: Performance of the picture is altered from the performance intended by the director or copyright holder of the motion picture. (we're required by law to note that).
 <!-- match amazon coloring for my stuff :| -->
 <style>
 input,select {
@@ -35,20 +36,22 @@ input,select {
 <div style="height: 760px; max-width: 620px; background: black;" id="show_your_instructions_here_id"> <!-- plugin binds here -->
 </div>
 
-<p>Seeing closed captions? To toggle them off go to <a href=youtube.com>youtube.com</a> and watch something and turn them off there.
+<p>Seeing closed captions? To toggle them off (or on) go to <a href=youtube.com>youtube.com</a> and watch something and turn them off there.
 
+<% if editor?(env) %>
 <h3>Create new other (youtube)</h3>
 Enter url of movie here:
 <form action="/new_manual_url" method="GET">Your Movie's url: <input type="text" name="url"/>
   <input type="submit" value="Submit">
 </form>
-
 <br/>
+<% end %>
+
 Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!-- in case it matches youtube's terms of use better -->
 <br/>
-<a href=/terms_of_service_youtube>Terms of use</a>.
+<a href=/terms_of_service_youtube>Terms of use (including Youtube's)</a>.
 <br/>
-<a href=/privacy>Privacy policy (including youtube's)</a>.
+<a href=/privacy>Privacy policy (including Youtube's)</a>.
 
 <script>
     function SetVolume(val)
