@@ -5,7 +5,7 @@
 var request_host="playitmyway.org";  // prod
 
 if (typeof clean_stream_timer !== 'undefined') {
-  alert("play it my way: already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|
+  alert("play it my way: already loaded...not loading it again...please use the ll.  on screen links for it"); // hope we never get here :|
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
@@ -14,7 +14,6 @@ var extra_message;
 var inMiddleOfTestingTimer;
 var current_json, url;
 var mouse_move_timer;
-var mutes, skips, yes_audio_no_videos, do_nothings, mute_audio_no_videos, make_video_smallers, change_speeds, set_audio_percents;
 var seek_timer;
 var all_pimw_stuff;
 var currently_in_process_tags = new Map();
@@ -517,14 +516,18 @@ function liveEpisodeNumber() {
   }
 }
 
-function areWeWithin(thisTagArray, cur_time) {
-  for (var i = 0; i < thisTagArray.length; i++) {
-    var tag = thisTagArray[i];
+function areWeWithin(thisAction, cur_time) {
+  for (var i = 0; i < current_tags_to_use.length; i++) {
+    var tag = current_tags_to_use[i];
+    if (tag.default_action != thisAction) {
+      continue;
+    }
     var start_time = tag.start;
     var end_time = tag.endy;
     if(cur_time >= start_time && cur_time < end_time && !withinDelta(cur_time, end_time, 0.0001)) { // avoid seeking at 4123.819999 will_end:4123.82 in 9.99999429041054e-7s infinite loop
       return tag;
     }
+    // no early out/break yet because 1) edits use it and 2) even if we did, at the end of movies it would still be junk so...fix it different way [?]
   }
   return false;
 }
@@ -542,8 +545,8 @@ function checkIfShouldDoActionAndUpdateUI() {
   var cur_time = getCurrentTime();
   var tag;
   
-  tag = areWeWithin(mutes, cur_time);
-  tag = tag || areWeWithin(mute_audio_no_videos, cur_time);
+  tag = areWeWithin('mute', cur_time);
+  tag = tag || areWeWithin('mute_audio_no_video', cur_time);
   extra_message = "";
   if (tag) {
     if (!isMuted()) {
@@ -564,8 +567,8 @@ function checkIfShouldDoActionAndUpdateUI() {
     }
   }
   
-  tag = areWeWithin(yes_audio_no_videos, cur_time);
-  tag = tag || areWeWithin(mute_audio_no_videos, cur_time);
+  tag = areWeWithin('yes_audio_no_video', cur_time);
+  tag = tag || areWeWithin('mute_audio_no_video', cur_time);
   if (tag) {
     // use style.visibility here so it retains the space on screen it would have otherwise used...(for non amazon LOL) and to not confuse the seektoheart logic :|
     if (video_element.style.visibility != "hidden") {
@@ -586,7 +589,7 @@ function checkIfShouldDoActionAndUpdateUI() {
     }
   }
   
-  tag = areWeWithin(skips, cur_time); // do after unhiding so it can use 'right now' to know if should heart blank :|
+  tag = areWeWithin('skip', cur_time); // do after unhiding so it can use 'right now' to know if should heart blank :|
   if (tag) {
     timestamp_log("seeking forward", cur_time, tag);
     notify_if_new(tag); // show it now so it can notify while it seeks :) [NB for longer seeks it shows it over and over [bug] but notification tag has our back'ish for now :\ ]
@@ -595,7 +598,7 @@ function checkIfShouldDoActionAndUpdateUI() {
     seekToTime(tag.endy, doneWithPossibleHeartBlankUnlessImpending);
   }
   
-  tag = areWeWithin(make_video_smallers, cur_time);
+  tag = areWeWithin('make_video_smaller', cur_time);
   if (tag) {
     // assume youtube :|
     var iframe = youtube_pimw_player.getIframe();
@@ -625,7 +628,7 @@ function checkIfShouldDoActionAndUpdateUI() {
     }
   }
   
-  tag = areWeWithin(change_speeds, cur_time);
+  tag = areWeWithin('change_speed', cur_time);
   if (tag) {
     var desired_speed = getEndSpeedOrAlert(tag.details);
     if (desired_speed) {
@@ -645,7 +648,7 @@ function checkIfShouldDoActionAndUpdateUI() {
     }
   }
   
-  tag = areWeWithin(set_audio_percents, cur_time);
+  tag = areWeWithin('set_audio_percent', cur_time);
   if (tag) {
     var desired_percent = getAudioPercentOrAlert(tag.details);
     if (desired_percent) {
@@ -713,15 +716,15 @@ function blankScreenIfWithinHeartOfSkip(skipish_tag, cur_time) {
 }
 
 function blankScreenIfImpending(cur_time) { // basically for pre-emptively knowing when skips will end :|
-  var just_before_bad_stuff = areWeWithin(all_no_show_video_tags(), cur_time + 0.02); // if about to re-non-video, don't show blip of bad stuff if two such edits back to back
+  var just_before_bad_stuff = areWeWithinNoShowVideoTag(cur_time + 0.02); // if about to re-non-video, don't show blip of bad stuff if two such edits back to back
   if (just_before_bad_stuff) {
     console.log("starting heartblank straight will be impending");
     startHeartBlank(just_before_bad_stuff, cur_time);
   }
 }
 
-function all_no_show_video_tags() {
-  return skips.concat(yes_audio_no_videos).concat(mute_audio_no_videos); // can't use + here :|
+function areWeWithinNoShowVideoTag(cur_time) {
+  return areWeWithin('skip') || areWeWithin('yes_audio_no_video') || areWeWithin('mute_audio_no_video');
 }
 
 function startHeartBlank(skipish_tag, cur_time) {
@@ -737,7 +740,7 @@ function startHeartBlank(skipish_tag, cur_time) {
 function doneWithPossibleHeartBlankUnlessImpending(start_heart_blank_if_close) { // do as its "whole own thing" (versus aumenting yes_audio_no_video) since it *has* to use style.display...I guess that means needs its own :|...
   var cur_time = getCurrentTime();
   // 0.02 cuz if it's "the next 0.01" then count it, plus some rounding error :)
-  var just_before_bad_stuff = areWeWithin(all_no_show_video_tags(), cur_time + 0.02); // if about to re-non-video, don't show blip of bad stuff if two such edits back to back
+  var just_before_bad_stuff = areWeWithinNoShowVideoTag(cur_time + 0.02); // if about to re-non-video, don't show blip of bad stuff if two such edits back to back
   if (!just_before_bad_stuff) {
     if (i_heart_blanked_it) {
       console.log("unheart blanking it");
@@ -757,9 +760,13 @@ function doneWithPossibleHeartBlankUnlessImpending(start_heart_blank_if_close) {
   }
 }
 
+function areWeWithinTag(tag, cur_time) {
+  return tag.start <= cur_time && tag.endy >= cur_time;
+}
+
 function removeIfNotifyEditsHaveEnded(cur_time) {
   for (var tag of currently_in_process_tags.keys()) {
-    if (!areWeWithin([tag], cur_time)) {
+    if (!areWeWithinTag(tag, cur_time)) {
       currently_in_process_tags.delete(tag);
     }
   }
@@ -937,11 +944,11 @@ function checkStatus() { // called 100 fps
       var cur_time = getCurrentTime();
       if (cur_time < last_timestamp) {
         console.log("Something (possibly)pimw just sought backwards to=" + cur_time + " from=" + last_timestamp + "to=" + timeStampToHuman(cur_time) + " from=" + timeStampToHuman(last_timestamp) + " readyState=" + video_element.readyState);
-        var tag = areWeWithin(all_no_show_video_tags(), cur_time);
+        var tag = areWeWithinNoShowVideoTag(cur_time);
         if (tag) {
           blankScreenIfWithinHeartOfSkip(tag, cur_time);
         }
-        tag = areWeWithin(skips, cur_time); // just skips for this one (also happens to avoid infinite loop...["seek to before skip oh it's the current location..., repeat"])
+        tag = areWeWithin('skip', cur_time); // just skips for this one (also happens to avoid infinite loop...["seek to before skip oh it's the current location..., repeat"])
         if (tag) {
           // was the seek to within an edit? Since this was a "rewind" let's actually go to *before* the bad spot, so the traditional +-10 buttons can work from UI
           console.log("they just seeked backward to within a skip, rewinding more..."); // tag already gets logged in seekToBeforeSkip
@@ -979,14 +986,14 @@ function refreshVideoElement() {
 }
 
 function timestamp_log(message, cur_time, tag) {
-  local_message = "edit:" + message + " at " + twoDecimals(cur_time) + " start:" + twoDecimals(tag.start) + " will_end:" + twoDecimals(tag.endy) + " " + timeStampToHuman(tag.endy) + " in " + twoDecimals(tag.endy - cur_time) + "s";;
+  local_message = "edit:" + message + " cur_time=" + timeStampToHuman(cur_time) + " start=" + timeStampToHuman(tag.start) + " will_end=" + twoDecimals(tag.endy) + " will_end=" + timeStampToHuman(tag.endy) + " in " + twoDecimals(tag.endy - cur_time) + "s";
   console.log(local_message);
 }
 
 function seekToBeforeSkip(delta, callback) {
   var cur_time = getCurrentTime();
   var desired_time = cur_time + delta;
-  var tag = areWeWithin(skips, desired_time);  
+  var tag = areWeWithin('skip', desired_time);  
   if (tag) {
     var new_delta = tag.start - cur_time - 5; // youtube with 2 would fail here seeking backward and loop forever :\ 
     console.log("would have sought to middle of " + twoDecimals(tag.start) + " -> " + twoDecimals(tag.endy) + " going back further instead old_delta=" + delta + " new_delta=" + new_delta + " cur_time=" + cur_time);
@@ -1267,24 +1274,7 @@ function testCurrentFromUi() {
 }
 
 function currentEditArray() {
-  switch (currentTestAction()) {
-    case 'mute':
-      return mutes;
-    case 'skip':
-      return skips;
-    case 'yes_audio_no_video':
-      return yes_audio_no_videos;
-    case 'mute_audio_no_video':
-      return mute_audio_no_videos;
-    case 'make_video_smaller':
-      return make_video_smallers;
-    case 'change_speed':
-      return change_speeds;
-    case 'set_audio_volume':
-      return set_audio_percents;
-    default:
-      alert('internal error 1...' + currentTestAction()); // hopefully never get here...
-  }
+  return current_tags_to_use;
 }
 
 function getCurrentVideoTimestampHuman() {
@@ -1449,7 +1439,6 @@ function setSmiley() {
 }
 
 function loadFailed(status) {
-  mutes = skips = yes_audio_no_videos = mute_audio_no_videos = []; // reset so it doesn't re-use last episode's edits for the current episode!
   current_json = null;
   url = null; // reset
   name = liveFullNameEpisode();
@@ -1549,39 +1538,10 @@ function countDoSomethingTags(tags) {
   return count;
 }
 
+var current_tags_to_use;
+
 function setTheseTagsAsTheOnesToUse(tags) {
-  mutes = []; // all get re-filled in this method :)
-  skips = [];
-  yes_audio_no_videos = [];
-  do_nothings = [];
-  mute_audio_no_videos = [];
-  make_video_smallers = [];
-  change_speeds = [];
-  set_audio_percents = [];
-  for (var i = 0; i < tags.length; i++) {
-    var tag = tags[i];
-    var push_to_array;
-    if (tag.default_enabled) {
-      if (tag.default_action == 'mute') {
-        push_to_array = mutes;
-      } else if (tag.default_action == 'skip') {
-        push_to_array = skips;
-      } else if (tag.default_action == 'yes_audio_no_video') {
-        push_to_array = yes_audio_no_videos;
-      } else if (tag.default_action == 'mute_audio_no_video') {
-        push_to_array = mute_audio_no_videos;     
-      } else if (tag.default_action == 'make_video_smaller') {
-        push_to_array = make_video_smallers;
-      } else if (tag.default_action == 'change_speed') {
-        push_to_array = change_speeds;
-      } else if (tag.default_action == 'set_audio_volume') {
-        push_to_array = set_audio_percents;
-      } else { alert("please report failure 1 " + tag.default_action); }
-    } else {
-      push_to_array = do_nothings;
-    }
-    push_to_array.push(tag);
-  }
+  current_tags_to_use = tags;
 }
 
 function editListChanged() {
