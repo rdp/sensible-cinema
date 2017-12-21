@@ -221,7 +221,7 @@ get "/delete_tag/:tag_id" do |env|
   tag.destroy_in_tag_edit_lists
   tag.destroy_no_cascade
   save_local_javascript tag.url, "removed tag", env
-  add_to_flash env, "deleted #{tag.inspect}"
+  add_to_flash env, "deleted tag #{tag.id}"
   env.redirect "/view_url/#{tag.url.id}"
 end
 
@@ -318,7 +318,7 @@ post "/save_tag/:url_id" do |env|
   # do git stuff after tag.save to make it propagate "fastuh"
   if is_update
     save_local_javascript url, "updated tag", env
-    add_to_flash(env, "Success! updated tag at #{seconds_to_human tag.start} duration #{tag.duration}s, recommend clicking reload tags or doing a browser refresh...")
+    add_to_flash(env, "Success! updated tag at #{seconds_to_human tag.start} duration #{tag.duration}s, if this was a save from the pimw website please do a reload tags or browser refresh")
   else
     save_local_javascript url, "created tag", env
     add_to_flash(env, "Success! created new tag at #{seconds_to_human tag.start} duration #{tag.duration}s, you can tweak details and close this page now.")

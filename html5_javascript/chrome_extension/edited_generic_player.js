@@ -404,8 +404,9 @@ default edit on?
 
 <!-- can't put javascript since don't know how to inject it quite right in plugin, though I could use a separate render... -->
  <!-- render full filename cuz macro -->
-        <input type='submit' value='Save This Tag' onclick="saveEditButton(); return false;">
-        <button type="reset" value="Reset">Reset</button>
+        <input type='submit' value='Save Tag' onclick="saveEditButton(); return false;">
+        <button type="reset" value="Reset" onclick="reloadAndResetForm(); return false;">Reset</button>
+        <input type='button' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
         <br/>
         <input type='submit' value='Re-Edit Prev Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">
         <input type='submit' value='Re-Edit Next Tag (or current)' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
@@ -693,10 +694,14 @@ function checkIfShouldDoActionAndUpdateUI() {
   updateHTML(document.getElementById("tag_details_top_line"), top_line + " " + timeStampToHuman(cur_time) + "<br>");
   
   var second_line = "";
-  var next_future_tag = getNextTagAfterOrWithin(getCurrentTime());
+  var next_future_tag = getNextTagAfterOrWithin(cur_time); // XXXX hacky'ish
   if (next_future_tag) {
-    second_line += "next: " + timeStampToHuman(next_future_tag.start) + " in " + twoDecimals(next_future_tag.start - cur_time) +
-           "s (" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
+    second_line += "next: " + timeStampToHuman(next_future_tag.start);
+    var time_until = next_future_tag.start - cur_time;
+    if (time_until > 0) {
+      second_line +=  " in " + twoDecimals(time_until) + "s ";
+    }
+    second_line += "(" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
     if (!next_future_tag.default_enabled) {
       second_line += "(disabled)";
     }
@@ -771,8 +776,13 @@ function doneWithPossibleHeartBlankUnlessImpending(start_heart_blank_if_close) {
 }
 
 function areWeWithinTag(tag, cur_time) {
-  return cur_time >= tag.start && cur_time < tag.endy && !withinDelta(cur_time, tag.endy, 0.0001); // don't count it if we're right at the very end
+  // don't count it if we're right at the very end
   // to avoid "seeking at 4123.819999 will_end:4123.82 in 9.99999429041054e-7s" infinite loop
+  if (cur_time >= tag.start && cur_time < tag.endy && !withinDelta(cur_time, tag.endy, 0.0001)) {
+    return tag;
+  } else {
+    return false;
+  }
 }
 
 function removeIfNotifyEditsHaveEnded(cur_time) {
@@ -1025,8 +1035,9 @@ function compareTagStarts(tag1, tag2) {
   return 0;
 }
 
-function getNextTagAfterOrWithin(cur_time) {
-  var all = current_json.tags; // already sorted :| [use this instead of current_tags_to_use so we can use buttons for more...or should we?]
+function getNextTagAfterOrWithin(cur_time) {  
+  // XXXX hacky'ish combo here
+  var all = [createFauxTagForCurrentUI()].concat(current_json.tags).sort(compareTagStarts);
   for (var i = 0; i < all.length; i++) {
     var tag = getTagOrInlineReplacement(all[i]);
     var start_time = tag.start;
@@ -1259,7 +1270,7 @@ function testCurrentFromUi() {
     document.getElementById('endy').value = getCurrentVideoTimestampHuman(); // assume they wanted to test till "right now" I did this a couple of times :)
   }
   var faux_tag = createFauxTagForCurrentUI();
-  if (!faux_tag.enabled) {
+  if (!faux_tag.default_enabled) {
     alert("tag is set to disabled, hard to test, please toggle on temporarily!");
     return;
   }
@@ -1343,7 +1354,6 @@ function openNextTagButton() {
   }
 }
 
-
 function saveEditButton() {
   if (!doubleCheckValues()) {
     return;
@@ -1357,9 +1367,13 @@ function saveEditButton() {
 
   document.getElementById('create_new_tag_form_id').action = "https://" + request_host + "/save_tag/" + url.id;
   document.getElementById('create_new_tag_form_id').submit();
-  setTimeout(reloadForCurrentUrl, 1000); // reload to get it "back" from the server after saved...longest I've seen like like 60ms
 
-  // reset so people don't think they can tweak and resave...
+  // reset so people don't think they can tweak and resave...since it doesn't know the new ID'ish :|
+  reloadAndResetForm();
+}
+
+function reloadAndResetForm() {
+  setTimeout(reloadForCurrentUrl, 1000); // reload to get it "back" from the server after saved...longest I've seen like like 60ms
   document.getElementById('start').value = timeStampToHuman(0);
   document.getElementById('endy').value = timeStampToHuman(0);
   document.getElementById('details_input_id').value = "";
@@ -1372,6 +1386,16 @@ function saveEditButton() {
   setImpactIfMute(); // reset if mute :|
   document.getElementById('tag_hidden_id').value = '0'; // reset
   document.getElementById('default_enabled_id').value = 'true';  
+}
+
+function destroyCurrentTagButton() {
+  var id = document.getElementById('tag_hidden_id').value;
+  if (id == '0') {
+    alert("cannot destroy non previously saved tag");
+    return;
+  }
+  window.open("https://" + request_host + "/delete_tag/" + id); // assume it works :)
+  reloadAndResetForm();
 }
 
 function doneMoviePage() {
