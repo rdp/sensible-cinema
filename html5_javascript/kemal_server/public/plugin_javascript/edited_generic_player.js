@@ -12,12 +12,13 @@ if (typeof clean_stream_timer !== 'undefined') {
 var video_element;
 var extra_message;
 var inMiddleOfTestingTimer;
-var current_json, url;
+var current_json, url; // XXXX remove url :)
 var mouse_move_timer;
 var seek_timer;
 var all_pimw_stuff;
 var currently_in_process_tags = new Map();
 var old_current_url;
+var current_tags_to_use;
 
 function addEditUi() {
   
@@ -404,6 +405,7 @@ default edit on?
 <!-- can't put javascript since don't know how to inject it quite right in plugin, though I could use a separate render... -->
  <!-- render full filename cuz macro -->
         <input type='submit' value='Save This Tag' onclick="saveEditButton(); return false;">
+        <button type="reset" value="Reset">Reset</button>
         <br/>
         <input type='submit' value='Re-Edit Prev Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">
         <input type='submit' value='Re-Edit Next Tag (or current)' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
@@ -516,20 +518,26 @@ function liveEpisodeNumber() {
   }
 }
 
-function areWeWithin(thisAction, cur_time) {
+function getTagOrInlineReplacement(tag) {
+  var editor_tag_id = parseInt(document.getElementById('tag_hidden_id').value);
+  if (editor_tag_id == tag.id) {
+    return createFauxTagForCurrentUI();
+  } else {
+    return tag;
+  }
+}
+
+function areWeWithin(desiredAction, cur_time) {
   for (var i = 0; i < current_tags_to_use.length; i++) {
     var tag = current_tags_to_use[i];
-    if (tag.default_action != thisAction) {
+    tag = getTagOrInlineReplacement(tag);
+    if (tag.default_action != desiredAction) {
       continue;
-    }
-    var editor_tag_id = parseInt(document.getElementById('tag_hidden_id').value = '0');
-    if (editor_tag_id == tag.id) {
-      tag = createFauxTagForCurrent(); // use that instead, just for this tag...
     }
     if(areWeWithinTag(tag, cur_time)) {
       return tag;
     }
-    // no early out/break yet because 1) edits use it and 2) even if we did, at the end of movies it would still be junk so...fix it different way [?]
+    // no early out/break yet because 1) test unsaved edits uses push/pop and 2) even if we did, at the end of movies it would still be junk so...fix it different...
   }
   return false;
 }
@@ -687,8 +695,8 @@ function checkIfShouldDoActionAndUpdateUI() {
   var second_line = "";
   var next_future_tag = getNextTagAfterOrWithin(getCurrentTime());
   if (next_future_tag) {
-    second_line += "next: " + timeStampToHuman(next_future_tag.start) + 
-           " (" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
+    second_line += "next: " + timeStampToHuman(next_future_tag.start) + " in " + twoDecimals(next_future_tag.start - cur_time) +
+           "s (" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
     if (!next_future_tag.default_enabled) {
       second_line += "(disabled)";
     }
@@ -1018,16 +1026,16 @@ function compareTagStarts(tag1, tag2) {
 }
 
 function getNextTagAfterOrWithin(cur_time) {
-  var all = current_json.tags; // already sorted :|
+  var all = current_json.tags; // already sorted :| [use this instead of current_tags_to_use so we can use buttons for more...or should we?]
   for (var i = 0; i < all.length; i++) {
-    var tag = all[i];
+    var tag = getTagOrInlineReplacement(all[i]);
     var start_time = tag.start;
     var end_time = tag.endy;
-    if(end_time > cur_time) {
+    if(end_time > cur_time) { // first one ending past our current position
       return tag;
     }
   }
-  return null;
+  return null; // none found
 }
 
 function videoDuration() {
@@ -1215,7 +1223,7 @@ function cancelCurrentTest() {
   doTimeoutEarly(inMiddleOfTestingTimer); // the timeout func also nulls it out for us
 }
 
-function createFauxTagForCurrent() {
+function createFauxTagForCurrentUI() {
   var faux_tag = {
     start: humanToTimeStamp(document.getElementById('start').value),
     endy: humanToTimeStamp(document.getElementById('endy').value),
@@ -1223,10 +1231,24 @@ function createFauxTagForCurrent() {
     is_test_tag: true,
     popup_text_after: document.getElementById('popup_text_after_id').value,
     default_enabled: true,
-    details: document.getElementById('details_input_id').value
-    // id ?
+    details: document.getElementById('details_input_id').value,
+    id: parseInt(document.getElementById('tag_hidden_id').value) // not that we use it LOL
   }
   return faux_tag;
+}
+
+function loadTagIntoUI(tag) {
+  // a bit manual but...
+  document.getElementById('start').value = timeStampToHuman(tag.start);
+  document.getElementById('endy').value = timeStampToHuman(tag.endy);
+  document.getElementById('details_input_id').value = tag.details;
+  document.getElementById('popup_text_after_id').value = tag.popup_text_after;
+  document.getElementById('category_select').value = tag.category; // XXXX rename
+  document.getElementById('subcategory_select_id').value = tag.subcategory;
+  document.getElementById('age_maybe_ok_id').value = tag.age_maybe_ok;
+  document.getElementById('impact_to_movie_id').value = tag.impact_to_movie;
+  document.getElementById('tag_hidden_id').value = tag.id;
+  document.getElementById('default_enabled_id').value = tag.default_enabled;
 }
 
 function testCurrentFromUi() {
@@ -1236,7 +1258,7 @@ function testCurrentFromUi() {
   if (humanToTimeStamp(document.getElementById('endy').value) == 0) {
     document.getElementById('endy').value = getCurrentVideoTimestampHuman(); // assume they wanted to test till "right now" I did this a couple of times :)
   }
-  var faux_tag = createFauxTagForCurrent();
+  var faux_tag = createFauxTagForCurrentUI();
   if (faux_tag.start == 0) {
     alert("appears your start time is zero, which is not allowed, if you want one that starts near the beginning enter 0.1s");
     return;
@@ -1252,8 +1274,7 @@ function testCurrentFromUi() {
   if (currentTestAction() == "change_speed" && !getEndSpeedOrAlert(faux_tag.details)) {
     return;
   }
-  var temp_array = currentEditArray();
-  temp_array.push(faux_tag);
+  current_tags_to_use.push(faux_tag);
   
   var rewindSeconds = 2;
   var start = faux_tag.start - rewindSeconds;
@@ -1275,15 +1296,11 @@ function testCurrentFromUi() {
     }
     inMiddleOfTestingTimer = makeTimeout(function() { // we call this early to cancel if they hit it a second time...
       console.log("popping " + JSON.stringify(faux_tag));
-      temp_array.pop();
+      current_tags_to_use.pop();
       removeTimeout(inMiddleOfTestingTimer);
       inMiddleOfTestingTimer = null;
     }, wait_time_millis);
   });
-}
-
-function currentEditArray() {
-  return current_tags_to_use;
 }
 
 function getCurrentVideoTimestampHuman() {
@@ -1295,7 +1312,8 @@ function openPreviousTagButton() {
   while (timeSearch > 0) {
     var next_tag = getNextTagAfterOrWithin(timeSearch);
     if (next_tag && (next_tag.endy < getCurrentTime())) {
-      window.open("https://" + request_host + "/edit_tag/" + next_tag.id);
+      loadTagIntoUI(next_tag);
+      window.open("https://" + request_host + "/edit_tag/" + next_tag.id); // do both for now :)
       return;
     }
     else {
@@ -1308,6 +1326,7 @@ function openPreviousTagButton() {
 function openNextTagButton() {
   var next_tag = getNextTagAfterOrWithin(getCurrentTime());
   if (next_tag) {
+    loadTagIntoUI(next_tag);
     window.open("https://" + request_host + "/edit_tag/" + next_tag.id);
   }
   else {
@@ -1545,8 +1564,6 @@ function countDoSomethingTags(tags) {
   }
   return count;
 }
-
-var current_tags_to_use;
 
 function setTheseTagsAsTheOnesToUse(tags) {
   current_tags_to_use = tags;
