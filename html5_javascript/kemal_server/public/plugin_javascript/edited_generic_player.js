@@ -522,9 +522,7 @@ function areWeWithin(thisAction, cur_time) {
     if (tag.default_action != thisAction) {
       continue;
     }
-    var start_time = tag.start;
-    var end_time = tag.endy;
-    if(cur_time >= start_time && cur_time < end_time && !withinDelta(cur_time, end_time, 0.0001)) { // avoid seeking at 4123.819999 will_end:4123.82 in 9.99999429041054e-7s infinite loop
+    if(areWeWithinTag(tag, cur_time)) {
       return tag;
     }
     // no early out/break yet because 1) edits use it and 2) even if we did, at the end of movies it would still be junk so...fix it different way [?]
@@ -715,16 +713,16 @@ function blankScreenIfWithinHeartOfSkip(skipish_tag, cur_time) {
   }
 }
 
-function blankScreenIfImpending(cur_time) { // basically for pre-emptively knowing when skips will end :|
-  var just_before_bad_stuff = areWeWithinNoShowVideoTag(cur_time + 0.02); // if about to re-non-video, don't show blip of bad stuff if two such edits back to back
+function blankScreenIfImpending(start_time) { // basically for pre-emptively knowing when skips will end :|
+  var just_before_bad_stuff = areWeWithinNoShowVideoTag(start_time + 0.02); // if about to re-non-video, don't show blip of bad stuff if two such edits back to back
   if (just_before_bad_stuff) {
     console.log("starting heartblank straight will be impending");
-    startHeartBlank(just_before_bad_stuff, cur_time);
+    startHeartBlank(just_before_bad_stuff, start_time);
   }
 }
 
 function areWeWithinNoShowVideoTag(cur_time) {
-  return areWeWithin('skip') || areWeWithin('yes_audio_no_video') || areWeWithin('mute_audio_no_video');
+  return areWeWithin('skip', cur_time) || areWeWithin('yes_audio_no_video', cur_time) || areWeWithin('mute_audio_no_video', cur_time);
 }
 
 function startHeartBlank(skipish_tag, cur_time) {
@@ -761,7 +759,8 @@ function doneWithPossibleHeartBlankUnlessImpending(start_heart_blank_if_close) {
 }
 
 function areWeWithinTag(tag, cur_time) {
-  return tag.start <= cur_time && tag.endy >= cur_time;
+  return cur_time >= tag.start && cur_time < tag.endy && !withinDelta(cur_time, tag.endy, 0.0001); // don't count it if we're right at the very end
+  // to avoid "seeking at 4123.819999 will_end:4123.82 in 9.99999429041054e-7s" infinite loop
 }
 
 function removeIfNotifyEditsHaveEnded(cur_time) {
@@ -2184,9 +2183,9 @@ function htmlDecode(input) // I guess typically we inject "inline" which works f
   var doc = new DOMParser().parseFromString(input, "text/html");
   return doc.documentElement.textContent;
 }
- <!-- render inline cuz uses macro -->
+ <!-- render inline cuz uses macro, putting this at the end isn't enough to not mess up line numbers because dropdowns are injected :| -->
 
-// no jquery setup here since this page might already have its own jQuery loaded, so don't load/use it to avoid any conflict.  [plus speedup our load time]
+// no jquery setup here since this page might already have its own jQuery loaded, so don't load/use it to avoid any conflict.  [bonus: speed's up our load time]
 
 // on ready just in case here LOL
 onReady(startOnce);

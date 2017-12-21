@@ -9,26 +9,29 @@ securityseearch had a bouncing up arrow under the chrome "add extension popup"
   
 == to test ==
 
-can it "survive starting within a skip" (sicario) (audio+video blip OK)
 does the text show up on an amazon page
+can it "survive starting within a skip" 
+  (sicario 53:30) (temp audio+video blip OK)
+  check5
 skip followed by skip -> no intermediate video (audio blip OK for now LOL)
-  rogue nation
+  rogue nation 1:56:00
     https://playitmyway.org/edit_tag/7189 -> https://playitmyway.org/edit_tag/7190
     skip -> skip
-      check4
+      check5
     skip -> yes_audio_no_video (and mute_audio_no_video)
-      check4
+      check5
     yes_audio_no_video -> skip
-      check4
+      check5
     if seek -> heart of skip auto blank
       check4
     seek -> heart of no_video auto blank
-      check4
+      check5
     seek "out of no_video" -> not show bad stuff
-      check4
+      check5
     single seek, normal start -> not black it at all
-      check4
-      
+      check5
+    reset them all to skips!
+    
 == TV ==
 
 cast to fire TV? chromecast? apple tv? roku?
