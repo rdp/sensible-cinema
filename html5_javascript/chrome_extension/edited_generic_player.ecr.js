@@ -1192,7 +1192,7 @@ function addPluginEnabledText() {
   if (isAmazon()) {
     var span = document.getElementsByClassName("dv-provenence-msg")[0];
     if (span && !span.innerHTML.includes("it my way")) {
-      var extra = "<br/><small>(Play it my way plugin enabled)";
+      var extra = "<br/><small>(Play it my way enabled! Legal disclaimer: Performance of the motion picture will be altered from the performance intended by the director or copyright holder)";
       if (url.editing_status != "Done with second review, tags viewed as complete") {
         extra += " (not fully edited yet)";
       }
