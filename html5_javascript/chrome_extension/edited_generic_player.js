@@ -404,9 +404,10 @@ default edit on?
 
 <!-- can't put javascript since don't know how to inject it quite right in plugin, though I could use a separate render... -->
  <!-- render full filename cuz macro -->
-        <button type="reset" value="Reset" onclick="reloadAndResetForm(); return false;">Clear</button>
-        <input type='button' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
-        <input type='submit' value='Save Tag' onclick="saveEditButton(); return false;">
+        <br/>
+        <button type="reset" value="Reset" onclick="reloadAndResetForm(); return false;">Reset</button>
+        <input type='button' id='destroy_button_id' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
+        <input type='submit' id='save_tag_button_id' value='Save Tag' onclick="saveEditButton(); return false;">
         <br/>
         <input type='submit' value='Re-Edit Prev Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">
         <input type='submit' value='Re-Edit Next Tag (or current)' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
@@ -713,9 +714,23 @@ function checkIfShouldDoActionAndUpdateUI() {
   }
   updateHTML(document.getElementById('tag_details_second_line'), second_line);
   
+  var save_button = document.getElementById("save_tag_button_id");
+  var destroy_button = document.getElementById("destroy_button_id");
+  if (UiTagIsNotInDb()) {
+    save_button.value = "Save New Tag";
+    destroy_button.style.visibility = "hidden"; // couldn't figure out how to grey it
+  } else {
+    save_button.value = "Update Tag";
+    destroy_button.style.visibility = "visible";
+  }
+    
   updateHTML(document.getElementById("playback_rate"), twoDecimals(getPlaybackRate()) + "x");
   // XXXX cleanup the below wasn't working enough huh?
   removeIfNotifyEditsHaveEnded(cur_time); // gotta clean this up sometime, and also support "rewind and renotify" so just notify once on init...
+}
+
+function UiTagIsNotInDb() {
+  return document.getElementById('tag_hidden_id').value == '0';
 }
 
 var i_heart_blanked_it = false;
