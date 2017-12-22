@@ -773,7 +773,7 @@ function isPaused() {
 }
 
 function doPlay() {
-  console.log("doing doPlay() paused=" + video_element.paused + "state=" + video_element.readyState);
+  console.log("doing doPlay() paused=" + video_element.paused + " state=" + video_element.readyState);
   if (isYoutubePimw()) {
     youtube_pimw_player.playVideo();
   } else {
