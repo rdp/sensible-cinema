@@ -16,7 +16,7 @@ var mouse_move_timer;
 var seek_timer;
 var all_pimw_stuff;
 var currently_in_process_tags = new Map();
-var old_current_url;
+var old_current_url, old_episode;
 var current_tags_to_use;
 
 function addEditUi() {
@@ -110,7 +110,7 @@ function addEditUi() {
         <br/>
        action:
         <%= pre_details = "tag details"; pre_popup = "popup text"; io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared.ecr", io2; io2.to_s %> <!-- render full filename cuz macro -->
-        <button type="reset" value="Reset" onclick="reloadAndResetForm(); return false;">Reset</button>
+        <button type="reset" value="Reset" onclick="reloadAndResetForm(); return false;">Clear</button>
         <input type='button' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
         <input type='submit' value='Save Tag' onclick="saveEditButton(); return false;">
         <br/>
@@ -405,11 +405,11 @@ function checkIfShouldDoActionAndUpdateUI() {
     second_line += "next: " + timeStampToHuman(next_future_tag.start);
     var time_until = next_future_tag.start - cur_time;
     if (time_until > 0) {
-      second_line +=  " in " + twoDecimals(time_until) + "s ";
+      second_line +=  " in " + timeStampToHuman(time_until);
     }
-    second_line += "(" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
+    second_line += " (" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
     if (!next_future_tag.default_enabled) {
-      second_line += "(disabled)";
+      second_line += " (disabled)";
     }
     document.getElementById("open_next_tag_id").style.visibility = "visible";
   }
@@ -773,7 +773,7 @@ function isPaused() {
 }
 
 function doPlay() {
-  console.log("doing doPlay() paused=" + video_element.paused);
+  console.log("doing doPlay() paused=" + video_element.paused + "state=" + video_element.readyState);
   if (isYoutubePimw()) {
     youtube_pimw_player.playVideo();
   } else {
@@ -949,7 +949,11 @@ function createFauxTagForCurrentUI() {
     popup_text_after: document.getElementById('popup_text_after_id').value,
     default_enabled: document.getElementById('default_enabled_id').value == 'true',
     details: document.getElementById('details_input_id').value,
-    id: parseInt(document.getElementById('tag_hidden_id').value) // not that we use it LOL
+    id: parseInt(document.getElementById('tag_hidden_id').value), // not that we use it LOL
+    category: document.getElementById('category_select').value,
+    subcategory: document.getElementById('subcategory_select_id').value,
+    impact_to_movie: document.getElementById('impact_to_movie_id').value,
+    age_maybe_ok: document.getElementById('age_maybe_ok_id').value
   }
   return faux_tag;
 }
@@ -966,6 +970,7 @@ function loadTagIntoUI(tag) {
   document.getElementById('age_maybe_ok_id').value = tag.age_maybe_ok;
   document.getElementById('impact_to_movie_id').value = tag.impact_to_movie;
   document.getElementById('default_enabled_id').value = tag.default_enabled;
+  document.getElementById('action_sel').value = tag.default_action;
   document.getElementById('tag_hidden_id').value = tag.id;
 }
 
@@ -977,6 +982,7 @@ function testCurrentFromUi() {
     document.getElementById('endy').value = getCurrentVideoTimestampHuman(); // assume they wanted to test till "right now" I did this a couple of times :)
   }
   var faux_tag = createFauxTagForCurrentUI();
+  // "minor" validation
   if (!faux_tag.default_enabled) {
     alert("tag is set to disabled, hard to test, please toggle on temporarily!");
     return;
@@ -996,9 +1002,10 @@ function testCurrentFromUi() {
   if (currentTestAction() == "change_speed" && !getEndSpeedOrAlert(faux_tag.details)) {
     return;
   }
-  var unsavedTag = document.getElementById('tag_hidden_id').value == '0';
-  if (unsavedTag) {
+  var tagNotInDb = document.getElementById('tag_hidden_id').value == '0';
+  if (tagNotInDb) {
     current_tags_to_use.push(faux_tag);
+    console.log("pushing since not in there yet");
   } // else it's "already in the list" and will be overridden at request time
   
   var rewindSeconds = 2;
@@ -1021,7 +1028,7 @@ function testCurrentFromUi() {
       doPlay(); // seems like we want it like this...
     }
     inMiddleOfTestingTimer = makeTimeout(function() { // we call this function early to cancel if they hit it a second time...
-      if (unsavedTag) {
+      if (tagNotInDb) {
         console.log("popping " + JSON.stringify(faux_tag));
         current_tags_to_use.pop();
       } else {
@@ -1038,10 +1045,11 @@ function getCurrentVideoTimestampHuman() {
 }
 
 function openPreviousTagButton() {
-  var timeSearch = getCurrentTime();
+  var cur_time = getCurrentTime();
+  var timeSearch = cur_time;
   while (timeSearch > 0) {
     var next_tag = getNextTagAfterOrWithin(timeSearch);
-    if (next_tag && (next_tag.endy < getCurrentTime())) {
+    if (next_tag && (next_tag.endy < cur_time)) {
       loadTagIntoUI(next_tag);
       return;
     }
