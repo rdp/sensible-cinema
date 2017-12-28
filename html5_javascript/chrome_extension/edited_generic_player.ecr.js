@@ -788,7 +788,7 @@ function isPaused() {
 }
 
 function doPlay() {
-  console.log("doing doPlay() paused=" + video_element.paused + " state=" + video_element.readyState);
+  console.log("doing doPlay() paused=" + video_element.paused + " state=" + video_element.readyState + " buffered=" + twoDecimals(getSecondsBufferedAhead()));
   if (isYoutubePimw()) {
     youtube_pimw_player.playVideo();
   } else {
@@ -977,8 +977,8 @@ function loadTagIntoUI(tag) {
   // a bit manual but...
   document.getElementById('start').value = timeStampToHuman(tag.start);
   document.getElementById('endy').value = timeStampToHuman(tag.endy);
-  document.getElementById('details_input_id').value = tag.details;
-  document.getElementById('popup_text_after_id').value = tag.popup_text_after;
+  document.getElementById('details_input_id').value = htmlDecode(tag.details);
+  document.getElementById('popup_text_after_id').value = htmlDecode(tag.popup_text_after);
   document.getElementById('category_select').value = tag.category; // XXXX rename :|
   document.getElementById('subcategory_select_id').value = tag.subcategory;
   document.getElementById('subcategory_select_id').dispatchEvent(new Event('change')); // so it'll do the right size, needed apparently :|

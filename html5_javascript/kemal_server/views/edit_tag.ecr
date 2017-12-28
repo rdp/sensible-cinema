@@ -52,11 +52,7 @@ document.getElementById('default_enabled_id').value = '<%= tag.default_enabled %
 
 select = document.getElementById('subcategory_select_id');
 
-function htmlDecode(input)
-{
-  var doc = new DOMParser().parseFromString(input, "text/html");
-  return doc.documentElement.textContent;
-}
+<%= render "views/_tag_shared_js.ecr" %>
 
 select.value = htmlDecode('<%= tag.subcategory %>');
 
@@ -66,7 +62,6 @@ $(document).ready(function() {
   }
 });
 	
-  <%= render "views/_tag_shared_js.ecr" %>
-  editDropdownsCreated(); // they already exist here :)
+editDropdownsCreated(); // they already exist here :)
   
 </script>

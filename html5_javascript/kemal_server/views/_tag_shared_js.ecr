@@ -153,7 +153,7 @@ function editDropdownsCreated() {
   ); 
 }
 
-function htmlDecode(input) // I guess typically we inject "inline" which works fine <sigh> but not for value = nor alert ... I did DB wrong
+function htmlDecode(input) // unescape I guess typically we inject "inline" which works fine <sigh> but not for value = nor alert ... I did DB wrong
 {
   var doc = new DOMParser().parseFromString(input, "text/html");
   return doc.documentElement.textContent;
