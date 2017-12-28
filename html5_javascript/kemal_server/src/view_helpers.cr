@@ -78,3 +78,18 @@ def tags_by_category_with_size(url)
     "#{category}: #{tags.size}"
   }.join(", ")
 end
+
+# from https://github.com/crystal-lang/crystal/pull/4555/commits/1a6f50250d9cbdc5354e80eeaec48a0e71559ee0 hope it wurx
+ESCAPE_JAVASCRIPT_SUBST = {
+    '\''     => "\\'",
+    '"'      => "\\\"",
+    '\\'     => "\\\\",
+    '\u2028' => "&#x2028;",
+    '\u2029' => "&#x2029;",
+    '\n'     => "\\n",
+    '\r'     => "\\n",
+} # might not be enough :|
+
+def escape_javascript(string : String) : String
+  string.gsub("\r\n", "\n").gsub(ESCAPE_JAVASCRIPT_SUBST).gsub("</", "<\\/")
+end

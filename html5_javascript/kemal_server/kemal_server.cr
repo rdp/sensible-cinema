@@ -726,7 +726,7 @@ end
 
 def resanitize_html(string)
   outy = HTML.unescape(string)
-  sanitize_html outy # this is HTML.escape
+  sanitize_html outy # and re-scape via HTML.escape
 end
 
 def get_float(params, name)

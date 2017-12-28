@@ -45,8 +45,8 @@ document.getElementById('category_select').value = '<%= tag.category %>';
 document.getElementById('age_maybe_ok_id').value = '<%= tag.age_maybe_ok %>';
 document.getElementById('impact_to_movie_id').value = '<%= tag.impact_to_movie %>';
 document.getElementById('action_sel').value = '<%= tag.default_action %>';
-document.getElementById('details_input_id').value = htmlDecode('<%= tag.details %>');
-document.getElementById('popup_text_after_id').value = htmlDecode('<%= tag.popup_text_after %>');
+document.getElementById('details_input_id').value = htmlDecode('<%= escape_javascript tag.details %>');
+document.getElementById('popup_text_after_id').value = htmlDecode('<%= escape_javascript tag.popup_text_after %>');
 document.getElementById('tag_hidden_id').value = '<%= tag.id %>'; // 0 is OK :)
 document.getElementById('default_enabled_id').value = '<%= tag.default_enabled %>';
 
@@ -54,7 +54,7 @@ select = document.getElementById('subcategory_select_id');
 
 <%= render "views/_tag_shared_js.ecr" %>
 
-select.value = htmlDecode('<%= tag.subcategory %>');
+select.value = htmlDecode('<%= escape_javascript tag.subcategory %>');
 
 $(document).ready(function() {
   if (document.getElementById('category_select').value != 'unknown') {
