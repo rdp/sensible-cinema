@@ -106,12 +106,13 @@ function addEditUi() {
       <input type='button' onclick="playButtonClicked(); return false;" value='&#9654;'>      
       
        <br/>
-        <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
+
+  <span id="before_test_edit_span_id"></span>        <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
         <br/>
        action:
         <%= pre_details = "tag details"; pre_popup = "popup text"; io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared.ecr", io2; io2.to_s %> <!-- render full filename cuz macro -->
         <br/>
-        <button type="reset" value="Reset" onclick="reloadAndResetForm(); return false;">Reset</button>
+        <button type="reset" value="Clear" onclick="reloadAndResetForm(); return false;">Reset</button>
         <input type='button' id='destroy_button_id' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
         <input type='submit' id='save_tag_button_id' value='Save Tag' onclick="saveEditButton(); return false;">
         <br/>
@@ -127,6 +128,7 @@ function addEditUi() {
       <input type='button' onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
     </div>
   </div>`;
+  
   document.body.appendChild(all_pimw_stuff);
   
   addMouseAnythingListener(mouseJustMoved);
@@ -422,12 +424,15 @@ function checkIfShouldDoActionAndUpdateUI() {
   
   var save_button = document.getElementById("save_tag_button_id");
   var destroy_button = document.getElementById("destroy_button_id");
+  var before_test_edit_span = document.getElementById("before_test_edit_span_id");
   if (UiTagIsNotInDb()) {
     save_button.value = "Save New Tag";
     destroy_button.style.visibility = "hidden"; // couldn't figure out how to grey it
+    updateHTML(before_test_edit_span, "");
   } else {
     save_button.value = "Update Tag";
     destroy_button.style.visibility = "visible";
+    updateHTML(before_test_edit_span, "editing existing...");
   }
     
   updateHTML(document.getElementById("playback_rate"), twoDecimals(getPlaybackRate()) + "x");
