@@ -1613,8 +1613,8 @@ function rawSeekToTime(ts) {
 function getSecondsBufferedAhead() {
   if (isYoutubePimw()) {
     var seconds_buffered = youtube_pimw_player.getDuration() * youtube_pimw_player.getVideoLoadedFraction() - getCurrentTime();
-  } else if (video_element.buffered.length > 0) { // the normal case I think...
-    var seconds_buffered = (video_element.buffered.end(0) - video_element.buffered.start(0)); // wait is this end guaranteed to be after our current???
+  } else if (video_element.buffered.length > 0) { // amazon is this way...but not always...
+    var seconds_buffered = (video_element.buffered.end(0) - video_element.currentTime); // it reports buffered as "10s ago until 10s from now" or what have you
   } else {
     var seconds_buffered = -1;
   }
@@ -1641,7 +1641,7 @@ function seekToTime(ts, callback) {
   // some shenanigans to pretend to work around this...
   if (!isYoutubePimw()) {
     doPause();
-  } // youtube seems to retain it!
+  } // youtube seems to not need these shenanigans
   rawSeekToTime(ts);
   old_ts = ts;
   seek_timer = setInterval(function() {
@@ -1656,7 +1656,7 @@ function seekToTime(ts, callback) {
         var seconds_buffered = getSecondsBufferedAhead();
 
         if (seconds_buffered > 2) { // usually 4 or 6...
-          console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " ts=" + ts + " length_was=" + twoDecimals(ts - start_time) + " buffered_ahead=" + twoDecimals(seconds_buffered) + " from=" + twoDecimals(start_time) + " cur_time_actually=" + getCurrentTime() + " state=" + video_element.readyState);
+          console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " ts=" + ts + " length_was=" + twoDecimals(ts - start_time) + " buffered_ahead=" + twoDecimals(seconds_buffered) + " from=" + twoDecimals(start_time) + " cur_time_actually=" + twoDecimals(getCurrentTime()) + " state=" + video_element.readyState);
           if (!isYoutubePimw()) {
             if (!current_pause_state) { // youtube loses 0.05 with these shenanigans needed on amazon, so attempt avoid :|
               doPlay();
