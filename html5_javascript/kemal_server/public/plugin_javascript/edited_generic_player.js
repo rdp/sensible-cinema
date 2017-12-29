@@ -522,19 +522,10 @@ function liveEpisodeNumber() {
   }
 }
 
-function getTagOrInlineReplacement(tag) {
-  var editor_tag_id = parseInt(document.getElementById('tag_hidden_id').value);
-  if (editor_tag_id == tag.id) {
-    return createFauxTagForCurrentUI();
-  } else {
-    return tag;
-  }
-}
-
 function areWeWithin(desiredAction, cur_time) {
-  for (var i = 0; i < current_tags_to_use.length; i++) {
-    var tag = current_tags_to_use[i];
-    tag = getTagOrInlineReplacement(tag);
+  var all = getAllTagsIncludingReplacedFromUISorted();
+  for (var i = 0; i < all.length; i++) {
+    var tag = all[i];
     if (tag.default_action != desiredAction) {
       continue;
     }
@@ -726,7 +717,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   } else {
     save_button.value = "Update Tag";
     destroy_button.style.visibility = "visible";
-    updateHTML(before_test_edit_span, "editing existing...");
+    updateHTML(before_test_edit_span, "re-editing existing tag...");
   }
     
   updateHTML(document.getElementById("playback_rate"), twoDecimals(getPlaybackRate()) + "x");
@@ -746,7 +737,7 @@ function blankScreenIfWithinHeartOfSkip(skipish_tag, cur_time) {
   if (within_heart_of_skipish) { 
     startHeartBlank(skipish_tag, cur_time);
   } else {
-    console.log("not blanking it because it's normal playing continuous beginning of skip..." + skipish_tag.start);
+    //console.log("not blanking it because it's normal playing continuous beginning of skip..." + skipish_tag.start);
   }
 }
 
@@ -986,7 +977,7 @@ function checkStatus() { // called 100 fps
       }
       var cur_time = getCurrentTime();
       if (cur_time < last_timestamp) {
-        console.log("Something (possibly)pimw just sought backwards to=" + cur_time + " from=" + last_timestamp + "to=" + timeStampToHuman(cur_time) + " from=" + timeStampToHuman(last_timestamp) + " readyState=" + video_element.readyState);
+        console.log("Something (possibly)pimw just sought backwards to=" + cur_time + " from=" + last_timestamp + " to=" + timeStampToHuman(cur_time) + " from=" + timeStampToHuman(last_timestamp) + " readyState=" + video_element.readyState);
         var tag = areWeWithinNoShowVideoTag(cur_time);
         if (tag) {
           blankScreenIfWithinHeartOfSkip(tag, cur_time);
@@ -1057,11 +1048,38 @@ function compareTagStarts(tag1, tag2) {
   return 0;
 }
 
+function getAllTagsIncludingReplacedFromUISorted() {
+  var tagNotInDb = document.getElementById('tag_hidden_id').value == '0';
+  if (tagNotInDb) {
+    var faux_tag = createFauxTagForCurrentUI();
+    if (faux_tag_is_ready(faux_tag)) {
+      return [faux_tag].concat(current_tags_to_use).sort(compareTagStarts); // add in new tag chronologically
+    } else {
+      return current_tags_to_use; // assume they come sorted :)
+    }
+  } else {
+    var allWithReplacement = [];
+    for (var i = 0; i < current_tags_to_use.length; i++) {
+      allWithReplacement.push(getTagOrInlineReplacement(current_tags_to_use[i])); // replace it
+    }
+    return allWithReplacement.sort(compareTagStarts); // and sort
+  }
+}
+
+function getTagOrInlineReplacement(tag) {
+  var editor_tag_id = parseInt(document.getElementById('tag_hidden_id').value);
+  if (editor_tag_id == tag.id) {
+    return createFauxTagForCurrentUI(); // replace it no matter what even if it's messed up :|
+  } else {
+    return tag;
+  }
+}
+
+
 function getNextTagAfterOrWithin(cur_time) {  
-  // XXXX hacky'ish combo here
-  var all = [createFauxTagForCurrentUI()].concat(current_json.tags).sort(compareTagStarts);
+  var all = getAllTagsIncludingReplacedFromUISorted();
   for (var i = 0; i < all.length; i++) {
-    var tag = getTagOrInlineReplacement(all[i]);
+    var tag = all[i];
     var start_time = tag.start;
     var end_time = tag.endy;
     if(end_time > cur_time) { // first one ending past our current position
@@ -1290,6 +1308,10 @@ function loadTagIntoUI(tag) {
   document.getElementById('tag_hidden_id').value = tag.id;
 }
 
+function faux_tag_is_ready(faux_tag) {
+  return faux_tag.default_enabled && faux_tag.start > 0 && faux_tag.endy > faux_tag.start;
+}
+
 function testCurrentFromUi() {
   if (inMiddleOfTestingTimer) {
     cancelCurrentTest();
@@ -1298,13 +1320,13 @@ function testCurrentFromUi() {
     document.getElementById('endy').value = getCurrentVideoTimestampHuman(); // assume they wanted to test till "right now" I did this a couple of times :)
   }
   var faux_tag = createFauxTagForCurrentUI();
-  // "minor" validation
+  // "minor" validation inline, so they can still just test it without it being setup yet :)
   if (!faux_tag.default_enabled) {
     alert("tag is set to disabled, hard to test, please toggle on temporarily!");
     return;
   }
   if (faux_tag.start == 0) {
-    alert("appears your start time is zero, which is not allowed, if you want one that starts near the beginning enter 0.1s");
+    alert("appears your start time is zero, which is not allowed, if you want one that starts near the beginning enter 0.05s");
     return;
   }
   if (faux_tag.endy <= faux_tag.start) {
@@ -1316,13 +1338,8 @@ function testCurrentFromUi() {
     return;
   }
   if (currentTestAction() == "change_speed" && !getEndSpeedOrAlert(faux_tag.details)) {
-    return;
+    return; // already alerted
   }
-  var tagNotInDb = document.getElementById('tag_hidden_id').value == '0';
-  if (tagNotInDb) {
-    current_tags_to_use.push(faux_tag);
-    console.log("pushing since not in there yet");
-  } // else it's "already in the list" and will be overridden at request time
   
   var rewindSeconds = 2;
   var start = faux_tag.start - rewindSeconds;
@@ -1344,12 +1361,6 @@ function testCurrentFromUi() {
       doPlay(); // seems like we want it like this...
     }
     inMiddleOfTestingTimer = makeTimeout(function() { // we call this function early to cancel if they hit it a second time...
-      if (tagNotInDb) {
-        console.log("popping " + JSON.stringify(faux_tag));
-        current_tags_to_use.pop();
-      } else {
-        console.log("not popping since was already in there'ish");
-      }
       removeTimeout(inMiddleOfTestingTimer);
       inMiddleOfTestingTimer = null;
     }, wait_time_millis);
@@ -1939,7 +1950,7 @@ function seekToTime(ts, callback) {
         var seconds_buffered = getSecondsBufferedAhead();
 
         if (seconds_buffered > 2) { // usually 4 or 6...
-          console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " ts=" + ts + " length_was=" + twoDecimals(ts - start_time) + " buffered_ahead=" + twoDecimals(seconds_buffered) + " start=" + twoDecimals(start_time) + " cur_time_actually=" + getCurrentTime() + " state=" + video_element.readyState);
+          console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " ts=" + ts + " length_was=" + twoDecimals(ts - start_time) + " buffered_ahead=" + twoDecimals(seconds_buffered) + " from=" + twoDecimals(start_time) + " cur_time_actually=" + getCurrentTime() + " state=" + video_element.readyState);
           if (!isYoutubePimw()) {
             if (!current_pause_state) { // youtube loses 0.05 with these shenanigans needed on amazon, so attempt avoid :|
               doPlay();

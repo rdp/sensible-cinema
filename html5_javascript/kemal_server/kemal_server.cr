@@ -318,10 +318,10 @@ post "/save_tag/:url_id" do |env|
   # do git stuff after tag.save to make it propagate "fastuh"
   if is_update
     save_local_javascript url, "updated tag", env
-    add_to_flash(env, "Success! updated tag at #{seconds_to_human tag.start} duration #{tag.duration}s, if this was a save from the pimw website please do a reload tags or browser refresh")
+    add_to_flash(env, "Success! updated tag at #{seconds_to_human tag.start} duration #{tag.duration}s")
   else
     save_local_javascript url, "created tag", env
-    add_to_flash(env, "Success! created new tag at #{seconds_to_human tag.start} duration #{tag.duration}s, you can tweak details and close this page now.")
+    add_to_flash(env, "Success! created new tag at #{seconds_to_human tag.start} duration #{tag.duration}s.")
   end
 
   if tag2 = tag.overlaps_any? url.tags
