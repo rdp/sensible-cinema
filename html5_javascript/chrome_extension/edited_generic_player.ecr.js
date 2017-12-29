@@ -461,6 +461,8 @@ function blankScreenIfImpending(start_time) { // basically for pre-emptively kno
   if (just_before_bad_stuff) {
     console.log("starting heartblank straight will be impending");
     startHeartBlank(just_before_bad_stuff, start_time);
+  } else {
+    // console.log("not heartblanking it, not in middle of anything");
   }
 }
 
@@ -488,7 +490,7 @@ function doneWithPossibleHeartBlankUnlessImpending(start_heart_blank_if_close) {
       video_element.style.display="block"; // non none :)
       i_heart_blanked_it = false;
     } else {
-      console.log("doneWithPossibleHeartBlankUnlessImpending nothing to do (i.e. didn't run into a heart when performed last seekish");
+      // console.log("doneWithPossibleHeartBlankUnlessImpending nothing to do (i.e. didn't run into a heart when performed last seekish");
     }
   }
   else {
@@ -725,7 +727,7 @@ function refreshVideoElement() {
     // only add event thing once :)
     video_element.addEventListener("seeking",  // there is also seeked and timeupdate (timeupdate typically not granular enough for much)
       function() { 
-        console.log("seeking event detected time=" + getCurrentTime()); // time will already be updated
+        console.log("seeking event received cur_time=" + getCurrentTime()); // time will already be updated...I think...or at least most of the time LOL
         checkStatus(); // do it "fast/immediately" in case need to blank [saves 0.007 yes!]
       }
     );
@@ -1582,6 +1584,8 @@ function doPause() {
 
 function rawSeekToTime(ts) {
   console.log("doing rawSeekToTime=" + twoDecimals(ts));
+   console.log("rawSeekToTime paused=" + video_element.paused + " state=" + video_element.readyState + " buffered=" + twoDecimals(getSecondsBufferedAhead()));
+
   if (isYoutubePimw()) {
     var allowSeekAhead = true;
     youtube_pimw_player.seekTo(ts, allowSeekAhead); // no callback option
