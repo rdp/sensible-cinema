@@ -714,7 +714,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   if (UiTagIsNotInDb()) {
     save_button.value = "Save New Tag";
     destroy_button.style.visibility = "hidden"; // couldn't figure out how to grey it
-    updateHTML(before_test_edit_span, "");
+    updateHTML(before_test_edit_span, "new tag...");
   } else {
     save_button.value = "Update Tag";
     destroy_button.style.visibility = "visible";
