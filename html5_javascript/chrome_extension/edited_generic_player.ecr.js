@@ -389,54 +389,57 @@ function checkIfShouldDoActionAndUpdateUI() {
     }
   }
 
-  var top_line = "";
+  var top_line_text = "";
   if (extra_message != "") {
-    top_line = "Currently:" + extra_message; // prefix
+    top_line_text = "Currently:" + extra_message; // prefix
   } else {
-    top_line = "<br>"; // NB can't use <br/> since trailing slash gets sanitized out so can't detect changes right FWIW :| <br> is OK :)
+    top_line_text = "<br>"; // NB can't use <br/> since trailing slash gets sanitized out so can't detect changes right FWIW :| <br> is OK :)
   }
-  updateHTML(document.getElementById("currently_xxx_span_id"), top_line);
-  updateHTML(document.getElementById("current_timestamp_span_id"), timeStampToHuman(cur_time)); 
-  var second_line = "";
-  var next_future_tag = getNextTagAfterOrWithin(cur_time);
-  if (next_future_tag) {
-    second_line += "next: " + timeStampToHuman(next_future_tag.start);
-    var time_until = next_future_tag.start - cur_time;
-    if (time_until > 0) {
-      second_line +=  " in " + timeStampToHuman(time_until);
-    }
-    second_line += "<br/>(" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
-    if (next_future_tag.id == 0) { // the faux_tag and unsaved :)
-      second_line += " (not saved)";
-    }
-
-    if (!next_future_tag.default_enabled) {
-      second_line += " (disabled)";
-    }
-    document.getElementById("open_next_tag_id").style.visibility = "visible";
-  }
-  else {
-    document.getElementById("open_next_tag_id").style.visibility = "hidden";
-    second_line += "<br/>";
-  }
-  updateHTML(document.getElementById('next_will_be_at_x_span_id'), second_line);
+  updateHTML(document.getElementById("currently_xxx_span_id"), top_line_text);
   
-  var save_button = document.getElementById("save_tag_button_id");
-  var destroy_button = document.getElementById("destroy_button_id");
-  var before_test_edit_span = document.getElementById("before_test_edit_span_id");
-  if (UiTagIsNotInDb()) {
-    save_button.value = "Save New Tag";
-    destroy_button.style.visibility = "hidden"; // couldn't figure out how to grey it
-    updateHTML(before_test_edit_span, "new tag...");
-  } else {
-    save_button.value = "Update Tag";
-    destroy_button.style.visibility = "visible";
-    updateHTML(before_test_edit_span, "re-editing existing tag...");
-  }
+  if (isAddtagStuffVisible()) { // uses a bit o' cpu
+    updateHTML(document.getElementById("current_timestamp_span_id"), timeStampToHuman(cur_time)); 
+    var second_line = "";
+    var next_future_tag = getNextTagAfterOrWithin(cur_time);
+    if (next_future_tag) {
+      second_line += "next: " + timeStampToHuman(next_future_tag.start);
+      var time_until = next_future_tag.start - cur_time;
+      if (time_until > 0) {
+        second_line +=  " in " + timeStampToHuman(time_until);
+      }
+      second_line += "<br/>(" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
+      if (next_future_tag.id == 0) { // the faux_tag and unsaved :)
+        second_line += " (not saved)";
+      }
+
+      if (!next_future_tag.default_enabled) {
+        second_line += " (disabled)";
+      }
+      document.getElementById("open_next_tag_id").style.visibility = "visible";
+    }
+    else {
+      document.getElementById("open_next_tag_id").style.visibility = "hidden";
+      second_line += "<br/>";
+    }
+    updateHTML(document.getElementById('next_will_be_at_x_span_id'), second_line);
     
-  updateHTML(document.getElementById("playback_rate"), twoDecimals(getPlaybackRate()) + "x");
-  // XXXX cleanup the below wasn't working enough huh?
-  removeIfNotifyEditsHaveEnded(cur_time); // gotta clean this up sometime, and also support "rewind and renotify" so just notify once on init...
+    var save_button = document.getElementById("save_tag_button_id");
+    var destroy_button = document.getElementById("destroy_button_id");
+    var before_test_edit_span = document.getElementById("before_test_edit_span_id");
+    if (UiTagIsNotInDb()) {
+      save_button.value = "Save New Tag";
+      destroy_button.style.visibility = "hidden"; // couldn't figure out how to grey it
+      updateHTML(before_test_edit_span, "new tag...");
+    } else {
+      save_button.value = "Update Tag";
+      destroy_button.style.visibility = "visible";
+      updateHTML(before_test_edit_span, "re-editing existing tag...");
+    }
+      
+    updateHTML(document.getElementById("playback_rate"), twoDecimals(getPlaybackRate()) + "x");
+  }
+  // XXXX cleanup the below needed huh?
+  removeIfNotifyEditsHaveEnded(cur_time); // gotta clean this up sometime, and also support "rewind and renotify" so just notify once on first tag...
 }
 
 function UiTagIsNotInDb() {
