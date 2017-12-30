@@ -687,12 +687,12 @@ function checkIfShouldDoActionAndUpdateUI() {
   if (extra_message != "") {
     top_line = "Currently:" + extra_message; // prefix
   } else {
-    top_line = ""; //NB can't use <br/> since trailing slash gets sanitized out so can't detect changes right FWIW :|
+    top_line = "<br>"; // NB can't use <br/> since trailing slash gets sanitized out so can't detect changes right FWIW :| <br> is OK :)
   }
   updateHTML(document.getElementById("currently_xxx_span_id"), top_line);
   updateHTML(document.getElementById("current_timestamp_span_id"), timeStampToHuman(cur_time)); 
   var second_line = "";
-  var next_future_tag = getNextTagAfterOrWithin(cur_time); // XXXX hacky'ish
+  var next_future_tag = getNextTagAfterOrWithin(cur_time);
   if (next_future_tag) {
     second_line += "next: " + timeStampToHuman(next_future_tag.start);
     var time_until = next_future_tag.start - cur_time;
@@ -700,6 +700,10 @@ function checkIfShouldDoActionAndUpdateUI() {
       second_line +=  " in " + timeStampToHuman(time_until);
     }
     second_line += "<br/>(" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
+    if (next_future_tag.id == 0) { // the faux_tag and unsaved :)
+      second_line += " (not saved)";
+    }
+
     if (!next_future_tag.default_enabled) {
       second_line += " (disabled)";
     }
@@ -979,7 +983,7 @@ function checkStatus() { // called 100 fps
       }
       var cur_time = getCurrentTime();
       if (cur_time < last_timestamp) {
-        console.log("Something (possibly)pimw just sought backwards to=" + cur_time + " from=" + last_timestamp + " to=" + timeStampToHuman(cur_time) + " from=" + timeStampToHuman(last_timestamp) + " readyState=" + video_element.readyState);
+        console.log("Something (possibly pimw) just sought backwards to=" + cur_time + " from=" + last_timestamp + " to=" + timeStampToHuman(cur_time) + " from=" + timeStampToHuman(last_timestamp) + " readyState=" + video_element.readyState);
         var tag = areWeWithinNoShowVideoTag(cur_time);
         if (tag) {
           blankScreenIfWithinHeartOfSkip(tag, cur_time);
@@ -1761,7 +1765,7 @@ function mouseJustMoved(event) {
   var cursorY = event.pageY;
   var mouse_within_all_pimw_stuff = pointWithinElement(cursorX, cursorY, all_pimw_stuff);
   var mouse_within_video = pointWithinElement(cursorX, cursorY, video_element);
-  var enough_focus = isAmazon() || document.hasFocus(); // only do this for youtube :|
+  var enough_focus = isAmazon() || document.hasFocus(); // only enforce this for youtube :|
   if (!mouse_move_timer || (mouse_within_video && enough_focus)) {
     displayDiv(all_pimw_stuff);
   
