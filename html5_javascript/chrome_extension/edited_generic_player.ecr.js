@@ -19,8 +19,7 @@ var currently_in_process_tags = new Map();
 var old_current_url, old_episode;
 var current_tags_to_use;
 
-function addEditUi() {
-  
+function addEditUiOnce() { 
   all_pimw_stuff = document.createElement('div');
   all_pimw_stuff.id = "all_pimw_stuff_id";
   all_pimw_stuff.style.color = "white";
@@ -141,7 +140,11 @@ function addEditUi() {
     $("#action_sel option[value='mute']").remove();
     $("#action_sel option[value='mute_audio_no_video']").remove();
   }
-}
+  
+  setInterval(doPeriodicChecks, 250);
+  
+} // end addEditUiOnce
+
 
 function playButtonClicked() {
   if (isPaused()) {
@@ -669,8 +672,6 @@ function checkStatus() { // called 100 fps
         i_set_it_to_add = false;
       }
 
-      addPluginEnabledText();
-
       // seems necessary to let it "come alive" first in amazon before we can hide it, even if within heart of seek <sigh> I guess... :|
       // an initial blip [video] is OK [this should be super rare, and is "hard" to avoid], just try not to crash for now...
       if (!video_ever_initialized) {
@@ -705,10 +706,6 @@ function checkStatus() { // called 100 fps
       checkIfShouldDoActionAndUpdateUI();      
     }
   }
-
-  checkIfEpisodeChanged();
-  refreshVideoElement();
-  setEditedControlsToMovieRight(); // in case something changed [i.e. amazon moved their video element into "on screen" :| ]
 }
 
 function refreshVideoElement() {
@@ -767,7 +764,7 @@ function getAllTagsIncludingReplacedFromUISorted() {
   } else {
     var allWithReplacement = [];
     for (var i = 0; i < current_tags_to_use.length; i++) {
-      allWithReplacement.push(getTagOrInlineReplacement(current_tags_to_use[i])); // replace it
+      allWithReplacement.push(getTagOrInlineReplacement(current_tags_to_use[i])); // replace it with faux_tag 
     }
     return allWithReplacement.sort(compareTagStarts); // and sort
   }
@@ -1230,8 +1227,15 @@ function loadSucceeded(json_string) {
   setSmiley();
 }
 
-function addPluginEnabledText() {
-  if (isAmazon()) {
+function doPeriodicChecks() {
+  setEditedControlsToMovieRight();
+  addPluginEnabledTextOnce();
+  checkIfEpisodeChanged();
+  refreshVideoElement();
+}
+
+function addPluginEnabledTextOnce() {
+  if (isAmazon() && url) {
     var span = document.getElementsByClassName("dv-provenence-msg")[0];
     if (span && !span.innerHTML.includes("it my way")) {
       var extra = "<br/><small>(Play it my way enabled! Legal disclaimer: Performance of the motion picture will be altered from the performance intended by the director or copyright holder)";
@@ -1240,6 +1244,7 @@ function addPluginEnabledText() {
       }
       extra += "</small";
       span.innerHTML += extra;
+      console.log("added plugin enabled to amazon");
     }
   }
 }
@@ -1417,20 +1422,22 @@ function checkIfEpisodeChanged() {
   }
 }
 
-var clean_stream_timer;
+var clean_stream_timer = null;
 
 function startWatcherTimerSingleton() {
   var fps = 100; // 100 fps since that's the granularity of our time entries :|
-  clean_stream_timer = clean_stream_timer || setInterval(checkStatus, 1000/fps);
-  // guess we just never turn it off on purpose :)
+  if (!clean_stream_timer) {
+    clean_stream_timer = setInterval(checkStatus, 1000/fps);
+    // guess we just never turn it off, on purpose :)
+  }
 }
 
 function startOnce() {
-  refreshVideoElement();
+  refreshVideoElement(); // prime pump :)
 
   if (video_element == null) {
     // maybe could get here if they raw load the javascript?
-    console.log("play it my way:\nfailure: unable to find a video playing, not loading edited playback...need to reload then hit a play button before loading edited playback?");
+    console.log("unable to find a video playing, not loading edited playback..."); // hopefully never get here :|
     setTimeout(startOnce, 500); // just retry forever :| [seems to work OK in pimw_youtube, never retries...]
     return;
   }
@@ -1444,10 +1451,10 @@ function startOnce() {
   }
 
   // ready to try and load the editor LOL
-  console.log("adding edit UI, looking for URL");
+  console.log("adding edit UI, requesting for current URL...");
 
-  addEditUi(); // and only do once...
-  loadForNewUrl();
+  addEditUiOnce(); // and only do once...but before we load anything so it can say "loading" I guess...
+  loadForNewUrl(); // will eventually call startWatcherTimerSingleton
 }
 
 function pointWithinElement(cursorX, cursorY, element) {
@@ -1507,7 +1514,7 @@ function addMouseAnythingListener(func) {
   addListener(document, 'mousedown', func);
 }
 
-function onReady(yourMethod) { // from SO :)
+function onReady(yourMethod) { // polling one, from SO :)
   if (document.readyState === 'complete') {
     setTimeout(yourMethod, 1); // schedule to run immediately
   }
