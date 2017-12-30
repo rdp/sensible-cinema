@@ -939,18 +939,15 @@ function setEditedControlsToMovieRight() {
   var desired_left = getLocationOfElement(video_element).right - width - 10; // avoid amazon x-ray so go to right
   var desired_top = getLocationOfElement(video_element).top;
   if (isAmazon()) {
-    desired_top += 225; // top amazon stuff, plus ability to select subs
+    desired_top += 225; // make top amazon stuff visible, plus ability to see subs dropdown ...
   }
     
+  if ((getLocationOfElement(all_pimw_stuff).height + desired_top) > getLocationOfElement(video_element).height) {
+    // video is too small to fit all the edit stuff, so nuke the useful top padding :|
+    desired_top = getLocationOfElement(video_element).top;
+  }
   all_pimw_stuff.style.left = desired_left + "px";
   all_pimw_stuff.style.top = desired_top + "px";
-  
-  var pimw_bottom = getLocationOfElement(all_pimw_stuff).bottom;
-  if (pimw_bottom > getLocationOfElement(video_element).bottom) {
-    // video is too small to fit it all, so just punt on the top spacing :|
-    desired_top = getLocationOfElement(video_element).top;
-    all_pimw_stuff.style.top = desired_top + "px";
-  }
 }
 
 function currentTestAction() {
