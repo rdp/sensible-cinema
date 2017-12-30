@@ -27,9 +27,6 @@ LLC "transfer to"/setup bank account/setup reminder :)
 GoT failure!
   fix 10s :\
   hbo tab
-
-plugin: I lose edit ability when yes_audio_no_video :|
-  cannot repro?
   
 kickstarter
   decide on prizes
@@ -81,12 +78,19 @@ if I create personalized, then somebody creates a new tag "default disabled" the
   in general something seems bworked there with personalized...
 
 some personalize icons are dead?
-
+  pinged M
+  
 does personalize still work?
-
+  probably
+  
 safe seek [?]
 
+plugin: clicking next of prev "with one loaded" should change it
+
 ================= todo all never LOL =======================
+
+plugin: I lose edit ability when yes_audio_no_video :|
+  cannot repro?
 
 fix win 10 license
     
