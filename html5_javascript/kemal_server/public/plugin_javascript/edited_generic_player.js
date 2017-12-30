@@ -696,7 +696,7 @@ function checkIfShouldDoActionAndUpdateUI() {
     if (time_until > 0) {
       second_line +=  " in " + timeStampToHuman(time_until);
     }
-    second_line += " (" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
+    second_line += "<br/>(" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
     if (!next_future_tag.default_enabled) {
       second_line += " (disabled)";
     }
@@ -704,7 +704,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   }
   else {
     document.getElementById("open_next_tag_id").style.visibility = "hidden";
-    second_line += "<br>";
+    second_line += "<br/>";
   }
   updateHTML(document.getElementById('next_will_be_at_x_span_id'), second_line);
   
