@@ -71,6 +71,7 @@ function addEditUi() {
       <br/>
       We're still in Beta, did we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
       <div style="display: inline-block"> <!-- prevent line feed before this div -->
+        <span id="currently_xxx_span_id"> <!-- "currently: muting" --></span>
         <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable if flagged as editor -->
            <a href=# onclick="toggleAddNewTagStuff(); return false;">[add tag]</a>
         </div>
@@ -78,8 +79,8 @@ function addEditUi() {
     </div>
     <div id="tag_details_div_id"  style='display: none;'>
       <div id='tag_layer_top_section'>
-        <span id="tag_details_top_line"> <!-- "currently: muting, 0m32s" --></span>
-        <span id="tag_details_second_line" /> <!-- next will be at x for y -->
+        <span id="current_timestamp_span_id"> <!-- 0m32s --> </span>
+        <span id="next_will_be_at_x_span_id" /> <!-- next will be at x for y -->
       </div>
       <form target="_blank" action="filled_in_later_if_you_see_this_it_may_mean_an_onclick_method_threw" method="POST" id="create_new_tag_form_id">
         from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
@@ -685,8 +686,8 @@ function checkIfShouldDoActionAndUpdateUI() {
   } else {
     top_line = ""; //NB can't use <br/> since trailing slash gets sanitized out so can't detect changes right FWIW :|
   }
-  updateHTML(document.getElementById("tag_details_top_line"), top_line + " " + timeStampToHuman(cur_time) + "<br>");
-  
+  updateHTML(document.getElementById("currently_xxx_span_id"), top_line);
+  updateHTML(document.getElementById("current_timestamp_span_id"), timeStampToHuman(cur_time)); 
   var second_line = "";
   var next_future_tag = getNextTagAfterOrWithin(cur_time); // XXXX hacky'ish
   if (next_future_tag) {
@@ -703,9 +704,9 @@ function checkIfShouldDoActionAndUpdateUI() {
   }
   else {
     document.getElementById("open_next_tag_id").style.visibility = "hidden";
-    second_line = "<br>";
+    second_line += "<br>";
   }
-  updateHTML(document.getElementById('tag_details_second_line'), second_line);
+  updateHTML(document.getElementById('next_will_be_at_x_span_id'), second_line);
   
   var save_button = document.getElementById("save_tag_button_id");
   var destroy_button = document.getElementById("destroy_button_id");
@@ -1625,7 +1626,7 @@ function parseSuccessfulJson(json_string) {
     big_edited.setAttribute("x", "0");
   }
   if (current_json.editor) {
-    document.getElementById("big_edited_text_svg_id").style.display = "none"; // hide it so more space for editors :|
+    // document.getElementById("big_edited_text_svg_id").style.display = "none"; // hide it so more space for editors :|
   }
 
   console.log("finished parsing response successful JSON");
