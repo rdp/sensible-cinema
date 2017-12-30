@@ -9,11 +9,14 @@ respond john's email...
 
 == meh sometime ==
 
+main page persuasive/beautiful/catchy [nik?] 
+
 youtubes them :|
 
-3rd passes/us: Things we don't own, already done 2nd pass
-  1st passes everything we own that's not even edited yet
-    after john's email...
+us passes:
+  3rd passes
+    Things we don't own, already done 2nd pass
+  after john's email...
 
 get installation feedback from humans again
   TV feedback :\
@@ -83,14 +86,13 @@ some personalize icons are dead?
 does personalize still work?
   probably
   
-safe seek [?]
+safe seek
 
 plugin: clicking next of prev "with one loaded" should change it
 
 ================= todo all never LOL =======================
 
 plugin: I lose edit ability when yes_audio_no_video :|
-  cannot repro?
 
 fix win 10 license
     
@@ -101,8 +103,11 @@ notifies on big buck mute seemed to go over and over...though they did disappear
 "disabled" edit still shows its popup? maybe does...
 
 plugin text on amazon comes in...too slow :|
-
-1st passes us: prime's that we could handle?
+  also handle if not in our system
+  
+1st passes us:
+  everything we own that's not even edited yet [m. prof's?]
+  prime's that we could handle?
 
 do "people" use firefox? edge? safari os x?
 
@@ -135,8 +140,6 @@ Have somebody 5th pass everything for the synopses :|
 facebook "like" buttons somewhere/possible :\
 
 listen to all greg's' youtubes...
-
-Notifications on macs aren't sticky?
 
 email feedback is a screwy page freelds :\
 
@@ -173,15 +176,11 @@ integrate with "real" amazon API so I can get the rental numbers right :|
 
 the extension popup.html is awful text on non-amazon, and broken link :|
 
-us: edit ben-hur, maybe others on our list/owned (lego movie, incredibles [m. prof's?]) princess bride
-
 extension: episode to episode was saying "watching ad?" amazon broken here :|
 
 some subcats are non comprehensible by humans...and yet...hmm...some are though...
 
-better search'ish :|
-
-extension: name based on playlist currently selected
+better website search'ish :|
 
 add: "family friendly for all ages" review or tag
 auto detect when shtuff goes off prime somehow?
@@ -191,8 +190,6 @@ saner url's :| more human
 groom the "sell it to them edited" options :|
 
 watch edited on view_url doesn't warn if wrong :|
-
-all pages groom, main page persuasive/beautiful/catchy [nik?] 
 
 add multiple tags "new releases" "enjoyable by whole family"
 add an "edited" moniker underneath each image?
@@ -206,7 +203,8 @@ allow them to pay us [finally] LOL
 
 add youtube preview ID's :|
   and inline previews :|
-  on amazon previews it says nothing, should say unedited [?] LOL [or allow for editing them?]
+  on amazon previews it says nothing, should say unedited
+    TODO allow editing amazon, it's kind of scary to our end users that these aren't edited!
 
 allow user reviews [star rating, other rating, every rating is a single rating] synopsis?
 
@@ -300,11 +298,9 @@ prettier movie url LOL
 
 patent
 
-better "contact us" form instead of recycling flds :|
-
 try to negotiate with various sites [vudu etc.] that have junky ToS ... maybe we can reason with them... :(
 
-groom the chrome plugin page...and get people to vote for it?
+groom the chrome plugin page...
 
 crystal:
   double check, sockets should have some ping/timeout thing so I don't get stuck with old connections...at least that...
@@ -331,14 +327,9 @@ private list of edits are shareable...or does that only make sense in the other 
 resurrect "fake" netflix playback :|
 can upload file for image
 
-somehow better subtitle syncer, his doesn't work awesome? :(
-
 an option "never show me r, or horror" :|
 
 edited facebook vids LOL
-
-missing any database indexes? check my queries uh guess...
-  once/if/when it gets slow...
 
 ask those one people to link to me
 
@@ -348,8 +339,5 @@ they can "at least playback" movies from google play index
   jQuery(".playing-title").text() => "Ice Age: Dawn of the Dinosaurs"
   they can "change" movies from google play index
 
-more plugins for edge, safari, [firefox mobile?]...if anybody cares...
-
 ask netflix etc. 4 real (permission, or change ToS, or let's really partner LOL) :|
   "I would love to support you, 30000 users" etc. LOL have them spam him
-
