@@ -10,7 +10,6 @@ if (typeof clean_stream_timer !== 'undefined') {
 
 var video_element;
 var extra_message;
-var inMiddleOfTestingTimer;
 var current_json, url; // XXXX remove url :)
 var mouse_move_timer;
 var seek_timer;
@@ -954,34 +953,6 @@ function currentTestAction() {
   return document.getElementById('action_sel').value;
 }
 
-// early callable timeout's ... :)
-var timeouts = {};  // hold the data
-function makeTimeout (func, interval) {
-    var run = function(){
-        timeouts[id] = undefined;
-        func();
-    }
-
-    var id = window.setTimeout(run, interval);
-    timeouts[id] = func
-
-    return id;
-}
-function removeTimeout (id) {
-    window.clearTimeout(id);
-    timeouts[id]=undefined; // is this enough tho??
-}
-
-function doTimeoutEarly (id) {
-  func = timeouts[id];
-  removeTimeout(id);
-  func();
-}
-
-function cancelCurrentTest() {
-  doTimeoutEarly(inMiddleOfTestingTimer); // the timeout func also nulls it out for us
-}
-
 function createFauxTagForCurrentUI() {
   var faux_tag = {
     start: humanToTimeStamp(document.getElementById('start').value),
@@ -1021,9 +992,6 @@ function faux_tag_is_ready(faux_tag) {
 }
 
 function testCurrentFromUi() {
-  if (inMiddleOfTestingTimer) {
-    cancelCurrentTest();
-  }
   if (humanToTimeStamp(document.getElementById('endy').value) == 0) {
     document.getElementById('endy').value = getCurrentVideoTimestampHuman(); // assume they wanted to test till "right now" I did this a couple of times :)
   }
@@ -1063,15 +1031,10 @@ function testCurrentFromUi() {
       length /= getEndSpeedOrAlert(faux_tag.details); // XXXX this is wrong somehow (too long?).
     }
     
-    wait_time_millis = (length + rewindSeconds + 0.5) * 1000;
     if (isPaused()) {
       console.log("testCurrentFromUi doing play");
       doPlay(); // seems like we want it like this...
     }
-    inMiddleOfTestingTimer = makeTimeout(function() { // we call this function early to cancel if they hit it a second time...
-      removeTimeout(inMiddleOfTestingTimer);
-      inMiddleOfTestingTimer = null;
-    }, wait_time_millis);
   });
 }
 
@@ -1200,9 +1163,6 @@ function reloadForCurrentUrl() {
     var link = document.getElementById('reload_tags_a_id');
     link.innerHTML = "Reloading...";
     getRequest(function(json_string) {
-      if (inMiddleOfTestingTimer) {
-        cancelCurrentTest(); // assume...they were testing start ts of something long, got it right, hit save, now it's loaded, cancel middle of edit [ :\ ]
-      }
       loadSucceeded(json_string);     
       link.innerHTML = "Reloaded!";
       setTimeout(function() {link.innerHTML = "Reload tags";}, 5000);
@@ -1846,6 +1806,8 @@ function removeFromArray(arr) {
 }
 
 <%= io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared_js.ecr", io2; io2.to_s %> <!-- render inline cuz uses macro, putting this at the end isn't enough to not mess up line numbers because dropdowns are injected :| -->
+
+<%= File.read("generic_javascript_helpers.js") %>
 
 // no jquery setup here since this page might already have its own jQuery loaded, so don't load/use it to avoid any conflict.  [bonus: speed's up our load time]
 
