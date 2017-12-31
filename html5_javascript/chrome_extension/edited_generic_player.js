@@ -702,7 +702,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       }
       second_line += "<br/>(" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
       if (next_future_tag.id == 0) { // the faux_tag and unsaved :)
-        second_line += " (not saved)";
+        second_line += " (tag not yet saved)";
       }
 
       if (!next_future_tag.default_enabled) {
@@ -1370,11 +1370,13 @@ function reloadAndResetForm() {
 function destroyCurrentTagButton() {
   var id = document.getElementById('tag_hidden_id').value;
   if (id == '0') {
-    alert("cannot destroy non previously saved tag");
+    alert("cannot destroy non previously saved tag"); // should be impossible I don't even think we show the button these days...
     return;
   }
-  window.open("https://" + request_host + "/delete_tag/" + id); // assume it works :)
-  reloadAndResetForm();
+  if (confirm("sure you want to nuke this tag all together?")) {
+    window.open("https://" + request_host + "/delete_tag/" + id); // assume it works, and ja :)
+    reloadAndResetForm();
+  }
 }
 
 function doneMoviePage() {
