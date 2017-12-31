@@ -882,6 +882,9 @@ function isAddtagStuffVisible() {
 }
 
 function setEditedControlsToMovieRight() {
+  if (videoCurrentlyBlackedByUs()) {
+    return; // we won't get the right coords to sync up with, and it makes our edit_tag area go off screen...
+  }
   var width = parseInt(all_pimw_stuff.style.width, 10);
   var desired_left = getLocationOfElement(video_element).right - width - 10; // avoid amazon x-ray so go to right
   var desired_top = getLocationOfElement(video_element).top;
@@ -893,8 +896,13 @@ function setEditedControlsToMovieRight() {
     // video is too small to fit all the edit stuff, so nuke the useful top padding :|
     desired_top = getLocationOfElement(video_element).top;
   }
-  all_pimw_stuff.style.left = desired_left + "px";
-  all_pimw_stuff.style.top = desired_top + "px";
+  desired_left = desired_left + "px"; // has to be this way apparently
+  desired_top = desired_top + "px";
+  if (all_pimw_stuff.style.left != desired_left || all_pimw_stuff.style.top != desired_top) {
+    console.log("moving controls to top=" + desired_top + " left=" + desired_left);
+    all_pimw_stuff.style.left = desired_left;
+    all_pimw_stuff.style.top = desired_top;
+  }
 }
 
 function currentTestAction() {
@@ -1361,11 +1369,15 @@ function startOnce() {
   loadForNewUrl(); // will eventually call startWatcherTimerSingleton
 }
 
+function videoCurrentlyBlackedByUs() {
+  return video_element.style.visibility == "hidden";
+}
+
 function mouseJustMoved(event) {
   var cursorX = event.pageX;
   var cursorY = event.pageY;
   var mouse_within_all_pimw_stuff = pointWithinElement(cursorX, cursorY, all_pimw_stuff);
-  var mouse_within_video = pointWithinElement(cursorX, cursorY, video_element);
+  var mouse_within_video = pointWithinElement(cursorX, cursorY, video_element) || videoCurrentlyBlackedByUs(); // middle of yes_audio_no_video still show our stuff, amazon's does this...
   var enough_focus = isAmazon() || document.hasFocus(); // only enforce this for youtube :|
   if (!mouse_move_timer || (mouse_within_video && enough_focus)) {
     displayDiv(all_pimw_stuff);
@@ -1392,6 +1404,7 @@ function mouseJustMoved(event) {
 }
 
 function hideAllPimwStuff() {
+  console.log("doing hideAllPimwStuff");
   if (!isYoutubePimw() && (!window.navigator.userAgent.includes("PlayItMyWay"))) {
     hideDiv(all_pimw_stuff);
   }
