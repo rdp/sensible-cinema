@@ -1,4 +1,57 @@
 
+function videoNotBuffering() {
+  if (isYoutubePimw()) {
+    // -1 – unstarted 0 – ended 1 – playing 2 – paused 3 – buffering 5 – video cued assume paused means not buffering? huh wuh? XXXX experiment...
+    return youtube_pimw_player.getPlayerState() == YT.PlayerState.PAUSED || youtube_pimw_player.getPlayerState() == YT.PlayerState.PLAYING;
+  } else {
+    return video_element.readyState == 4; // it's HAVE_NOTHING, HAVE_METADATA, HAVE_CURRENT_DATA [i.e. 1 frame], HAVE_FUTURE_DATA [i.e. 2 frames], HAVE_ENOUGH_DATA == 4 [i.e. lots of data buffered]
+  }
+}
+
+
+function sendNotification(notification_desired) {
+  if (isYoutubePimw()) {
+      // can't rely on background.js at all :|
+      // so just send it here...
+
+      if (!("Notification" in window)) {
+        console.log("This browser does not support desktop notification");
+        return; // oh well, punt!
+      }
+      else if (Notification.permission === "granted") { // already been granted before...
+        createNotification(notification_desired);
+      }
+      // Otherwise, we need to ask the user for permission
+      else if (Notification.permission !== "denied") {
+        Notification.requestPermission(function (permission) {
+          // If the user accepts, let's create a notification
+          if (permission === "granted") {
+            createNotification(notification_desired);
+          }
+        });
+      }
+      else {
+        // denied previously :| I guess don't alert they denied it right? :) but they're using it? oh well...
+      }
+  } else {
+    sendMessageToPlugin({notification_desired : notification_desired});
+  }
+}
+
+function createNotification(notification_desired) { // shared with background.js
+  var notification = new Notification(notification_desired.title, {body: notification_desired.body, tag: notification_desired.tag.id}); // auto shows it
+  notification.onclose = function() { console.log("notification onclose");};
+  // doesn't work "well" OS X (only when they really choose close, not auto disappear :| ) requireInteraction doesn't help either?? TODO report to chrome, when fixed update my SO answer :)
+  notification.onclick = function(event) {
+    event.preventDefault(); // prevent the browser from focusing the Notification's tab
+    window.open('https://playitmyway.org/view_tag/' + notification_desired.tag.id, '_blank'); // also opens and sets active
+  }
+  setTimeout(function() {
+    notification.close();
+  }, 
+  10000);
+}
+
 function removeElementFromArray(arr) {
     var what, a = arguments, L = a.length, ax;
     while (L > 1 && arr.length) {

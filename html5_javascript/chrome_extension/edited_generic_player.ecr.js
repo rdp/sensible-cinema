@@ -308,7 +308,7 @@ function checkIfShouldDoActionAndUpdateUI() {
     timestamp_log("seeking forward", cur_time, tag);
     notify_if_new(tag); // show it now so it can notify while it seeks :) [NB for longer seeks it shows it over and over [bug] but notification tag has our back'ish for now :\ ]
     blankScreenIfWithinHeartOfSkip(tag, cur_time);
-    blankScreenIfImpending(tag.endy);  // warn it to start a blank now, for the gap, otherwise when it gets there it's already too late
+    heartBlankScreenIfImpending(tag.endy);  // warn it to start a blank now, for the gap, otherwise when it gets there it's already too late
     seekToTime(tag.endy, doneWithPossibleHeartBlankUnlessImpending);
   }
   
@@ -457,7 +457,7 @@ function blankScreenIfWithinHeartOfSkip(skipish_tag, cur_time) {
   }
 }
 
-function blankScreenIfImpending(start_time) { // basically for pre-emptively knowing when skips will end :|
+function heartBlankScreenIfImpending(start_time) { // basically for pre-emptively knowing when skips will end :|
   var just_before_bad_stuff = areWeWithinNoShowVideoTag(start_time + 0.02); // if about to re-non-video, don't show blip of bad stuff if two such edits back to back
   if (just_before_bad_stuff) {
     console.log("starting heartblank straight will be impending");
@@ -514,7 +514,7 @@ function areWeWithinTag(tag, cur_time) {
   }
 }
 
-function removeIfNotifyEditsHaveEnded(cur_time) {
+function removeIfNotifyEditsHaveEnded(cur_time) { // wait how does this interface with the 10s timeout?
   for (var tag of currently_in_process_tags.keys()) {
     if (!areWeWithinTag(tag, cur_time)) {
       currently_in_process_tags.delete(tag);
@@ -560,7 +560,7 @@ function optionally_show_notification(seek_tag) {
       if (char == " " || char == "") { // "" means "past end" for shorter ones...
         var title = popup.substring(0, i);
         var body = popup.substring(i); 
-        // XXXX if body too large still split to second notification?
+        // XXXX if body too large still, split to second notification?
         break;
       }
     }
@@ -572,48 +572,6 @@ function optionally_show_notification(seek_tag) {
   }
 }
 
-function sendNotification(notification_desired) {
-  if (isYoutubePimw()) {
-      // can't rely on background.js at all :|
-      // so just send it here...
-
-      if (!("Notification" in window)) {
-        console.log("This browser does not support desktop notification");
-        return; // oh well, punt!
-      }
-      else if (Notification.permission === "granted") { // already been granted before...
-        createNotification(notification_desired);
-      }
-      // Otherwise, we need to ask the user for permission
-      else if (Notification.permission !== "denied") {
-        Notification.requestPermission(function (permission) {
-          // If the user accepts, let's create a notification
-          if (permission === "granted") {
-            createNotification(notification_desired);
-          }
-        });
-      }
-      else {
-        // denied previously :| I guess don't alert they denied it right? :) but they're using it? oh well...
-      }
-  } else {
-    sendMessageToPlugin({notification_desired : notification_desired});
-  }
-}
-
-function createNotification(notification_desired) { // shared with background.js
-  var notification = new Notification(notification_desired.title, {body: notification_desired.body, tag: notification_desired.tag.id}); // auto shows it
-  notification.onclose = function() { console.log("notification onclose");};
-  // doesn't work "well" OS X (only when they really choose close, not auto disappear :| ) requireInteraction doesn't help either?? TODO report to chrome, when fixed update my SO answer :)
-  notification.onclick = function(event) {
-    event.preventDefault(); // prevent the browser from focusing the Notification's tab
-    window.open('https://playitmyway.org/view_tag/' + notification_desired.tag.id, '_blank'); // also opens and sets active
-  }
-  setTimeout(function() {
-    notification.close();
-  }, 
-  10000);
-}
 
 function updateHTML(div, new_value) {
   if (div.innerHTML != new_value) {
@@ -622,7 +580,7 @@ function updateHTML(div, new_value) {
 }
 
 var last_log = "";
-function logOnce(to_log) {
+function logAddOnce(to_log) {
   if (last_log != to_log) {
     console.log(to_log);
     last_log = to_log;
@@ -634,7 +592,7 @@ function isWatchingAdd() {
     // guess this > 0 check is for amazon when it has "lost" its video?
     // withinDelta 10 is amazon at the end weird stuff LOL
     if (current_json.url.total_time > 0 && !withinDelta(current_json.url.total_time, videoDuration(), 10.5)) { // amazon can be 10.01 or something if you go to the end
-      logOnce("watching add? Or possibly hit X after starting movie amazon expected=" + current_json.url.total_time + " got_duration=" + videoDuration()); // we get NaN for video_element.duration after hit video x in amazon :| [?]
+      logAddOnce("watching add? Or possibly hit X after starting movie amazon expected=" + current_json.url.total_time + " got_duration=" + videoDuration()); // we get NaN for video_element.duration after hit video x in amazon :| [?]
       return true;
       // and do nothing
     }
@@ -649,15 +607,6 @@ function isWatchingAdd() {
 var i_set_it_to_add = false;
 var video_ever_initialized = false; // can't do seeks "off the bat" in amazon [while still obscured] -> spinner then crash!
 var last_timestamp = 0;
-
-function videoNotBuffering() {
-  if (isYoutubePimw()) {
-    // -1 – unstarted 0 – ended 1 – playing 2 – paused 3 – buffering 5 – video cued assume paused means not buffering? huh wuh? XXXX experiment...
-    return youtube_pimw_player.getPlayerState() == YT.PlayerState.PAUSED || youtube_pimw_player.getPlayerState() == YT.PlayerState.PLAYING;
-  } else {
-    return video_element.readyState == 4; // it's HAVE_NOTHING, HAVE_METADATA, HAVE_CURRENT_DATA [i.e. 1 frame], HAVE_FUTURE_DATA [i.e. 2 frames], HAVE_ENOUGH_DATA == 4 [i.e. lots of data buffered]
-  }
-}
 
 function checkStatus() { // called 100 fps
 
@@ -784,7 +733,6 @@ function getTagOrInlineReplacement(tag) {
     return tag;
   }
 }
-
 
 function getNextTagAfterOrWithin(cur_time) {  
   var all = getAllTagsIncludingReplacedFromUISorted();
@@ -1043,19 +991,29 @@ function getCurrentVideoTimestampHuman() {
 }
 
 function openPreviousTagButton() {
-  var cur_time = getCurrentTime();
-  var timeSearch = cur_time;
-  while (timeSearch > 0) {
-    var next_tag = getNextTagAfterOrWithin(timeSearch);
-    if (next_tag && (next_tag.endy < cur_time)) {
-      loadTagIntoUI(next_tag);
-      return;
-    }
-    else {
-      timeSearch -= 1; // OK OK this is lame I know...
+  var search_time = getCurrentTime();
+  if (!UiTagIsNotInDb()) {
+    search_time = createFauxTagForCurrentUI().endy - 1; // get the next down, assume they barely loaded it :|
+  }
+  var tag = getNextTagEndingBefore(search_time);
+  if (tag){
+    loadTagIntoUI(tag);    
+  } else {
+    alert("none found ending before current playback position");
+  }
+}
+
+function getNextTagEndingBefore(search_time) { // somewhat duplicated but seemed useful :|
+  var all = getAllTagsIncludingReplacedFromUISorted();
+  for (var i = all.length - 1; i >= 0; i--) {
+    var tag = all[i];
+    var start_time = tag.start;
+    var end_time = tag.endy;
+    if(end_time < search_time) {
+      return tag;
     }
   }
-  alert("none found before current playback position");
+  return null; // none found
 }
 
 function openNextTagButton() {
