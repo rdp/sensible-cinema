@@ -1177,7 +1177,7 @@ function isAddtagStuffVisible() {
 
 function setEditedControlsToMovieRight() {
   if (videoCurrentlyBlackedByUs()) {
-    return; // we won't get the right coords to sync up with, and it makes our edit_tag area go off screen...
+    return; // we won't get the right coords to sync up with, and it makes our edit_tag area go off screen... [NB not enough if video "starts" right in a blank screen, but auto-corrects... :| ]
   }
   var width = parseInt(all_pimw_stuff.style.width, 10);
   var desired_left = getLocationOfElement(video_element).right - width - 10; // avoid amazon x-ray so go to right
@@ -1698,7 +1698,6 @@ function mouseJustMoved(event) {
 }
 
 function hideAllPimwStuff() {
-  console.log("doing hideAllPimwStuff");
   if (!isYoutubePimw() && (!window.navigator.userAgent.includes("PlayItMyWay"))) {
     hideDiv(all_pimw_stuff);
   }
@@ -1815,10 +1814,10 @@ function seekToTime(ts, callback) {
   // [amazon] if this is far enough away from current, it also implies a "play" call...oddly. I mean seriously that is bizarre.
   // however if it close enough, then we need to call play
   // some shenanigans to pretend to work around this...
+  rawSeekToTime(ts);
   if (!isYoutubePimw()) {
     doPause();
   } // youtube seems to not need these shenanigans
-  rawSeekToTime(ts);
   old_ts = ts;
   seek_timer = setInterval(function() {
       if (isYoutubePimw()) {
