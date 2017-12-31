@@ -1229,7 +1229,7 @@ function loadTagIntoUI(tag) {
   document.getElementById('popup_text_after_id').value = htmlDecode(tag.popup_text_after);
   document.getElementById('category_select').value = tag.category; // XXXX rename :|
   document.getElementById('category_select').dispatchEvent(new Event('change')); // so it'll prune the subcats
-  document.getElementById('subcategory_select_id').value = tag.subcategory;
+  document.getElementById('subcategory_select_id').value = htmlDecode(tag.subcategory);
   document.getElementById('subcategory_select_id').dispatchEvent(new Event('change')); // so it'll do the right size, needed apparently :|
   document.getElementById('age_maybe_ok_id').value = tag.age_maybe_ok;
   document.getElementById('impact_to_movie_id').value = tag.impact_to_movie;
