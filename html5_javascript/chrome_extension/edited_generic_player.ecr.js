@@ -111,7 +111,7 @@ function addEditUiOnce() {
        action:
         <%= pre_details = "tag details"; pre_popup = "popup text"; io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared.ecr", io2; io2.to_s %> <!-- render full filename cuz macro -->
         <br/>
-        <button type="reset" value="Clear" onclick="reloadAndResetForm(); return false;">Reset</button>
+        <button type="reset" value="Clear" onclick="reloadAndResetForm(); return false;">Reset/Clear</button>
         <input type='button' id='destroy_button_id' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
         <input type='submit' id='save_tag_button_id' value='Save Tag' onclick="saveEditButton(); return false;">
         <br/>
@@ -397,9 +397,9 @@ function checkIfShouldDoActionAndUpdateUI() {
   updateHTML(document.getElementById("currently_xxx_span_id"), top_line_text);
   
   if (isAddtagStuffVisible()) { // uses a bit o' cpu
-    updateHTML(document.getElementById("current_timestamp_span_id"), timeStampToHuman(cur_time)); 
+    updateHTML(document.getElementById("current_timestamp_span_id"), "now: " + timeStampToHuman(cur_time)); 
     var second_line = "";
-    var next_future_tag = getNextTagAfterOrWithin(cur_time);
+    var next_future_tag = getFirstTagEndingAfter(cur_time);
     if (next_future_tag) {
       second_line += "next: " + timeStampToHuman(next_future_tag.start);
       var time_until = next_future_tag.start - cur_time;
@@ -425,7 +425,7 @@ function checkIfShouldDoActionAndUpdateUI() {
     var save_button = document.getElementById("save_tag_button_id");
     var destroy_button = document.getElementById("destroy_button_id");
     var before_test_edit_span = document.getElementById("before_test_edit_span_id");
-    if (UiTagIsNotInDb()) {
+    if (uiTagIsNotInDb()) {
       save_button.value = "Save New Tag";
       destroy_button.style.visibility = "hidden"; // couldn't figure out how to grey it
       updateHTML(before_test_edit_span, "new tag...");
@@ -441,7 +441,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   removeIfNotifyEditsHaveEnded(cur_time); // gotta clean this up sometime, and also support "rewind and renotify" so just notify once on first tag...
 }
 
-function UiTagIsNotInDb() {
+function uiTagIsNotInDb() {
   return document.getElementById('tag_hidden_id').value == '0';
 }
 
@@ -734,7 +734,7 @@ function getTagOrInlineReplacement(tag) {
   }
 }
 
-function getNextTagAfterOrWithin(cur_time) {  
+function getFirstTagEndingAfter(cur_time) {  
   var all = getAllTagsIncludingReplacedFromUISorted();
   for (var i = 0; i < all.length; i++) {
     var tag = all[i];
@@ -926,6 +926,7 @@ function loadTagIntoUI(tag) {
   document.getElementById('details_input_id').value = htmlDecode(tag.details);
   document.getElementById('popup_text_after_id').value = htmlDecode(tag.popup_text_after);
   document.getElementById('category_select').value = tag.category; // XXXX rename :|
+  document.getElementById('category_select').dispatchEvent(new Event('change')); // so it'll prune the subcats
   document.getElementById('subcategory_select_id').value = tag.subcategory;
   document.getElementById('subcategory_select_id').dispatchEvent(new Event('change')); // so it'll do the right size, needed apparently :|
   document.getElementById('age_maybe_ok_id').value = tag.age_maybe_ok;
@@ -992,7 +993,7 @@ function getCurrentVideoTimestampHuman() {
 
 function openPreviousTagButton() {
   var search_time = getCurrentTime();
-  if (!UiTagIsNotInDb()) {
+  if (!uiTagIsNotInDb()) {
     search_time = createFauxTagForCurrentUI().endy - 1; // get the next down, assume they barely loaded it :|
   }
   var tag = getNextTagEndingBefore(search_time);
@@ -1017,7 +1018,11 @@ function getNextTagEndingBefore(search_time) { // somewhat duplicated but seemed
 }
 
 function openNextTagButton() {
-  var next_tag = getNextTagAfterOrWithin(getCurrentTime());
+  var search_time = getCurrentTime();
+  if (!uiTagIsNotInDb()) {
+    search_time = createFauxTagForCurrentUI().endy + 1;
+  }
+  var next_tag = getFirstTagEndingAfter(search_time);
   if (next_tag) {
     loadTagIntoUI(next_tag);
   }

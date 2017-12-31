@@ -84,7 +84,7 @@ function onReady(yourMethod) {
 
 function injectEditedPlayerOnce() {
     console.log("injecting editor code...");
-    chrome.runtime.sendMessage({text: "load", color: "#008000", details: "Trying to load edited playback..."}); // last thing they see for non big 3 :|
+    chrome.runtime.sendMessage({text: "load", color: "#008000", details: "Trying to load edited playback..."}); // last thing they see for non big 2 :|
     if (already_loaded) {
         alert('edited player already loaded for this page...please use its UI. Try clicking "unedited" or the refresh button on your browser.');
     }
@@ -120,11 +120,11 @@ function autoStartIfShould() {
             details: "edited playback and waiting for a video to appear present, then will try to see if edits exist for it so can playback edited"}); 
     }
     // iframe wants to load it though, for google play
-    console.log("big 3/pimw polling for video tag...");
+    console.log("big 2/pimw polling for video tag...");
     var interval = setInterval(function(){
       var video_element = findFirstVideoTagOrNull();
       if (video_element != null) {
-        console.log("big 3 found video tag [or pimw non youtube], injecting...");
+        console.log("big 2 found video tag [or pimw non youtube], injecting...");
         injectEditedPlayerOnce();
         clearInterval(interval);
       }
@@ -162,7 +162,7 @@ function loadIfCurrentHasOne() {
 }
 
 function currentHasEdits() {
-  console.log("got extant non big 3 " + currentUrlNotIframe());
+  console.log("got extant non big 2 " + currentUrlNotIframe());
   injectEditedPlayerOnce();
 }
 
