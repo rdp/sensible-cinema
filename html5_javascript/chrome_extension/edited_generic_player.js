@@ -37,6 +37,7 @@ function addEditUiOnce() {
     #all_pimw_stuff_id a:link { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
     #all_pimw_stuff_id a:visited { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
     #all_pimw_stuff_id { text-align: right;}
+    #all_pimw_stuff_id input { margin-left: .0;}
   </style>
   
   <!-- no pre-load message here since...we don't start the watcher thread until after the first fail or success to give us the right coords, and possibly annoying... -->
@@ -92,6 +93,7 @@ function addEditUiOnce() {
       <!-- no special method for seek forward since it'll at worst seek to a skip then skip --> 
       <input type='button' onclick="seekToBeforeSkip(-30); return false;" value='-30s'/>
       <input type='button' onclick="seekToTime(getCurrentTime() - 2); return false;" value='-2s'/> 
+      <input type='button' onclick="seekToTime(getCurrentTime() + 2); return false;" value='+2s'/> 
       <input type='button' onclick="seekToBeforeSkip(-5); return false;" value='-5s'/>
       <input type='button' onclick="seekToTime(getCurrentTime() + 5); return false;" value='+5s'/> 
       <input type='button' onclick="stepFrameBack(); return false;" value='frame-'/>
