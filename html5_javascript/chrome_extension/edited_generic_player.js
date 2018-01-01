@@ -140,7 +140,7 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
 </div>
 
 <div id="subcategory_div_id">
-sub cat:
+sub:
 <select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);" onchange="resizeToCurrentSize(this);">
     <option value="">unknown -- please select subcategory</option>
     
@@ -730,7 +730,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       destroy_button.style.visibility = "hidden"; // couldn't figure out how to grey it
       updateHTML(before_test_edit_span, "new tag...");
     } else {
-      save_button.value = "Update Tag";
+      save_button.value = "Update This Tag";
       destroy_button.style.visibility = "visible";
       updateHTML(before_test_edit_span, "re-editing existing tag...");
     }
@@ -1350,7 +1350,7 @@ function openFirstTagAfter(search_time) {
     loadTagIntoUI(next_tag);
   }
   else {
-    alert("didn't find a tag the current times seem to match??");
+    alert("none after the spot requested...");
   }
 }
 
