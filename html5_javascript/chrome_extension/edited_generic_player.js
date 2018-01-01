@@ -407,12 +407,16 @@ default edit on?
 <!-- can't put javascript since don't know how to inject it quite right in plugin, though I could use a separate render... -->
  <!-- render full filename cuz macro -->
         <br/>
-        <button type="reset" value="Clear" onclick="reloadAndResetForm(); return false;">Reset/Clear</button>
-        <input type='button' id='destroy_button_id' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
         <input type='submit' id='save_tag_button_id' value='Save Tag' onclick="saveEditButton(); return false;">
         <br/>
-        <input type='submit' value='Re-Edit Prev Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">
-        <input type='submit' value='Re-Edit Next Tag (or current)' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
+        <input type='submit' value='&lt;&lt;' id='open_prev_tag_id' onclick="openTagBeforeCurrent(); return false;">
+        <input type='submit' value='Open Just Passed Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">
+        <input type='submit' value='Open Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
+        <input type='submit' value='&gt;&gt;' id='open_prev_tag_id' onclick="openTagAfterCurrent(); return false;">
+        <br/>
+        <input type='button' id='destroy_button_id' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
+        <button type="reset" value="Clear" onclick="reloadAndResetForm(); return false;">Reset/Clear</button>
+
       </form>
       
       <a id=reload_tags_a_id href=# onclick="reloadForCurrentUrl(); return false;" </a>Reload tags</a>
@@ -1295,11 +1299,19 @@ function getCurrentVideoTimestampHuman() {
   return timeStampToHuman(getCurrentTime());
 }
 
+function openTagBeforeCurrent() {
+  if (!uiTagIsNotInDb()) {
+    var search_time = createFauxTagForCurrentUI().endy - 1; // get the next down...
+    openTagEndingBefore(search_time);
+  } else {
+    alert("have to have a previously saved tag to get prev");
+  }
+}
 function openPreviousTagButton() {
   var search_time = getCurrentTime();
-  if (!uiTagIsNotInDb()) {
-    search_time = createFauxTagForCurrentUI().endy - 1; // get the next down, assume they barely loaded it :|
-  }
+  openTagEndingBefore(search_time);
+}
+function openTagEndingBefore(search_time) {
   var tag = getNextTagEndingBefore(search_time);
   if (tag){
     loadTagIntoUI(tag);    
@@ -1307,7 +1319,6 @@ function openPreviousTagButton() {
     alert("none found ending before current playback position");
   }
 }
-
 function getNextTagEndingBefore(search_time) { // somewhat duplicated but seemed useful :|
   var all = getAllTagsIncludingReplacedFromUISorted();
   for (var i = all.length - 1; i >= 0; i--) {
@@ -1321,17 +1332,25 @@ function getNextTagEndingBefore(search_time) { // somewhat duplicated but seemed
   return null; // none found
 }
 
+function openTagAfterCurrent() {
+  if (!uiTagIsNotInDb()) {
+    var search_time = createFauxTagForCurrentUI().endy + 1;
+    openFirstTagAfter(search_time);
+  } else {
+    alert("have to have a previously saved tag to get next");
+  }
+}
 function openNextTagButton() {
   var search_time = getCurrentTime();
-  if (!uiTagIsNotInDb()) {
-    search_time = createFauxTagForCurrentUI().endy + 1;
-  }
+  openFirstTagAfter(search_time);
+}
+function openFirstTagAfter(search_time) {
   var next_tag = getFirstTagEndingAfter(search_time);
   if (next_tag) {
     loadTagIntoUI(next_tag);
   }
   else {
-    alert("didn't find a tag the current times seem to match??"); // this should be impossible...
+    alert("didn't find a tag the current times seem to match??");
   }
 }
 
