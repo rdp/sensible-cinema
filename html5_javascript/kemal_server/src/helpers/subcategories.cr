@@ -77,6 +77,7 @@ def subcategory_map
     "sports violence": "violence -- sports violence part of game",
     "rape": "violence -- rape",
     "dead body": "violence -- dead body visible lifeless",
+    "suicidal actions": "violence -- suicidal actions",
     "violence (other)": "violence -- other",
 
     "art nudity": "physical -- art based nudity",

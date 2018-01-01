@@ -272,6 +272,8 @@ sub:
     
       <option value="dead body">violence -- dead body visible lifeless</option>    
     
+      <option value="suicidal actions">violence -- suicidal actions</option>    
+    
       <option value="violence (other)">violence -- other</option>    
     
       <option value="art nudity">physical -- art based nudity</option>    
