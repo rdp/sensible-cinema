@@ -74,7 +74,7 @@ def db_style_from_query_url(env)
   sanitize_html standardize_url(real_url)
 end
 
-require "./straight_forward.cr"
+require "./src/straight_forward.cr"
 
 get "/edited_youtube/:youtube_id" do |env|
   youtube_id = env.params.url["youtube_id"]
