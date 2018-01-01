@@ -1208,7 +1208,7 @@ function addPluginEnabledTextOnce() {
   if (isAmazon() && url) {
     var span = document.getElementsByClassName("dv-provenence-msg")[0];
     if (span && !span.innerHTML.includes("it my way")) {
-      var extra = "<br/><small>(Play it my way enabled! Legal disclaimer: Performance of the motion picture will be altered from the performance intended by the director or copyright holder)";
+      var extra = "<br/><small>(Play it my way enabled! Disclaimer: Performance of the motion picture will be altered from the performance intended by the director/copyright holder, we're required to mention that)";
       if (url.editing_status != "Done with second review, tags viewed as complete") {
         extra += " (not fully edited yet)";
       }
