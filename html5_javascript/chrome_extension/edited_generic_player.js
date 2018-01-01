@@ -417,7 +417,8 @@ default edit on?
         <input type='submit' value='&gt;&gt;' id='open_prev_tag_id' onclick="openTagAfterCurrent(); return false;">
         <br/>
         <input type='button' id='destroy_button_id' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
-        <button type="reset" value="Clear" onclick="reloadAndResetForm(); return false;">Reset/Clear</button>
+        <button type="" value="" onclick="clearButton(); return false;">Clear</button>
+        <button type="" value="" onclick="reloadButton(); return false;">Reload Tag</button>
 
       </form>
       
@@ -874,13 +875,6 @@ function optionally_show_notification(seek_tag) {
   }
 }
 
-
-function updateHTML(div, new_value) {
-  if (div.innerHTML != new_value) {
-    div.innerHTML = new_value;
-  }
-}
-
 var last_log = "";
 function logAddOnce(to_log) {
   if (last_log != to_log) {
@@ -1010,8 +1004,7 @@ function compareTagStarts(tag1, tag2) {
 }
 
 function getAllTagsIncludingReplacedFromUISorted() {
-  var tagNotInDb = document.getElementById('tag_hidden_id').value == '0';
-  if (tagNotInDb) {
+  if (uiTagIsNotInDb()) {
     var faux_tag = createFauxTagForCurrentUI();
     if (faux_tag_is_ready(faux_tag)) {
       return [faux_tag].concat(current_tags_to_use).sort(compareTagStarts); // add in new tag chronologically
@@ -1021,9 +1014,9 @@ function getAllTagsIncludingReplacedFromUISorted() {
   } else {
     var allWithReplacement = [];
     for (var i = 0; i < current_tags_to_use.length; i++) {
-      allWithReplacement.push(getTagOrInlineReplacement(current_tags_to_use[i])); // replace it with faux_tag 
+      allWithReplacement.push(getTagOrInlineReplacement(current_tags_to_use[i])); // replace it with any local mods 
     }
-    return allWithReplacement.sort(compareTagStarts); // and sort
+    return allWithReplacement.sort(compareTagStarts); // and sort it in
   }
 }
 
@@ -1371,10 +1364,29 @@ function saveEditButton() {
   document.getElementById('create_new_tag_form_id').submit();
 
   // reset so people don't think they can tweak and resave...since it doesn't know the new ID'ish :|
-  reloadAndResetForm();
+  reloadTagsAndClearForm();
 }
 
-function reloadAndResetForm() {
+function reloadButton() {
+  var id_desired = document.getElementById('tag_hidden_id').value;
+  if (id_desired == '0') {
+    alert("can't reset if don't have tag loaded");
+    return;
+  }
+  for (var i = 0; i < current_tags_to_use.length; i++) {
+    if (current_tags_to_use[i].id == parseInt(id_desired)) {
+      loadTagIntoUI(current_tags_to_use[i]);
+      return;
+    }
+  }
+  alert("should never see this please report 3");
+}
+
+function clearButton() {
+  reloadTagsAndClearForm();
+}
+
+function reloadTagsAndClearForm() {
   setTimeout(reloadForCurrentUrl, 1000); // reload to get it "back" from the server after saved...longest I've seen like like 60ms
   document.getElementById('start').value = timeStampToHuman(0);
   document.getElementById('endy').value = timeStampToHuman(0);
@@ -1398,7 +1410,7 @@ function destroyCurrentTagButton() {
   }
   if (confirm("sure you want to nuke this tag all together?")) {
     window.open("https://" + request_host + "/delete_tag/" + id); // assume it works, and ja :)
-    reloadAndResetForm();
+    reloadTagsAndClearForm();
   }
 }
 
