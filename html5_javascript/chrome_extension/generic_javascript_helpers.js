@@ -1,3 +1,8 @@
+function updateHTML(div, new_value) {
+  if (div.innerHTML != new_value) {
+    div.innerHTML = new_value;
+  }
+}
 
 function videoNotBuffering() {
   if (isYoutubePimw()) {

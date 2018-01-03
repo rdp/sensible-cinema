@@ -239,7 +239,7 @@ function liveEpisodeNumber() {
 }
 
 function areWeWithin(desiredAction, cur_time) {
-  var all = getAllTagsIncludingReplacedFromUISorted();
+  var all = getAllTagsIncludingReplacedFromUISorted(current_tags_to_use);
   for (var i = 0; i < all.length; i++) {
     var tag = all[i];
     if (tag.default_action != desiredAction) {
@@ -403,10 +403,10 @@ function checkIfShouldDoActionAndUpdateUI() {
   }
   updateHTML(document.getElementById("currently_xxx_span_id"), top_line_text);
   
-  if (isAddtagStuffVisible()) { // uses a bit o' cpu
+  if (isAddtagStuffVisible()) { // uses a bit o' cpu, and is edit only...
     updateHTML(document.getElementById("current_timestamp_span_id"), "now: " + timeStampToHuman(cur_time)); 
     var second_line = "";
-    var next_future_tag = getFirstTagEndingAfter(cur_time);
+    var next_future_tag = getFirstTagEndingAfter(cur_time, getAllTagsIncludingReplacedFromUISorted(current_json.tags)); // all so we can open stuff if editing and "unedited" selected
     if (next_future_tag) {
       second_line += "next: " + timeStampToHuman(next_future_tag.start);
       var time_until = next_future_tag.start - cur_time;
@@ -425,7 +425,7 @@ function checkIfShouldDoActionAndUpdateUI() {
     }
     else {
       document.getElementById("open_next_tag_id").style.visibility = "hidden";
-      second_line += "<br/>";
+      second_line += "<br/><br/>";
     }
     updateHTML(document.getElementById('next_will_be_at_x_span_id'), second_line);
     
@@ -707,18 +707,18 @@ function compareTagStarts(tag1, tag2) {
   return 0;
 }
 
-function getAllTagsIncludingReplacedFromUISorted() {
+function getAllTagsIncludingReplacedFromUISorted(tags_to_use) {
   if (uiTagIsNotInDb()) {
     var faux_tag = createFauxTagForCurrentUI();
     if (faux_tag_is_ready(faux_tag)) {
-      return [faux_tag].concat(current_tags_to_use).sort(compareTagStarts); // add in new tag chronologically
+      return [faux_tag].concat(tags_to_use).sort(compareTagStarts); // add in new tag chronologically
     } else {
-      return current_tags_to_use; // assume they come sorted :)
+      return tags_to_use; // assume they come sorted :)
     }
   } else {
     var allWithReplacement = [];
-    for (var i = 0; i < current_tags_to_use.length; i++) {
-      allWithReplacement.push(getTagOrInlineReplacement(current_tags_to_use[i])); // replace it with any local mods 
+    for (var i = 0; i < tags_to_use.length; i++) {
+      allWithReplacement.push(getTagOrInlineReplacement(tags_to_use[i])); // replace it with any local mods 
     }
     return allWithReplacement.sort(compareTagStarts); // and sort it in
   }
@@ -733,10 +733,9 @@ function getTagOrInlineReplacement(tag) {
   }
 }
 
-function getFirstTagEndingAfter(cur_time) {  
-  var all = getAllTagsIncludingReplacedFromUISorted();
-  for (var i = 0; i < all.length; i++) {
-    var tag = all[i];
+function getFirstTagEndingAfter(cur_time, all_tags) {  
+  for (var i = 0; i < all_tags.length; i++) {
+    var tag = all_tags[i];
     var start_time = tag.start;
     var end_time = tag.endy;
     if(end_time > cur_time) { // first one ending past our current position
@@ -1018,8 +1017,8 @@ function openTagEndingBefore(search_time) {
     alert("none found ending before current playback position");
   }
 }
-function getNextTagEndingBefore(search_time) { // somewhat duplicated but seemed useful :|
-  var all = getAllTagsIncludingReplacedFromUISorted();
+function getNextTagEndingBefore(search_time) { // somewhat duplicate but seemed distinct enough :|
+  var all = getAllTagsIncludingReplacedFromUISorted(current_json.tags);
   for (var i = all.length - 1; i >= 0; i--) {
     var tag = all[i];
     var start_time = tag.start;
@@ -1044,7 +1043,7 @@ function openNextTagButton() {
   openFirstTagAfter(search_time);
 }
 function openFirstTagAfter(search_time) {
-  var next_tag = getFirstTagEndingAfter(search_time);
+  var next_tag = getFirstTagEndingAfter(search_time, getAllTagsIncludingReplacedFromUISorted(current_json.tags));
   if (next_tag) {
     loadTagIntoUI(next_tag);
   }
