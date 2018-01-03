@@ -699,7 +699,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   }
   updateHTML(document.getElementById("currently_xxx_span_id"), top_line_text);
   
-  if (isAddtagStuffVisible()) { // uses a bit o' cpu, and is edit only...
+  if (isAddtagStuffVisible()) { // uses a bit o' cpu, is editor only...
     updateHTML(document.getElementById("current_timestamp_span_id"), "now: " + timeStampToHuman(cur_time)); 
     var second_line = "";
     var next_future_tag = getFirstTagEndingAfter(cur_time, getAllTagsIncludingReplacedFromUISorted(current_json.tags)); // all so we can open stuff if editing and "unedited" selected
@@ -1399,6 +1399,8 @@ function reloadTagsAndClearForm() {
   setImpactIfMute(); // reset if mute :|
   document.getElementById('tag_hidden_id').value = '0'; // reset
   document.getElementById('default_enabled_id').value = 'true';  
+ 
+  document.getElementById('action_sel').dispatchEvent(new Event('change')); // so it'll set impact if mute
 }
 
 function destroyCurrentTagButton() {
