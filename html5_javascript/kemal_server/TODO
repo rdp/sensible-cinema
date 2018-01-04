@@ -69,14 +69,9 @@ personalize: defaults
 super soft launch looks like: easy links...ycombinator...reddit [? more?] betterlogic
 
 Try and go everywhere with ads/pub...
-  ads for "vidangel" "clearplay" "pureflix" [?]
+  also ads for "vidangel" "clearplay" "pureflix" [?]
   
 figure out how to collect emails/logins?
-
-move to its own linode server :|
-  server low on space :|
-  maybe don't have to yet?
-  fix flds? :|
 
 if I create personalized, then somebody creates a new tag "default disabled" then on my list it's enabled I think...
   in general something seems bworked there with personalized...
@@ -89,7 +84,14 @@ does personalize still work?
 
 3. It would be better if the movie page didn't open when I save a tag.
 
+seeks can break, also can they be 'better' cached??
+
 ================= todo all never LOL =======================
+
+move to its own linode server :|
+  server low on space :|
+  maybe don't have to yet?
+  fix flds? :|
 
 currently "xx" displays wrong in big buck :|
 
