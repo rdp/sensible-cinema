@@ -113,16 +113,16 @@ function addEditUiOnce() {
        action:
         <%= pre_details = "tag details"; pre_popup = "popup text"; io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared.ecr", io2; io2.to_s %> <!-- render full filename cuz macro -->
         <br/>
-        <input type='submit' id='save_tag_button_id' value='Save Tag' onclick="saveEditButton(); return false;">
+        <input type='submit' id='save_tag_button_id' value='Save Tag' onclick="saveTagButton(); return false;">
         <br/>
         <input type='submit' value='&lt;&lt;' id='open_prev_tag_id' onclick="openTagBeforeCurrent(); return false;">
-        <input type='submit' value='Open Just Passed Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">
-        <input type='submit' value='Open Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
+        <input type='submit' value='Edit Just Passed Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">
+        <input type='submit' value='Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
         <input type='submit' value='&gt;&gt;' id='open_prev_tag_id' onclick="openTagAfterCurrent(); return false;">
         <br/>
         <input type='button' id='destroy_button_id' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
         <button type="" value="" onclick="clearButton(); return false;">Clear</button>
-        <button type="" value="" onclick="reloadButton(); return false;">Reload Tag</button>
+        <button type="" id='reload_tag_button_id' value="" onclick="reloadButton(); return false;">Reload This Tag</button>
 
       </form>
       
@@ -432,16 +432,19 @@ function checkIfShouldDoActionAndUpdateUI() {
     var save_button = document.getElementById("save_tag_button_id");
     var destroy_button = document.getElementById("destroy_button_id");
     var before_test_edit_span = document.getElementById("before_test_edit_span_id");
+    var reload_tag_button = document.getElementById("reload_tag_button_id");
     if (uiTagIsNotInDb()) {
       save_button.value = "Save New Tag";
       destroy_button.style.visibility = "hidden"; // couldn't figure out how to grey it
+      reload_tag_button.style.visibility = "hidden";
       updateHTML(before_test_edit_span, "new tag...");
     } else {
       save_button.value = "Update This Tag";
       destroy_button.style.visibility = "visible";
+      reload_tag_button.style.visibility = "visible";
       updateHTML(before_test_edit_span, "re-editing existing tag...");
     }
-      
+    
     updateHTML(document.getElementById("playback_rate"), twoDecimals(getPlaybackRate()) + "x");
   }
   // XXXX cleanup the below needed huh?
@@ -1041,7 +1044,7 @@ function openFirstTagAfter(search_time) {
   }
 }
 
-function saveEditButton() {
+function saveTagButton() {
   if (!doubleCheckValues()) {
     return;
   }
@@ -1052,11 +1055,15 @@ function saveEditButton() {
     return;
   }
 
-  document.getElementById('create_new_tag_form_id').action = "https://" + request_host + "/save_tag/" + url.id;
-  document.getElementById('create_new_tag_form_id').submit();
-
-  // reset so people don't think they can tweak and resave...since it doesn't know the new ID'ish :|
-  reloadTagsAndClearForm();
+  var submit_form = document.getElementById('create_new_tag_form_id');
+  submit_form.action = "https://" + request_host + "/save_tag/" + url.id; // allow request_host to change :| NB this goes to the *movie* id
+//    submit_form.submit();
+  submitFormXhr(submit_form, function(xhr) {
+    reloadTagsAndClearForm();  
+  }, function(xhr) {
+    console.log("save didn't take?");
+    // and don't clear?
+  });
 }
 
 function reloadButton() {

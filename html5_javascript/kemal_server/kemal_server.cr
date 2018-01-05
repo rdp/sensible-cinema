@@ -123,7 +123,7 @@ get "/for_current_just_settings_json" do |env|
   episode_number = env.params.query["episode_number"].to_i # should always be present :)
   url_or_nil = Url.get_only_or_nil_by_urls_and_episode_number(sanitized_url, episode_number)
   if page = env.request.headers["Origin"]? # XHR hmm...
-    urlish = page.split("/")[0..2].join("/") # https://amazon.com
+    urlish = page.split("/")[0..2].join("/") # https://amazon.com or smile.amazon.com
   else
     # assume it's big buck bunny on pimw for CORS purposes...
     urlish = "https://playitmyway.org"
@@ -140,7 +140,7 @@ get "/for_current_just_settings_json" do |env|
     if HTML.unescape(url.url).starts_with?(standardize_url urlish) # standardize so smile.amazon still works :|
       env.response.headers.add "Access-Control-Allow-Origin", urlish # apparently has to be exactly instead of "*" for it to reuse your normal cookies (or is it any at all?)
     else
-      # allow them to be seen just "for normal viewing" ex: on playitmyway.org...
+      # allow them to be seen just "for normal viewing" ex: on playitmyway.org...no CORS needed
     end
     if !editor?(env)
       url.count_downloads += 1
@@ -327,6 +327,13 @@ post "/save_tag/:url_id" do |env|
   if tag2 = tag.overlaps_any? url.tags
     add_to_flash(env, "appears this tag might accidentally [or purposefully] have an overlap with a different #{tag2.default_action} tag that starts at #{seconds_to_human tag2.start} and ends at #{seconds_to_human tag2.endy}, expected?")
   end
+  
+  if page = env.request.headers["Origin"]? # XHR
+    urlish = page.split("/")[0..2].join("/") # https://amazon.com or https://smile.amazon.com
+    env.response.headers.add "Access-Control-Allow-Credentials", "true"
+    env.response.headers.add "Access-Control-Allow-Origin", urlish
+  end
+ 
   env.redirect "/edit_tag/#{tag.id}" # so they can add details...
 end
 

@@ -153,13 +153,24 @@ function pointWithinElement(cursorX, cursorY, element) {
   return (cursorX < coords.left + coords.width && cursorX > coords.left && cursorY < coords.top + coords.height && cursorY > coords.top);
 }
 
+function submitFormXhr(oFormElement, success, failure)
+{
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function() {success(xhr); }
+  xhr.onerror = function() { failure(xhr) };
+  xhr.withCredentials = true; // or we don't know who is sending the data in to save it
+  xhr.open (oFormElement.method, oFormElement.action, true);
+  xhr.send (new FormData (oFormElement));
+  return false;
+}
+
 function getRequest(success, error) {  
   var url = lookupUrl();
   console.log("starting attempt GET download " + url);
   var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"); 
   xhr.open("GET", url); 
   xhr.withCredentials = true; // the only request we do is the json one which should work secured...
-  xhr.onreadystatechange = function(){ 
+  xhr.onreadystatechange = function(){  // or onload for newer browsers LOL onload == success
     if ( xhr.readyState == 4 ) { 
       if ( xhr.status == 200 ) { 
         success(xhr.responseText); 
