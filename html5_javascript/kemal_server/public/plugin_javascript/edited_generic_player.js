@@ -1875,6 +1875,15 @@ function check_if_done_seek(start_time, ts, did_arbitrary_pause, callback) {
       console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " ts=" + ts + " length_was=" + twoDecimals(ts - start_time) + " buffered_ahead=" + twoDecimals(seconds_buffered) + " from=" + twoDecimals(start_time) + " cur_time_actually=" + twoDecimals(getCurrentTime()) + " state=" + video_element.readyState);
       if (did_arbitrary_pause) {
         doPlay();
+        setTimeout(function() {
+          if (isPaused()) {
+            console.log("emergency! It didn't come back out, re-trying..."); // obviously we are really doing something wrong here, but couldn't quite figure out the right way :|
+            doPause(); // needed to get rid of that annoying twisting circle seemingly...
+            doPlay();
+          } else {
+            console.log("appears the play message wasn't nuked");
+          } 
+        }, 100);
       } else {
         console.log("not doing doPlay after seek");
       }
