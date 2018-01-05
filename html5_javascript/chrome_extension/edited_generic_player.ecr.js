@@ -1059,9 +1059,10 @@ function saveTagButton() {
   submit_form.action = "https://" + request_host + "/save_tag/" + url.id; // allow request_host to change :| NB this goes to the *movie* id
 //    submit_form.submit();
   submitFormXhr(submit_form, function(xhr) {
-    reloadTagsAndClearForm();  
+    clearForm();
+    reloadForCurrentUrl(); // it's been saved so we can do this ja
   }, function(xhr) {
-    console.log("save didn't take?");
+    alert("save didn't take? website down?");
     // and don't clear?
   });
 }
@@ -1082,11 +1083,11 @@ function reloadButton() {
 }
 
 function clearButton() {
-  reloadTagsAndClearForm();
+  clearForm();
+  reloadForCurrentUrl();
 }
 
-function reloadTagsAndClearForm() {
-  setTimeout(reloadForCurrentUrl, 1000); // reload to get it "back" from the server after saved...longest I've seen like like 60ms
+function clearForm() {
   document.getElementById('start').value = timeStampToHuman(0);
   document.getElementById('endy').value = timeStampToHuman(0);
   document.getElementById('details_input_id').value = "";
@@ -1111,8 +1112,13 @@ function destroyCurrentTagButton() {
   }
   if (confirm("sure you want to nuke this tag all together?")) {
     window.open("https://" + request_host + "/delete_tag/" + id); // assume it works, and ja :)
-    reloadTagsAndClearForm();
+    clearForm();
+    reloadTagsAfterOneSecond();
   }
+}
+
+function reloadTagsAfterOneSecond() {
+  setTimeout(reloadForCurrentUrl, 1000); // reload to get it "back" from the server after saved...longest I've seen like like 60ms
 }
 
 function doneMoviePage() {
