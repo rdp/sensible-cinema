@@ -1063,6 +1063,7 @@ function doPlay() {
   if (isYoutubePimw()) {
     youtube_pimw_player.playVideo();
   } else {
+    // could return this "play promise" but seems to get called immediately even if play is actually still working [amazon]
     video_element.play(); // implies video_element.style.visibility = "visible" after...enough time to see the video :(
   }
 }
@@ -1799,7 +1800,7 @@ function rawRequestSeekToTime(ts) {
   console.log("rawRequestSeekToTime paused=" + video_element.paused + " state=" + video_element.readyState + " buffered=" + twoDecimals(getSecondsBufferedAhead()));
 
   if (isYoutubePimw()) {
-    var allowSeekAhead = true;
+    var allowSeekAhead = true; // something about dragging the mouse
     youtube_pimw_player.seekTo(ts, allowSeekAhead); // no callback option
   } else {
     if (isAmazon()) {
@@ -1877,9 +1878,11 @@ function check_if_done_seek(start_time, ts, did_arbitrary_pause, callback) {
         doPlay();
         setTimeout(function() {
           if (isPaused()) {
-            console.log("emergency! It didn't come back out, re-trying..."); // obviously we are really doing something wrong here, but couldn't quite figure out the right way :|
-            doPause(); // needed to get rid of that annoying twisting circle seemingly...
+            console.log("EMERGENCY! It didn't come back out, re-trying..."); // obviously we are really doing something wrong here, but couldn't quite figure out the right way :|
+//            doPause(); // needed to get rid of that annoying twisting circle seemingly...
             doPlay();
+  //          doPause();
+    //        doPlay();
           } else {
             console.log("appears the play message wasn't nuked");
           } 
