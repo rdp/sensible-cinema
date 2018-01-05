@@ -332,8 +332,9 @@ post "/save_tag/:url_id" do |env|
     urlish = page.split("/")[0..2].join("/") # https://amazon.com or https://smile.amazon.com
     env.response.headers.add "Access-Control-Allow-Credentials", "true"
     env.response.headers.add "Access-Control-Allow-Origin", urlish
-    "it wurked"
+    "it wurked" # don't redir else we have to add CORS to the edit_tag as well :|
   else
+    // save from website
     env.redirect "/edit_tag/#{tag.id}" # so they can add details...
   end 
 end
