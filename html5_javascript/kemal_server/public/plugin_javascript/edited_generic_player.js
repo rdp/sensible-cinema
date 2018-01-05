@@ -1356,7 +1356,7 @@ function saveTagButton() {
 //    submit_form.submit();
   submitFormXhr(submit_form, function(xhr) {
     clearForm();
-    reloadForCurrentUrl(); // it's been saved so we can do this ja
+    reloadForCurrentUrl(" saved tag!"); // it's done saving so we can do this ja
   }, function(xhr) {
     alert("save didn't take? website down?");
     // and don't clear?
@@ -1462,15 +1462,21 @@ function loadForNewUrl() {
   getRequest(loadSucceeded, loadFailed);
 }
 
-function reloadForCurrentUrl() {
+function reloadForCurrentUrl(optional_additional_string) {
   if (url != null) {
-    console.log("reloading...");
-    var link = document.getElementById('reload_tags_a_id');
-    link.innerHTML = "Reloading...";
+    var reload_tags_link = document.getElementById('reload_tags_a_id');
+    reload_tags_link.innerHTML = "Reloading...";
+    if (optional_additional_string) {
+      reload_tags_link.innerHTML += optional_additional_string;
+    }
+    console.log("submitting reload request...");
     getRequest(function(json_string) {
       loadSucceeded(json_string);     
-      link.innerHTML = "Reloaded!";
-      setTimeout(function() {link.innerHTML = "Reload tags";}, 5000);
+      reload_tags_link.innerHTML = "Reloaded!";
+      if (optional_additional_string) {
+        reload_tags_link.innerHTML += optional_additional_string;
+      }
+      setTimeout(function() {reload_tags_link.innerHTML = "Reload tags";}, 5000);
     }, loadFailed);
   }
   else {
