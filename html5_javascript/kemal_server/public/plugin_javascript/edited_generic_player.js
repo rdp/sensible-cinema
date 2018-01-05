@@ -140,7 +140,7 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
 </div>
 
 <div id="subcategory_div_id">
-sub:
+subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
 <select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);" onchange="resizeToCurrentSize(this);">
     <option value="">unknown -- please select subcategory</option>
     
@@ -1271,22 +1271,10 @@ function testCurrentFromUi() {
   var rewindSeconds = 2;
   var start = faux_tag.start - rewindSeconds;
   if (start < 0) {
-    start = 0; // allow test edits to start at or near 0 without messing up the "done" timing...
+    start = 0; // allow testing edits to start at or near 0 without messing up the "done" timing...
   }
-  seekToTime(start, function() {
-    var length = faux_tag.endy - start;
-    if (currentTestAction() == 'skip') {
-      length = 0; // it skips it, so the amount of time before being done is less :)
-    }
-    if (currentTestAction() == "change_speed") {
-      length /= getEndSpeedOrAlert(faux_tag.details); // XXXX this is wrong somehow (too long?).
-    }
-    
-    if (isPaused()) {
-      console.log("testCurrentFromUi doing play");
-      doPlay(); // seems like we want it like this...
-    }
-  });
+  doPlay(); // seems like we want it like this...
+  seekToTime(start);
 }
 
 function getCurrentVideoTimestampHuman() {
@@ -1806,9 +1794,9 @@ function doPause() {
   }
 }
 
-function rawSeekToTime(ts) {
-  console.log("doing rawSeekToTime=" + twoDecimals(ts));
-  console.log("rawSeekToTime paused=" + video_element.paused + " state=" + video_element.readyState + " buffered=" + twoDecimals(getSecondsBufferedAhead()));
+function rawRequestSeekToTime(ts) {
+  console.log("doing rawRequestSeekToTime=" + twoDecimals(ts));
+  console.log("rawRequestSeekToTime paused=" + video_element.paused + " state=" + video_element.readyState + " buffered=" + twoDecimals(getSecondsBufferedAhead()));
 
   if (isYoutubePimw()) {
     var allowSeekAhead = true;
@@ -1835,6 +1823,7 @@ function getSecondsBufferedAhead() {
 }
 
 var current_seek_ts;
+
 function seekToTime(ts, callback) {
   if (seek_timer) {
     console.log("still seeking from previous_requested=" + current_seek_ts + ", not trying that again...new_requested=" + ts);
@@ -1858,11 +1847,12 @@ function seekToTime(ts, callback) {
     doPause();
     did_arbitrary_pause = true;
   }
-  rawSeekToTime(ts);
+  rawRequestSeekToTime(ts);
   
   if (already_cached) {
     if (callback) {
-      callback(); // scawah
+      console.log("quick seek assuming...");
+      callback(); // scawah, but the other one assumes it's paused? :|
     }
   } else {
     seek_timer = setInterval(function() {
