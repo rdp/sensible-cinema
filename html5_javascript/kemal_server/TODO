@@ -1,10 +1,10 @@
 == todo list (me ja, ordered) ==
 
+add "something age" to lewd? 
+
 3rd passes/us: 
   everything prime that's already done 2nd pass
   new releases we own that are done 2nd pass.
-
-add "something age" to lewd? 
 
 == meh sometime ==
 
@@ -13,7 +13,6 @@ youtubes them :|
 us passes:
   3rd passes
     Things we don't own, already done 2nd pass
-  after john's email...
 
 decide if private edits :\
 
@@ -22,10 +21,10 @@ melissa wants a new "age" thing (split out even more options/movie?)
   uplifting "level" -> types
 
 main page persuasive/beautiful/catchy [nik?] 
-  get installation feedback from humans again
-  TV feedback :\
   groom it first?
-  try out macs first?
+  get installation feedback from humans
+  TV feedback :\
+  try out my macs first etc.
 
 get feedback: business model
 
@@ -71,21 +70,18 @@ super soft launch looks like: easy links...ycombinator...reddit [? more?] better
 Try and go everywhere with ads/pub...
   also ads for "vidangel" "clearplay" "pureflix" [?]
   
-figure out how to collect emails/logins?
-
-if I create personalized, then somebody creates a new tag "default disabled" then on my list it's enabled I think...
-  in general something seems bworked there with personalized...
+figure out plan to collect emails/logins?
 
 some personalize icons are dead?
   pinged M
   
 does personalize still work?
-  probably
+  hopefully
+  if I create personalized, then somebody creates a new tag "default disabled" then on my list it's enabled I think...
+    in general something seems bworked there with personalized...
 
-3. It would be better if the movie page didn't open when I save a tag.
-
-seeks can break, also can they be 'better' cached??
-
+publish android app
+    
 ================= todo all never LOL =======================
 
 move to its own linode server :|
@@ -99,8 +95,6 @@ mention "made for TV" "edited for airplane"
 
 youtube: better fullscreen I guess 90%
 
-fix win 10 license
-    
 it checks "edit out all" even if some are individually not edited out...personalize page
 
 notifies on big buck mute seemed to go over and over...though they did disappear after 10 LOL
@@ -108,13 +102,12 @@ notifies on big buck mute seemed to go over and over...though they did disappear
 "disabled" edit still shows its popup? maybe does...
 
 plugin text on amazon comes in...too slow :|
-  also handle if not in our system
   
 1st passes us:
   everything we own that's not even edited yet [m. prof's?]
   prime's that we could handle?
 
-do "people" use firefox? edge? safari os x?
+do "people" use firefox? edge? safari desktop?
 
 retrofit new "tight clothing" tag, "deity euphemized", lesser cleavage for that one movie harry potter
 
@@ -128,8 +121,8 @@ Fix YouTube seek adjacent to seek (assuming it's broken :| )
   icon says "none" on youtubes :(
   better url https://playitmyway.org/edited_youtube/d732rPkjqOU
 
-get real permission to use images :|
-    rewrite legal at the bottom to be just a link
+get real permission to use movie poster images full :|
+  rewrite legal at the bottom to be just a link
     
 figure out a way to have "edited subtitles" (maybe below it?)
   either edited or...something like that.  Not show them when near a mute?
@@ -156,7 +149,6 @@ experiment with my TV options :\
   try out chromecast et al.
 
 android app (all):
-  publish!!!
   Does it say something wrong in the android app on main page install instructions? (possibly fixed)
   allow login for them! :|
   do notifications work?
@@ -223,15 +215,11 @@ if they came from google say something "spezal" LOL
   even possible these days?
   maybe if "cookie x not set"?
 
-buy TV (if people want me to research it ever LOL)
-
-make auto subs do "disabled" right/better (dang should be disabled..) :\
-
 list for "watch later" for them :)
 
 make R-rated "opt in"?
 
-add an "edited" tag underneath images in the amazon "watchlist"
+add an "edited" tag underneath images in the amazon "watchlist" "my video library" page
 
 it could say "skipping" or something for very long skips :|
 
@@ -262,12 +250,11 @@ https://twitch.amazon.com/prime?ref_=sm_w_tup_ntp_t_all&redirectRoute=aXNfdGhpc1
 youtube button for "next edited" [?]
 
 did alerts not show up in windows?
-
+  can I not unfullscreen?
+  
 There is a tiny blip of audio (between back to back skips).  And also right when you start within a skip tiny blip of video (meh)
 
 show details -> hide details
-
-Add instructions for all sorts of weird stuff, like using Safari on mac (bookmarklet?) Safari on iOS, edge, FF...
 
 decide and/or do personalized edits but publically usable :| woot
 
@@ -279,17 +266,16 @@ vimeo api??? :| legal? I've got like 3 movies on there only, man!
 
 profile javascript is something in there expensive?
 
-edited amazon precursor ads :|
+edited amazon previews :|
 
 allow tags to be tagged with multiples "it's an opening scene and it's x" [?]
 
 if you're on firefox, it should say "click here to be redirected to chrome" and it does but not clearly enough yet...
 
-genre with scroll rights
+genre
 
 get facebook gender
   and birthday LOL
-  and profile pic
 
 select by genre/original rating :|
   maybe just a search, flds style? :)
@@ -303,23 +289,10 @@ prettier movie url LOL
 
 patent
 
-try to negotiate with various sites [vudu etc.] that have junky ToS ... maybe we can reason with them... :(
-
-groom the chrome plugin page...
-
 crystal:
   double check, sockets should have some ping/timeout thing so I don't get stuck with old connections...at least that...
   slam it with wrk, everything barfs all over the place :(
   stack traces come out ugly?
-
-on amazon indexes list which ones are "editable" and also on its main page list "editable/which episodes editable" whoa!
-
-a bit ugly on horizontal mobile chrome :| or was that only after a switch? but still...dat ain't good...
-
-add year with dropdown [?]
-  low prior for now let's hope mclintock was a freak...
-  year is still barely kind of useful to people though...
-  yeah prefer dropdown...  low priority
 
 do we need more things people can enter in, like what common sense media has 3 different things?
 test roku stream from desktop? LOL :|
@@ -346,3 +319,4 @@ they can "at least playback" movies from google play index
 
 ask netflix etc. 4 real (permission, or change ToS, or let's really partner LOL) :|
   "I would love to support you, 30000 users" etc. LOL have them spam him
+  try to negotiate with various sites [vudu etc.] that have junky ToS ... maybe we can reason with them... :( (m/b don't have to wait)
