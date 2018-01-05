@@ -1808,7 +1808,7 @@ function doPause() {
 
 function rawSeekToTime(ts) {
   console.log("doing rawSeekToTime=" + twoDecimals(ts));
-   console.log("rawSeekToTime paused=" + video_element.paused + " state=" + video_element.readyState + " buffered=" + twoDecimals(getSecondsBufferedAhead()));
+  console.log("rawSeekToTime paused=" + video_element.paused + " state=" + video_element.readyState + " buffered=" + twoDecimals(getSecondsBufferedAhead()));
 
   if (isYoutubePimw()) {
     var allowSeekAhead = true;
@@ -1834,61 +1834,71 @@ function getSecondsBufferedAhead() {
   return seconds_buffered;
 }
 
-var old_ts;
+var current_seek_ts;
 function seekToTime(ts, callback) {
   if (seek_timer) {
-    console.log("still seeking from previous_requested=" + old_ts + ", not trying that again...new_requested=" + ts);
+    console.log("still seeking from previous_requested=" + current_seek_ts + ", not trying that again...new_requested=" + ts);
     return;
   }
+  current_seek_ts = ts;
   
   if (ts < 0) {
     console.log("not seeking to before 0, seeking to 0 instead, seeking to negative doesn't work well " + ts);
     ts = 0;
   }
-  var current_pause_state = isPaused();
   // try and avoid freezes after seeking...if it was playing first...
   var start_time = getCurrentTime();
   console.log("seeking to " + timeStampToHuman(ts) + " from=" + timeStampToHuman(start_time) + " state=" + video_element.readyState + " to_ts=" + twoDecimals(ts));
   // [amazon] if this is far enough away from current, it also implies a "play" call...oddly. I mean seriously that is bizarre.
   // however if it close enough, then we need to call play
   // some shenanigans to pretend to work around this...
-  rawSeekToTime(ts);
-  if (!isYoutubePimw()) {
+  var did_arbitrary_pause = false; // youtube loses 0.05 with these shenanigans needed on amazon, so attempt avoid :|
+  var already_cached = ts > getCurrentTime() && ts < (getCurrentTime() + getSecondsBufferedAhead() - 0.6); // 0.4 seemed to really quite fail in amazon
+  if (isAmazon() && !isPaused() && !already_cached) {
     doPause();
-  } // youtube seems to not need these shenanigans
-  old_ts = ts;
-  seek_timer = setInterval(function() {
-      if (isYoutubePimw()) {
-        console.log("seeking youtube_player_state=" + youtube_pimw_player.getPlayerState());
-        var done_buffering = (youtube_pimw_player.getPlayerState() == YT.PlayerState.PAUSED); // This "might" mean done buffering :| [we pause it ourselves first...hmm...maybe don't have to?]
-      } else {
-        var HAVE_ENOUGH_DATA_HTML5 = 4;
-        var done_buffering = videoNotBuffering();
-      }
-      if ((isPaused() && done_buffering) || !isPaused()) {
-        var seconds_buffered = getSecondsBufferedAhead();
+    did_arbitrary_pause = true;
+  }
+  rawSeekToTime(ts);
+  
+  if (already_cached) {
+    if (callback) {
+      callback(); // scawah
+    }
+  } else {
+    seek_timer = setInterval(function() {
+        check_if_done_seek(start_time, ts, did_arbitrary_pause, callback);
+    }, 25);
+  }
+}
 
-        if (seconds_buffered > 2) { // usually 4 or 6...
-          console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " ts=" + ts + " length_was=" + twoDecimals(ts - start_time) + " buffered_ahead=" + twoDecimals(seconds_buffered) + " from=" + twoDecimals(start_time) + " cur_time_actually=" + twoDecimals(getCurrentTime()) + " state=" + video_element.readyState);
-          if (!isYoutubePimw()) {
-            if (!current_pause_state) { // youtube loses 0.05 with these shenanigans needed on amazon, so attempt avoid :|
-              doPlay();
-            } else {
-              console.log("staying paused [was paused before seek]");
-            }
-          }
-          clearInterval(seek_timer);
-          if (callback) {
-            callback();
-          }
-          seek_timer = null;
-        } else {
-          console.log("waiting for it to finish buffering after seek seconds_buffered=" + seconds_buffered);
-        }
+function check_if_done_seek(start_time, ts, did_arbitrary_pause, callback) {
+  if (isYoutubePimw()) {
+    console.log("check_if_done_seek youtube_player_state=" + youtube_pimw_player.getPlayerState());
+    var done_buffering = (youtube_pimw_player.getPlayerState() == YT.PlayerState.PAUSED); // This "might" mean done buffering :| [we pause it ourselves first...hmm...maybe don't have to?]
+  } else {
+    var done_buffering = videoNotBuffering();
+  }
+  if ((isPaused() && done_buffering) || !isPaused()) {
+    var seconds_buffered = getSecondsBufferedAhead();
+
+    if (seconds_buffered > 2) { // usually 4 or 6...
+      console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " ts=" + ts + " length_was=" + twoDecimals(ts - start_time) + " buffered_ahead=" + twoDecimals(seconds_buffered) + " from=" + twoDecimals(start_time) + " cur_time_actually=" + twoDecimals(getCurrentTime()) + " state=" + video_element.readyState);
+      if (did_arbitrary_pause) {
+        doPlay();
       } else {
-        console.log("seek_timer interval [i.e. still seeking...] paused=" + isPaused() + " desired_seek_to=" + ts + " state=" + video_element.readyState + " cur_time=" + getCurrentTime());
+        console.log("not doing doPlay after seek");
       }
-  }, 25);
+      clearInterval(seek_timer);
+      if (callback) {
+        callback();
+      }
+      seek_timer = null;
+    } else {
+      console.log("waiting for it to finish buffering after seek seconds_buffered=" + seconds_buffered);
+    }
+  } else {
+    console.log("seek_timer interval [i.e. still seeking...] paused=" + isPaused() + " desired_seek_to=" + ts + " state=" + video_element.readyState + " cur_time=" + getCurrentTime());
+  }
 }
 
 function displayDiv(div) { // who needs jQuery :)
@@ -2128,7 +2138,8 @@ function videoNotBuffering() {
     // -1 – unstarted 0 – ended 1 – playing 2 – paused 3 – buffering 5 – video cued assume paused means not buffering? huh wuh? XXXX experiment...
     return youtube_pimw_player.getPlayerState() == YT.PlayerState.PAUSED || youtube_pimw_player.getPlayerState() == YT.PlayerState.PLAYING;
   } else {
-    return video_element.readyState == 4; // it's HAVE_NOTHING, HAVE_METADATA, HAVE_CURRENT_DATA [i.e. 1 frame], HAVE_FUTURE_DATA [i.e. 2 frames], HAVE_ENOUGH_DATA == 4 [i.e. lots of data buffered]
+    var HAVE_ENOUGH_DATA_HTML5 = 4;
+    return video_element.readyState == HAVE_ENOUGH_DATA_HTML5;// it's HAVE_NOTHING, HAVE_METADATA, HAVE_CURRENT_DATA [i.e. 1 frame], HAVE_FUTURE_DATA [i.e. 2 frames], HAVE_ENOUGH_DATA == 4 [i.e. lots of data buffered]
   }
 }
 
