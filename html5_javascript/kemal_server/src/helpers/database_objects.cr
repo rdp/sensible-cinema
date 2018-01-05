@@ -489,7 +489,7 @@ class Tag
     @default_action = "mute"
     @age_maybe_ok = 0
     @url_id = url.id
-    @impact_to_movie = 0
+    @impact_to_movie = 1
     @popup_text_after = ""
     @default_enabled = true
   end
