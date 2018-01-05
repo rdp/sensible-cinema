@@ -1,2 +1,2 @@
-git cam $1
+git cam "$1"
 git pom

@@ -1898,14 +1898,12 @@ function check_if_done_seek(start_time, ts, did_arbitrary_pause, callback) {
         setTimeout(function() {
           if (isPaused()) {
             console.log("EMERGENCY! It didn't come back out, re-trying..."); // obviously we are really doing something wrong here, but couldn't quite figure out the right way :|
-//            doPause(); // needed to get rid of that annoying twisting circle seemingly...
+            doPause(); // needed to get rid of that annoying twisting circle seemingly...
             doPlay();
-  //          doPause();
-    //        doPlay();
           } else {
             console.log("appears the play message wasn't nuked");
           } 
-        }, 100);
+        }, 1000); // 100 didn't work here :|
       } else {
         console.log("not doing doPlay after seek");
       }
