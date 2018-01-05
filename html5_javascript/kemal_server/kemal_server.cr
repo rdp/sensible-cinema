@@ -332,9 +332,10 @@ post "/save_tag/:url_id" do |env|
     urlish = page.split("/")[0..2].join("/") # https://amazon.com or https://smile.amazon.com
     env.response.headers.add "Access-Control-Allow-Credentials", "true"
     env.response.headers.add "Access-Control-Allow-Origin", urlish
-  end
- 
-  env.redirect "/edit_tag/#{tag.id}" # so they can add details...
+    "it wurked"
+  else
+    env.redirect "/edit_tag/#{tag.id}" # so they can add details...
+  end 
 end
 
 get "/edit_url/:url_id" do |env|
