@@ -1356,7 +1356,7 @@ function saveTagButton() {
 //    submit_form.submit();
   submitFormXhr(submit_form, function(xhr) {
     clearForm();
-    reloadForCurrentUrl(" saved tag!"); // it's done saving so we can do this ja
+    reloadForCurrentUrl("Saved tag! "); // it's done saving so we can do this ja
   }, function(xhr) {
     alert("save didn't take? website down?");
     // and don't clear?
@@ -1467,14 +1467,14 @@ function reloadForCurrentUrl(optional_additional_string) {
     var reload_tags_link = document.getElementById('reload_tags_a_id');
     reload_tags_link.innerHTML = "Reloading...";
     if (optional_additional_string) {
-      reload_tags_link.innerHTML += optional_additional_string;
+      reload_tags_link.innerHTML = optional_additional_string + reload_tags_link.innerHTML;
     }
     console.log("submitting reload request...");
     getRequest(function(json_string) {
       loadSucceeded(json_string);     
       reload_tags_link.innerHTML = "Reloaded!";
       if (optional_additional_string) {
-        reload_tags_link.innerHTML += optional_additional_string;
+        reload_tags_link.innerHTML = optional_additional_string + reload_tags_link.innerHTML;
       }
       setTimeout(function() {reload_tags_link.innerHTML = "Reload tags";}, 5000);
     }, loadFailed);
@@ -1898,12 +1898,14 @@ function check_if_done_seek(start_time, ts, did_arbitrary_pause, callback) {
         setTimeout(function() {
           if (isPaused()) {
             console.log("EMERGENCY! It didn't come back out, re-trying..."); // obviously we are really doing something wrong here, but couldn't quite figure out the right way :|
-            doPause(); // needed to get rid of that annoying twisting circle seemingly...
-            doPlay();
+            setTimeout(function() {
+              doPause(); // needed to get rid of that annoying twisting circle seemingly...
+              doPlay();
+            }, 1500); // just doing it "now" after 100 didn't work, but don't want to interrupt legit pauses :|
           } else {
             console.log("appears the play message wasn't nuked");
           } 
-        }, 1000); // 100 didn't work here :|
+        }, 100);
       } else {
         console.log("not doing doPlay after seek");
       }
