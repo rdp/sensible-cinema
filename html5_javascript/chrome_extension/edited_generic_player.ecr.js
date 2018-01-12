@@ -16,6 +16,14 @@ var all_pimw_stuff;
 var currently_in_process_tags = new Map();
 var old_current_url, old_episode;
 var current_tags_to_use;
+var i_muted_it = false; // attempt to let them still control their mute button :|
+var i_changed_its_speed = false; // attempt to let them still control speed manually if desired
+var i_changed_audio_percent = false;
+var i_hid_it = false; // make us "unhide" it only if we hid it, so that hiding because seeked into skip middle does its own hiding...don't mess with that one...
+var last_speed_value = null;
+var last_audio_percent = null;
+var i_unfullscreened_it_element = null;
+var i_paused_it = null;
 
 function addEditUiOnce() { 
   all_pimw_stuff = document.createElement('div');
@@ -252,14 +260,6 @@ function areWeWithin(desiredAction, cur_time) {
   return false;
 }
 
-var i_muted_it = false; // attempt to let them still control their mute button :|
-var i_changed_its_speed = false; // attempt to let them still control speed manually if desired
-var i_changed_audio_percent = false;
-var i_hid_it = false; // make us "unhide" it only if we hid it, so that hiding because seeked into skip middle does its own hiding...don't mess with that one...
-var last_speed_value = null;
-var last_audio_percent = null;
-var i_unfullscreened_it_element = null;
-var i_paused_it = null;
 
 function checkIfShouldDoActionAndUpdateUI() {
   var cur_time = getCurrentTime();
@@ -415,7 +415,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       second_line +=  " in " + timeStampToHuman(time_until);      
       second_line += "<br/>";
       // third_line now
-      if (faux_tag_being_tested) {
+      if (faux_tag_being_tested && uiTagDiffersFromOriginalOrNoOriginal()) {
         second_line += "(testing using your last values)";
       }
       second_line += "(" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
@@ -716,7 +716,7 @@ function compareTagStarts(tag1, tag2) {
 
 function getAllTagsIncludingReplacedFromUISorted(tags_wanting_replacement_inserted) {
   if (!faux_tag_being_tested) {
-    return tags_wanting_replacement_inserted; // assume sorted
+    return tags_wanting_replacement_inserted; // should be sorted
   }
   if (uiTagIsNotInDb()) {
     return [faux_tag_being_tested].concat(tags_wanting_replacement_inserted).sort(compareTagStarts); // add in new tag chronologically
@@ -969,15 +969,20 @@ function testCurrentFromUi() {
   var rewindSeconds = 2;
   var start = faux_tag.start - rewindSeconds;
   faux_tag_being_tested = faux_tag; // just concretize for now :|
-  if (!uiTagIsNotInDb()) {
-    var original_tag = get_original_tag_of_ui();
-    if (withinDelta(original_tag.start, faux_tag.start, 0.01) && withinDelta(original_tag.endy, faux_tag.endy, 0.01) && original_tag.default_action == faux_tag.default_action) {
-      // we're not testing anything, really...don't say so on the UI
-      faux_tag_being_tested = null;
-    }
-  }
   doPlay(); // seems like we want it like this...
   seekToTime(start);
+}
+
+function uiTagDiffersFromOriginalOrNoOriginal() {
+  var original_tag = get_original_tag_of_ui();
+  if (uiTagIsNotInDb()) {
+    return true;
+  }
+  if (withinDelta(original_tag.start, faux_tag.start, 0.01) && withinDelta(original_tag.endy, faux_tag.endy, 0.01) && original_tag.default_action == faux_tag.default_action) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 function getCurrentVideoTimestampHuman() {
