@@ -1,7 +1,7 @@
 
 function showSubCatWithRightOptionsAvailable() {
   // theoretically they can never select unknown...
-  var type = document.getElementById("category_select").value; // category like "profanity"
+  var category = document.getElementById("category_select").value;
   var subcategory_select = document.getElementById("subcategory_select_id");
   var width_needed = 0;
   var subcats_with_optgroups = Array.apply(null, subcategory_select.options); // convert to Array
@@ -10,7 +10,7 @@ function showSubCatWithRightOptionsAvailable() {
     var option = subcats_with_optgroups[i];
     var text = option.text || option.label; // for optgroup
     var cat_from_subcat = text.split(" ")[0]; // profanity of profanity -- XXX
-    if (cat_from_subcat != type && text.includes(" -- ")) {
+    if (cat_from_subcat != category && text.includes(" -- ")) {
       option.style.display = "none";
     }
     else {
