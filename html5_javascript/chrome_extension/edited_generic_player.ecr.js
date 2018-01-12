@@ -146,7 +146,7 @@ function addEditUiOnce() {
     $("#action_sel option[value='mute_audio_no_video']").remove();
   }
   
-  setInterval(doPeriodicChecks, 250);
+  setInterval(doPeriodicChecks, 250); // too cpu hungry :|
   
 } // end addEditUiOnce
 
@@ -159,7 +159,7 @@ function playButtonClicked() {
   }
 }
 
-function getStandardizedCurrentUrl() { // duplicated with conentscript .js
+function getStandardizedCurrentUrl() { // duplicated with contentscript .js
   var current_url = currentUrlNotIframe();
   if (document.querySelector('link[rel="canonical"]') != null && !isYoutube()) {
     // -> canonical, the crystal code does this for everything so guess we should do here as well...ex youtube it strips off any &t=2 or something...
@@ -199,7 +199,7 @@ function liveEpisodeName() {
         if (regex.test(numberName)) {
           return numberName.split(regex)[2];
         }
-        // ??
+        // ?? punt!
         return numberName;
      }
     }
@@ -951,30 +951,19 @@ function faux_tag_is_ready(faux_tag) {
 
 function testCurrentFromUi() {
   if (humanToTimeStamp(document.getElementById('endy').value) == 0) {
-    document.getElementById('endy').value = getCurrentVideoTimestampHuman(); // assume they wanted to test till "right now" I did this a couple of times :)
+    document.getElementById('endy').value = getCurrentVideoTimestampHuman(); // assume they wanted to test till "right now" I did sometimes :)
   }
   var faux_tag = createFauxTagForCurrentUI();
-  // "minor" validation inline, so they can still just test it without it being setup yet :)
+  // "minor" validation inline, so they can still just test it without it being fully setup yet :)
+  if !weakDoubleCheckTimestampsAndAlert(currentTestAction(), faux_tag.details, faux_tag.start, faux_tag.endy) {
+    return;
+  }
+
   if (!faux_tag.default_enabled) {
     alert("tag is set to disabled, hard to test, please toggle on temporarily!");
     return;
   }
-  if (faux_tag.start == 0) {
-    alert("appears your start time is zero, which is not allowed, if you want one that starts near the beginning enter 0.05s");
-    return;
-  }
-  if (faux_tag.endy <= faux_tag.start) {
-    alert("appears your end is before or equal to your start, please adjust timestamps, then try again!");
-    return; // abort!
-  }
-  if ((currentTestAction() == "make_video_smaller") && !isYoutubePimw()) {
-    alert("we only do that for youtube today, ping us if you want it added elsewhere");
-    return;
-  }
-  if (currentTestAction() == "change_speed" && !getEndSpeedOrAlert(faux_tag.details)) {
-    return; // already alerted
-  }
-  
+
   var rewindSeconds = 2;
   var start = faux_tag.start - rewindSeconds;
   if (start < 0) {

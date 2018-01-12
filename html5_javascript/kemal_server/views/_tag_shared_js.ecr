@@ -71,7 +71,55 @@ function getAudioPercentOrAlert(value) {
   return null;
 }
 
+function weakDoubleCheckTimestampsAndAlert(action, details, start, endy) {
+
+  if ((action == "make_video_smaller" || action == "change_speed") && !isYoutubePimw()) {
+    alert("we only do that for youtube today, ping us if you want it added elsewhere");
+    return;
+  }
+  
+  if (action == "change_speed" && !getEndSpeedOrAlert(details)) {
+    return false;
+  }
+  if (action == "set_audio_volume" && !getAudioPercentOrAlert(details)) {
+    return false;
+  }
+ 
+  // XXXX don't really need anymore...wait maybe should allow so I can warn 'em?
+  if (isYoutubePimw() && (action == "mute" || action == "mute_audio_no_video")) {
+    alert("we seemingly aren't allowed to do mutes for youtube, you can either do a skip or set_audio_volume to low [5%], instead");
+    return false;
+  }
+  if (isYoutubePimw() && action == "yes_audio_no_video") {
+    alert("we seemingly aren't allowed to do yes_audio_no_video for youtube, just skip instead");
+    return false;
+  }
+  if (start == 0) {
+    alert("Can't start at zero, please select 0.01s if you want one that starts near the beginning");
+    return false;
+  }
+  if (start >= endy) {
+    alert("appears your end is before or equal to your start, please adjust timestamps, then try again!");
+    return false;
+  }
+  if (endy - start > 60*15) {
+    alert("tag is more than 15 minutes long? This should not typically be expected? check timestamps, if you do need it this long, let us know...");
+    return false;
+  }
+
+  return true;
+}
+
 function doubleCheckValues() {
+
+  var action = document.getElementById('action_sel').value;
+  var details = document.getElementById('details_input_id').value;
+  var start = humanToTimeStamp(document.getElementById('start').value);
+  var endy = humanToTimeStamp(document.getElementById('endy').value);
+  if (!weakDoubleCheckTimestampsAndAlert(action, details, start, endy)) {
+    return false;
+  }
+
   var category = document.getElementById('category_select').value;
   if (category == "") {
     alert("please select category first");
@@ -89,46 +137,13 @@ function doubleCheckValues() {
     alert("please select impact to story");
     return false;
   }
-  var details = document.getElementById('details_input_id').value;
   if (details == "") {
     alert("please enter tag details");
-    return false;
-  }
-  var action = document.getElementById('action_sel').value;
-  
-  if (action == "change_speed" && !getEndSpeedOrAlert(details)) {
-    return false;
-  }
-  if (action == "set_audio_volume" && !getAudioPercentOrAlert(details)) {
-    return false;
-  }
- 
-  // XXXX don't really need anymore... 
-  if (isYoutubePimw() && (action == "mute" || action == "mute_audio_no_video")) {
-    alert("we seemingly aren't allowed to do mutes for youtube, you can either skip or change the volume to low [5%], instead");
-    return false;
-  }
-  if (isYoutubePimw() && action == "yes_audio_no_video") {
-    alert("we can't do no_video for youtube, just skip instead");
     return false;
   }
   
   if ((category == "violence" || category == "suspense") && age == "0") {
     alert("for violence or suspense tags, please also select a value in the age specifier dropdown");
-    return false;
-  }
-  var start = humanToTimeStamp(document.getElementById('start').value);
-  var endy = humanToTimeStamp(document.getElementById('endy').value);
-  if (start == 0) {
-    alert("Can't start at zero, please select 0.01s if you want one that starts near the beginning");
-    return false;
-  }
-  if (start >= endy) {
-    alert("end is not after the start, double check timestamps...");
-    return false;
-  }
-  if (endy - start > 60*15) {
-    alert("tag is more than 15 minutes long? This should not typically be expected? check timestamps, if you do need it this long, let us know...");
     return false;
   }
   return true;
