@@ -143,201 +143,275 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
 <select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);" onchange="resizeToCurrentSize(this);">
     <option value="">unknown -- please select subcategory</option>
     
-      <option value="initial theme song">movie-content -- initial theme song</option>    
-    
-      <option value="initial credits">movie-content -- initial company credits before intro/before songs</option>    
-    
-      <option value="closing credits">movie-content -- closing credits/songs</option>    
-    
-      <option value="subscription plea">movie-content -- closing subscription plea</option>    
-    
-      <option value="joke edit">movie-content -- joke edit -- edits that make video funny when applied</option>    
-    
-      <option value="movie content morally questionable choice">movie-content -- morally questionable choice</option>    
-    
-      <option value="movie note for viewer">movie-content -- movie note/message for viewer</option>    
-    
-      <option value="movie content other">movie-content -- other</option>    
-    
-      <option value="loud noise">profanity -- loud noise/screaming/yelling</option>    
-    
-      <option value="raucous music">profanity -- raucous music</option>    
-    
-      <option value="personal insult mild">profanity -- insult (&quot;moron&quot;, &quot;idiot&quot; etc.)</option>    
-    
-      <option value="personal attack mild">profanity -- attack command (&quot;shut up&quot; etc.)</option>    
-    
-      <option value="being mean">profanity -- being mean/cruel to another</option>    
-    
-      <option value="derogatory slur">profanity -- categorizing derogatory slur</option>    
-    
-      <option value="crude humor">profanity -- crude humor, like poop, bathroom, gross, etc.</option>    
-    
-      <option value="bodily part reference mild">profanity -- bodily part reference mild (butt, bumm, suck...)</option>    
-    
-      <option value="bodily part reference harsh">profanity -- bodily part reference harsh (balls, etc.)</option>    
-    
-      <option value="sexual reference">profanity -- sexual innuendo/reference</option>    
-    
-      <option value="violence reference">profanity -- violence reference</option>    
-    
-      <option value="euphemized profanities">profanity -- euphemized profanities (ex: crap, dang, gosh dang)</option>    
-    
-      <option value="lesser expletive">profanity -- other lesser expletive ex &quot;bloomin&#39;&quot; etc.</option>    
-    
-      <option value="deity religious context">profanity -- deity use in religious context like &quot;the l... is good&quot;</option>    
-    
-      <option value="deity reference">profanity -- deity use appropriate but non religious context like &quot;in this game you are G...&quot;</option>    
-    
-      <option value="deity exclamation mild">profanity -- deity exclamation mild like Good L...</option>    
-    
-      <option value="deity exclamation euphemized">profanity -- deity euphemized like &#39;oh my gosh&#39;</option>    
-    
-      <option value="deity exclamation harsh">profanity -- deity exclamation harsh, name of the Lord (omg, etc.)</option>    
-    
-      <option value="deity expletive">profanity -- deity expletive (es: goll durn, the real words)</option>    
-    
-      <option value="deity greek">profanity -- deity greek (Zeus, etc.)</option>    
-    
-      <option value="deity foreign language">profanity -- deity different language, like Allah or French equivalents, etc</option>    
-    
-      <option value="personal insult harsh">profanity -- insult harsh (son of a ..... etc.)</option>    
-    
-      <option value="a word">profanity -- a.. (and/or followed by anything)</option>    
-    
-      <option value="d word">profanity -- d word</option>    
-    
-      <option value="h word">profanity -- h word</option>    
-    
-      <option value="h word in context">profanity -- h word original meaning</option>    
-    
-      <option value="s word">profanity -- s word</option>    
-    
-      <option value="f word">profanity -- f-bomb expletive</option>    
-    
-      <option value="f word sex connotation">profanity -- f-bomb sexual connotation</option>    
-    
-      <option value="profanity foreign language">profanity -- any other profanity different language, French, etc</option>    
-    
-      <option value="profanity (other)">profanity -- other</option>    
-    
-      <option value="light fight">violence -- short fighting (single punch/kick/hit/push)</option>    
-    
-      <option value="sustained fight">violence -- sustained punching/fighting</option>    
-    
-      <option value="threatening actions">violence -- threatening actions</option>    
-    
-      <option value="stabbing/shooting no blood">violence -- stabbing/shooting no blood</option>    
-    
-      <option value="stabbing/shooting with blood">violence -- stabbing/shooting yes blood</option>    
-    
-      <option value="visible blood">violence -- visible blood (ex: blood from wound)</option>    
-    
-      <option value="visible wound">violence -- visible wound (no gore, light gore)</option>    
-    
-      <option value="open wounds">violence -- visible gore (ex: open wound)</option>    
-    
-      <option value="crudeness">violence -- crude actions, grossness, etc.</option>    
-    
-      <option value="collision">violence -- collision/crash (no implied death)</option>    
-    
-      <option value="collision death">violence -- collision/crash (implied death)</option>    
-    
-      <option value="explosion">violence -- explosion (no implied death)</option>    
-    
-      <option value="explosion death">violence -- explosion (implied death)</option>    
-    
-      <option value="comedic fight">violence -- comedic/slapstick fighting</option>    
-    
-      <option value="shooting miss">violence -- shooting miss or ambiguous</option>    
-    
-      <option value="shooting hit non death">violence -- shooting hits person or thing but non fatal</option>    
-    
-      <option value="killing">violence -- killing on screen (ex: shooting death fatal)</option>    
-    
-      <option value="attempted killing">violence -- attempted killing on screen (ex: laser zap)</option>    
-    
-      <option value="non human killing">violence -- non human killing/death on screen (ex: animal, or robot)</option>    
-    
-      <option value="killing offscreen">violence -- killing off screen (ex: shooting death off screen)</option>    
-    
-      <option value="circumstantial death">violence -- death non-killing, ex: accidental falling</option>    
-    
-      <option value="hand gesture">violence -- hand gesture</option>    
-    
-      <option value="sports violence">violence -- sports violence part of game</option>    
-    
-      <option value="rape">violence -- rape</option>    
-    
-      <option value="dead body">violence -- dead body visible lifeless</option>    
-    
-      <option value="suicidal actions">violence -- suicidal actions</option>    
-    
-      <option value="violence (other)">violence -- other</option>    
-    
-      <option value="art nudity">physical -- art based nudity</option>    
-    
-      <option value="revealing clothing">physical -- revealing clothing (scantily clad)</option>    
-    
-      <option value="tight clothing">physical -- tight clothing (revealing because tight)</option>    
-    
-      <option value="underwear">physical -- clad in underwear</option>    
-    
-      <option value="swimsuit">physical -- swimsuit</option>    
-    
-      <option value="light cleavage">physical -- light cleavage/barely revealing</option>    
-    
-      <option value="revealing cleavage">physical -- revealing cleavage</option>    
-    
-      <option value="partial nudity">physical -- partial nudity (ex: excessive cleavage)</option>    
-    
-      <option value="nudity posterior male">physical -- nudity (posterior) male</option>    
-    
-      <option value="nudity posterior female">physical -- nudity (posterior) female</option>    
-    
-      <option value="nudity anterior male">physical -- nudity (anterior) male</option>    
-    
-      <option value="nudity anterior female">physical -- nudity (anterior) female</option>    
-    
-      <option value="nudity breast">physical -- nudity (breast)</option>    
-    
-      <option value="shirtless male">physical -- shirtless male (non sexual)</option>    
-    
-      <option value="kissing peck">physical -- kiss (peck)</option>    
-    
-      <option value="kissing passionate">physical -- kiss (passionate)</option>    
-    
-      <option value="sexually charged scene">physical -- sexually charged scene</option>    
-    
-      <option value="sex foreplay">physical -- sex foreplay</option>    
-    
-      <option value="implied sex">physical -- implied sex</option>    
-    
-      <option value="explicit sex">physical -- explicit sex</option>    
-    
-      <option value="homosexual behavior">physical -- homosexual behavior (kissing, holding hands, light stuff)</option>    
-    
-      <option value="physical (other)">physical -- other</option>    
-    
-      <option value="alcohol">substance-abuse -- alcohol drinking</option>    
-    
-      <option value="smoking">substance-abuse -- smoking legal stuff (cigar, cigarette)</option>    
-    
-      <option value="smoking illegal">substance-abuse -- smoking illegal drugs</option>    
-    
-      <option value="drugs">substance-abuse -- illegal drug use</option>    
-    
-      <option value="drug injection">substance-abuse -- drug use injection</option>    
-    
-      <option value="substance-abuse other">substance-abuse -- other</option>    
-    
-      <option value="frightening/startling scene/event">suspense -- frightening/startling scene/event</option>    
-    
-      <option value="suspenseful fight &quot;will they win?&quot;">suspense -- suspenseful fight &quot;will they win?&quot;</option>    
-    
-      <option value="creepy">suspense -- creepy/horror/unsettling</option>    
-    
-      <option value="suspense other">suspense -- other</option>    
+      
+      
+        
+        
+          <option value="initial theme song">movie-content -- initial theme song</option>    
+        
+          <option value="initial credits">movie-content -- initial company credits before intro/before songs</option>    
+        
+          <option value="closing credits">movie-content -- closing credits/songs</option>    
+        
+          <option value="subscription plea">movie-content -- closing subscription plea</option>    
+        
+          <option value="joke edit">movie-content -- joke edit</option>    
+        
+          <option value="movie content morally questionable choice">movie-content -- morally questionable choice</option>    
+        
+          <option value="movie note for viewer">movie-content -- movie note/message for viewer</option>    
+        
+          <option value="movie content other">movie-content -- other</option>    
+        
+        
+      
+    
+      
+      
+        
+        
+          <option value="loud noise">profanity -- loud noise/screaming/yelling</option>    
+        
+          <option value="raucous music">profanity -- raucous music</option>    
+        
+          <option value="violence reference">profanity -- violence reference</option>    
+        
+          <option value="profanity (other)">profanity -- other</option>    
+        
+        
+      
+        
+          <optgroup label="attack">
+        
+        
+          <option value="personal insult mild">profanity -- insult (&quot;moron&quot;, &quot;idiot&quot; etc.)</option>    
+        
+          <option value="personal attack mild">profanity -- attack command (&quot;shut up&quot; etc.)</option>    
+        
+          <option value="being mean">profanity -- being mean/cruel to another</option>    
+        
+          <option value="derogatory slur">profanity -- categorizing derogatory slur or phobic</option>    
+        
+        
+          </optgroup>
+        
+      
+        
+          <optgroup label="crude">
+        
+        
+          <option value="crude humor">profanity -- crude humor, like poop, bathroom, gross, etc.</option>    
+        
+          <option value="bodily part reference mild">profanity -- bodily part reference mild (butt, bumm, suck...)</option>    
+        
+          <option value="bodily part reference harsh">profanity -- bodily part reference harsh (balls, etc.)</option>    
+        
+          <option value="sexual reference">profanity -- sexual innuendo/reference</option>    
+        
+        
+          </optgroup>
+        
+      
+        
+          <optgroup label="deity">
+        
+        
+          <option value="deity religious context">profanity -- deity use in religious context like &quot;the l... is good&quot;</option>    
+        
+          <option value="deity reference">profanity -- deity use appropriate but non religious context like &quot;in this game you are G...&quot;</option>    
+        
+          <option value="deity exclamation mild">profanity -- deity exclamation mild like Good L...</option>    
+        
+          <option value="deity exclamation euphemized">profanity -- deity euphemized like &#39;oh my gosh&#39;</option>    
+        
+          <option value="deity exclamation harsh">profanity -- deity exclamation harsh, name of the Lord (omg, etc.)</option>    
+        
+          <option value="deity expletive">profanity -- deity expletive (es: goll durn, the real words)</option>    
+        
+          <option value="deity greek">profanity -- deity greek (Zeus, etc.)</option>    
+        
+          <option value="deity foreign language">profanity -- deity different language, like Allah or French equivalents, etc</option>    
+        
+        
+          </optgroup>
+        
+      
+        
+          <optgroup label="curse">
+        
+        
+          <option value="euphemized profanities">profanity -- euphemized profanities (ex: crap, dang, gosh dang)</option>    
+        
+          <option value="lesser expletive">profanity -- other lesser expletive ex &quot;bloomin&#39;&quot; etc.</option>    
+        
+          <option value="personal insult harsh">profanity -- insult harsh (son of a ..... etc.)</option>    
+        
+          <option value="a word">profanity -- a.. (and/or followed by anything)</option>    
+        
+          <option value="d word">profanity -- d word</option>    
+        
+          <option value="h word">profanity -- h word</option>    
+        
+          <option value="h word in context">profanity -- h word original meaning</option>    
+        
+          <option value="s word">profanity -- s word</option>    
+        
+          <option value="f word">profanity -- f-bomb expletive</option>    
+        
+          <option value="f word sex connotation">profanity -- f-bomb sexual connotation</option>    
+        
+          <option value="profanity foreign language">profanity -- any other profanity different language, French, etc</option>    
+        
+        
+          </optgroup>
+        
+      
+    
+      
+      
+        
+        
+          <option value="light fight">violence -- short fighting (single punch/kick/hit/push)</option>    
+        
+          <option value="sustained fight">violence -- sustained punching/fighting</option>    
+        
+          <option value="threatening actions">violence -- threatening actions</option>    
+        
+          <option value="stabbing/shooting no blood">violence -- stabbing/shooting no blood</option>    
+        
+          <option value="stabbing/shooting with blood">violence -- stabbing/shooting yes blood</option>    
+        
+          <option value="visible blood">violence -- visible blood (ex: blood from wound)</option>    
+        
+          <option value="visible wound">violence -- visible wound (no gore, light gore)</option>    
+        
+          <option value="open wounds">violence -- visible gore (ex: open wound)</option>    
+        
+          <option value="crudeness">violence -- crude actions, grossness, etc.</option>    
+        
+          <option value="collision">violence -- collision/crash (no implied death)</option>    
+        
+          <option value="collision death">violence -- collision/crash (implied death)</option>    
+        
+          <option value="explosion">violence -- explosion (no implied death)</option>    
+        
+          <option value="explosion death">violence -- explosion (implied death)</option>    
+        
+          <option value="comedic fight">violence -- comedic/slapstick fighting</option>    
+        
+          <option value="shooting miss">violence -- shooting miss or ambiguous</option>    
+        
+          <option value="shooting hit non death">violence -- shooting hits person or thing but non fatal</option>    
+        
+          <option value="killing">violence -- killing on screen (ex: shooting death fatal)</option>    
+        
+          <option value="attempted killing">violence -- attempted killing on screen (ex: laser zap)</option>    
+        
+          <option value="non human killing">violence -- non human killing/death on screen (ex: animal, or robot)</option>    
+        
+          <option value="killing offscreen">violence -- killing off screen (ex: shooting death off screen)</option>    
+        
+          <option value="circumstantial death">violence -- death non-killing, ex: accidental falling</option>    
+        
+          <option value="hand gesture">violence -- hand gesture</option>    
+        
+          <option value="sports violence">violence -- sports violence part of game</option>    
+        
+          <option value="rape">violence -- rape</option>    
+        
+          <option value="dead body">violence -- dead body visible lifeless</option>    
+        
+          <option value="suicidal actions">violence -- suicidal actions</option>    
+        
+          <option value="creepy">violence -- creepy/horror/unsettling</option>    
+        
+          <option value="violence (other)">violence -- other</option>    
+        
+        
+      
+    
+      
+      
+        
+        
+          <option value="art nudity">physical -- art based nudity</option>    
+        
+          <option value="revealing clothing">physical -- revealing clothing (scantily clad)</option>    
+        
+          <option value="tight clothing">physical -- tight clothing (revealing because tight)</option>    
+        
+          <option value="underwear">physical -- clad in underwear</option>    
+        
+          <option value="swimsuit">physical -- swimsuit</option>    
+        
+          <option value="light cleavage">physical -- light cleavage/barely revealing</option>    
+        
+          <option value="revealing cleavage">physical -- revealing cleavage</option>    
+        
+          <option value="partial nudity">physical -- partial nudity (ex: excessive cleavage)</option>    
+        
+          <option value="nudity posterior male">physical -- nudity (posterior) male</option>    
+        
+          <option value="nudity posterior female">physical -- nudity (posterior) female</option>    
+        
+          <option value="nudity anterior male">physical -- nudity (anterior) male</option>    
+        
+          <option value="nudity anterior female">physical -- nudity (anterior) female</option>    
+        
+          <option value="nudity breast">physical -- nudity (breast)</option>    
+        
+          <option value="shirtless male">physical -- shirtless male (non sexual)</option>    
+        
+          <option value="kissing peck">physical -- kiss (peck)</option>    
+        
+          <option value="kissing passionate">physical -- kiss (passionate)</option>    
+        
+          <option value="sexually charged scene">physical -- sexually charged scene</option>    
+        
+          <option value="sex foreplay">physical -- sex foreplay</option>    
+        
+          <option value="implied sex">physical -- implied sex</option>    
+        
+          <option value="explicit sex">physical -- explicit sex</option>    
+        
+          <option value="homosexual behavior">physical -- homosexual behavior (kissing, holding hands, light stuff)</option>    
+        
+          <option value="physical (other)">physical -- other</option>    
+        
+        
+      
+    
+      
+      
+        
+        
+          <option value="alcohol">substance-abuse -- alcohol drinking</option>    
+        
+          <option value="smoking">substance-abuse -- smoking legal stuff (cigar, cigarette)</option>    
+        
+          <option value="smoking illegal">substance-abuse -- smoking illegal drugs</option>    
+        
+          <option value="drugs">substance-abuse -- illegal drug use</option>    
+        
+          <option value="drug injection">substance-abuse -- drug use injection</option>    
+        
+          <option value="substance-abuse other">substance-abuse -- other</option>    
+        
+        
+      
+    
+      
+      
+        
+        
+          <option value="frightening/startling scene/event">suspense -- frightening/startling scene/event</option>    
+        
+          <option value="suspenseful fight &quot;will they win?&quot;">suspense -- suspenseful fight &quot;will they win?&quot;</option>    
+        
+          <option value="suspense other">suspense -- other</option>    
+        
+        
+      
     
 </select>
 </div>
