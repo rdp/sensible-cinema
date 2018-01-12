@@ -421,7 +421,8 @@ class Tag
     url_id: Int32,
     impact_to_movie: Int32,
     popup_text_after: String,
-    default_enabled: Bool
+    default_enabled: Bool,
+    lewdness_level: Int32
   })
   DB.mapping({
     id: Int32,
@@ -435,7 +436,8 @@ class Tag
     url_id: Int32,
     impact_to_movie: Int32,
     popup_text_after: String,
-    default_enabled: Bool
+    default_enabled: Bool,
+    lewdness_level: Int32
   })
 
   def self.all
@@ -480,6 +482,7 @@ class Tag
   end
   
   def initialize(url)
+    # necessary I think to avoid them "ever being nil" though duplicate with SQL defaults? :|
     @id = 0
     @start = 0.0
     @endy = 0.0
@@ -492,14 +495,15 @@ class Tag
     @impact_to_movie = 1
     @popup_text_after = ""
     @default_enabled = true
+    @lewdness_level = 0
   end
   
   def save
     with_db do |conn|
       if @id == 0
-        @id = conn.exec("insert into tags (start, endy, category, subcategory, details, default_action, age_maybe_ok, url_id, impact_to_movie, popup_text_after, default_enabled) values (?,?,?,?,?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @details,  @default_action, @age_maybe_ok, @url_id, @impact_to_movie, @popup_text_after, @default_enabled).last_insert_id.to_i32
+        @id = conn.exec("insert into tags (start, endy, category, subcategory, details, default_action, age_maybe_ok, url_id, impact_to_movie, popup_text_after, default_enabled, lewdness_level) values (?,?,?,?,?,?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @details,  @default_action, @age_maybe_ok, @url_id, @impact_to_movie, @popup_text_after, @default_enabled, @lewdness_level).last_insert_id.to_i32
       else
-        conn.exec "update tags set start = ?, endy = ?, category = ?, subcategory = ?, details = ?, default_action = ?, age_maybe_ok = ?, url_id = ?, impact_to_movie = ?, popup_text_after = ?, default_enabled = ? where id = ?", start, endy, category, subcategory, details, default_action, age_maybe_ok, url_id, impact_to_movie, popup_text_after, default_enabled, id
+        conn.exec "update tags set start = ?, endy = ?, category = ?, subcategory = ?, details = ?, default_action = ?, age_maybe_ok = ?, url_id = ?, impact_to_movie = ?, popup_text_after = ?, default_enabled = ?, lewdness_level = ? where id = ?", start, endy, category, subcategory, details, default_action, age_maybe_ok, url_id, impact_to_movie, popup_text_after, default_enabled, lewdness_level, id
       end
     end
   end

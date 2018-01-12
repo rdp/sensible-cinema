@@ -172,6 +172,8 @@ alter table users add facebook_id VARCHAR(1024) NOT NULL DEFAULT '';
 -- last login type alter table users drop column type;
 ALTER TABLE users ADD CONSTRAINT unique_email_user_id UNIQUE (email);
 
+alter table tags add column lewdness_level int DEFAULT 0;
+
 -- and output to screen to show success...
 select * from urls;
 select * from tags;
