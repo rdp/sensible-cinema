@@ -78,6 +78,7 @@ def subcategory_map
     "rape": "violence -- rape",
     "dead body": "violence -- dead body visible lifeless",
     "suicidal actions": "violence -- suicidal actions",
+    "creepy": "violence -- creepy/horror/unsettling",
     "violence (other)": "violence -- other",
 
     "art nudity": "physical -- art based nudity",
@@ -112,7 +113,6 @@ def subcategory_map
 
     "frightening/startling scene/event": "suspense -- frightening/startling scene/event",
     "suspenseful fight \"will they win?\"": "suspense -- suspenseful fight \"will they win?\"",
-    "creepy": "suspense -- creepy/horror/unsettling",
     "suspense other": "suspense -- other"
   }
 end
