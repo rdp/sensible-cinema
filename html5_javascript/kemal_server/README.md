@@ -5,7 +5,7 @@ though there was a lot of pre-existing art (including edited youtube API/google,
 
 ## Installation of server:
 
-# Ubuntu
+# Ubuntu/VM
 
  curl https://dist.crystal-lang.org/apt/setup.sh | sudo bash # enable crystal  
  sudo apt install crystal build-essential libssl-dev jhead imagemagick fish -y # need cookie key, sessions dir, ssl dev key  
@@ -13,19 +13,17 @@ though there was a lot of pre-existing art (including edited youtube API/google,
  \# add swap, need 1.5G anyway...  
  sudo apt install mysql-server -y 
  sudo /etc/init.d/mysql start  
- # create db/connectionXX file  
- db$ cp connection_string_local_box_no_commit.txt.template connection_string_local_box_no_commit.txt
- $ touch this_is_development
 
 # OS X
 
 brew install crystal-lang kqwait mysql imagemagick pidof   
 brew services start mysql  
 
-touch this_is_development
+# for both, after:
 
+login to mysql, SET PASSWORD FOR root@localhost=PASSWORD('');
+$ cp db/connection_string_local_box_no_commit.txt.template db/connection_string_local_box_no_commit.txt
+$ touch this_is_development
 ./db/nuke*
-
 shards install
-
 ./goXX
