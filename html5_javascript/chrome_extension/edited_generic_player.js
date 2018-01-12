@@ -705,9 +705,10 @@ function checkIfShouldDoActionAndUpdateUI() {
     if (next_future_tag) {
       second_line += "next: " + timeStampToHuman(next_future_tag.start);
       var time_until = next_future_tag.start - cur_time;
-      if (time_until > 0) {
-        second_line +=  " in " + timeStampToHuman(time_until);
+      if (time_until < 0) {
+        time_until =  next_future_tag.endy - cur_time;; // we're in the heart of one, don't show a negative :|
       }
+      second_line +=  " in " + timeStampToHuman(time_until);      
       second_line += "<br/>(" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
       if (next_future_tag.id == 0) { // the faux_tag and unsaved :)
         second_line += " (tag not yet saved)";
@@ -1251,7 +1252,7 @@ function testCurrentFromUi() {
   }
   var faux_tag = createFauxTagForCurrentUI();
   // "minor" validation inline, so they can still just test it without it being fully setup yet :)
-  if !weakDoubleCheckTimestampsAndAlert(currentTestAction(), faux_tag.details, faux_tag.start, faux_tag.endy) {
+  if (!weakDoubleCheckTimestampsAndAlert(currentTestAction(), faux_tag.details, faux_tag.start, faux_tag.endy)) {
     return;
   }
 
