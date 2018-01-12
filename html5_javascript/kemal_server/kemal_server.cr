@@ -335,7 +335,7 @@ post "/save_tag/:url_id" do |env|
     env.response.headers.add "Access-Control-Allow-Origin", urlish
     "it wurked" # don't redir else we have to add CORS to the edit_tag as well :|
   else
-    # save from website
+    # save from website...actually this doesn't branch right :|
     env.redirect "/edit_tag/#{tag.id}" # so they can add details...
   end 
 end
