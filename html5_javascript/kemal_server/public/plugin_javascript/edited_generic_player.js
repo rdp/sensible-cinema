@@ -181,7 +181,7 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
         
       
         
-          <optgroup label="attack">
+          <optgroup label="profanity -- attack">
         
         
           <option value="personal insult mild">profanity -- insult (&quot;moron&quot;, &quot;idiot&quot; etc.)</option>    
@@ -197,7 +197,7 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
         
       
         
-          <optgroup label="crude">
+          <optgroup label="profanity -- crude">
         
         
           <option value="crude humor">profanity -- crude humor, like poop, bathroom, gross, etc.</option>    
@@ -213,7 +213,7 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
         
       
         
-          <optgroup label="deity">
+          <optgroup label="profanity -- deity">
         
         
           <option value="deity religious context">profanity -- deity use in religious context like &quot;the l... is good&quot;</option>    
@@ -237,7 +237,7 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
         
       
         
-          <optgroup label="curse">
+          <optgroup label="profanity -- curse">
         
         
           <option value="euphemized profanities">profanity -- euphemized profanities (ex: crap, dang, gosh dang)</option>    
