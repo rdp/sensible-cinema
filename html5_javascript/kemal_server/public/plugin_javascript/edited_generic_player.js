@@ -1263,9 +1263,6 @@ function testCurrentFromUi() {
 
   var rewindSeconds = 2;
   var start = faux_tag.start - rewindSeconds;
-  if (start < 0) {
-    start = 0; // allow testing edits to start at or near 0 without messing up the "done" timing...
-  }
   doPlay(); // seems like we want it like this...
   seekToTime(start);
 }
