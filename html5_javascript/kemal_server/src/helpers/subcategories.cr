@@ -8,8 +8,8 @@ end
 
 # if you change any names in this method be careful that any auto scan subs need to match it [you can tell by doing a single upload]
 def subcategory_map
-  {
-"movie-content": {
+ {
+"movie-content": [
   {db_name: "initial theme song", human_name: "initial theme song", sub_sub_cat: ""},
   {db_name: "initial credits", human_name: "initial company credits before intro/before songs", sub_sub_cat: ""},
   {db_name: "closing credits", human_name: "closing credits/songs", sub_sub_cat: ""},
@@ -18,8 +18,8 @@ def subcategory_map
   {db_name: "movie content morally questionable choice", human_name: "morally questionable choice", sub_sub_cat: ""},
   {db_name: "movie note for viewer", human_name: "movie note/message for viewer", sub_sub_cat: ""},
   {db_name: "movie content other", human_name: "other", sub_sub_cat: ""},
-},
-"profanity": {
+],
+"profanity": [
   {db_name: "loud noise", human_name: "loud noise/screaming/yelling", sub_sub_cat: ""},
   {db_name: "raucous music", human_name: "raucous music", sub_sub_cat: ""},
   {db_name: "personal insult mild", human_name: "insult (\"moron\", \"idiot\" etc.)", sub_sub_cat: ""},
@@ -51,8 +51,8 @@ def subcategory_map
   {db_name: "f word sex connotation", human_name: "f-bomb sexual connotation", sub_sub_cat: ""},
   {db_name: "profanity foreign language", human_name: "any other profanity different language, French, etc", sub_sub_cat: ""},
   {db_name: "profanity (other)", human_name: "other", sub_sub_cat: ""},
-},
-"violence": {
+],
+"violence": [
   {db_name: "light fight", human_name: "short fighting (single punch/kick/hit/push)", sub_sub_cat: ""},
   {db_name: "sustained fight", human_name: "sustained punching/fighting", sub_sub_cat: ""},
   {db_name: "threatening actions", human_name: "threatening actions", sub_sub_cat: ""},
@@ -81,8 +81,8 @@ def subcategory_map
   {db_name: "suicidal actions", human_name: "suicidal actions", sub_sub_cat: ""},
   {db_name: "creepy", human_name: "creepy/horror/unsettling", sub_sub_cat: ""},
   {db_name: "violence (other)", human_name: "other", sub_sub_cat: ""},
-},
-"physical": {
+],
+"physical": [
   {db_name: "art nudity", human_name: "art based nudity", sub_sub_cat: ""},
   {db_name: "revealing clothing", human_name: "revealing clothing (scantily clad)", sub_sub_cat: ""},
   {db_name: "tight clothing", human_name: "tight clothing (revealing because tight)", sub_sub_cat: ""},
@@ -105,20 +105,20 @@ def subcategory_map
   {db_name: "explicit sex", human_name: "explicit sex", sub_sub_cat: ""},
   {db_name: "homosexual behavior", human_name: "homosexual behavior (kissing, holding hands, light stuff)", sub_sub_cat: ""},
   {db_name: "physical (other)", human_name: "other", sub_sub_cat: ""},
-},
-"substance-abuse": {
+],
+"substance-abuse": [
   {db_name: "alcohol", human_name: "alcohol drinking", sub_sub_cat: ""},
   {db_name: "smoking", human_name: "smoking legal stuff (cigar, cigarette)", sub_sub_cat: ""},
   {db_name: "smoking illegal", human_name: "smoking illegal drugs", sub_sub_cat: ""},
   {db_name: "drugs", human_name: "illegal drug use", sub_sub_cat: ""},
   {db_name: "drug injection", human_name: "drug use injection", sub_sub_cat: ""},
   {db_name: "substance-abuse other", human_name: "other", sub_sub_cat: ""},
-},
-"suspense": {
+],
+"suspense": [
   {db_name: "frightening/startling scene/event", human_name: "frightening/startling scene/event", sub_sub_cat: ""},
   {db_name: "suspenseful fight \"will they win?\"", human_name: "suspenseful fight \"will they win?\"", sub_sub_cat: ""},
   {db_name: "suspense other", human_name: "other", sub_sub_cat: ""},
-},
+],
 
 }
 end
