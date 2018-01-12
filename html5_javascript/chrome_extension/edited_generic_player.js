@@ -2060,11 +2060,11 @@ function showSubCatWithRightOptionsAvailable() {
   var subcats_with_optgroups = Array.apply(null, subcategory_select.options); // convert to Array
   subcats_with_optgroups = subcats_with_optgroups.concat(Array.apply(null, subcategory_select.getElementsByTagName('optgroup')));
   for (var i=0; i < subcats_with_optgroups.length; i++){
-    var option = subcats_with_optgroups.options[i];
+    var option = subcats_with_optgroups[i];
     var text = option.text || option.label; // for optgroup
     console.log("searching text=" + text);
-    var cat_from_subcat = option.text.split(" ")[0]; // profanity of profanity -- XXX
-    if (cat_from_subcat != type && option.text.includes(" -- ")) {
+    var cat_from_subcat = text.split(" ")[0]; // profanity of profanity -- XXX
+    if (cat_from_subcat != type && text.includes(" -- ")) {
       option.style.display = "none";
     }
     else {
