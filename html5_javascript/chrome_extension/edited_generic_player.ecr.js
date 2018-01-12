@@ -439,7 +439,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       reload_tag_button.style.visibility = "hidden";
       updateHTML(before_test_edit_span, "new tag...");
     } else {
-      save_button.value = "Update This Tag";
+      save_button.value = "Update-Save This Tag";
       destroy_button.style.visibility = "visible";
       reload_tag_button.style.visibility = "visible";
       updateHTML(before_test_edit_span, "re-editing existing tag...");
