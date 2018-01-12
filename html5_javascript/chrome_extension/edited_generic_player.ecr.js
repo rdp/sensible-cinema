@@ -926,7 +926,8 @@ function createFauxTagForCurrentUI() {
     category: document.getElementById('category_select').value,
     subcategory: document.getElementById('subcategory_select_id').value,
     impact_to_movie: document.getElementById('impact_to_movie_id').value,
-    age_maybe_ok: document.getElementById('age_maybe_ok_id').value
+    age_maybe_ok: document.getElementById('age_maybe_ok_id').value,
+    lewdness_level: document.getElementById('lewdness_level_id').value
   }
   return faux_tag;
 }
@@ -942,6 +943,7 @@ function loadTagIntoUI(tag) {
   document.getElementById('subcategory_select_id').value = htmlDecode(tag.subcategory);
   document.getElementById('subcategory_select_id').dispatchEvent(new Event('change')); // so it'll do the right size, needed apparently :|
   document.getElementById('age_maybe_ok_id').value = tag.age_maybe_ok;
+  document.getElementById('lewdness_level_id').value = tag.lewdness_level;
   document.getElementById('impact_to_movie_id').value = tag.impact_to_movie;
   document.getElementById('default_enabled_id').value = tag.default_enabled;
   document.getElementById('action_sel').value = tag.default_action;
@@ -1100,6 +1102,7 @@ function clearForm() {
   document.getElementById('subcategory_select_id').selectedIndex = 0; // use a present value so size doesn't go to *0*
   showSubCatWithRightOptionsAvailable(); // resize it back to none, not sure how to auto-trigger this
   document.getElementById('age_maybe_ok_id').value = "0";
+  document.getElementById('lewdness_level_id').value = "0";
   document.getElementById('impact_to_movie_id').value = "0"; // force them to choose one
   setImpactIfMute(); // reset if mute :|
   document.getElementById('tag_hidden_id').value = '0'; // reset
