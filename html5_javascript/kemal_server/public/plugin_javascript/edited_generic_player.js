@@ -1346,10 +1346,10 @@ function testCurrentFromUi() {
 }
 
 function uiTagDiffersFromOriginalOrNoOriginal() {
-  var original_tag = get_original_tag_of_ui();
   if (uiTagIsNotInDb()) {
     return true;
   }
+  var original_tag = get_original_tag_of_ui();
   if (withinDelta(original_tag.start, faux_tag_being_tested.start, 0.01) && withinDelta(original_tag.endy, faux_tag_being_tested.endy, 0.01) && original_tag.default_action == faux_tag_being_tested.default_action) {
     return false;
   } else {
