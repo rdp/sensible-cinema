@@ -1093,15 +1093,24 @@ function getAllTagsIncludingReplacedFromUISorted(tags_wanting_replacement_insert
   } else {
     // UI tag is in DB, so we need to search out and replace it
     var allWithReplacement = [];
+    var found_it = false;
     for (var i = 0; i < tags_wanting_replacement_inserted.length; i++) {
-      allWithReplacement.push(getTagOrInlineReplacement(tags_wanting_replacement_inserted[i]));
+      if (faux_tag_being_tested.id == tags_wanting_replacement_inserted[i].id) {
+        allWithReplacement.push(faux_tag_being_tested);
+        found_it = true;
+      } else {
+        allWithReplacement.push(tags_wanting_replacement_inserted[i]);
+      }
+    }
+    if (!found_it) {
+      // case "watch unedited" and "still click test an edit"
+      allWithReplacement.push(faux_tag_being_tested);
     }
     return allWithReplacement.sort(compareTagStarts); // and sort it in
   }
 }
 
 function getTagOrInlineReplacement(tag) {
-  if (faux_tag_being_tested.id == tag.id) {
     return faux_tag_being_tested;
   } else {
     return tag;
