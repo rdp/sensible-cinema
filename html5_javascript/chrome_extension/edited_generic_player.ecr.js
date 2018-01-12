@@ -956,7 +956,7 @@ function testCurrentFromUi() {
     document.getElementById('endy').value = getCurrentVideoTimestampHuman(); // assume they wanted to test till "right now" I did sometimes :)
   }
   var faux_tag = createFauxTagForCurrentUI();
-  // "minor" validation inline, so they can still just test it without it being fully setup yet :)
+
   if (!weakDoubleCheckTimestampsAndAlert(currentTestAction(), faux_tag.details, faux_tag.start, faux_tag.endy)) {
     return;
   }
