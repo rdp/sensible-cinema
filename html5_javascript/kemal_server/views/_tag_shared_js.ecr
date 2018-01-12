@@ -191,20 +191,14 @@ function editDropdownsCreated() {
 
   var subcat_select = document.getElementById("subcategory_select_id");
   document.getElementById('category_select').addEventListener('change', function() {
+    subcat_select.value = ''; // reset subcat to top 'unknown', cat just changed...
     showSubCatWithRightOptionsAvailable(); 
-    subcat_select.value = ''; // reset subcat, cat just changed wait after?
    });
   
   document.getElementById('action_sel').addEventListener('change', setImpactIfMute, false);
-  // setImpactIfMute(); // the default is mute so set up origin as we'd anticipate :| except can't because resets it from edit_tag.cr :\
+  // setImpactIfMute(); // the default is mute so set up origin as we'd anticipate :| except can't because resets it immediately after from edit_tag.cr at least :|
   resizeToCurrentSize(subcat_select);
-  subcat_select.addEventListener(
-       'change', // XX move out :|
-       function() {
-         resizeToCurrentSize(this);
-        },
-       false
-  ); 
+  subcat_select.addEventListener( 'change', function() { resizeToCurrentSize(this); }, false); 
 }
 
 function htmlDecode(input) // unescape I guess typically we inject "inline" which works fine <sigh> but not for value = nor alert ... I did DB wrong
