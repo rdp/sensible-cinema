@@ -710,19 +710,19 @@ function compareTagStarts(tag1, tag2) {
   return 0;
 }
 
-function getAllTagsIncludingReplacedFromUISorted(tags_to_use) {
+function getAllTagsIncludingReplacedFromUISorted(tags_wanting_replacement_inserted) {
   if (uiTagIsNotInDb()) {
     var faux_tag = createFauxTagForCurrentUI();
     if (faux_tag_is_ready(faux_tag)) {
-      return [faux_tag].concat(tags_to_use).sort(compareTagStarts); // add in new tag chronologically
+      return [faux_tag].concat(tags_wanting_replacement_inserted).sort(compareTagStarts); // add in new tag chronologically
     } else {
-      return tags_to_use; // assume they come sorted :)
+      return tags_wanting_replacement_inserted; // assume they come sorted :)
     }
   } else {
     // UI tag is in DB, so we need to search out and replace it
     var allWithReplacement = [];
-    for (var i = 0; i < tags_to_use.length; i++) {
-      allWithReplacement.push(getTagOrInlineReplacement(tags_to_use[i])); // replace it with any local mods 
+    for (var i = 0; i < tags_wanting_replacement_inserted.length; i++) {
+      allWithReplacement.push(getTagOrInlineReplacement(tags_wanting_replacement_inserted[i])); // replace it with any local mods 
     }
     return allWithReplacement.sort(compareTagStarts); // and sort it in
   }
@@ -735,7 +735,7 @@ function getTagOrInlineReplacement(tag) {
     if (faux_tag_is_ready(faux_tag)) {
       return faux_tag;
     } else {
-      return tag; // assume they're in the middle of some editing I guess, can't readily alert here...
+      return tag; // assume they're in the middle of some editing I guess, can't readily alert here
     }
   } else {
     return tag;
