@@ -62,6 +62,7 @@ def subcategory_map
   {db_name: "visible wound", human_name: "visible wound (no gore, light gore)", sub_sub_cat: ""},
   {db_name: "open wounds", human_name: "visible gore (ex: open wound)", sub_sub_cat: ""},
   {db_name: "crudeness", human_name: "crude actions, grossness, etc.", sub_sub_cat: ""},
+  {db_name: "creepy", human_name: "creepy/horror/unsettling", sub_sub_cat: ""},
   {db_name: "collision", human_name: "collision/crash (no implied death)", sub_sub_cat: ""},
   {db_name: "collision death", human_name: "collision/crash (implied death)", sub_sub_cat: ""},
   {db_name: "explosion", human_name: "explosion (no implied death)", sub_sub_cat: ""},
@@ -78,8 +79,7 @@ def subcategory_map
   {db_name: "sports violence", human_name: "sports violence part of game", sub_sub_cat: ""},
   {db_name: "rape", human_name: "rape", sub_sub_cat: ""},
   {db_name: "dead body", human_name: "dead body visible lifeless", sub_sub_cat: ""},
-  {db_name: "suicidal actions", human_name: "suicidal actions", sub_sub_cat: ""},
-  {db_name: "creepy", human_name: "creepy/horror/unsettling", sub_sub_cat: ""},
+  {db_name: "suicidal actions", human_name: "suicidal actions/threats", sub_sub_cat: ""},
   {db_name: "violence (other)", human_name: "other", sub_sub_cat: ""},
 ],
 "physical": [
