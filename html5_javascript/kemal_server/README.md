@@ -21,6 +21,7 @@ brew services start mysql
 
 # for both, after:
 
+mkdir edit_descriptors
 login to mysql, SET PASSWORD FOR root@localhost=PASSWORD('');
 $ cp db/connection_string_local_box_no_commit.txt.template db/connection_string_local_box_no_commit.txt
 $ touch this_is_development
