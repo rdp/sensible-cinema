@@ -2057,9 +2057,13 @@ function showSubCatWithRightOptionsAvailable() {
   var type = document.getElementById("category_select").value; // category like "profanity"
   var subcategory_select = document.getElementById("subcategory_select_id");
   var width_needed = 0;
-  for (var i=0; i < subcategory_select.length; i++){
-    var option = subcategory_select.options[i];
-    var cat_from_subcat = option.text.split(" ")[0]; // profanity
+  var subcats_with_optgroups = Array.apply(null, subcategory_select.options); // convert to Array
+  subcats_with_optgroups = subcats_with_optgroups.concat(Array.apply(null, subcategory_select.getElementsByTagName('optgroup')));
+  for (var i=0; i < subcats_with_optgroups.length; i++){
+    var option = subcats_with_optgroups.options[i];
+    var text = option.text || option.label; // for optgroup
+    console.log("searching text=" + text);
+    var cat_from_subcat = option.text.split(" ")[0]; // profanity of profanity -- XXX
     if (cat_from_subcat != type && option.text.includes(" -- ")) {
       option.style.display = "none";
     }
@@ -2068,6 +2072,7 @@ function showSubCatWithRightOptionsAvailable() {
       width_needed = Math.max(width_needed, option.offsetWidth);
     }
   }
+    
   resizeToCurrentSize(subcategory_select); // it probably reset to the top option of a new category [so new size]  
 }
 

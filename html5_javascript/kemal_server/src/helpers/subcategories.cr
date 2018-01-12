@@ -8,7 +8,7 @@ end
 
 # if you change any names in this method be careful that any auto scan subs need to match it [you can tell by doing a single upload]
 def subcategory_map
- { # XXX make into array not named here :|
+ { # XXX make into array not named here? :|
 "movie-content": [
   {db_name: "initial theme song", human_name: "initial theme song", sub_sub_cat: ""},
   {db_name: "initial credits", human_name: "initial company credits before intro/before songs", sub_sub_cat: ""},
