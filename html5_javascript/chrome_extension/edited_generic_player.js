@@ -1243,7 +1243,7 @@ function loadTagIntoUI(tag) {
 }
 
 function faux_tag_is_ready(faux_tag) {
-  return faux_tag.default_enabled && faux_tag.start > 0 && faux_tag.endy > faux_tag.start;
+  return faux_tag.default_enabled && (faux_tag.start > 0) && (faux_tag.endy > faux_tag.start);
 }
 
 function testCurrentFromUi() {
