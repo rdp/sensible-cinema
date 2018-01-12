@@ -5,7 +5,7 @@
 var request_host="playitmyway.org";  // prod
 
 if (typeof clean_stream_timer !== 'undefined') {
-  alert("play it my way: already loaded...not loading it again...please use the ll.  on screen links for it"); // hope we never get here :|
+  alert("play it my way: already loaded...not loading it again...please use the ll.  on screen links for it, we should never get here");
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
@@ -685,6 +685,7 @@ function checkIfShouldDoActionAndUpdateUI() {
     notify_if_new(tag); // show it now so it can notify while it seeks :) [NB for longer seeks it shows it over and over [bug] but notification tag has our back'ish for now :\ ]
     blankScreenIfWithinHeartOfSkip(tag, cur_time);
     heartBlankScreenIfImpending(tag.endy);  // warn it to start a blank now, for the gap, otherwise when it gets there it's already too late
+    extra_message += "Skipping forward...";
     seekToTime(tag.endy, doneWithPossibleHeartBlankUnlessImpending);
   }
   
