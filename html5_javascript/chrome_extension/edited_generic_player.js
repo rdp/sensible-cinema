@@ -1027,7 +1027,12 @@ function getAllTagsIncludingReplacedFromUISorted(tags_to_use) {
 function getTagOrInlineReplacement(tag) {
   var editor_tag_id = parseInt(document.getElementById('tag_hidden_id').value);
   if (editor_tag_id == tag.id) {
-    return createFauxTagForCurrentUI(); // replace it no matter what even if it's messed up :|
+    var faux_tag = createFauxTagForCurrentUI();
+    if (faux_tag_is_ready(faux_tag)) {
+      return faux_tag;
+    } else {
+      return tag; // assume they're in the middle of some editing I guess, can't readily alert here...
+    }
   } else {
     return tag;
   }
