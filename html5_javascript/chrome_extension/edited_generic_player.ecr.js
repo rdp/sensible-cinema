@@ -978,7 +978,7 @@ function uiTagDiffersFromOriginalOrNoOriginal() {
   if (uiTagIsNotInDb()) {
     return true;
   }
-  if (withinDelta(original_tag.start, faux_tag.start, 0.01) && withinDelta(original_tag.endy, faux_tag.endy, 0.01) && original_tag.default_action == faux_tag.default_action) {
+  if (withinDelta(original_tag.start, faux_tag_being_tested.start, 0.01) && withinDelta(original_tag.endy, faux_tag_being_tested.endy, 0.01) && original_tag.default_action == faux_tag_being_tested.default_action) {
     return false;
   } else {
     return true;
