@@ -719,6 +719,7 @@ function getAllTagsIncludingReplacedFromUISorted(tags_to_use) {
       return tags_to_use; // assume they come sorted :)
     }
   } else {
+    // UI tag is in DB, so we need to search out and replace it
     var allWithReplacement = [];
     for (var i = 0; i < tags_to_use.length; i++) {
       allWithReplacement.push(getTagOrInlineReplacement(tags_to_use[i])); // replace it with any local mods 
