@@ -13,7 +13,7 @@
 
 
 <div id="category_div_id">
-<select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); document.getElementById('subcategory_select_id').value = ''; // reset subcat in case cat changed "
+<select name="category" id='category_select' onchange=""
 style="background-color: rgba(255, 255, 255, 0.85);" >
   <option value="" disabled selected>unknown -- please select category</option>
   <option value="profanity">profanity (verbal attacks, anything spoken)</option>
@@ -27,7 +27,7 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
 
 <div id="subcategory_div_id">
 subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
-<select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);" onchange="resizeToCurrentSize(this);">
+<select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);" onchange="">
     <option value="">unknown -- please select subcategory</option>
     <% subcategory_map().each{|subcat_name, entries| %>
       <% old_sub_sub = "" %>
@@ -50,13 +50,24 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
  <option id="hidden_select_option_id"></option>
 </select>
 
-age specifier (optional):
+age specifier (violence):
 <select name="age_maybe_ok" id="age_maybe_ok_id">
   <option value="0">not applicable/needed</option>
   <% [3,6,9,12,15].each{|n| %>
     <option value="<%= n %>">not OK age <%= n %> and under</option>
   <% } %>
   <option value="-1">no age OK</option>
+</select>
+<br/>
+
+Lewdness level:
+<select name="lewdness_level" id="lewdness_level_id">
+  <option value="0">not applicable/needed</option>
+  <option value="1">Art non sensual</option>
+  <option value="2">Cartoon non sensual</option>
+  <option value="3">Tame</option>
+  <option value="4">Passionate</option>
+  <option value="5">Sexual</option>
 </select>
 <br/>
 

@@ -293,6 +293,7 @@ post "/save_tag/:url_id" do |env|
   end
   raise "got some timestamp negative?" if tag.start < 0 || tag.endy < 0 # should be impossible :|
   tag.default_action = resanitize_html(params["default_action"])
+  tag.lewdness_level = get_int(params, "lewdness_level")
   tag.category = resanitize_html params["category"]
   tag.impact_to_movie = get_int(params, "impact_to_movie")
   if params["popup_text_after"]? # remove july 4 '17'ish...
@@ -842,7 +843,7 @@ post "/upload_from_subtitles_post/:url_id" do |env|
   profs.each { |prof|
     tag = Tag.new(db_url)
     tag.start = prof[:start] - add_to_beginning
-    tag.endy =  prof[:endy] + add_to_end
+    tag.endy = prof[:endy] + add_to_end
     tag.default_action = "mute"
     tag.category = "profanity"
     tag.subcategory = prof[:category]
