@@ -10,7 +10,6 @@ if (typeof clean_stream_timer !== 'undefined') {
 }
 
 var video_element;
-var extra_message;
 var current_json;
 var mouse_move_timer;
 var seek_timer;
@@ -564,7 +563,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   
   tag = areWeWithin('mute', cur_time);
   tag = tag || areWeWithin('mute_audio_no_video', cur_time);
-  extra_message = "";
+  var extra_message = "";
   if (tag) {
     if (!isMuted()) {
       setMute(true);
