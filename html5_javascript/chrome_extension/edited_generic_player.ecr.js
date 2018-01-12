@@ -591,7 +591,7 @@ function logAddOnce(to_log) {
 }
 
 function isWatchingAdd() {
-  if (url != null) {
+  if (current_json != null) {
     // guess this > 0 check is for amazon when it has "lost" its video?
     // withinDelta 10 is amazon at the end weird stuff LOL
     if (current_json.url.total_time > 0 && !withinDelta(current_json.url.total_time, videoDuration(), 10.5)) { // amazon can be 10.01 or something if you go to the end
@@ -614,7 +614,7 @@ var last_timestamp = 0;
 function checkStatus() { // called 100 fps
 
   // avoid unmuting videos playing that we don't even control [like youtube main page] with this if...
-  if (url != null) {
+  if (current_json != null) {
     if (isWatchingAdd()) {
       if (!i_set_it_to_add) {
         i_set_it_to_add = true;
@@ -1166,7 +1166,7 @@ function loadForNewUrl() {
 }
 
 function reloadForCurrentUrl(optional_additional_string) {
-  if (url != null) {
+  if (current_json != null) {
     var reload_tags_link = document.getElementById('reload_tags_a_id');
     reload_tags_link.innerHTML = "Reloading...";
     if (optional_additional_string) {
@@ -1214,7 +1214,7 @@ function doPeriodicChecks() {
 }
 
 function addPluginEnabledTextOnce() {
-  if (isAmazon() && current_json.url) {
+  if (isAmazon() && current_json) {
     var span = document.getElementsByClassName("dv-provenence-msg")[0];
     if (span && !span.innerHTML.includes("it my way")) {
       var extra = "<br/><small>(Play it my way enabled! Disclaimer: Performance of the motion picture will be altered from the performance intended by the director/copyright holder, we're required to mention that)";
