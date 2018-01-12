@@ -134,7 +134,7 @@ function addEditUiOnce() {
 
 
 <div id="category_div_id">
-<select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); document.getElementById('subcategory_select_id').value = ''; // reset subcat in case cat changed "
+<select name="category" id='category_select' onchange=""
 style="background-color: rgba(255, 255, 255, 0.85);" >
   <option value="" disabled selected>unknown -- please select category</option>
   <option value="profanity">profanity (verbal attacks, anything spoken)</option>
@@ -148,7 +148,7 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
 
 <div id="subcategory_div_id">
 subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
-<select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);" onchange="resizeToCurrentSize(this);">
+<select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);" onchange="">
     <option value="">unknown -- please select subcategory</option>
     
       
@@ -428,7 +428,7 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
  <option id="hidden_select_option_id"></option>
 </select>
 
-age specifier (optional):
+age specifier (violence):
 <select name="age_maybe_ok" id="age_maybe_ok_id">
   <option value="0">not applicable/needed</option>
   
@@ -443,6 +443,17 @@ age specifier (optional):
     <option value="15">not OK age 15 and under</option>
   
   <option value="-1">no age OK</option>
+</select>
+<br/>
+
+Lewdness level:
+<select name="lewdness_level" id="lewdness_level_id">
+  <option value="0">not applicable/needed</option>
+  <option value="1">Art non sensual</option>
+  <option value="2">Cartoon non sensual</option>
+  <option value="3">Tame</option>
+  <option value="4">Passionate</option>
+  <option value="5">Sexual</option>
 </select>
 <br/>
 
@@ -2189,9 +2200,10 @@ function doubleCheckValues() {
     return false;
   }
   
-  var age = document.getElementById('age_maybe_ok_id').value;
-  
-  if (document.getElementById('subcategory_select_id').value == "") {
+ 
+  var subcat_select = document.getElementById('subcategory_select_id');
+ 
+  if (subcat_select.value == "") {
     alert("please select subcategory first");
     return false;
   }
@@ -2205,27 +2217,38 @@ function doubleCheckValues() {
     return false;
   }
   
+  var age = document.getElementById('age_maybe_ok_id').value;
   if ((category == "violence" || category == "suspense") && age == "0") {
     alert("for violence or suspense tags, please also select a value in the age specifier dropdown");
     return false;
+  }
+  var lewdness_level = document.getElementById('lewdness_level_id').value;
+  if ((category == "physical") && lewdness_level == "0") {
+    alert("for sex/nudity/lewdness, please also select a value in the lewdness_level dropdown");
+    return false;
+  }
+  if (subcat_select.options[subcat_select.selectedIndex].value == "joke edit" && document.getElementById('default_enabled_id').value == 'true') {
+    alert("for joking edits please save them with default_enabled as N");
   }
   return true;
 }
 
 function editDropdownsCreated() {
   // they call this when we're ready to setup variables in the dropdowns, since otherwise the right divs aren't in place yet in plugin
+
+  var subcat_select = document.getElementById("subcategory_select_id");
+  document.getElementById('category_select').addEventListener('change', function() {
+    showSubCatWithRightOptionsAvailable(); 
+    subcat_select.value = ''; // reset subcat, cat just changed wait after?
+   });
   
   document.getElementById('action_sel').addEventListener('change', setImpactIfMute, false);
   // setImpactIfMute(); // the default is mute so set up origin as we'd anticipate :| except can't because resets it from edit_tag.cr :\
-  var subcat_select = document.getElementById("subcategory_select_id");
   resizeToCurrentSize(subcat_select);
   subcat_select.addEventListener(
-       'change',
+       'change', // XX move out :|
        function() {
-         if (subcat_select.options[subcat_select.selectedIndex].value == "joke edit") {
-           alert("for joking edits please set default_enabled as N, then you can create your own personalized edit list where you modify it to get a mute or skip, that way for default user playback it isn't edited out");
-           document.getElementById('default_enabled_id').value = 'false';
-         }
+         resizeToCurrentSize(this);
         },
        false
   ); 
