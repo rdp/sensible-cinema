@@ -1061,13 +1061,14 @@ function reloadTagButton() {
     alert("can't reset if don't have tag loaded");
     return;
   }
-  for (var i = 0; i < current_tags_to_use.length; i++) {
-    if (current_tags_to_use[i].id == parseInt(id_desired)) {
-      loadTagIntoUI(current_tags_to_use[i]);
+  var tags = current_json.tags; // so it works if they have "Unedited" selected :|
+  for (var i = 0; i < tags.length; i++) {
+    if (tags[i].id == parseInt(id_desired)) {
+      loadTagIntoUI(tags[i]);
       return;
     }
   }
-  alert("should never see this please report 3");
+  alert("should never see this please report 3 " + id_desired);
 }
 
 function clearButton() {
