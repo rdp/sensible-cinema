@@ -121,7 +121,7 @@ function addEditUiOnce() {
         <br/>
         <input type='button' id='destroy_button_id' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
         <button type="" value="" onclick="clearButton(); return false;">Clear</button>
-        <button type="" id='reload_tag_button_id' value="" onclick="reloadButton(); return false;">Reload This Tag</button>
+        <button type="" id='reload_tag_button_id' value="" onclick="reloadTagButton(); return false;">Reload This Tag</button>
 
       </form>
       
@@ -1045,8 +1045,7 @@ function saveTagButton() {
   }
 
   var submit_form = document.getElementById('create_new_tag_form_id');
-  submit_form.action = "https://" + request_host + "/save_tag/" + current_json.url.id; // allow request_host to change :| NB this goes to the *movie* id
-//    submit_form.submit();
+  submit_form.action = "https://" + request_host + "/save_tag/" + current_json.url.id; // allow request_host to change :| NB this goes to the *movie* id on purpose
   submitFormXhr(submit_form, function(xhr) {
     clearForm();
     reloadForCurrentUrl("Saved tag! "); // it's done saving so we can do this ja
@@ -1056,7 +1055,7 @@ function saveTagButton() {
   });
 }
 
-function reloadButton() {
+function reloadTagButton() {
   var id_desired = document.getElementById('tag_hidden_id').value;
   if (id_desired == '0') {
     alert("can't reset if don't have tag loaded");
@@ -1191,7 +1190,7 @@ function loadSucceeded(json_string) {
     displayDiv(document.getElementById("editor_top_line_div_id"));
   }
   hideDiv(document.getElementById("load_failed_div_id"));
-  hideDiv(document.getElementById("server_down_div_id")); // in case it's a recovery
+  hideDiv(document.getElementById("server_down_div_id")); // in case it's a recovery now, server just came back up...
   setSmiley();
 }
 
