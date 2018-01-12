@@ -410,14 +410,18 @@ function checkIfShouldDoActionAndUpdateUI() {
       second_line += "next: " + timeStampToHuman(next_future_tag.start);
       var time_until = next_future_tag.start - cur_time;
       if (time_until < 0) {
-        time_until =  next_future_tag.endy - cur_time;; // we're in the heart of one, don't show a negative :|
+        time_until =  next_future_tag.endy - cur_time; // we're in the heart of one, don't show a negative :|
       }
       second_line +=  " in " + timeStampToHuman(time_until);      
-      second_line += "<br/>(" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
+      second_line += "<br/>";
+      // third_line now
+      if (faux_tag_being_tested) {
+        second_line += "(test using your last values)";
+      }
+      second_line += "(" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
       if (next_future_tag.id == 0) { // the faux_tag and unsaved :)
         second_line += " (tag not yet saved)";
       }
-
       if (!next_future_tag.default_enabled) {
         second_line += " (disabled)";
       }
@@ -711,32 +715,24 @@ function compareTagStarts(tag1, tag2) {
 }
 
 function getAllTagsIncludingReplacedFromUISorted(tags_wanting_replacement_inserted) {
+  if (!faux_tag_being_tested) {
+    return tags_wanting_replacement_inserted; // assume sorted
+  }
   if (uiTagIsNotInDb()) {
-    var faux_tag = createFauxTagForCurrentUI();
-    if (faux_tag_is_ready(faux_tag)) {
-      return [faux_tag].concat(tags_wanting_replacement_inserted).sort(compareTagStarts); // add in new tag chronologically
-    } else {
-      return tags_wanting_replacement_inserted; // assume they come sorted :)
-    }
+    return [faux_tag_being_tested].concat(tags_wanting_replacement_inserted).sort(compareTagStarts); // add in new tag chronologically
   } else {
     // UI tag is in DB, so we need to search out and replace it
     var allWithReplacement = [];
     for (var i = 0; i < tags_wanting_replacement_inserted.length; i++) {
-      allWithReplacement.push(getTagOrInlineReplacement(tags_wanting_replacement_inserted[i])); // replace it with any local mods 
+      allWithReplacement.push(getTagOrInlineReplacement(tags_wanting_replacement_inserted[i]));
     }
     return allWithReplacement.sort(compareTagStarts); // and sort it in
   }
 }
 
 function getTagOrInlineReplacement(tag) {
-  var editor_tag_id = parseInt(document.getElementById('tag_hidden_id').value);
-  if (editor_tag_id == tag.id) {
-    var faux_tag = createFauxTagForCurrentUI();
-    if (faux_tag_is_ready(faux_tag)) {
-      return faux_tag;
-    } else {
-      return tag; // assume they're in the middle of some editing I guess, can't readily alert here
-    }
+  if (faux_tag_being_tested.id == tag.id) {
+    return faux_tag_being_tested;
   } else {
     return tag;
   }
@@ -950,11 +946,10 @@ function loadTagIntoUI(tag) {
   document.getElementById('default_enabled_id').value = tag.default_enabled;
   document.getElementById('action_sel').value = tag.default_action;
   document.getElementById('tag_hidden_id').value = tag.id;
+  faux_tag_being_tested = null;
 }
 
-function faux_tag_is_ready(faux_tag) {
-  return faux_tag.default_enabled && (faux_tag.start > 0) && (faux_tag.endy > faux_tag.start);
-}
+var faux_tag_being_tested = null;
 
 function testCurrentFromUi() {
   if (humanToTimeStamp(document.getElementById('endy').value) == 0) {
@@ -973,6 +968,14 @@ function testCurrentFromUi() {
 
   var rewindSeconds = 2;
   var start = faux_tag.start - rewindSeconds;
+  faux_tag_being_tested = faux_tag; // just concretize for now :|
+  if (!uiTagIsNotInDb()) {
+    var original_tag = get_original_tag_of_ui();
+    if (withinDelta(original_tag.start, faux_tag.start, 0.01) && withinDelta(original_tag.endy, faux_tag.endy, 0.01) && original_tag.default_action == faux_tag.default_action) {
+      // we're not testing anything, really...don't say so on the UI
+      faux_tag_being_tested = null;
+    }
+  }
   doPlay(); // seems like we want it like this...
   seekToTime(start);
 }
@@ -1059,6 +1062,11 @@ function saveTagButton() {
 }
 
 function reloadTagButton() {
+  var original_tag = get_original_tag_of_ui();
+  loadTagIntoUI(original_tag);
+}
+
+function get_original_tag_of_ui() {
   var id_desired = document.getElementById('tag_hidden_id').value;
   if (id_desired == '0') {
     alert("can't reset if don't have tag loaded");
@@ -1067,8 +1075,7 @@ function reloadTagButton() {
   var tags = current_json.tags; // so it works if they have "Unedited" selected :|
   for (var i = 0; i < tags.length; i++) {
     if (tags[i].id == parseInt(id_desired)) {
-      loadTagIntoUI(tags[i]);
-      return;
+      return tags[i];
     }
   }
   alert("should never see this please report 3 " + id_desired);
@@ -1094,6 +1101,7 @@ function clearForm() {
   document.getElementById('default_enabled_id').value = 'true';  
  
   document.getElementById('action_sel').dispatchEvent(new Event('change')); // so it'll set impact if mute
+  faux_tag_being_tested = null;
 }
 
 function destroyCurrentTagButton() {
