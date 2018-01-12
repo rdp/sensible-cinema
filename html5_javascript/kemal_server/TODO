@@ -2,8 +2,6 @@
 
 add "something age" to lewd? 
 
-John: if unedited, you can't "test" a single edit
-  
 3rd passes/us: 
   everything prime that's already done 2nd pass
   new releases we own that are done 2nd pass.
@@ -12,7 +10,7 @@ John: if unedited, you can't "test" a single edit
 
 fix seeks iOS
 
-it didn't step forward right herobrine :|
+it didn't step forward/back right herobrine :|
 
 youtubes them :|
 
@@ -34,9 +32,9 @@ main page persuasive/beautiful/catchy [nik?]
 
 get feedback: business model
 
-safe seek
+safe seek, for me! :)
 
-LLC "transfer to"/setup bank account/setup reminder :)
+LLC Taxes
 
 GoT failure!
   fix 10s :\
@@ -229,24 +227,17 @@ make R-rated "opt in"?
 
 add an "edited" tag underneath images in the amazon "watchlist" "my video library" page
 
-it could say "skipping" or something for very long skips :|
-
 attempt a real iOS app
 
 only show the age dropdown if "required" for that tag type? or flash it red if the right type...
 
 don't use access tokens as GET params, barely wonky...
 
-tell crystal their servers shucks under stress test :|
-
 edge plugin (for underpowered HTPC boxes )
   should be legal! 
 
 IP:
   copy some vids (from youtube to the other place)
-
-figure out why query {"SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type asc, create_timestamp desc, name, episode_number"} took 00:00:00.0634933
-  takes 0.06 in crystal and 0.01 in mysql console :|
 
 impact to story finish rename
   purchase_cost -> purchase_cost_hd
@@ -280,8 +271,6 @@ allow tags to be tagged with multiples "it's an opening scene and it's x" [?]
 
 if you're on firefox, it should say "click here to be redirected to chrome" and it does but not clearly enough yet...
 
-genre
-
 get facebook gender
   and birthday LOL
 
@@ -295,12 +284,15 @@ figure out a way to do DB backups...though...actually..that other git is good, i
 prettier movie url LOL
   one they can "like" on facebook'ish more? easily? share?
 
-patent
+patent??
 
 crystal:
   double check, sockets should have some ping/timeout thing so I don't get stuck with old connections...at least that...
   slam it with wrk, everything barfs all over the place :(
   stack traces come out ugly?
+  various crystal bugs I could "help out with" (gzip, escape_javascript, server conns shuck...)
+  figure out why query {"SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type asc, create_timestamp desc, name, episode_number"} took 00:00:00.0634933
+    takes 0.06 in crystal and 0.01 in mysql console :|
 
 do we need more things people can enter in, like what common sense media has 3 different things?
 test roku stream from desktop? LOL :|
