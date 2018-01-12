@@ -10,7 +10,7 @@ if (typeof clean_stream_timer !== 'undefined') {
 
 var video_element;
 var extra_message;
-var current_json, url; // XXXX remove url :)
+var current_json;
 var mouse_move_timer;
 var seek_timer;
 var all_pimw_stuff;
@@ -1056,7 +1056,7 @@ function saveTagButton() {
   }
 
   var submit_form = document.getElementById('create_new_tag_form_id');
-  submit_form.action = "https://" + request_host + "/save_tag/" + url.id; // allow request_host to change :| NB this goes to the *movie* id
+  submit_form.action = "https://" + request_host + "/save_tag/" + current_json.url.id; // allow request_host to change :| NB this goes to the *movie* id
 //    submit_form.submit();
   submitFormXhr(submit_form, function(xhr) {
     clearForm();
@@ -1136,7 +1136,6 @@ function getSubtitleLink() {
   }
   var arr = window.performance.getEntriesByType("resource");
   for (var i = arr.length - 1; i >= 0; --i) {
-    console.log("name=" + arr[i].name);
     if (arr[i].name.endsWith(".dfxp")) { // ex: https://dmqdd6hw24ucf.cloudfront.net/341f/e367/03b5/4dce-9c0e-511e3b71d331/15e8386e-0cb0-477f-b2e4-b21dfa06f1f7.dfxp apparently
       var response = prompt("this appears to be a subtitles url, copy this:", arr[i].name); // has a cancel prompt, but we don't care which button they use
       return;
@@ -1194,6 +1193,7 @@ function loadSucceeded(json_string) {
   startWatcherTimerSingleton(); // don't know what to display before this...so leave everything none until now
   old_current_url = getStandardizedCurrentUrl();
   old_episode = liveEpisodeNumber();
+  var expected_episode_number = current_json.url.episode_number;
   if (liveEpisodeNumber() != expected_episode_number) {
     alert("play it my way\ndanger: may have gotten wrong episode expected=" + expected_episode_number + " got=" + liveEpisodeNumber());
   }
@@ -1214,11 +1214,11 @@ function doPeriodicChecks() {
 }
 
 function addPluginEnabledTextOnce() {
-  if (isAmazon() && url) {
+  if (isAmazon() && current_json.url) {
     var span = document.getElementsByClassName("dv-provenence-msg")[0];
     if (span && !span.innerHTML.includes("it my way")) {
       var extra = "<br/><small>(Play it my way enabled! Disclaimer: Performance of the motion picture will be altered from the performance intended by the director/copyright holder, we're required to mention that)";
-      if (url.editing_status != "Done with second review, tags viewed as complete") {
+      if (current_json.url.editing_status != "Done with second review, tags viewed as complete") {
         extra += " (not fully edited yet)";
       }
       extra += "</small";
@@ -1234,10 +1234,6 @@ function setSmiley() {
 
 function loadFailed(status) {
   current_json = null;
-  url = null; // reset
-  name = liveFullNameEpisode();
-  episode_name = liveEpisodeString();
-  expected_episode_number = liveEpisodeNumber();
   hideDiv(document.getElementById("load_succeeded_div_id"));
   displayDiv(document.getElementById("load_failed_div_id"));
   hideDiv(document.getElementById("server_down_div_id"));
@@ -1272,21 +1268,16 @@ function loadFailed(status) {
 
 function parseSuccessfulJson(json_string) {
   current_json = JSON.parse(json_string);
-  url = current_json.url;
-  name = url.name;
-  episode_name = url.episode_name;
-  expected_episode_number = url.episode_number;
   
   var dropdown = document.getElementById("tag_edit_list_dropdown");
-  removeAllOptions(dropdown); // out with any old...  
-  
+  removeAllOptions(dropdown); // out with any old...    
   var option = document.createElement("option");
   option.text = "Default (all tags) (" + countDoSomethingTags(current_json.tags) + ")";
   option.value = "-1"; // special case :|
   // I think this will start as selected...
   list_length = current_json.tag_edit_lists.length;
   if (list_length > 1) {
-    // wait what? should be 1:1 today...
+    // wait what? should be 1:1 these days...
     console.log("list size greater than 1???" + current_json.tag_edit_lists);
   }
   dropdown.add(option);
@@ -1301,7 +1292,7 @@ function parseSuccessfulJson(json_string) {
     option.value = tag_edit_list.id;
     dropdown.add(option);
     option.setAttribute('selected', true); // hope this overrides, we want it to be the default for now uh guess...
-  }  
+  }
   
   option = document.createElement("option");
   option.text = "Watch Unedited (0 tags)";
@@ -1309,7 +1300,7 @@ function parseSuccessfulJson(json_string) {
   dropdown.add(option);
   
   var big_edited = document.getElementById("big_edited_text_id");
-  if (url.editing_status == 'Done with second review, tags viewed as complete') {
+  if (current_json.url.editing_status == 'Done with second review, tags viewed as complete') {
     big_edited.innerHTML = "Edited";
   } else {
     big_edited.innerHTML = "Partially edited...";
