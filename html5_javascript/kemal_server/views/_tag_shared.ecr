@@ -29,8 +29,10 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
 subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
 <select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);" onchange="resizeToCurrentSize(this);">
     <option value="">unknown -- please select subcategory</option>
-    <% subcategory_map().each{|db_name, human_name| %>
-      <option value="<%= HTML.escape(db_name.to_s) %>"><%= HTML.escape(human_name) %></option>    
+    <% subcategory_map().each{|subcat_name, entries| %>
+      <% entries.each{|entry| %>
+        <option value="<%= HTML.escape(entry[:db_name]) %>"><%= HTML.escape(entry[:human_name]) %></option>    
+      <% } %>
     <% } %>
 </select>
 </div>
