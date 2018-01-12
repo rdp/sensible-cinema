@@ -416,7 +416,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       second_line += "<br/>";
       // third_line now
       if (faux_tag_being_tested) {
-        second_line += "(test using your last values)";
+        second_line += "(testing using your last values)";
       }
       second_line += "(" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
       if (next_future_tag.id == 0) { // the faux_tag and unsaved :)

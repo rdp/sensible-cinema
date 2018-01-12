@@ -181,7 +181,7 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
         
       
         
-          <optgroup label="profanity -- attack">
+          <optgroup label="profanity -- attack"> <!-- so it'll hide them when profanity not selected -->
         
         
           <option value="personal insult mild">profanity -- insult (&quot;moron&quot;, &quot;idiot&quot; etc.)</option>    
@@ -197,7 +197,7 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
         
       
         
-          <optgroup label="profanity -- crude">
+          <optgroup label="profanity -- crude"> <!-- so it'll hide them when profanity not selected -->
         
         
           <option value="crude humor">profanity -- crude humor, like poop, bathroom, gross, etc.</option>    
@@ -213,7 +213,7 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
         
       
         
-          <optgroup label="profanity -- deity">
+          <optgroup label="profanity -- deity"> <!-- so it'll hide them when profanity not selected -->
         
         
           <option value="deity religious context">profanity -- deity use in religious context like &quot;the l... is good&quot;</option>    
@@ -237,7 +237,7 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
         
       
         
-          <optgroup label="profanity -- curse">
+          <optgroup label="profanity -- curse"> <!-- so it'll hide them when profanity not selected -->
         
         
           <option value="euphemized profanities">profanity -- euphemized profanities (ex: crap, dang, gosh dang)</option>    
@@ -289,6 +289,8 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
         
           <option value="crudeness">violence -- crude actions, grossness, etc.</option>    
         
+          <option value="creepy">violence -- creepy/horror/unsettling</option>    
+        
           <option value="collision">violence -- collision/crash (no implied death)</option>    
         
           <option value="collision death">violence -- collision/crash (implied death)</option>    
@@ -321,9 +323,7 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
         
           <option value="dead body">violence -- dead body visible lifeless</option>    
         
-          <option value="suicidal actions">violence -- suicidal actions</option>    
-        
-          <option value="creepy">violence -- creepy/horror/unsettling</option>    
+          <option value="suicidal actions">violence -- suicidal actions/threats</option>    
         
           <option value="violence (other)">violence -- other</option>    
         
@@ -786,7 +786,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       second_line += "<br/>";
       // third_line now
       if (faux_tag_being_tested) {
-        second_line += "(test using your last values)";
+        second_line += "(testing using your last values)";
       }
       second_line += "(" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
       if (next_future_tag.id == 0) { // the faux_tag and unsaved :)
