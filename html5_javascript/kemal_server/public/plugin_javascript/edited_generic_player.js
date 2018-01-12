@@ -1110,13 +1110,6 @@ function getAllTagsIncludingReplacedFromUISorted(tags_wanting_replacement_insert
   }
 }
 
-function getTagOrInlineReplacement(tag) {
-    return faux_tag_being_tested;
-  } else {
-    return tag;
-  }
-}
-
 function getFirstTagEndingAfter(cur_time, all_tags) {  
   for (var i = 0; i < all_tags.length; i++) {
     var tag = all_tags[i];
