@@ -3,7 +3,7 @@
 
 <form action="/save_tag/<%= url.id %>" method="POST" >
 
-from:<input type="text" name="start"  size="25" value="<%= url.seconds_to_human tag.start %>"/>
+from:<input type="text" name="start" id='start' size="25" value="<%= url.seconds_to_human tag.start %>"/>
 <br/>
 
 to: <input type="text" name="endy" size="25" id="endy" value="<%= url.seconds_to_human tag.endy %>"/>
