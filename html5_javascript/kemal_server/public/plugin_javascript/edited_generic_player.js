@@ -63,7 +63,7 @@ function addEditUiOnce() {
         <text style="fill: none; stroke: white; stroke-width: 0.5px; stroke-linejoin: round;" y="40" x="175" id="big_edited_text_id">Edited</text>
       </svg>
        <br/>
-      Currently Editing out: <select id='tag_edit_list_dropdown' onChange='editListChanged();'></select> <!-- javascript will set up this select --> 
+      Currently Editing out: <select id='tag_edit_list_dropdown_id' onChange='personalizedDropdownChanged();'></select> <!-- javascript will set up this select --> 
       <br/>
       <a href=# onclick="openPersonalizedEditList(); return false">Personalize which parts you edit out</a>
       <br/>
@@ -421,7 +421,7 @@ default edit on?
 
       </form>
       
-      <a id=reload_tags_a_id href=# onclick="reloadForCurrentUrl(); return false;" </a>Reload tags</a>
+      <a id=reload_tags_a_id href=# onclick="reloadForCurrentUrl(''); return false;" </a>Reload tags</a>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <a href=# onclick="getSubtitleLink(); return false;" </a>Get subtitles</a>
         <input type='submit' value='Done with movie' onclick="doneMoviePage(); return false;">
@@ -922,7 +922,7 @@ function checkStatus() { // called 100 fps
     }
     else {
       if (i_set_it_to_add) {
-        setSmiley();
+        setExtensionSmiley();
         i_set_it_to_add = false;
       }
 
@@ -1368,7 +1368,7 @@ function reloadTagButton() {
 
 function clearButton() {
   clearForm();
-  reloadForCurrentUrl();
+  reloadForCurrentUrl('cleared!');
 }
 
 function clearForm() {
@@ -1397,12 +1397,8 @@ function destroyCurrentTagButton() {
   if (confirm("sure you want to nuke this tag all together?")) {
     window.open("https://" + request_host + "/delete_tag/" + id); // assume it works, and ja :)
     clearForm();
-    reloadTagsAfterOneSecond();
+    setTimeout(function() { reloadForCurrentUrl('destroyed tag')}, 1000); // reload to get it "back" from the server after saved...longest I've seen like like 60ms
   }
-}
-
-function reloadTagsAfterOneSecond() {
-  setTimeout(reloadForCurrentUrl, 1000); // reload to get it "back" from the server after saved...longest I've seen like like 60ms
 }
 
 function doneMoviePage() {
@@ -1449,31 +1445,31 @@ function loadForNewUrl() {
   getRequest(loadSucceeded, loadFailed);
 }
 
-function reloadForCurrentUrl(optional_additional_string) {
+function reloadForCurrentUrl(additional_string) {
   if (current_json != null) {
-    var reload_tags_link = document.getElementById('reload_tags_a_id');
-    reload_tags_link.innerHTML = "Reloading...";
-    if (optional_additional_string) {
-      reload_tags_link.innerHTML = optional_additional_string + reload_tags_link.innerHTML;
-    }
     console.log("submitting reload request...");
-    getRequest(function(json_string) {
-      loadSucceeded(json_string);     
-      reload_tags_link.innerHTML = "Reloaded!";
-      if (optional_additional_string) {
-        reload_tags_link.innerHTML = optional_additional_string + reload_tags_link.innerHTML;
-      }
-      setTimeout(function() {reload_tags_link.innerHTML = "Reload tags";}, 5000);
-    }, loadFailed);
+    var reload_tags_link = document.getElementById('reload_tags_a_id');
+    reload_tags_link.innerHTML = additional_string + "Reloading...";
+    getRequest(
+      function(json_string) { reloadSucceeded(json_string, additional_string); }, 
+      loadFailed // straight load failed since shouldn't happen, riiiight?
+    ); 
   }
   else {
-    alert("not reloading, possibly no edits loaded?"); // amazon went to next episode??
+    alert("not reloading, possibly no edits loaded?"); // amazon already went to next episode??
   }
+}
+
+function reloadSucceeded(json_string, additional_string) {
+  loadSucceeded(json_string);
+  var reload_tags_link = document.getElementById('reload_tags_a_id');
+  reload_tags_link.innerHTML = additional_string + "Reloaded!";
+  setTimeout(function() {reload_tags_link.innerHTML = "Reload tags";}, 5000);  
 }
 
 function loadSucceeded(json_string) {
   parseSuccessfulJson(json_string);
-  getEditsFromCurrentTagList();
+  setEditsToUseFromSelectedPersonalizeDropdown();
   startWatcherTimerSingleton(); // don't know what to display before this...so leave everything none until now
   old_current_url = getStandardizedCurrentUrl();
   old_episode = liveEpisodeNumber();
@@ -1487,7 +1483,7 @@ function loadSucceeded(json_string) {
   }
   hideDiv(document.getElementById("load_failed_div_id"));
   hideDiv(document.getElementById("server_down_div_id")); // in case it's a recovery now, server just came back up...
-  setSmiley();
+  setExtensionSmiley();
 }
 
 function doPeriodicChecks() {
@@ -1512,7 +1508,7 @@ function addPluginEnabledTextOnce() {
   }
 }
 
-function setSmiley() {
+function setExtensionSmiley() {
   sendMessageToPlugin({text: "☺", color: "#008000", details: "Edited playback is enabled and fully operational for current video being played"}); // green
 }
 
@@ -1522,7 +1518,7 @@ function loadFailed(status) {
   displayDiv(document.getElementById("load_failed_div_id"));
   hideDiv(document.getElementById("server_down_div_id"));
   
-  removeAllOptions(document.getElementById("tag_edit_list_dropdown")); // clean up...in case it matters...
+  removeAllOptions(document.getElementById("tag_edit_list_dropdown_id")); // clean up...in case it matters...
   old_current_url = getStandardizedCurrentUrl();
   old_episode = liveEpisodeNumber(); 
   sendMessageToPlugin({color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
@@ -1551,9 +1547,23 @@ function loadFailed(status) {
 }
 
 function parseSuccessfulJson(json_string) {
-  current_json = JSON.parse(json_string);
+  current_json = JSON.parse(json_string); // non var on purpose
   
-  var dropdown = document.getElementById("tag_edit_list_dropdown");
+  refreshPersonalizedDropdownOptions(current_json);
+  
+  var big_edited = document.getElementById("big_edited_text_id");
+  if (current_json.url.editing_status == 'Done with second review, tags viewed as complete') {
+    big_edited.innerHTML = "Edited";
+  } else {
+    big_edited.innerHTML = "Partially edited...";
+    big_edited.setAttribute("x", "0"); // move it left so they can see all that text..
+  }
+  console.log("finished parsing response successful JSON");
+}
+
+function refreshPersonalizedDropdownOptions() {
+  var dropdown = document.getElementById("tag_edit_list_dropdown_id");
+  var old_selected = dropdown.value;
   removeAllOptions(dropdown); // out with any old...    
   var option = document.createElement("option");
   option.text = "Default (all tags) (" + countDoSomethingTags(current_json.tags) + ")";
@@ -1580,21 +1590,11 @@ function parseSuccessfulJson(json_string) {
   
   option = document.createElement("option");
   option.text = "Watch Unedited (0 tags)";
-  option.value = "-2"; // special case :|
+  option.value = "-2"; // special case "unedited" :|
   dropdown.add(option);
-  
-  var big_edited = document.getElementById("big_edited_text_id");
-  if (current_json.url.editing_status == 'Done with second review, tags viewed as complete') {
-    big_edited.innerHTML = "Edited";
-  } else {
-    big_edited.innerHTML = "Partially edited...";
-    big_edited.setAttribute("x", "0");
+  if (old_selected != "") {
+    dropdown.value = old_selected; // preserve this across a save, but not for initially
   }
-  if (current_json.editor) {
-    // document.getElementById("big_edited_text_svg_id").style.display = "none"; // hide it so more space for editors :|
-  }
-
-  console.log("finished parsing response successful JSON");
 }
 
 function countDoSomethingTags(tags) {
@@ -1611,12 +1611,12 @@ function setTheseTagsAsTheOnesToUse(tags) {
   current_tags_to_use = tags;
 }
 
-function editListChanged() {
-  getEditsFromCurrentTagList();
+function personalizedDropdownChanged() {
+  setEditsToUseFromSelectedPersonalizeDropdown();
 }
 
-function getEditsFromCurrentTagList() {
-  var dropdown = document.getElementById("tag_edit_list_dropdown");
+function setEditsToUseFromSelectedPersonalizeDropdown() {
+  var dropdown = document.getElementById("tag_edit_list_dropdown_id");
   var selected_edit_list_id = dropdown.value;
   if (selected_edit_list_id == "-2") {
     setTheseTagsAsTheOnesToUse([]); // i.e. no-tags LOl
@@ -1635,7 +1635,7 @@ function getEditsFromCurrentTagList() {
       return;
     }   
   }
-  alert("unable to select " + dropdown.value); // shouldn't get here ever LOL.
+  alert("unable to select " + dropdown.value + "shouldn't get here ever");
 }
 
 function checkIfEpisodeChanged() {
