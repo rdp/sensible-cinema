@@ -225,19 +225,6 @@ function paddTo2(n) {
   return (pad + n).slice(-pad.length);
 }
 
-function humanToTimeStamp(timestamp) {
-  // 0h 17m 34.54s
-  sum = 0.0
-  split = timestamp.split(/[hms ]/)
-  removeElementFromArray(split, "");
-  split.reverse();
-  for (var i = 0; i < split.length; i++) {
-    sum += parseFloat(split[i]) * Math.pow(60, i);
-  }
-  return sum;
-}
-
-
 function twoDecimals(thisNumber) {
   return thisNumber.toFixed(2);
 }
