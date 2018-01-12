@@ -3,8 +3,6 @@
 add "something age" to lewd? 
   John's sugg: don't apply till hit test edit
   minor UI tweaks
-  don't make the default tags turn on after a save
-  tag edits as auto sub :|
   "Deity" all under one bold heading, "Curse Words" under another, "Euphemized," "Insults," "Misc.
   
 3rd passes/us: 
@@ -88,6 +86,8 @@ does personalize still work?
 publish android app
     
 ================= todo all never LOL =======================
+
+tag edits as originated auto sub :|
 
 move to its own linode server :|
   server low on space :|
