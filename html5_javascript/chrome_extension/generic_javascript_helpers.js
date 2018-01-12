@@ -1,3 +1,5 @@
+// also some in _tag_shared_js.ecr
+
 function updateHTML(div, new_value) {
   if (div.innerHTML != new_value) {
     div.innerHTML = new_value;
@@ -56,17 +58,6 @@ function createNotification(notification_desired) { // shared with background.js
     notification.close();
   }, 
   10000);
-}
-
-function removeElementFromArray(arr) {
-    var what, a = arguments, L = a.length, ax;
-    while (L > 1 && arr.length) {
-        what = a[--L];
-        while ((ax= arr.indexOf(what)) !== -1) {
-            arr.splice(ax, 1);
-        }
-    }
-    return arr;
 }
 
 // early callable timeout's ... :) not used anymore...
