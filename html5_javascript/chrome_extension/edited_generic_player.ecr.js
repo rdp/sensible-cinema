@@ -1577,7 +1577,7 @@ function seekToTime(ts, callback) {
   }
   rawRequestSeekToTime(ts);
   
-  if (already_cached) {
+  if (already_cached && !isYoutubePimw()) { // youtube a "raw request" doesn't actually change the time instantaneously...
     if (callback) {
       console.log("quick seek assuming...");
       callback(); // scawah, but the other one assumes it's paused? :|
