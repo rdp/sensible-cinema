@@ -122,10 +122,10 @@ function addEditUiOnce() {
         <br/>
         <input type='submit' id='save_tag_button_id' value='Save Tag' onclick="saveTagButton(); return false;">
         <br/>
-        <input type='submit' value='&lt;&lt;' id='open_prev_tag_id' onclick="openTagBeforeCurrent(); return false;">
-        <input type='submit' value='Edit Just Passed Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">
+        <input type='submit' value='&lt;&lt;' id='open_prev_tag_id' onclick="openTagBeforeOneInUi(); return false;">
+        <input type='submit' value='Edit Just Passed Tag' id='open_prev_tag_id' onclick="openTagPreviousToNowButton(); return false;">
         <input type='submit' value='Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
-        <input type='submit' value='&gt;&gt;' id='open_prev_tag_id' onclick="openTagAfterCurrent(); return false;">
+        <input type='submit' value='&gt;&gt;' id='open_prev_tag_id' onclick="openTagAfterOneInUi(); return false;">
         <br/>
         <input type='button' id='destroy_button_id' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
         <button type="" value="" onclick="clearButton(); return false;">Clear</button>
@@ -991,7 +991,7 @@ function getCurrentVideoTimestampHuman() {
   return timeStampToHuman(getCurrentTime());
 }
 
-function openTagBeforeCurrent() {
+function openTagBeforeOneInUi() {
   if (!uiTagIsNotInDb()) {
     var search_time = createFauxTagForCurrentUI().endy - 1; // get the next down...
     openTagEndingBefore(search_time);
@@ -999,19 +999,19 @@ function openTagBeforeCurrent() {
     alert("have to have a previously saved tag to get prev");
   }
 }
-function openPreviousTagButton() {
+function openTagPreviousToNowButton() {
   var search_time = getCurrentTime();
   openTagEndingBefore(search_time);
 }
 function openTagEndingBefore(search_time) {
-  var tag = getNextTagEndingBefore(search_time);
+  var tag = getFirstTagEndingBefore(search_time);
   if (tag){
     loadTagIntoUI(tag);    
   } else {
     alert("none found ending before current playback position");
   }
 }
-function getNextTagEndingBefore(search_time) { // somewhat duplicate but seemed distinct enough :|
+function getFirstTagEndingBefore(search_time) { // somewhat duplicate but seemed distinct enough :|
   var all = getAllTagsIncludingReplacedFromUISorted(current_json.tags);
   for (var i = all.length - 1; i >= 0; i--) {
     var tag = all[i];
@@ -1024,7 +1024,7 @@ function getNextTagEndingBefore(search_time) { // somewhat duplicate but seemed 
   return null; // none found
 }
 
-function openTagAfterCurrent() {
+function openTagAfterOneInUi() {
   if (!uiTagIsNotInDb()) {
     var search_time = createFauxTagForCurrentUI().endy + 1;
     openFirstTagAfter(search_time);
