@@ -137,7 +137,7 @@ function addEditUiOnce() {
 <select name="category" id='category_select' onchange=""
 style="background-color: rgba(255, 255, 255, 0.85);" >
   <option value="" disabled selected>unknown -- please select category</option>
-  <option value="profanity">profanity (verbal attacks, anything spoken)</option>
+  <option value="profanity">profanity/verbal attack</option>
   <option value="violence">violence/blood/crude action etc.</option>
   <option value="physical">sex/nudity/lewd etc.</option>
   <option value="suspense">suspense (frightening, scary fighting, surprise)</option>
@@ -182,8 +182,6 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
         
           <option value="raucous music">profanity -- raucous music</option>    
         
-          <option value="violence reference">profanity -- violence reference</option>    
-        
           <option value="profanity (other)">profanity -- other</option>    
         
         
@@ -213,8 +211,6 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
           <option value="bodily part reference mild">profanity -- bodily part reference mild (butt, bumm, suck...)</option>    
         
           <option value="bodily part reference harsh">profanity -- bodily part reference harsh (balls, etc.)</option>    
-        
-          <option value="sexual reference">profanity -- sexual innuendo/reference</option>    
         
         
           </optgroup>
@@ -279,6 +275,8 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
       
         
         
+          <option value="violence reference">violence -- violence reference (spoken)</option>    
+        
           <option value="light fight">violence -- short fighting (single punch/kick/hit/push)</option>    
         
           <option value="sustained fight">violence -- sustained punching/fighting</option>    
@@ -331,7 +329,7 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
         
           <option value="dead body">violence -- dead body visible lifeless</option>    
         
-          <option value="suicidal actions">violence -- suicidal actions/threats</option>    
+          <option value="suicidal actions">violence -- suicidal actions/references</option>    
         
           <option value="violence (other)">violence -- other</option>    
         
@@ -339,6 +337,16 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
       
     
       
+      
+        
+          <optgroup label="physical -- crude"> <!-- so it'll hide them when profanity not selected -->
+        
+        
+          <option value="sexual reference">physical -- spoken sexual innuendo/reference</option>    
+        
+        
+          </optgroup>
+        
       
         
         

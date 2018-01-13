@@ -22,7 +22,6 @@ def subcategory_map
 "profanity": [
   {db_name: "loud noise", human_name: "loud noise/screaming/yelling", sub_sub_cat: ""},
   {db_name: "raucous music", human_name: "raucous music", sub_sub_cat: ""},
-  {db_name: "violence reference", human_name: "violence reference", sub_sub_cat: ""},
   {db_name: "personal insult mild", human_name: "insult (\"moron\", \"idiot\" etc.)", sub_sub_cat: "attack"},
   {db_name: "personal attack mild", human_name: "attack command (\"shut up\" etc.)", sub_sub_cat: "attack"},
   {db_name: "being mean", human_name: "being mean/cruel to another", sub_sub_cat: "attack"},
@@ -30,7 +29,6 @@ def subcategory_map
   {db_name: "crude humor", human_name: "crude humor, like poop, bathroom, gross, etc.", sub_sub_cat: "crude"},
   {db_name: "bodily part reference mild", human_name: "bodily part reference mild (butt, bumm, suck...)", sub_sub_cat: "crude"},
   {db_name: "bodily part reference harsh", human_name: "bodily part reference harsh (balls, etc.)", sub_sub_cat: "crude"},
-  {db_name: "sexual reference", human_name: "sexual innuendo/reference", sub_sub_cat: "crude"},
   {db_name: "deity religious context", human_name: "deity use in religious context like \"the l... is good\"", sub_sub_cat: "deity"},
   {db_name: "deity reference", human_name: "deity use appropriate but non religious context like \"in this game you are G...\"", sub_sub_cat: "deity"},
   {db_name: "deity exclamation mild", human_name: "deity exclamation mild like Good L...", sub_sub_cat: "deity"},
@@ -53,6 +51,7 @@ def subcategory_map
   {db_name: "profanity (other)", human_name: "other", sub_sub_cat: ""},
 ],
 "violence": [
+  {db_name: "violence reference", human_name: "violence reference (spoken)", sub_sub_cat: ""},
   {db_name: "light fight", human_name: "short fighting (single punch/kick/hit/push)", sub_sub_cat: ""},
   {db_name: "sustained fight", human_name: "sustained punching/fighting", sub_sub_cat: ""},
   {db_name: "threatening actions", human_name: "threatening actions", sub_sub_cat: ""},
@@ -79,11 +78,12 @@ def subcategory_map
   {db_name: "sports violence", human_name: "sports violence part of game", sub_sub_cat: ""},
   {db_name: "rape", human_name: "rape", sub_sub_cat: ""},
   {db_name: "dead body", human_name: "dead body visible lifeless", sub_sub_cat: ""},
-  {db_name: "suicidal actions", human_name: "suicidal actions/threats", sub_sub_cat: ""},
+  {db_name: "suicidal actions", human_name: "suicidal actions/references", sub_sub_cat: ""},
   {db_name: "violence (other)", human_name: "other", sub_sub_cat: ""},
 ],
 "physical": [
 #  {db_name: "art nudity", human_name: "art based nudity", sub_sub_cat: ""},
+  {db_name: "sexual reference", human_name: "spoken sexual innuendo/reference", sub_sub_cat: "crude"},
   {db_name: "revealing clothing", human_name: "revealing clothing (scantily clad)", sub_sub_cat: ""},
   {db_name: "tight clothing", human_name: "tight clothing (revealing because tight)", sub_sub_cat: ""},
   {db_name: "underwear", human_name: "clad in underwear", sub_sub_cat: ""},
