@@ -362,7 +362,9 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
         
           <option value="nudity breast">physical -- nudity (breast)</option>    
         
-          <option value="shirtless male">physical -- shirtless male (non sexual or sexual)</option>    
+          <option value="shirtless male front">physical -- shirtless male (+- sexual) front</option>    
+        
+          <option value="shirtless male back">physical -- shirtless male (+- sexual) back</option>    
         
           <option value="kissing">physical -- kissing</option>    
         
