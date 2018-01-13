@@ -208,7 +208,7 @@ function editDropdownsCreated() {
   document.getElementById('category_select').addEventListener('change', function() {
     subcat_select.value = ''; // reset subcat to top, since cat just changed...
     showSubCatWithRightOptionsAvailable();
-    showRightAgeDropdowns();
+    showRightDropdownsForCategory();
    });
   
   document.getElementById('action_sel').addEventListener('change', setImpactIfMute, false);
