@@ -1,3 +1,18 @@
+function showRightDropdownsForCategory() {
+  var category = document.getElementById("category_select").value;
+  var age_select = document.getElementById('age_maybe_ok_id');
+  var lewdness_select = document.getElementById('lewdness_level_id');
+  if (category == "physical") {
+    lewdness_select.style.visibility = "visible";
+    age_select.style.visibility = "hidden";
+  } else if (category == "violence" || category == "suspense" || category == "substance-abuse") { // sustance abuse for like hard core drugs uh guess
+    lewdness_select.style.visibility = "hidden";
+    age_select.style.visibility = "visible";
+  } else { // profanity, creditz
+    lewdness_select.style.visibility = "hidden";
+    age_select.style.visibility = "hidden";
+  }
+}
 
 function showSubCatWithRightOptionsAvailable() {
   // theoretically they can never select unknown...
@@ -191,8 +206,9 @@ function editDropdownsCreated() {
 
   var subcat_select = document.getElementById("subcategory_select_id");
   document.getElementById('category_select').addEventListener('change', function() {
-    subcat_select.value = ''; // reset subcat to top 'unknown', cat just changed...
-    showSubCatWithRightOptionsAvailable(); 
+    subcat_select.value = ''; // reset subcat to top, since cat just changed...
+    showSubCatWithRightOptionsAvailable();
+    showRightAgeDropdowns();
    });
   
   document.getElementById('action_sel').addEventListener('change', setImpactIfMute, false);

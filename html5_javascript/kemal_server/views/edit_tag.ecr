@@ -60,7 +60,8 @@ select.value = htmlDecode('<%= escape_javascript tag.subcategory %>');
 
 $(document).ready(function() {
   if (document.getElementById('category_select').value != 'unknown') {
-    showSubCatWithRightOptionsAvailable(); // show it, prune it :)
+    showSubCatWithRightOptionsAvailable(); // show it, prune it :) XXX don't do this here :| the plugin 'does it' by firing change events after setting the vals :|
+    showRightDropdownsForCategory();
   }
 });
 	
