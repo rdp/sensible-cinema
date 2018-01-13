@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendMessageBigBuck(View view) {
         Intent intent = new Intent(this, DisplayMessageActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, "https://playitmyway.org/test_movie_for_practicing_edits.html");
+        intent.putExtra(EXTRA_MESSAGE, "https://playitmyway.org/test_movie_for_showing_off_edits.html");
         startActivity(intent);
     }
 

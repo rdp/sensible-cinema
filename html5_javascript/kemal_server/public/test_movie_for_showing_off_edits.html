@@ -1,0 +1,24 @@
+<head><meta charset="utf-8" /> 
+<title>Play It My Way Demo Movie -- Big Buck Bunny</title></head>
+This is a movie to show you how Play it my Way works.
+<br/>
+Basically, it can take movies online and cut the stuff you don't want!
+<br/>
+Click <a href=# onclick="window.open('http://playitmyway.org/nuke_test_by_url?url=' + window.location.href);">here</a> to reset/clean it all up for a fresh start, or to start all over, then come back here!
+
+<br/>
+<h1>Test Movie</h1>
+<br/>
+
+<div style="max-height: 720px; background-color: #000000; max-wdith: 100%;">
+<video height="95%" controls preload=metadata autoplay>
+ <source src="BigBuckBunny_320x180.mp4" type="video/mp4"/> <!-- get copy here http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4 -->
+</video>
+</div>
+
+<script>
+  // inject copy of plugin FTW :|
+  var my_awesome_script = document.createElement('script');
+  my_awesome_script.setAttribute('src','https://playitmyway.org/plugin_javascript/edited_generic_player.js');
+  document.head.appendChild(my_awesome_script);
+</script>
