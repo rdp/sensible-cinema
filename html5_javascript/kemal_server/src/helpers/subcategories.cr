@@ -83,7 +83,7 @@ def subcategory_map
 ],
 "physical": [
 #  {db_name: "art nudity", human_name: "art based nudity", sub_sub_cat: ""},
-  {db_name: "sexual reference", human_name: "spoken sexual innuendo/reference", sub_sub_cat: "crude"},
+  {db_name: "sexual reference", human_name: "spoken sexual innuendo/reference", sub_sub_cat: ""},
   {db_name: "revealing clothing", human_name: "revealing clothing (scantily clad)", sub_sub_cat: ""},
   {db_name: "tight clothing", human_name: "tight clothing (revealing because tight)", sub_sub_cat: ""},
   {db_name: "underwear", human_name: "clad in underwear", sub_sub_cat: ""},

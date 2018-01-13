@@ -136,7 +136,7 @@ function addEditUiOnce() {
 <div id="category_div_id">
 <select name="category" id='category_select' onchange=""
 style="background-color: rgba(255, 255, 255, 0.85);" >
-  <option value="" disabled selected>unknown -- please select category</option>
+  <option value="" disabled selected>category -- please select one</option>
   <option value="profanity">profanity/verbal attack</option>
   <option value="violence">violence/blood/crude action etc.</option>
   <option value="physical">sex/nudity/lewd etc.</option>
@@ -339,16 +339,8 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
       
       
         
-          <optgroup label="physical -- crude"> <!-- so it'll hide them when profanity not selected -->
-        
         
           <option value="sexual reference">physical -- spoken sexual innuendo/reference</option>    
-        
-        
-          </optgroup>
-        
-      
-        
         
           <option value="revealing clothing">physical -- revealing clothing (scantily clad)</option>    
         
@@ -453,8 +445,9 @@ Lewdness level:
   <option value="2">Cartoon (non sensual)</option>
   <option value="3">Non sensual (other)</option>
   <option value="4">Mild</option>
-  <option value="5">Moderate</option>
-  <option value="6">Extreme</option>
+  <option value="5">Art-based (sensual/extreme)</option>
+  <option value="6">Moderate</option>
+  <option value="7">Extreme</option>
 </select>
 <br/>
 
@@ -2079,11 +2072,12 @@ function showRightDropdownsForCategory() {
     lewdness_select.style.visibility = "visible";
     age_select.style.visibility = "hidden";
     age_select.value = "0";
-  } else if (category == "violence" || category == "suspense" || category == "substance-abuse") { // sustance abuse for like hard core drugs uh guess
+  } else if (category == "violence" || category == "suspense" || category == "substance-abuse") {
     lewdness_select.style.visibility = "hidden";
     lewdness_select.value = "0";
+    // sustance abuse optional for like hard core drugs...?
     age_select.style.visibility = "visible";
-  } else { // profanity, creditz
+  } else { // profanity, creditz -> neither
     lewdness_select.style.visibility = "hidden";
     age_select.style.visibility = "hidden";
     lewdness_select.value = "0";
