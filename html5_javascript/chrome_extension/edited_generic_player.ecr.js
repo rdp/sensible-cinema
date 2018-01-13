@@ -999,10 +999,12 @@ function openTagBeforeOneInUi() {
     alert("have to have a previously saved tag to get prev");
   }
 }
+
 function openTagPreviousToNowButton() {
   var search_time = getCurrentTime();
   openTagEndingBefore(search_time);
 }
+
 function openTagEndingBefore(search_time) {
   var tag = getFirstTagEndingBefore(search_time);
   if (tag){
@@ -1011,6 +1013,7 @@ function openTagEndingBefore(search_time) {
     alert("none found ending before current playback position");
   }
 }
+
 function getFirstTagEndingBefore(search_time) { // somewhat duplicate but seemed distinct enough :|
   var all = getAllTagsIncludingReplacedFromUISorted(current_json.tags);
   for (var i = all.length - 1; i >= 0; i--) {
@@ -1021,7 +1024,7 @@ function getFirstTagEndingBefore(search_time) { // somewhat duplicate but seemed
       return tag;
     }
   }
-  return null; // none found
+  return null; // not found
 }
 
 function openTagAfterOneInUi() {
@@ -1032,10 +1035,12 @@ function openTagAfterOneInUi() {
     alert("have to have a previously saved tag to get next");
   }
 }
+
 function openNextTagButton() {
   var search_time = getCurrentTime();
   openFirstTagAfter(search_time);
 }
+
 function openFirstTagAfter(search_time) {
   var next_tag = getFirstTagEndingAfter(search_time, getAllTagsIncludingReplacedFromUISorted(current_json.tags));
   if (next_tag) {
