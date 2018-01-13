@@ -136,7 +136,7 @@ function addEditUiOnce() {
       <a id=reload_tags_a_id href=# onclick="reloadForCurrentUrl(''); return false;" </a>Reload tags</a>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <a href=# onclick="getSubtitleLink(); return false;" </a>Get subtitles</a>
-        <input type='submit' value='Done with movie' onclick="doneMoviePage(); return false;">
+        <input type='submit' value='Movie page' onclick="doneMoviePage(); return false;">
       <br/>
       <input type='button' onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
     </div>
@@ -993,7 +993,7 @@ function getCurrentVideoTimestampHuman() {
 
 function openTagBeforeOneInUi() {
   if (!uiTagIsNotInDb()) {
-    var search_time = createFauxTagForCurrentUI().endy - 1; // get the next down...
+    var search_time = createFauxTagForCurrentUI().endy - 0.01; // get the next down...
     openTagEndingBefore(search_time);
   } else {
     alert("have to have a previously saved tag to get prev");
@@ -1029,7 +1029,7 @@ function getFirstTagEndingBefore(search_time) { // somewhat duplicate but seemed
 
 function openTagAfterOneInUi() {
   if (!uiTagIsNotInDb()) {
-    var search_time = createFauxTagForCurrentUI().endy + 1;
+    var search_time = createFauxTagForCurrentUI().endy + 0.01;
     openFirstTagAfter(search_time);
   } else {
     alert("have to have a previously saved tag to get next");
