@@ -487,7 +487,7 @@ get "/new_manual_url" do |env|
   end
   if real_url =~ /youtube.com/
     raise "expected normal youtube url like https://www.youtube.com/watch?v=9VH8lvZ-Z1g" unless real_url.includes?("?v=")
-    youtube_id = real_url.split("?v=")[-1]
+    youtube_id = real_url.split("?v=")[-1].split("&")[0] # remove &t=33
     real_url = "https://playitmyway.org/edited_youtube/" + youtube_id
     env.redirect real_url # they can add it from there, with duration :)
   else
