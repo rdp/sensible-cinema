@@ -5,12 +5,16 @@ function showRightDropdownsForCategory() {
   if (category == "physical") {
     lewdness_select.style.visibility = "visible";
     age_select.style.visibility = "hidden";
+    age_select.value = "0";
   } else if (category == "violence" || category == "suspense" || category == "substance-abuse") { // sustance abuse for like hard core drugs uh guess
     lewdness_select.style.visibility = "hidden";
+    lewdness_select.value = "0";
     age_select.style.visibility = "visible";
   } else { // profanity, creditz
     lewdness_select.style.visibility = "hidden";
     age_select.style.visibility = "hidden";
+    lewdness_select.value = "0";
+    age_select.value = "0";
   }
 }
 
