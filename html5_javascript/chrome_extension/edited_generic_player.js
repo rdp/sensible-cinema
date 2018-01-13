@@ -342,8 +342,6 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
       
         
         
-          <option value="art nudity">physical -- art based nudity</option>    
-        
           <option value="revealing clothing">physical -- revealing clothing (scantily clad)</option>    
         
           <option value="tight clothing">physical -- tight clothing (revealing because tight)</option>    
@@ -352,11 +350,7 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
         
           <option value="swimsuit">physical -- swimsuit</option>    
         
-          <option value="light cleavage">physical -- light cleavage/barely revealing</option>    
-        
           <option value="revealing cleavage">physical -- revealing cleavage</option>    
-        
-          <option value="partial nudity">physical -- partial nudity (ex: excessive cleavage)</option>    
         
           <option value="nudity posterior male">physical -- nudity (posterior) male</option>    
         
@@ -368,11 +362,9 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
         
           <option value="nudity breast">physical -- nudity (breast)</option>    
         
-          <option value="shirtless male">physical -- shirtless male (non sexual)</option>    
+          <option value="shirtless male">physical -- shirtless male (non sexual or sexual)</option>    
         
-          <option value="kissing peck">physical -- kiss (peck)</option>    
-        
-          <option value="kissing passionate">physical -- kiss (passionate)</option>    
+          <option value="kissing">physical -- kissing</option>    
         
           <option value="sexually charged scene">physical -- sexually charged scene</option>    
         
@@ -382,7 +374,7 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
         
           <option value="explicit sex">physical -- explicit sex</option>    
         
-          <option value="homosexual behavior">physical -- homosexual behavior (kissing, holding hands, light stuff)</option>    
+          <option value="homosexual behavior">physical -- homosexual behavior</option>    
         
           <option value="physical (other)">physical -- other</option>    
         
