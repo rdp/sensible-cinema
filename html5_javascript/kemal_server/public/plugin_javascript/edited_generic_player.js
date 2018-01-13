@@ -149,7 +149,7 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
 <div id="subcategory_div_id">
 subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
 <select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);" onchange="">
-    <option value="">unknown -- please select subcategory</option>
+    <option value="">unknown -- please select subcategory</option> <!-- this one sticks around no matter which category you select -->
     
       
       
@@ -449,11 +449,12 @@ age specifier (violence):
 Lewdness level:
 <select name="lewdness_level" id="lewdness_level_id">
   <option value="0">not applicable/needed</option>
-  <option value="1">Art non sensual</option>
-  <option value="2">Cartoon non sensual</option>
-  <option value="3">Tame</option>
-  <option value="4">Passionate</option>
-  <option value="5">Sexual</option>
+  <option value="1">Art-based (non sensual)</option>
+  <option value="2">Cartoon (non sensual)</option>
+  <option value="3">Non sensual (other)</option>
+  <option value="4">Mild</option>
+  <option value="5">Moderate</option>
+  <option value="6">Extreme</option>
 </select>
 <br/>
 
@@ -1307,7 +1308,8 @@ function createFauxTagForCurrentUI() {
     category: document.getElementById('category_select').value,
     subcategory: document.getElementById('subcategory_select_id').value,
     impact_to_movie: document.getElementById('impact_to_movie_id').value,
-    age_maybe_ok: document.getElementById('age_maybe_ok_id').value
+    age_maybe_ok: document.getElementById('age_maybe_ok_id').value,
+    lewdness_level: document.getElementById('lewdness_level_id').value
   }
   return faux_tag;
 }
@@ -1323,6 +1325,7 @@ function loadTagIntoUI(tag) {
   document.getElementById('subcategory_select_id').value = htmlDecode(tag.subcategory);
   document.getElementById('subcategory_select_id').dispatchEvent(new Event('change')); // so it'll do the right size, needed apparently :|
   document.getElementById('age_maybe_ok_id').value = tag.age_maybe_ok;
+  document.getElementById('lewdness_level_id').value = tag.lewdness_level;
   document.getElementById('impact_to_movie_id').value = tag.impact_to_movie;
   document.getElementById('default_enabled_id').value = tag.default_enabled;
   document.getElementById('action_sel').value = tag.default_action;
@@ -1481,6 +1484,7 @@ function clearForm() {
   document.getElementById('subcategory_select_id').selectedIndex = 0; // use a present value so size doesn't go to *0*
   showSubCatWithRightOptionsAvailable(); // resize it back to none, not sure how to auto-trigger this
   document.getElementById('age_maybe_ok_id').value = "0";
+  document.getElementById('lewdness_level_id').value = "0";
   document.getElementById('impact_to_movie_id').value = "0"; // force them to choose one
   setImpactIfMute(); // reset if mute :|
   document.getElementById('tag_hidden_id').value = '0'; // reset
@@ -2067,10 +2071,29 @@ function liveFullNameEpisode() {
   return liveTitleNoEpisode() + liveEpisodeString(); 
 }
 
+function showRightDropdownsForCategory() {
+  var category = document.getElementById("category_select").value;
+  var age_select = document.getElementById('age_maybe_ok_id');
+  var lewdness_select = document.getElementById('lewdness_level_id');
+  if (category == "physical") {
+    lewdness_select.style.visibility = "visible";
+    age_select.style.visibility = "hidden";
+    age_select.value = "0";
+  } else if (category == "violence" || category == "suspense" || category == "substance-abuse") { // sustance abuse for like hard core drugs uh guess
+    lewdness_select.style.visibility = "hidden";
+    lewdness_select.value = "0";
+    age_select.style.visibility = "visible";
+  } else { // profanity, creditz
+    lewdness_select.style.visibility = "hidden";
+    age_select.style.visibility = "hidden";
+    lewdness_select.value = "0";
+    age_select.value = "0";
+  }
+}
 
 function showSubCatWithRightOptionsAvailable() {
   // theoretically they can never select unknown...
-  var type = document.getElementById("category_select").value; // category like "profanity"
+  var category = document.getElementById("category_select").value;
   var subcategory_select = document.getElementById("subcategory_select_id");
   var width_needed = 0;
   var subcats_with_optgroups = Array.apply(null, subcategory_select.options); // convert to Array
@@ -2078,9 +2101,8 @@ function showSubCatWithRightOptionsAvailable() {
   for (var i=0; i < subcats_with_optgroups.length; i++){
     var option = subcats_with_optgroups[i];
     var text = option.text || option.label; // for optgroup
-    console.log("searching text=" + text);
     var cat_from_subcat = text.split(" ")[0]; // profanity of profanity -- XXX
-    if (cat_from_subcat != type && text.includes(" -- ")) {
+    if (cat_from_subcat != category && text.includes(" -- ")) {
       option.style.display = "none";
     }
     else {
@@ -2184,6 +2206,29 @@ function weakDoubleCheckTimestampsAndAlert(action, details, start, endy) {
   return true;
 }
 
+function humanToTimeStamp(timestamp) {
+  // 0h 17m 34.54s
+  sum = 0.0
+  split = timestamp.split(/[hms ]/)
+  removeElementFromArray(split, "");
+  split.reverse();
+  for (var i = 0; i < split.length; i++) {
+    sum += parseFloat(split[i]) * Math.pow(60, i);
+  }
+  return sum;
+}
+
+function removeElementFromArray(arr) {
+    var what, a = arguments, L = a.length, ax;
+    while (L > 1 && arr.length) {
+        what = a[--L];
+        while ((ax= arr.indexOf(what)) !== -1) {
+            arr.splice(ax, 1);
+        }
+    }
+    return arr;
+}
+
 function doubleCheckValues() {
 
   var action = document.getElementById('action_sel').value;
@@ -2238,20 +2283,15 @@ function editDropdownsCreated() {
 
   var subcat_select = document.getElementById("subcategory_select_id");
   document.getElementById('category_select').addEventListener('change', function() {
-    showSubCatWithRightOptionsAvailable(); 
-    subcat_select.value = ''; // reset subcat, cat just changed wait after?
+    subcat_select.value = ''; // reset subcat to top, since cat just changed...
+    showSubCatWithRightOptionsAvailable();
+    showRightDropdownsForCategory();
    });
   
   document.getElementById('action_sel').addEventListener('change', setImpactIfMute, false);
-  // setImpactIfMute(); // the default is mute so set up origin as we'd anticipate :| except can't because resets it from edit_tag.cr :\
+  // setImpactIfMute(); // the default is mute so set up origin as we'd anticipate :| except can't because resets it immediately after from edit_tag.cr at least :|
   resizeToCurrentSize(subcat_select);
-  subcat_select.addEventListener(
-       'change', // XX move out :|
-       function() {
-         resizeToCurrentSize(this);
-        },
-       false
-  ); 
+  subcat_select.addEventListener( 'change', function() { resizeToCurrentSize(this); }, false); 
 }
 
 function htmlDecode(input) // unescape I guess typically we inject "inline" which works fine <sigh> but not for value = nor alert ... I did DB wrong
@@ -2260,6 +2300,8 @@ function htmlDecode(input) // unescape I guess typically we inject "inline" whic
   return doc.documentElement.textContent;
 }
  <!-- render inline cuz uses macro, putting this at the end isn't enough to not mess up line numbers because dropdowns are injected :| -->
+
+// also some in _tag_shared_js.ecr
 
 function updateHTML(div, new_value) {
   if (div.innerHTML != new_value) {
@@ -2319,17 +2361,6 @@ function createNotification(notification_desired) { // shared with background.js
     notification.close();
   }, 
   10000);
-}
-
-function removeElementFromArray(arr) {
-    var what, a = arguments, L = a.length, ax;
-    while (L > 1 && arr.length) {
-        what = a[--L];
-        while ((ax= arr.indexOf(what)) !== -1) {
-            arr.splice(ax, 1);
-        }
-    }
-    return arr;
 }
 
 // early callable timeout's ... :) not used anymore...
@@ -2487,19 +2518,6 @@ function paddTo2(n) {
   var pad = new Array(1 + 2).join('0');
   return (pad + n).slice(-pad.length);
 }
-
-function humanToTimeStamp(timestamp) {
-  // 0h 17m 34.54s
-  sum = 0.0
-  split = timestamp.split(/[hms ]/)
-  removeElementFromArray(split, "");
-  split.reverse();
-  for (var i = 0; i < split.length; i++) {
-    sum += parseFloat(split[i]) * Math.pow(60, i);
-  }
-  return sum;
-}
-
 
 function twoDecimals(thisNumber) {
   return thisNumber.toFixed(2);
