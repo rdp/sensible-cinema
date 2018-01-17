@@ -7,7 +7,6 @@
 == meh sometime ==
 
 youtubes them :|
-  make it easier to edit first? So painful...a new button 50% it?
 
 us passes:
   3rd passes
@@ -111,11 +110,6 @@ currently "xx" displays wrong in big buck :|
 
 mention "made for TV" "edited for airplane"
 
-youtube: 
-  I guess 90% init so they can see the fs link
-  better icon for fs
-  volume +- button
-
 it checks "edit out all" even if some are individually not edited out...personalize page
 
 notifies on big buck mute seemed to go over and over...though they did disappear after 10 LOL
@@ -137,10 +131,6 @@ edit greg's one movie [sync? :| ]
 sticky-er notifications os x :/
 
 move "our actual requests" to the uservoice :)
-
-Fix YouTube seek adjacent to seek (assuming it's broken :| )
-  icon says "none" on youtubes :(
-  better url https://playitmyway.org/edited_youtube/d732rPkjqOU
 
 get real permission to use movie poster images full :|
   rewrite legal at the bottom to be just a link
@@ -185,12 +175,18 @@ android app (lesser prio):
   experiment with "uninstall all chrome" :\
   android TV app?? :|
 
-youtube: some way to get from youtube.com to mine (low prio though...maybe just need an "add to play it my way" popup.html?)
+youtube: 
+  some way to get from youtube.com to mine (low prio though...maybe just need an "add to play it my way" popup.html?)
   list "more" youtubes to watch underneath (make black less terrifyingly large if not logged in?)
   fix for slower phones
   better html icon :)
-  better title
-  the "start 90%" doesn't work:|
+  better HTML title
+  fix seek adjacent to seek (assuming it's broken :| )
+  icon says "none" on youtubes :(
+  better url https://playitmyway.org/edited_youtube/d732rPkjqOU
+  better icon for fullscreen
+  volume +- buttons/cleanups
+  youtube button(s) for "next edited" [?]
   
 integrate with "real" amazon API so I can get the rental numbers right :|
 
@@ -262,8 +258,6 @@ impact to story finish rename
   default_action => action
 
 https://twitch.amazon.com/prime?ref_=sm_w_tup_ntp_t_all&redirectRoute=aXNfdGhpc19teV9uYW1l broken :|
-
-youtube button for "next edited" [?]
 
 did alerts not show up in windows?
   can I not unfullscreen?
