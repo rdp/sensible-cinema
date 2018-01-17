@@ -11,7 +11,7 @@
     <a href='' onclick="seekToDelta(-10); return false">-10s</a>
     <a href='' onclick="seekToDelta(10); return false">+10s</a>
     <!-- fullscreen -->
-    <a href='' onclick="toggleFullScreen(); return false">Go Fullscreen</a>
+    Go <a href='' onclick="toggleFullScreen(); return false">Fullscreen</a>
 
     <br/>
     Volume:<input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)" style="max-width: 100px; display:inline;"></input>
@@ -26,8 +26,12 @@
 <h2 id="youtube_name_header_id"><%= url ? url.name + " (Edited)" : "youtube not in our edited system yet, please click 'unedited' in the black box below the movie to add it!" %></h2>
 
 Legal disclaimer: Performance of the picture is altered from the performance intended by the director or copyright holder of the motion picture. (we're required by law to say that).
-<br/>
+
 Edited controls:
+<% if editor?(env) %>
+  <a href="" onclick='document.getElementById('player_with_controls').style.width = "50%"; return false;'>Make smaller for editing</a>
+<% end %>
+
 <!-- match amazon coloring for my stuff :| -->
 <style>
 input,select {
@@ -35,13 +39,13 @@ input,select {
 }
 </style>
 
-<div style="height: 760px; max-width: 620px; background: black;" id="show_your_instructions_here_id"> <!-- plugin binds here -->
-</div>
+<div style="height: 760px; max-width: 620px; background: black;" id="show_your_instructions_here_id"> <!-- plugin binds here --></div>
 
-<p>Seeing closed captions? To toggle them off (or on) go to <a href=youtube.com>youtube.com</a> and watch something and turn them off there.
+<p>Seeing closed captions? To toggle them off (we recommend off) go <a href="https://youtu.be/<%= youtube_id %>">here</a> and turn them off.
+<br/>
 
 <% if editor?(env) %>
-<h3>Create new other (youtube)</h3>
+<h3>Editor: Create new other (youtube)</h3>
 Enter url of movie here:
 <form action="/new_manual_url" method="GET">Your Movie's url: <input type="text" name="url"/>
   <input type="submit" value="Submit">
