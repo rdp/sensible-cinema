@@ -117,10 +117,11 @@ function autoStartIfShould() {
   if (wantItPlayItMyWay && window.navigator.userAgent.includes("PlayItMyWay")) {
     wantItPlayItMyWay = false; // let android inject it, don't want to cheat
   }
+  
   if (url.includes("play.google.com") || url.includes("amazon.com") || wantItPlayItMyWay) {
     if (inIframe()) { 
       // avoid google iframes popup after it says <smiley> and reset it back even though it is playing OK
-      console.log("not setting plugin text to ... from an iframe");
+      console.log("not setting plugin text to look from an iframe");
     }
     else {
       chrome.runtime.sendMessage({text: "look", color: "#808080", 
