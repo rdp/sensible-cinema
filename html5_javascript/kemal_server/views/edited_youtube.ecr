@@ -127,8 +127,8 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
         exitFullScreen(); // from plugin
         return;
       }
-      var iframe = document.getElementById("player_with_controls");
-      // var iframe = youtube_pimw_player.getIframe(); // no seek controls :\
+      // var iframe = document.getElementById("player_with_controls");
+      var iframe = youtube_pimw_player.getIframe(); // no controls *at all*, but goes to *real fullscreen* :)
 
       var requestFullScreen = iframe.requestFullScreen || iframe.mozRequestFullScreen || iframe.webkitRequestFullScreen;
       if (requestFullScreen) {
