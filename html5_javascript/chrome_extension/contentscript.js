@@ -110,7 +110,7 @@ function autoStartIfShould() {
   }
   // youtube_pimw "already has it" hard coded
   // but want the demo movie still :|
-  var wantItPlayItMyWay = url.includes("playitmyway.org;
+  var wantItPlayItMyWay = url.includes("playitmyway.org");
   if (wantItPlayItMyWay && !url.includes("edited_youtube")) {
     wantItPlayItMyWay = false; // already hard-coded inline...
   }
