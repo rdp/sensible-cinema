@@ -2,7 +2,7 @@
 // content script runs on every page...and once again on each embedded iframe...
 // we mostly use this to bootstrap the real player...
 
-console.log("PIMW content script entered..."); // to try and see how fast it "can" load...
+console.log("PIMW content script entered... " + window.location); // try and see how fast it "can" load...
 
 function loadScript(url, callback)
 {
@@ -111,7 +111,7 @@ function autoStartIfShould() {
   // youtube_pimw "already has it" hard coded
   // but want the demo movie still :|
   var wantItPlayItMyWay = url.includes("playitmyway.org");
-  if (wantItPlayItMyWay && !url.includes("edited_youtube")) {
+  if (wantItPlayItMyWay && url.includes("edited_youtube")) {
     wantItPlayItMyWay = false; // already hard-coded inline...
   }
   if (wantItPlayItMyWay && window.navigator.userAgent.includes("PlayItMyWay")) {

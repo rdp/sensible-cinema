@@ -1279,7 +1279,7 @@ function setEditedControlsToMovieRight() {
   }
   desired_left = desired_left + "px"; // has to be this way apparently
   desired_top = desired_top + "px";
-  if (all_pimw_stuff.style.left != desired_left || all_pimw_stuff.style.top != desired_top) {
+  if (parseInt(all_pimw_stuff.style.left) != parseInt(desired_left) || parseInt(all_pimw_stuff.style.top) != parseInt(desired_top)) { // youtube had some weird off by 0.001
     console.log("moving controls to top=" + desired_top + " left=" + desired_left);
     all_pimw_stuff.style.left = desired_left;
     all_pimw_stuff.style.top = desired_top;
@@ -1628,7 +1628,6 @@ function loadFailed(status) {
   old_current_url = getStandardizedCurrentUrl();
   old_episode = liveEpisodeNumber(); 
   sendMessageToPlugin({color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
-  console.log("got failure HTML status=" + status);
   if (status == 412) {
     // not in our system yet
     // alert here is annoying
@@ -1650,6 +1649,7 @@ function loadFailed(status) {
   }
   
   startWatcherTimerSingleton(); // so it can check if episode changes to one we like magically LOL [amazon...]
+  console.log("got failure/ABSENT HTML response status=" + status);
 }
 
 function parseSuccessfulJson(json_string) {
@@ -1664,7 +1664,7 @@ function parseSuccessfulJson(json_string) {
     big_edited.innerHTML = "Partially edited...";
     big_edited.setAttribute("x", "0"); // move it left so they can see all that text..
   }
-  console.log("finished parsing response successful JSON");
+  console.log("finished parsing response SUCCESS JSON");
 }
 
 function refreshPersonalizedDropdownOptions() {
