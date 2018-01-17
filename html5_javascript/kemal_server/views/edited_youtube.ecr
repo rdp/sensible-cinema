@@ -1,5 +1,5 @@
 <div id="player_with_controls" style="width: 100%;"> <!-- width for fullscreen needed it -->
-  <div id="ytplayer_wrapper_div_id" style="width: 100%; height: 100%;"> <!-- so when youtube gets small, it doesn't rejostle everything -->
+  <div id="ytplayer_wrapper_div_id" style="width: 100%; height: 90%;"> <!-- need wrapper div so when youtube gets small, doesn't rejostle everything -->
     <div id="ytplayer_div"></div>
   </div>
   <h3 style="margin-top: 5px;">
@@ -32,7 +32,7 @@
 
   Edited controls:
   <% if editor?(env) %>
-    Editor: <a href="" onclick='document.getElementById("player_with_controls").style.height = "60%"; document.getElementById("below_vid_stuff").style.display="none"; return false;'>Make smaller for editing</a>
+    Editor: <a href="" onclick='document.getElementById("player_with_controls").style.height = "60%"; document.getElementById("below_vid_stuff").style.display="none"; return false;'>Click here to make video smaller for easier editing!</a>
   <% end %>
 
   <!-- match amazon coloring for my stuff :| -->
