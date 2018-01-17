@@ -1409,7 +1409,7 @@ function startOnce() {
       return; // avoid future prompts which don't matter anyway for now :|
     }
   }
-
+  
   // ready to try and load the editor LOL
   console.log("adding edit UI, requesting for current URL...");
 
