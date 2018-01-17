@@ -208,9 +208,9 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
         
           <option value="crude humor">profanity -- crude humor, like poop, bathroom, gross, etc.</option>    
         
-          <option value="bodily part reference mild">profanity -- bodily part reference mild (butt, bumm, suck...)</option>    
+          <option value="bodily part reference mild">profanity -- bodily part reference mild (butt, bumm, suck ...)</option>    
         
-          <option value="bodily part reference harsh">profanity -- bodily part reference harsh (balls, etc.)</option>    
+          <option value="bodily part reference harsh">profanity -- bodily part reference harsh (ex: balls...)</option>    
         
         
           </optgroup>
@@ -1443,7 +1443,7 @@ function saveTagButton() {
   submit_form.action = "https://" + request_host + "/save_tag/" + current_json.url.id; // allow request_host to change :| NB this goes to the *movie* id on purpose
   submitFormXhr(submit_form, function(xhr) {
     clearForm();
-    reloadForCurrentUrl("Saved tag! "); // it's done saving so we can do this ja
+    reloadForCurrentUrl("SAVED tag! "); // it's done saving so we can do this ja
   }, function(xhr) {
     alert("save didn't take? website down?");
     // and don't clear?
