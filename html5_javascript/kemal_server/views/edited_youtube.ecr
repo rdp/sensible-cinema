@@ -25,24 +25,25 @@
 
 <h2 id="youtube_name_header_id"><%= url ? url.name + " (Edited)" : "youtube not in our edited system yet, please click 'unedited' in the black box below the movie to add it!" %></h2>
 
-Seeing closed captions? To toggle them off (we recommend off) go <a href="https://youtu.be/<%= youtube_id %>">here</a> and turn them off.
-<br/>
-Legal disclaimer: Performance of the picture is altered from the performance intended by the director or copyright holder of the motion picture. (we're required by law to say that).
-<br/>
-
-Edited controls:
-<% if editor?(env) %>
+<div id="below_vid_stuff">
+  Seeing closed captions? To toggle them off (we recommend off) go <a href="https://youtu.be/<%= youtube_id %>">here</a> and turn them off.
   <br/>
-  Editor: <a href="" onclick='document.getElementById('player_with_controls').style.height = "60%"; return false;'>Make smaller for editing</a>
-<% end %>
+  Legal disclaimer: Performance of the picture is altered from the performance intended by the director or copyright holder of the motion picture. (we're required by law to say that).
+  <br/>
 
-<!-- match amazon coloring for my stuff :| -->
-<style>
-input,select {
-  color: black;
-}
-</style>
+  Edited controls:
+  <% if editor?(env) %>
+    Editor: <a href="" onclick='document.getElementById("player_with_controls").style.height = "60%"; document.getElementById("below_vid_stuff").style.display="none"; return false;'>Make smaller for editing</a>
+  <% end %>
 
+  <!-- match amazon coloring for my stuff :| -->
+  <style>
+  input,select {
+    color: black;
+  }
+  </style>
+
+</div>
 <div style="height: 760px; max-width: 620px; background: black;" id="show_your_instructions_here_id"> <!-- plugin binds here --></div>
 
 
