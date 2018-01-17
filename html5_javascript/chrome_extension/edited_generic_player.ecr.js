@@ -78,7 +78,7 @@ function addEditUiOnce() {
       <div style="display: inline-block"> <!-- prevent line feed before this div -->
         <span id="currently_xxx_span_id"> <!-- "currently: muting" --></span>
         <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable if flagged as editor -->
-           <a href=# onclick="toggleAddNewTagStuff(); return false;">[add tag]</a>
+           <a href=# onclick="toggleAddNewTagStuff(); return false;">[add/edit tag]</a>
         </div>
       </div>
     </div>
