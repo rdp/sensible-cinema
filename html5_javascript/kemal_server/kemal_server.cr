@@ -81,7 +81,7 @@ get "/edited_youtube/:youtube_id" do |env|
   in_system = sanitize_html("https://playitmyway.org/edited_youtube/" + youtube_id) # hacky way to be able to look it up to display stuff about it in the ecr
   url = Url.get_only_or_nil_by_urls_and_episode_number(in_system, 0)
   if url
-    env.response.title = "Edited: " + url.name
+    env.response.title = "Edited: " + url.name + " Youtube"
   end
   render "views/edited_youtube.ecr", "views/layout_no_nav.ecr"
 end
