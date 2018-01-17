@@ -16,8 +16,10 @@ public class AdminActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin);
     }
 
+    // XXX add shaka ? :) or are we "past that" already :)
+
     public void sendMessageLogin(View view) {
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
+        Intent intent = new Intent(this, EditedWebViewActivity.class);
         EditText editText = (EditText) findViewById(R.id.password);
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, "https://playitmyway.org/go_admin?secret=" + message);
@@ -25,13 +27,13 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     public void sendMessageMinions(View view) {
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
+        Intent intent = new Intent(this, EditedWebViewActivity.class);
         intent.putExtra(EXTRA_MESSAGE, "https://smile.amazon.com/Minions-Sandra-Bullock/dp/B011802KGM?sa-no-redirect=1");
         startActivity(intent);
     }
 
     public void sendMessageRawUrl(View view) {
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
+        Intent intent = new Intent(this, EditedWebViewActivity.class);
         EditText editText = (EditText) findViewById(R.id.rawUrl);
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);

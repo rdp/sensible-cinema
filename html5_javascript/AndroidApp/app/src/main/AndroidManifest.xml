@@ -3,9 +3,11 @@
     package="com.example.rdp.myfirstapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- needed? -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- not sure -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+    <!-- no target SDK FWIW -->
     <application
         android:versionCode="1"
         android:versionName="0.1"
@@ -24,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DisplayMessageActivity"
+            android:name=".EditedWebViewActivity"
             android:configChanges="orientation|screenSize"
             android:hardwareAccelerated="true"
             android:parentActivityName=".MainActivity">

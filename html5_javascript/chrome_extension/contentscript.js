@@ -110,7 +110,14 @@ function autoStartIfShould() {
   }
   // youtube_pimw "already has it" hard coded
   // but want the demo movie still :|
-  if (url.includes("play.google.com") || url.includes("amazon.com") || (url.includes("playitmyway.org") && !url.includes("edited_youtube") && !url.includes("test_movie_for_showing_off_edits")) {
+  var wantItPlayItMyWay = url.includes("playitmyway.org;
+  if (wantItPlayItMyWay && !url.includes("edited_youtube")) {
+    wantItPlayItMyWay = false; // already hard-coded inline...
+  }
+  if (wantItPlayItMyWay && window.navigator.userAgent.includes("PlayItMyWay")) {
+    wantItPlayItMyWay = false; // let android inject it, don't want to cheat
+  }
+  if (url.includes("play.google.com") || url.includes("amazon.com") || wantItPlayItMyWay) {
     if (inIframe()) { 
       // avoid google iframes popup after it says <smiley> and reset it back even though it is playing OK
       console.log("not setting plugin text to ... from an iframe");

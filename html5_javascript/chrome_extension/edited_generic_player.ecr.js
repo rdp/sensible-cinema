@@ -1452,7 +1452,7 @@ function mouseJustMoved(event) {
 }
 
 function hideAllPimwStuff() {
-  if (!isYoutubePimw() && (!window.navigator.userAgent.includes("PlayItMyWay"))) {
+  if (!isYoutubePimw() && (!window.navigator.userAgent.includes("PlayItMyWay"))) { // don't hide it in android app, too hard to do edits elsewise [wait do I want that?]
     hideDiv(all_pimw_stuff);
   }
 }

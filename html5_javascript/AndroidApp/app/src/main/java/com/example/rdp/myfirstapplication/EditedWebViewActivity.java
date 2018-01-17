@@ -19,9 +19,9 @@ import android.widget.TextView;
 
 import static android.webkit.PermissionRequest.RESOURCE_PROTECTED_MEDIA_ID;
 
-public class DisplayMessageActivity extends AppCompatActivity {
+public class EditedWebViewActivity extends AppCompatActivity {
 
-    private static final String LOG_TAG = "DisplayMessageActivity";
+    private static final String LOG_TAG = "EditedWebViewActivity";
     WebView myWebView;
 
     @Override
@@ -32,10 +32,12 @@ public class DisplayMessageActivity extends AppCompatActivity {
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
         final String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-        final ProgressBar pbar = (ProgressBar) findViewById(R.id.pB1);
+        final ProgressBar loadingBar = (ProgressBar) findViewById(R.id.pB1);
 
         myWebView = (WebView) findViewById(R.id.webView1);
         WebSettings webSettings = myWebView.getSettings();
+
+        // might not need all of these
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setJavaScriptEnabled(true);
         myWebView.getSettings().setDomStorageEnabled(true);
@@ -47,28 +49,27 @@ public class DisplayMessageActivity extends AppCompatActivity {
         myWebView.getSettings().setLoadWithOverviewMode(true);
         myWebView.getSettings().setUseWideViewPort(true);
         
-        // Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.135 Safari/537.36 is chrome with "desktop" checked
-        myWebView.getSettings().setUserAgentString("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.135 Safari/537.36 PlayItMyWay/0.2");
+        String chromeAndroidDesktopChecked = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.135 Safari/537.36";
+        myWebView.getSettings().setUserAgentString(chromeAndroidDesktopChecked + "PlayItMyWay/0.2");
 
-        if (Build.VERSION.SDK_INT >= 21) {
-            // required seemingly for my cookies to connect with logged in user
-           CookieManager cookieManager = CookieManager.getInstance();
-           cookieManager.setAcceptThirdPartyCookies(myWebView, true);
-        }
+        // required seemingly for my cookies to connect with logged in user
+       CookieManager cookieManager = CookieManager.getInstance();
+       cookieManager.setAcceptThirdPartyCookies(myWebView, true);
 
         myWebView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onPermissionRequest(PermissionRequest request) {
-                request.grant(new String[]{RESOURCE_PROTECTED_MEDIA_ID});
+                request.grant(new String[]{RESOURCE_PROTECTED_MEDIA_ID}); // allow playing videos
             }
+
             public void onProgressChanged(WebView view, int progress) {
-                if(progress < 100 && pbar.getVisibility() == ProgressBar.GONE){
-                    pbar.setVisibility(ProgressBar.VISIBLE);
+                if(progress < 100 && loadingBar.getVisibility() == ProgressBar.GONE){
+                    loadingBar.setVisibility(ProgressBar.VISIBLE);
                 }
 
-                pbar.setProgress(progress);
+                loadingBar.setProgress(progress);
                 if(progress == 100) {
-                    pbar.setVisibility(ProgressBar.GONE);
+                    loadingBar.setVisibility(ProgressBar.GONE);
                 }
             }
         });
@@ -77,7 +78,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                return false; // false == default  [means "you handle it, WebView!"] we never get here anyway?? what?
+                return false; // false == default  [means "you handle it, WebView!"] we never get here anyway?? what???
             }
 
             @Override
@@ -85,12 +86,13 @@ public class DisplayMessageActivity extends AppCompatActivity {
                 super.onPageFinished(view, url);
                 Log.v(LOG_TAG, "onPageFinished url=" + url);
                 StringBuilder sb = new StringBuilder();
+                // NB: keep synchronized with the contentscript injector [could combine?]
                 if (url.contains("amazon.com") || (url.contains("playitmyway.org") && !url.contains("youtube_pimw_edited"))) {
                     sb.append("var my_awesome_script = document.createElement('script'); my_awesome_script.setAttribute('src','https://playitmyway.org/plugin_javascript/edited_generic_player.js'); document.head.appendChild(my_awesome_script);");
                 }
 
                 if (url.equals("https://playitmyway.org/")) {
-                    sb.append("document.getElementById('replace_me').innerHTML = 'Play it my way browser enabled!'; null;");
+                    sb.append("document.getElementById('replace_me').innerHTML = 'Play it my way Android browser enabled!'; null;"); // more confirmation :)
                 }
                 view.loadUrl("javascript:" + sb.toString());
             }
@@ -128,7 +130,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         // once ran into
-        // 10-18 20:50:13.103 2580-2580/? E/ActivityThread: Activity com.example.rdp.myfirstapplication.DisplayMessageActivity has leaked IntentReceiver android.widget.ZoomButtonsController$1@910dfc3 that was originally registered here. Are you missing a call to unregisterReceiver()?
+        // 10-18 20:50:13.103 2580-2580/? E/ActivityThread: Activity com.example.rdp.myfirstapplication.EditedWebViewActivity has leaked IntentReceiver android.widget.ZoomButtonsController$1@910dfc3 that was originally registered here. Are you missing a call to unregisterReceiver()?
         ViewGroup view = (ViewGroup) getWindow().getDecorView();
         view.removeAllViews();
 
