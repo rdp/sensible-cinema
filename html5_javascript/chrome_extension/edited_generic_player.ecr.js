@@ -1066,7 +1066,7 @@ function saveTagButton() {
   submit_form.action = "https://" + request_host + "/save_tag/" + current_json.url.id; // allow request_host to change :| NB this goes to the *movie* id on purpose
   submitFormXhr(submit_form, function(xhr) {
     clearForm();
-    reloadForCurrentUrl("Saved tag! "); // it's done saving so we can do this ja
+    reloadForCurrentUrl("SAVED tag! "); // it's done saving so we can do this ja
   }, function(xhr) {
     alert("save didn't take? website down?");
     // and don't clear?
