@@ -127,8 +127,8 @@ function autoStartIfShould() {
       chrome.runtime.sendMessage({text: "look", color: "#808080", 
             details: "edited playback and waiting for a video to appear present, then will try to see if edits exist for it so can playback edited"}); 
     }
-    // iframe wants to load it though, for google play
-    console.log("big 2/pimw polling for video tag...");
+    // iframe wants to load the extension though, for google play to work...
+    console.log("big 2/pimw polling for video tag..."); // I guess we just look for video tag :|
     var interval = setInterval(function(){
       var video_element = findFirstVideoTagOrNull();
       if (video_element != null) {
