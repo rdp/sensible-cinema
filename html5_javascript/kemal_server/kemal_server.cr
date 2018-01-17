@@ -142,13 +142,45 @@ get "/for_current_just_settings_json" do |env|
     else
       # allow them to be seen just "for normal viewing" ex: on playitmyway.org...no CORS needed
     end
-    if !editor?(env)
+    if !editor?(env) && not_a_bot(env)
       url.count_downloads += 1
       url.save # we shouldn't hit this tooo often...takes 0.003...
     end
     json_for(url, env)
   end
 end
+
+def not_a_bot(env)
+    # homebrew, FTW!
+    ua = env.request.headers["User-Agent"]?
+    al = env.request.headers["Accept-Language"]?
+    not_bot = al ? true : false
+
+    # these are OK even if they don't have Accept-Language
+    not_bot = true if ua =~ /MSIE \d.\d|Mac |Apple|translate.google.com|Gecko|player|Windows NT/i # players and browser players, etc.
+    not_bot = true if ua =~ /^Mozilla\/\d/ # [Mozilla/5.0] [] huh? maybe their default player? # This kind of kills our whole system though...
+    not_bot = true if ua =~ /stagefright/ # android player
+    # but it's fun to try and perfect :P
+    # slightly prefer to undercount uh guess
+    not_bot = false if ua =~ /http/i # like http://siteexplorer.info
+    not_bot = false if ua =~ /@/i # like mail@emoz.com
+    not_bot = false if ua =~ /httrack/i # scraper?
+    not_bot = false if ua =~ /SiteExplorer/i
+    not_bot = false if ua =~ /yahoo.*slurp/i
+    not_bot = false if ua =~ /spider/i # baiduspider
+    not_bot = false if ua =~ /bot[^a-z]/i # robot, bingbot (otherwise can't get the Mozilla with bingbot, above), various others calling themselves 'bot'
+    not_bot = false if ua =~ /bots[^a-z]/i # ...yandex/bots)
+    not_bot = false if ua =~ /robot/i #  http://help.naver.com/robots/ Yeti
+    not_bot = false if ua =~ /crawler/i # alexa crawler etc.
+    not_bot = false if ua =~ /webfilter/ # genio crawler
+    not_bot = false if ua =~ /walker/i # webwalker
+    not_bot = false if ua =~ /nutch/i # aghaven/nutch crawler
+    not_bot = false if ua =~ /Chilkat/ # might be a crawler...prolly http://www.forumpostersunion.com/showthread.php?t=4895
+    not_bot = false if ua =~ /search.goo.ne.jp/ # ichiro
+    not_bot = false if ua =~ /Preview/ # BingPreview Google Web Preview I don't think those are humans...
+
+    not_bot
+ end
 
 def json_for(db_url, env)
   render "views/html5_edited.just_settings.json.ecr"
