@@ -188,7 +188,9 @@ youtube: some way to get from youtube.com to mine (low prio though...maybe just 
   list "more" youtubes to watch underneath (make black less terrifyingly large if not logged in?)
   fix for slower phones
   better html icon :)
-
+  better title
+  the "start 90%" doesn't work:|
+  
 integrate with "real" amazon API so I can get the rental numbers right :|
 
 the extension popup.html is awful text on non-amazon, and broken link :|
