@@ -114,6 +114,7 @@ youtube:
   better fullscreen (straight normal)
   I guess 90% init so they can see the fs link
   better icon for fs
+  volume +- button
 
 it checks "edit out all" even if some are individually not edited out...personalize page
 
@@ -170,18 +171,16 @@ experiment with my TV options :\
 
 android app (lesser prio):
   betuh icons
+  fix something so it can go fullscreen?
   allow login for them! :| [only need it for personalized :| ]
   do notifications work?
   Does it say something wrong in the android app on main page install instructions? (possibly fixed)
-  make a "real" demo movie for them :|
-  make WebView can go fullscreen!!
+  make WebView can go full android screen
     add "fullscreen" new button for humanz to use their full screen!
-    just for horizontal
-  adjust UA so it is sometimes prettier (tried, failed)
+    just for horizontal?
+  adjust UA so it is sometimes prettier (ex: login [tried, failed])
   link to "see all your purchased movies" (if that works by now LOL)
-  link to re-watch latest [?]
-  reload button? :\
-  Prettier front page, prettier icons
+  Prettier front page
   submit to kindle fires? LOL
   experiment with "uninstall all chrome" :\
   android TV app?? :|
