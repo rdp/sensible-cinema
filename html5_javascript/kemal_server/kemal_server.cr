@@ -108,7 +108,7 @@ get "/regen_all_javascript" do |env|
 end
 
 get "/sync_web_server" do |env|
-  raise_unless_editor(env)
+  # raise_unless_editor(env) # allow curl to do it :|
   system("git pull") || raise "unable to git pull"
   puts "doing rebuild..."
   if system("crystal build --debug ./kemal_server.cr")
