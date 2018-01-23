@@ -87,18 +87,28 @@ get "/edited_youtube/:youtube_id" do |env|
 end
 
 get "/redo_all_thumbnails" do |env|
-  raise "should not need often" # comment out if thumbnails change somehow...
+  raise "should not need often" # comment out if thumbnails change somehow and you need/want this back...
   Url.all.each &.create_thumbnail_if_has_image
   "did 'em #{Url.all.size}"
 end
 
+def raise_unless_editor(env)
+  if !editor?(env)
+    raise "only editor can do this"
+  end
+end
+
 get "/regen_all_javascript" do |env|
+  raise_unless_editor(env)
   Url.all.each{|url|
     save_local_javascript url, nil, env # nil means "don't add a log message just arbitrarily"
+    # still doesn't work perfect it tries to do all the gits in simultaneous sub-threads :| doesn't work perfect it tries to do all the gits in simultaneous sub-threads :|
   }
+  "done all"
 end
 
 get "/sync_web_server" do |env|
+  raise_unless_editor(env)
   system("git pull") || raise "unable to git pull"
   puts "doing rebuild..."
   if system("crystal build --debug ./kemal_server.cr")
@@ -109,7 +119,8 @@ get "/sync_web_server" do |env|
   end
 end
 
-get "/look_for_outdated_primes" do
+get "/look_for_outdated_primes" do |env|
+  raise_unless_editor(env)
   all = Url.all # TODO real api instead?
   all.select!{|url| url.editing_status == editing_phases[:done_second_pass]}
   all_with_curl = all.map{ |url| 
