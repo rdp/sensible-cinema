@@ -52,10 +52,11 @@ module SubtitleProfanityFinder
    end
 
    def self.convert_to_regexps(profanity_tuples)
-    all_profanity_combinations = [] of {Regex, String, String} # category, replace_with
+    all_profanity_combinations = [] of {Regex, String, String} # Strings = subcategory, replace_with :|
     profanity_tuples.each{ |profanity_tuple|
-      category = profanity_tuple[:category]
-      raise "unknown cat [#{category}] option! available are #{subcategory_map.keys}" unless subcategory_map.has_key?(category) # these should match up :|
+      category = profanity_tuple[:category] # actually sub category within profanity
+      subcats = subcategory_map.map{ |category, entries| entries.map{|e| e[:db_name] } }.flatten
+      raise "unknown cat, please report [#{category}] option! available are #{subcats}" unless subcats.includes?(category) # these should match! :|
       profanity = profanity_tuple[:bad_word]
       sanitized = profanity_tuple[:sanitized]
       
