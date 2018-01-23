@@ -92,6 +92,12 @@ get "/redo_all_thumbnails" do |env|
   "did 'em #{Url.all.size}"
 end
 
+get "/regen_all_javascript" do |env|
+  Url.all.each{|url|
+    save_local_javascript url, "part of regen all", env
+  }
+end
+
 get "/sync_web_server" do |env|
   system("git pull") || raise "unable to git pull"
   puts "doing rebuild..."
