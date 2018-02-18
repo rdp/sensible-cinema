@@ -342,7 +342,7 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
         
           <option value="sexual reference">physical -- spoken sexual innuendo/reference</option>    
         
-          <option value="revealing clothing">physical -- revealing clothing (scantily clad, non chest)</option>    
+          <option value="revealing clothing">physical -- revealing clothing (scantily clad, non cleavage)</option>    
         
           <option value="tight clothing">physical -- tight clothing (revealing because tight)</option>    
         
@@ -424,7 +424,7 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
 
 age specifier (violence):
 <select name="age_maybe_ok" id="age_maybe_ok_id">
-  <option value="0">not applicable/needed</option>
+  <option value="0">please select</option>
   
     <option value="3">not OK age 3 and under</option>
   
@@ -442,10 +442,10 @@ age specifier (violence):
 
 Lewdness level:
 <select name="lewdness_level" id="lewdness_level_id">
-  <option value="0">not applicable/needed</option>
+  <option value="0">please select</option>
   <option value="1">Art-based (non sensual)</option>
   <option value="2">Cartoon (non sensual)</option>
-  <option value="3">Non sensual (other)</option>
+  <option value="3">Non sensual</option>
   <option value="4">Mild</option>
   <option value="5">Art-based (sensual/extreme)</option>
   <option value="6">Moderate</option>
@@ -499,6 +499,7 @@ default edit on?
  <!-- render full filename cuz macro -->
         <br/>
         <input type='submit' id='save_tag_button_id' value='Save Tag' onclick="saveTagButton(); return false;">
+        <br/>
         <br/>
         <input type='submit' value='&lt;&lt;' id='open_prev_tag_id' onclick="openTagBeforeOneInUi(); return false;">
         <input type='submit' value='Edit Just Passed Tag' id='open_prev_tag_id' onclick="openTagPreviousToNowButton(); return false;">
@@ -815,7 +816,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       reload_tag_button.style.visibility = "hidden";
       updateHTML(before_test_edit_span, "new tag...");
     } else {
-      save_button.value = "Update-Save This Tag";
+      save_button.value = "Update This Tag";
       destroy_button.style.visibility = "visible";
       reload_tag_button.style.visibility = "visible";
       updateHTML(before_test_edit_span, "re-editing existing tag...");
@@ -1052,6 +1053,11 @@ function refreshVideoElement() {
       function() { 
         console.log("seeking event received cur_time=" + getCurrentTime()); // time will already be updated...I think...or at least most of the time LOL
         checkStatus(); // do it "fast/immediately" in case need to blank [saves 0.007 yes!]
+      }
+    );
+    video_element.addEventListener("play", 
+      function() { 
+        console.log("got onplay event isPaused()=" + isPaused());
       }
     );
   }
@@ -1853,7 +1859,7 @@ function withinDelta(first, second, delta) {
 }
 
 function findFirstVideoTagOrNull() {
-   // or document.querySelector("video") LOL
+   // or document.querySelector("video") LOL (though not enough)
   if (isYoutubePimw()) {
     return document.getElementById("show_your_instructions_here_id");
   }
@@ -1894,6 +1900,7 @@ function doPause() {
   } else {
     video_element.pause();
   }
+  paused_requested = true;
 }
 
 function rawRequestSeekToTime(ts) {
@@ -1954,7 +1961,7 @@ function seekToTime(ts, callback) {
   if (already_cached && !isYoutubePimw()) { // youtube a "raw request" doesn't actually change the time instantaneously...
     if (callback) {
       console.log("quick seek assuming...");
-      callback(); // scawah, but the other one assumes it's paused? :|
+      callback(); // scawah
     }
   } else {
     seek_timer = setInterval(function() {
@@ -1977,23 +1984,13 @@ function check_if_done_seek(start_time, ts, did_arbitrary_pause, callback) {
       console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " ts=" + ts + " length_was=" + twoDecimals(ts - start_time) + " buffered_ahead=" + twoDecimals(seconds_buffered) + " from=" + twoDecimals(start_time) + " cur_time_actually=" + twoDecimals(getCurrentTime()) + " state=" + video_element.readyState);
       if (did_arbitrary_pause) {
         doPlay();
-        setTimeout(function() {
-          if (isPaused()) {
-            console.log("EMERGENCY! It didn't come back out, re-trying..."); // obviously we are really doing something wrong here, but couldn't quite figure out the right way :|
-            setTimeout(function() {
-              doPause(); // needed to get rid of that annoying twisting circle seemingly...
-              doPlay();
-            }, 1500); // just doing it "now" after 100 didn't work, but don't want to interrupt legit pauses :|
-          } else {
-            console.log("appears the play message wasn't nuked");
-          } 
-        }, 100);
+        make_sure_does_not_get_stuck_after_play(); // doPlay isn't always enough sadly...and then it gets stuck in this weird half paused state :| hopefully rare!
       } else {
-        console.log("not doing doPlay after seek");
+        console.log("not doing doPlay after seek because !did_arbitrary_pause");
       }
       clearInterval(seek_timer);
       if (callback) {
-        callback();
+        callback(); // just too scary to poll to see if play "actually worked" can't wait for it!
       }
       seek_timer = null;
     } else {
@@ -2002,6 +1999,27 @@ function check_if_done_seek(start_time, ts, did_arbitrary_pause, callback) {
   } else {
     console.log("seek_timer interval [i.e. still seeking...] paused=" + isPaused() + " desired_seek_to=" + ts + " state=" + video_element.readyState + " cur_time=" + getCurrentTime());
   }
+}
+
+function make_sure_does_not_get_stuck_after_play() {
+  paused_requested = false; // :|
+  var start = new Date().getTime();
+  var timer = setInterval(function() {
+    var millisPassed = (new Date().getTime()) - start;
+    console.log("mp=" + millisPassed);;
+    if (!isPaused() || paused_requested) {
+      console.log("detected it did not get stuck after play");;
+      clearInterval(timer);
+    }
+    if (millisPassed > 1500) {
+      console.log("EMERGENCY seemed to still be stuck after play, beep beep");
+      doPause(); // needed to get rid of that annoying twisting circle seemingly...
+      doPlay();
+      clearInterval(timer);
+    }
+    doPause();
+    doPlay();
+  }, 25); // poll it so we can detect "oh it worked once but then was legit paused after"
 }
 
 function displayDiv(div) { // who needs jQuery :)

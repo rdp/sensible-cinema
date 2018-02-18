@@ -52,7 +52,7 @@ subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
 
 age specifier (violence):
 <select name="age_maybe_ok" id="age_maybe_ok_id">
-  <option value="0">not applicable/needed</option>
+  <option value="0">please select</option>
   <% [3,6,9,12,15].each{|n| %>
     <option value="<%= n %>">not OK age <%= n %> and under</option>
   <% } %>
@@ -62,10 +62,10 @@ age specifier (violence):
 
 Lewdness level:
 <select name="lewdness_level" id="lewdness_level_id">
-  <option value="0">not applicable/needed</option>
+  <option value="0">please select</option>
   <option value="1">Art-based (non sensual)</option>
   <option value="2">Cartoon (non sensual)</option>
-  <option value="3">Non sensual (other)</option>
+  <option value="3">Non sensual</option>
   <option value="4">Mild</option>
   <option value="5">Art-based (sensual/extreme)</option>
   <option value="6">Moderate</option>

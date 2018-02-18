@@ -50,7 +50,7 @@ public class EditedWebViewActivity extends AppCompatActivity {
         myWebView.getSettings().setUseWideViewPort(true);
         
         String chromeAndroidDesktopChecked = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.135 Safari/537.36";
-        myWebView.getSettings().setUserAgentString(chromeAndroidDesktopChecked + "PlayItMyWay/0.2");
+        myWebView.getSettings().setUserAgentString(chromeAndroidDesktopChecked + ",,.PlayItMyWay/0.2");
 
         // required seemingly for my cookies to connect with logged in user
        CookieManager cookieManager = CookieManager.getInstance();
@@ -68,18 +68,7 @@ public class EditedWebViewActivity extends AppCompatActivity {
                 }
 
                 loadingBar.setProgress(progress);
-                if(progress == 100) {
-                    loadingBar.setVisibility(ProgressBar.GONE);
-                }
-            }
-        });
-
-        myWebView.setWebViewClient(new WebViewClient() {
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                return false; // false == default  [means "you handle it, WebView!"] we never get here anyway?? what???
-            }
+             ]]????????????????????????           }
 
             @Override
             public void onPageFinished(WebView view, String url) {
