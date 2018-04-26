@@ -1480,29 +1480,6 @@ function withinDelta(first, second, delta) {
   return diff < delta;
 }
 
-function findFirstVideoTagOrNull() {
-   // or document.querySelector("video") LOL (though not enough)
-  if (isYoutubePimw()) {
-    return document.getElementById("show_your_instructions_here_id");
-  }
-  
-  var all = document.getElementsByTagName("video");
-  // search iframes in case people try to load it manually, non plugin, and we happen to have access to iframes, which will be about never
-  // it hopefully won't hurt anything tho...since with the plugin way and most pages "can't access child iframes" the content script injected into all iframes will take care of business instead.
-  var i, frames;
-  frames = document.getElementsByTagName("iframe");
-  for (i = 0; i < frames.length; ++i) {
-    try { var childDocument = frame.contentDocument } catch (e) { continue }; // skip ones we can't access :|
-    all.concat(frames[i].contentDocument.document.getElementsByTagName("video"));
-  }
-  for(var i = 0, len = all.length; i < len; i++) {
-    if (all[i].currentTime > 0) { // somewhere once had some background ones that stayed paused :|
-      return all[i];
-    }
-  }
-  return null;
-}
-
 function getCurrentTime() {
   if (isYoutubePimw()) {
     return youtube_pimw_player.getCurrentTime();
@@ -1639,7 +1616,7 @@ function make_sure_does_not_get_stuck_after_play() {
       doPlay();
       clearInterval(timer);
     }
-    doPause();
+    doPause(); // may as well, maybe it'll help! LOL
     doPlay();
   }, 25); // poll it so we can detect "oh it worked once but then was legit paused after"
 }
