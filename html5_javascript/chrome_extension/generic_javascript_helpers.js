@@ -186,6 +186,16 @@ function removeAllOptions(selectbox)
   }
 }
 
+function selectHasOption(select_element, desired_value) {
+  for (var i = 0; i < select_element.length; i++){
+    var option = select_element.options[i];
+    if (option.value == desired_value) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function timeStampToHuman(timestamp) {
   var hours = Math.floor(timestamp / 3600);
   timestamp -= hours * 3600;

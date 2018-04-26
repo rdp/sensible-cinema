@@ -124,7 +124,7 @@ function addEditUiOnce() {
         <br/>
         <br/>
         <input type='submit' value='&lt;&lt;' id='open_prev_tag_id' onclick="openTagBeforeOneInUi(); return false;">
-        <input type='submit' value='Edit Just Passed Tag' id='open_prev_tag_id' onclick="openTagPreviousToNowButton(); return false;">
+        <input type='submit' value='Re-Edit Just Passed Tag' id='open_prev_tag_id' onclick="openTagPreviousToNowButton(); return false;">
         <input type='submit' value='Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
         <input type='submit' value='&gt;&gt;' id='open_prev_tag_id' onclick="openTagAfterOneInUi(); return false;">
         <br/>
@@ -939,11 +939,17 @@ function loadTagIntoUI(tag) {
   document.getElementById('start').value = timeStampToHuman(tag.start);
   document.getElementById('endy').value = timeStampToHuman(tag.endy);
   document.getElementById('details_input_id').value = htmlDecode(tag.details);
-  document.getElementById('popup_text_after_id').value = htmlDecode(tag.popup_text_after);
-  document.getElementById('category_select').value = tag.category; // XXXX rename :|
+  document.getElementById('popup_text_after_id').value = htmlDecode(tag.popup_text_after);  
+  document.getElementById('category_select').value = tag.category; // XXX rename category_select_id
   document.getElementById('category_select').dispatchEvent(new Event('change')); // so it'll prune the subcats
-  document.getElementById('subcategory_select_id').value = htmlDecode(tag.subcategory);
-  document.getElementById('subcategory_select_id').dispatchEvent(new Event('change')); // so it'll do the right size, needed apparently :|
+  
+  var subcat_select = document.getElementById('subcategory_select_id');
+  var desired_value = htmlDecode(tag.subcategory);
+  if (!selectHasOption(subcat_select, desired_value)) {
+    alert("old subcat was " + desired_value + " please select a more updated one"); // don't just show blank which is frustrating and loses info :| XXXX check all tags against known...
+  }
+  subcat_select.value = desired_value;
+  subcat_select.dispatchEvent(new Event('change')); // so it'll do the right size, needed apparently :|
   document.getElementById('age_maybe_ok_id').value = tag.age_maybe_ok;
   document.getElementById('lewdness_level_id').value = tag.lewdness_level;
   document.getElementById('impact_to_movie_id').value = tag.impact_to_movie;
