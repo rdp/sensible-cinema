@@ -73,7 +73,7 @@ module SensibleSwing
       unless File.exist? 'vendor/cache/7za.exe'
         Dir.chdir('vendor/cache') do
           print 'downloading unzipper (7zip--400K) ...'
-          MainWindow.download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
+          MainWindow.download("https://bintray.com/rdp/sensible-cinema/download_file?file_path=7za920.zip", "7za920.zip")
           system_blocking("../unzip.exe -o 7za920.zip") # -o means "overwrite" without prompting
         end
       end

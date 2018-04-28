@@ -87,8 +87,8 @@ module SensibleSwing
     
     # side by side stuff we haven't really factored out yet, also doubles for both normal/create LODO
     def choose_file_and_edl_and_create_sxs_or_play just_create_xbmc_dot_edl_file_instead_of_play
-      filename_mpg = new_existing_file_selector_and_select_file( "Pick moviefile (like moviename.mpg or video_ts/anything.ext)")
-      edl_filename = new_existing_file_selector_and_select_file( "Pick an EDL file to use with it", EdlParser::EDL_DIR)
+      filename_mpg = new_existing_file_selector_and_select_file( "Pick moviefile (like moviename.mp4, moviename.mpg or video_ts/anything.ext)")
+      edl_filename = new_existing_file_selector_and_select_file( "Pick an EDL file to use with it (for none yet, right click and create new text file)", EdlParser::EDL_DIR)
       if just_create_xbmc_dot_edl_file_instead_of_play
         descriptors = EdlParser.parse_file edl_filename
         # XBMC can use english timestamps

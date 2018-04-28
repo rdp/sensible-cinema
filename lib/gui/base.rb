@@ -580,12 +580,15 @@ KP_ENTER dvdnav select
     # also caches directory previously selected ...
     def new_existing_file_selector_and_select_file title, dir = nil
       bring_to_front unless OS.mac? # causes same duplicate prompts?
-      unique_trace = caller.map{|string| string.gsub(/\d+/, '_') }.inspect # or #hash I guess, but maybe easier for debugging purposes to save the whole trace
+      unique_trace = caller.inspect # or #hash I guess, but maybe easier for debugging purposes to save the whole trace
+      p unique_trace
       if LocalStorage[unique_trace]
         dir = LocalStorage[unique_trace]
       end
-      p 'using system default dir' unless dir # happens more frequently after code changes alter the path :P
-      p 'using lookup dir ' + dir, LocalStorage[unique_trace] if $VERBOSE
+      if $VERBOSE
+        p 'using system default starting dir for finder, not seen before, not default specified' unless dir # happens more frequently after code changes alter the path :P
+        p "using lookup dir #{dir} #{LocalStorage[unique_trace]}"
+      end
       got = SimpleGuiCreator.new_previously_existing_file_selector_and_go title, dir
       LocalStorage[unique_trace] = File.dirname(got)
       got
