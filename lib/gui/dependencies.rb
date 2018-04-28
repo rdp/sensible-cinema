@@ -30,6 +30,7 @@ module SensibleSwing
         require 'openssl'
         eval("OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE")
       end
+      puts "downloading #{full_url}..."
       out_frame = JFrame.new("downloading #{english_name}...")
       out_frame.show
       out_frame.setSize(500,15)
@@ -126,8 +127,7 @@ module SensibleSwing
         if !check_for_exe(mplayer_local(false), nil)
           require_blocking_license_accept_dialog 'Mplayer-EDL', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer EDL "
           FileUtils.mkdir_p 'vendor/cache/mplayer_edl'
-          puts 'downloading mplayer edl [12 MB]'
-          MainWindow.download('http://mplayer-edl.googlecode.com/files/' + File.basename(mplayer_local false), mplayer_local(false))
+          MainWindow.download('https://sourceforge.net/projects/mplayer-edl/files/' + File.basename(mplayer_local false), mplayer_local(false))
           config_dir = File.expand_path('~/mplayer')
           FileUtils.mkdir(config_dir) unless File.directory?(config_dir)
           FileUtils.cp('vendor/subfont.ttf', config_dir) # TODO mac ttf?
