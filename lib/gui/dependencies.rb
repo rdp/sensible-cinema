@@ -143,10 +143,10 @@ module SensibleSwing
           # this one has its own installer...
           require_blocking_license_accept_dialog 'SMPlayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: smplayer."
           save_to_dir = SimpleGuiCreator.new_existing_dir_chooser_and_go 'pick dir to save smplayer exe installer to:'
-          filename = "smplayer-0.6.9-win32.exe"
+          filename = "smplayer-0.6.10-win32.exe"
           save_to_file =  "#{save_to_dir}/#{filename}"
           puts "downloading smplayer.exe [14MB] to #{save_to_file}"
-          MainWindow.download "http://smplayer-clean.googlecode.com/files/#{filename}", save_to_file
+          MainWindow.download "https://bintray.com/rdp/sensible-cinema/download_file?file_path=#{filename}", save_to_file
           show_blocking_message_dialog "Run this file to install it now (click ok to reveal): #{filename}"
           SimpleGuiCreator.show_in_explorer save_to_file
           # system("save_to_file") # unfortunately fails for some reason[?]
