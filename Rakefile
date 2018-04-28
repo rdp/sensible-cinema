@@ -6,6 +6,12 @@ rescue LoadError
   puts '$ gem install jeweler -v 1.7.0 && gem install os'
   exit 1
 end
+
+if RUBY_VERSION > '2.2.9'
+  puts "needs ruby < 2.3.0"
+  exit 1
+end
+
 require 'os' # gem
 
 # basically, to deploy, for windows run innosetup, manual upload
