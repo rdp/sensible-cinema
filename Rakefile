@@ -7,15 +7,15 @@ rescue LoadError
   exit 1
 end
 
-if RUBY_VERSION > '2.2.9'
-  puts "needs ruby < 2.3.0"
+require 'os' # gem
+
+if RUBY_VERSION > '2.2.9' && !OS.jruby?
+  puts "MRI needs ruby < 2.3.0 to avoid some SAFE thing, but you'll probably need/want jruby in the end regardless!"
   exit 1
 end
 
-require 'os' # gem
-
 # basically, to deploy, for windows run innosetup, manual upload
-# for mac, run rake full_release, manual upload
+# for mac, run rake full_release_mac, manual upload
 
 ENV['PATH'] = "C:\\Program Files (x86)\\Git\\cmd;" + ENV['PATH'] # jeweler's git gem hack-work-around...
 
@@ -130,11 +130,12 @@ task 'create_distro_dir' => :gemspec do # depends on gemspec...
   all_local_files = Dir['*'] - ['pkg']
   FileUtils.mkdir_p dir_out
   FileUtils.cp_r(all_local_files, dir_out) # copies files, subdirs in
-  # these belong in the parent dir, by themselves.
+  # a few belong in the parent dir, by themselves.
   root_distro =  "#{dir_out}/.."
-  FileUtils.cp_r(dir_out + '/template_bats/mac', root_distro) # the executable bit carries through...
+  puts "copying " + dir_out + '/template_bats/mac'
+  FileUtils.cp_r(dir_out + '/bin/template_bats/mac', root_distro) # the executable bit carries through...this is for the mac-ers out there...
   #FileUtils.cp(dir_out + '/template_bats/RUN SENSIBLE CINEMA CLICK HERE WINDOWS.bat', root_distro)
-  FileUtils.cp('template_bats/README_DISTRO.TXT', root_distro)
+  FileUtils.cp('bin/template_bats/README_DISTRO.TXT', root_distro)
   p 'created (still need to mac_zip it) ' + dir_out
   FileUtils.rm_rf Dir[dir_out + '/**/{spec}'] # don't need to distribute those..save 3M, baby!
 end
@@ -201,8 +202,14 @@ task 'sync_wbo_website' do
   on_wbo 'cd ~/sensible-cinema/source && git pull'
 end
 
+desc ' warns you that windows is innosetup'
+task 'full_release_windows' do
+  puts "to full release in windows, run innosetup"
+  exit 1
+end
+
 desc ' (releases with clean cache dir, which we need now)'
-task 'full_release' => [:clear_and_copy_vendor_cache, :create_distro_dir] do # this is :release
+task 'full_release_mac' => [:clear_and_copy_vendor_cache, :create_distro_dir] do # this is :release
   p 'remember to run all the specs!! Have any!'
   require 'os'
   raise 'need jruby' unless OS.jruby?
