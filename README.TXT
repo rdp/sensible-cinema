@@ -15,7 +15,7 @@ volunteers/contributors to help it grow!
 2. Insert an original DVD that you want to edit.
 3. Run sensible cinema. It will pop up some windows where you choose what to do (watch edited, create a new EDL file, etc.).
 
-Note: please install from the zip files at http://code.google.com/p/sensible-cinema/downloads/list and not from github's "download" button.
+Note: please install from the zip files at https://bintray.com/rdp/sensible-cinema/sensible-cinema and not from github's "download" button.
 
 	CEM Player has a few "realtime viewing" options available, based on some freely available open source popular video players. [3]
 

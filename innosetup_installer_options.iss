@@ -48,3 +48,6 @@ Name: "{userdesktop}\Run Sensible Cinema for DVDs or Files"; Filename: {app}\sen
 [Messages]
 ;ConfirmUninstall=Are you sure you want to remove %1 (any local EDL files you created will be left on disk, so please upload them first!)?
 ;FinishedLabel=Done installing [name].  Go start it from your start button -> programs menu, and add some cameras!
+
+; TODO remove vendor/* files at uninstall time
+; TODO I have double jruby's...
