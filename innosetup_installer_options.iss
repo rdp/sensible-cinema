@@ -13,11 +13,11 @@
 [UninstallRun]
 
 [Files]
-Source: *; DestDir: {app}; Excludes: pkg, html5_javascript, .git, releases, vendor\cache, spec, lib\jruby-swing-helpers\spec, vendor/jruby-complete.jar; Flags: recursesubdirs
+Source: *; DestDir: {app}; Excludes: pkg, html5_javascript, .git, releases, vendor\cache, spec, lib\jruby-swing-helpers\spec, vendor\jruby-complete.jar; Flags: recursesubdirs
 Source: README.TXT; DestDir: {app}\vendor; Flags: isreadme
 
 ; easier than re-running launch4j? :|
-Source: vendor/jruby-complete.jar; DestDir: {app}\vendor; DestName: jruby-complete-1.6.2.jar
+Source: vendor\jruby-complete.jar; DestDir: {app}\vendor; DestName: jruby-complete-1.6.2.jar
 
 ; attempt to remove previous versions' icons
 [InstallDelete]
