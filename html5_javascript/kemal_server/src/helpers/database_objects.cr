@@ -50,6 +50,7 @@ class Url
     purchase_cost_sd: Float64,
     total_time: Float64,
     create_timestamp: Time,
+    status_last_modified_timestamp: Time,
     subtitles: String,
     genre: String,
     original_rating: String,
@@ -79,6 +80,7 @@ class Url
     purchase_cost_sd: Float64,
     total_time: Float64,
     create_timestamp: Time,
+    status_last_modified_timestamp: Time,
     subtitles: String,
     genre: String,
     original_rating: String,
@@ -99,13 +101,13 @@ class Url
   
   def self.all
       # sort by host, amazon type, name for series together
-      query("SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type asc, create_timestamp desc, name, episode_number") do |rs|
+      query("SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type asc, status_last_modified_timestamp desc, name, episode_number") do |rs|
          Url.from_rs(rs);
       end
   end
 
   def self.latest
-    query("SELECT * from urls ORDER BY create_timestamp desc limit 1") do |rs|
+    query("SELECT * from urls ORDER BY status_last_modified_timestamp desc limit 1") do |rs|
       only_one!(Url.from_rs(rs))
     end
   end
@@ -133,10 +135,9 @@ class Url
   def save
     with_db do |conn|
       if @id == 0
-       @id = conn.exec("insert into urls (name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, subtitles, genre, original_rating, editing_notes) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, subtitles, genre, original_rating, editing_notes).last_insert_id.to_i32
-       # get create_timestamp for free by its default crystal value
+       @id = conn.exec("insert into urls (name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, create_timestamp, status_last_modified_timestamp, subtitles, genre, original_rating, editing_notes) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, create_timestamp, status_last_modified_timestamp, subtitles, genre, original_rating, editing_notes).last_insert_id.to_i32
       else
-       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, amazon_third_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_local_filename = ?, review = ?, wholesome_review = ?, count_downloads = ?, amazon_prime_free_type = ?, rental_cost = ?, rental_cost_sd = ?, purchase_cost = ?, purchase_cost_sd = ?, total_time = ?, subtitles = ?, genre = ?, original_rating = ?, editing_notes = ?  where id = ?", name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, subtitles, genre, original_rating, editing_notes, id
+       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, amazon_third_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_local_filename = ?, review = ?, wholesome_review = ?, count_downloads = ?, amazon_prime_free_type = ?, rental_cost = ?, rental_cost_sd = ?, purchase_cost = ?, purchase_cost_sd = ?, total_time = ?, create_timestamp = ?, status_last_modified_timestamp = ?, subtitles = ?, genre = ?, original_rating = ?, editing_notes = ?  where id = ?", name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, create_timestamp, status_last_modified_timestamp, subtitles, genre, original_rating, editing_notes, id
       end
     end
   end
@@ -164,6 +165,7 @@ class Url
     @purchase_cost = 0.0
     @total_time = 0.0
     @create_timestamp = Time.now
+    @status_last_modified_timestamp = Time.now
     @subtitles = ""
     @genre = ""
     @original_rating = ""
