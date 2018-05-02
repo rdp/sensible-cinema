@@ -789,7 +789,8 @@ function checkIfShouldDoActionAndUpdateUI() {
       if (time_until < 0) {
         time_until =  next_future_tag.endy - cur_time; // we're in the heart of one, don't show a negative :|
       }
-      second_line +=  " in " + timeStampToHuman(time_until);      
+      time_until = Math.round(time_until);
+      second_line +=  " in " + timeStampToHuman(time_until).replace( new RegExp('.00s$'), 's');
       second_line += "<br/>";
       // third_line now
       if (faux_tag_being_tested && uiTagDiffersFromOriginalOrNoOriginal()) {
