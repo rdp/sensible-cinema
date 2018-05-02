@@ -7,8 +7,8 @@
 ; AppId === AppName by default BTW
 
 [Run]
-; doesn't work? LODO fix Description: Run Sensible Cinema; Filename: {app}\sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: nowait postinstall
 ; a checkbox run optional after install...
+; doesn't work? LODO fix Description: Run Sensible Cinema; Filename: {app}\sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: nowait postinstall
 
 [UninstallRun]
 
@@ -32,7 +32,7 @@ DefaultDirName={%HOMEPATH|c:\}\{#AppName} {#AppVer}
 ; DefaultDirName={pf}\{#AppName} 
 DefaultGroupName={#AppName}
 UninstallDisplayName={#AppName} uninstall
-OutputBaseFilename=Setup {#AppName} v{#AppVer}
+OutputBaseFilename=Setup {#AppName} v{#AppVer} Windows
 OutputDir=releases
 
 [Icons]
