@@ -8,7 +8,8 @@
 
 [Run]
 ; a checkbox run optional after install...
-; doesn't work? LODO fix Description: Run Sensible Cinema; Filename: {app}\sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: nowait postinstall
+; doesn't work? LODO fix 
+Description: Run Sensible Cinema; Filename: {app}\sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: nowait postinstall
 
 [UninstallRun]
 
@@ -39,11 +40,12 @@ OutputDir=releases
 Name: {group}\Run Sensible Cinema for DVDs or Files; Filename: {app}\sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: 
 Name: {group}\Advanced\Run Sensible Cinema in advanced or create mode; Filename: {app}\sensible_cinema_debug.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema --create-mode; Flags: 
 Name: {group}\Advanced\Run Sensible Cinema with debug console; Filename: {app}\sensible_cinema_debug.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: 
+; I think only player mode is the OCR [?]
 Name: {group}\Advanced\Run Sensible Cinema Online Player mode; Filename: {app}\sensible_cinema_debug.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema --online-player-mode; Flags: 
 Name: {group}\Advanced\Uninstall {#AppName}; Filename: {uninstallexe}
 Name: {group}\Advanced\ChangeLog ; Filename: {app}\change_log_with_feature_list.txt
 
-Name: "{userdesktop}\Run Sensible Cinema for DVDs or Files"; Filename: {app}\sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: ; IconFilename: vendor/profs.ico  
+Name: "{userdesktop}\Run Sensible Cinema for DVDs or Files"; Filename: {app}\sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: ; IconFilename: {app}\vendor\profs.ico  
                                                                                  
 [Messages]
 ;ConfirmUninstall=Are you sure you want to remove %1 (any local EDL files you created will be left on disk, so please upload them first!)?

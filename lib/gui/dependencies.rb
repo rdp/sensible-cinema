@@ -147,10 +147,10 @@ module SensibleSwing
           save_to_file =  "#{save_to_dir}/#{filename}"
           puts "downloading smplayer.exe [14MB] to #{save_to_file}"
           MainWindow.download "https://bintray.com/rdp/sensible-cinema/download_file?file_path=#{filename}", save_to_file
-          show_blocking_message_dialog "Run this file to install it now (click ok to reveal): #{filename}"
+          show_blocking_message_dialog "Run this smplayer install file to install it now (click ok to reveal): #{filename}"
           SimpleGuiCreator.show_in_explorer save_to_file
-          # system("save_to_file") # unfortunately fails for some reason[?]
-          sleep 3
+          # system("save_to_file") # unfortunately failed for some reason[?]
+          sleep 10
           show_blocking_message_dialog "please hit ok AFTER you have installed SMPlayer has been installed fully..."          
           add_smplayer_paths # load it back onto the PATH now that it's installed so its path exists...
           raise 'smplayer not installed, try restarting!' unless RubyWhich.new.which('smplayer').length > 0
