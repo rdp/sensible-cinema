@@ -895,7 +895,7 @@ function setEditedControlsToMovieRight() {
   var desired_left = getLocationOfElement(video_element).right - width - 10; // avoid amazon x-ray so go to right
   var desired_top = getLocationOfElement(video_element).top;
   if (isAmazon()) {
-    desired_top += 225; // make top amazon stuff visible, plus ability to see subs dropdown ...
+    desired_top += 200; // make top amazon stuff visible, plus ability to see subs dropdown ...
   }
     
   if ((getLocationOfElement(all_pimw_stuff).height + desired_top) > getLocationOfElement(video_element).height) {
@@ -1162,6 +1162,7 @@ function getSubtitleLink() {
 }
 
 function stepFrameBack() {
+  // doPause(); // TODO seems there's a bug where this is required if playing :|
   seekToTime(getCurrentTime() - 1/10, function () { // go back 2 frames, 1 seems hard...
     doPause();
   });
