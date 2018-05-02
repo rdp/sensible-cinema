@@ -8,7 +8,6 @@
 
 [Run]
 ; a checkbox run optional after install...
-; doesn't work? LODO fix 
 Description: Run Sensible Cinema; Filename: {app}\sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: nowait postinstall
 
 [UninstallRun]
