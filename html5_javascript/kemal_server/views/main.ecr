@@ -177,7 +177,7 @@ Relax and enjoy your movies while we filter out the stuff you don't want, for fr
 
 <% 
 non_youtubes = all_urls_done.reject{|u| u.url =~ /edited_youtube/}
-most_recent = all_urls_done.sort_by{|u| u.status_last_modified_timestamp}[0..5]
+most_recent = all_urls_done.sort_by{|u| u.status_last_modified_timestamp}.last(5)
 new_releases = non_youtubes.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number == 0}
 settings = [
   {type: :most_recent, title: "Most recently added", urls: most_recent, message: "Most recently added to our system!"},
