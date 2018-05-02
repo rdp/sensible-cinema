@@ -512,7 +512,7 @@ class Tag
 
   def overlaps_any?(all_tags)
     all_tags.reject{|tag2| tag2.id == id}.each{|tag2|
-      if start <= tag2.endy && tag2.start <= endy # whoa
+      if start < tag2.endy && tag2.start < endy
         return tag2
       end
     }
