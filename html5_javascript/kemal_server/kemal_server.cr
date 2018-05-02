@@ -833,7 +833,12 @@ post "/save_url" do |env|
   db_url.name = resanitize_html(params["name"]) # resanitize in case previously escaped case of re-save [otherwise it grows and grows in error...]
   db_url.url = incoming_url
   db_url.details = resanitize_html(params["details"])
-  db_url.editing_status = resanitize_html(params["editing_status"])
+  new_editing_status = resanitize_html(params["editing_status"])
+  if new_editing_status != db_url.editing_status
+    puts "updating status_last_modified_timestamp"
+    db_url.status_last_modified_timestamp = Time.now
+  end
+  db_url.editing_status = new_editing_status
   db_url.amazon_second_url = amazon_second_url
   db_url.amazon_third_url = amazon_third_url
   db_url.episode_number = get_int(params, "episode_number")

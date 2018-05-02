@@ -174,7 +174,7 @@ ALTER TABLE users ADD CONSTRAINT unique_email_user_id UNIQUE (email);
 
 alter table tags add column lewdness_level int DEFAULT 0;
 
-alter table urls add column status_last_modified_timestamp TIMESTAMP not null DEFAULT NOW(); -- default for the existings
+alter table urls add column status_last_modified_timestamp TIMESTAMP not null DEFAULT now(); -- default for the existings
 
 -- and output to screen to show success...
 select * from urls;
