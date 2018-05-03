@@ -129,7 +129,7 @@ function addEditUiOnce() {
         <input type='submit' value='&gt;&gt;' id='open_prev_tag_id' onclick="openTagAfterOneInUi(); return false;">
         <br/>
         <input type='button' id='destroy_button_id' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
-        <button type="" value="" onclick="clearButton(); return false;">Clear</button>
+        <button type="" value="" onclick="clearButton(); return false;">Clear/start over</button>
         <button type="" id='reload_tag_button_id' value="" onclick="reloadTagButton(); return false;">Reload This Tag</button>
 
       </form>
@@ -137,9 +137,8 @@ function addEditUiOnce() {
       <a id=reload_tags_a_id href=# onclick="reloadForCurrentUrl(''); return false;" </a>Reload tags</a>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <a href=# onclick="getSubtitleLink(); return false;" </a>Get subtitles</a>
-        <input type='submit' value='Movie page' onclick="doneMoviePage(); return false;">
-      <br/>
-      <input type='button' onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
+      <a href=# onclick="doneMoviePage(); return false;">Movie page </a>
+      <input type='submit' onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
     </div>
   </div>`;
   
@@ -1624,8 +1623,6 @@ function make_sure_does_not_get_stuck_after_play() {
       doPlay();
       clearInterval(timer);
     }
-    doPause(); // may as well, maybe it'll help! LOL
-    doPlay();
   }, 25); // poll it so we can detect "oh it worked once but then was legit paused after"
 }
 
