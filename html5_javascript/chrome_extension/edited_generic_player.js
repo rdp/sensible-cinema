@@ -515,8 +515,9 @@ default edit on?
       </form>
       
       <a id=reload_tags_a_id href=# onclick="reloadForCurrentUrl(''); return false;" </a>Reload tags</a>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;
       <a href=# onclick="getSubtitleLink(); return false;" </a>Get subtitles</a>
+      &nbsp;&nbsp;
       <a href=# onclick="doneMoviePage(); return false;">Movie page </a>
       <input type='submit' onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
     </div>
