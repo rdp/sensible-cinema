@@ -1,10 +1,10 @@
-// (c) 2016, 2017 Roger Pack released under LGPL
+// (c) 2016, 2017, 2018 Roger Pack released under LGPL
 
 // var request_host="localhost:3000"; // dev
 var request_host="playitmyway.org";  // prod
 
 if (typeof clean_stream_timer !== 'undefined') {
-  alert("play it my way: already loaded...not loading it again...please use the ll.  on screen links for it, we should never get here");
+  alert("play it my way: already loaded...not loading it again...extension installed twice?");
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
@@ -403,7 +403,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   if (isAddtagStuffVisible()) { // uses a bit o' cpu, is editor only...
     updateHTML(document.getElementById("current_timestamp_span_id"), "now: " + timeStampToHuman(cur_time)); 
     var second_line = "";
-    var next_future_tag = getFirstTagEndingAfter(cur_time, getAllTagsIncludingReplacedFromUISorted(current_json.tags)); // all so we can open stuff if editing and "unedited" selected
+    var next_future_tag = getFirstTagEndingAfter(cur_time, getAllTagsIncludingReplacedFromUISorted(current_json.tags)); // so we can see stuff if "unedited" dropdown selected, also endingAfter so we can show the "currently playing" edit
     if (next_future_tag) {
       second_line += "next: " + timeStampToHuman(next_future_tag.start);
       var time_until = next_future_tag.start - cur_time;
@@ -744,9 +744,19 @@ function getAllTagsIncludingReplacedFromUISorted(tags_wanting_replacement_insert
 function getFirstTagEndingAfter(cur_time, all_tags) {  
   for (var i = 0; i < all_tags.length; i++) {
     var tag = all_tags[i];
-    var start_time = tag.start;
     var end_time = tag.endy;
     if(end_time > cur_time) { // first one ending past our current position
+      return tag;
+    }
+  }
+  return null; // none found
+}
+
+function getFirstTagStartingAfter(cur_time, all_tags) {  
+  for (var i = 0; i < all_tags.length; i++) {
+    var tag = all_tags[i];
+    var start_time = tag.start;
+    if(start_time > cur_time) { // first one ending past our current position
       return tag;
     }
   }
@@ -1000,19 +1010,20 @@ function getCurrentVideoTimestampHuman() {
   return timeStampToHuman(getCurrentTime());
 }
 
-function openTagBeforeOneInUi() {
-  if (!uiTagIsNotInDb()) {
-    var search_time = createFauxTagForCurrentUI().endy - 0.01; // get the next down...
-    openTagEndingBefore(search_time);
-  } else {
-    alert("have to have a previously saved tag to get prev");
-  }
-}
-
 function openTagPreviousToNowButton() {
   var search_time = getCurrentTime();
   openTagEndingBefore(search_time);
 }
+
+function openTagStartingBefore(search_time) {
+  var tag = getFirstTagStartingBefore(search_time);
+  if (tag){
+    loadTagIntoUI(tag);    
+  } else {
+    alert("none found ending before current playback position");
+  }
+}
+
 
 function openTagEndingBefore(search_time) {
   var tag = getFirstTagEndingBefore(search_time);
@@ -1036,21 +1047,42 @@ function getFirstTagEndingBefore(search_time) { // somewhat duplicate but seemed
   return null; // not found
 }
 
+function getFirstTagStartingBefore(search_time) { // somewhat duplicate but seemed distinct enough :|
+  var all = getAllTagsIncludingReplacedFromUISorted(current_json.tags);
+  for (var i = all.length - 1; i >= 0; i--) {
+    var tag = all[i];
+    var start_time = tag.start;
+    if(start_time < search_time) {
+      return tag;
+    }
+  }
+  return null; // not found
+}
+
+function openTagBeforeOneInUi() {
+  if (!uiTagIsNotInDb()) {
+    var search_time = createFauxTagForCurrentUI().start - 0.01; // get the next down...
+    openTagStartingBefore(search_time);
+  } else {
+    alert("have to have a previously saved tag to get prev");  // :|
+  }
+}
+
 function openTagAfterOneInUi() {
   if (!uiTagIsNotInDb()) {
-    var search_time = createFauxTagForCurrentUI().endy + 0.01;
-    openFirstTagAfter(search_time);
+    var search_time = createFauxTagForCurrentUI().start + 0.01;
+    openFirstTagStartingAfter(search_time);
   } else {
-    alert("have to have a previously saved tag to get next");
+    alert("have to have a previously saved tag to get next"); // :|
   }
 }
 
 function openNextTagButton() {
   var search_time = getCurrentTime();
-  openFirstTagAfter(search_time);
+  openFirstTagEndingAfter(search_time); // want ending after so we can get the current...
 }
 
-function openFirstTagAfter(search_time) {
+function openFirstTagEndingAfter(search_time) {
   var next_tag = getFirstTagEndingAfter(search_time, getAllTagsIncludingReplacedFromUISorted(current_json.tags));
   if (next_tag) {
     loadTagIntoUI(next_tag);
@@ -1059,6 +1091,17 @@ function openFirstTagAfter(search_time) {
     alert("none after the spot requested...");
   }
 }
+
+function openFirstTagStartingAfter(search_time) {
+  var next_tag = getFirstTagStartingAfter(search_time, getAllTagsIncludingReplacedFromUISorted(current_json.tags));
+  if (next_tag) {
+    loadTagIntoUI(next_tag);
+  }
+  else {
+    alert("none after the spot requested...");
+  }
+}
+
 
 function saveTagButton() {
   if (!doubleCheckValues()) {
@@ -1613,7 +1656,7 @@ function make_sure_does_not_get_stuck_after_play() {
   var start = new Date().getTime();
   var timer = setInterval(function() {
     var millisPassed = (new Date().getTime()) - start;
-    console.log("mp=" + millisPassed);;
+    console.log("millisPassed waiting for it to play=" + millisPassed);;
     if (!isPaused() || paused_requested) {
       console.log("detected it did not get stuck after play");;
       clearInterval(timer);
@@ -1622,7 +1665,7 @@ function make_sure_does_not_get_stuck_after_play() {
       console.log("EMERGENCY seemed to still be stuck after play, beep beep");
       doPause(); // needed to get rid of that annoying twisting circle seemingly...
       doPlay();
-      clearInterval(timer);
+      start = new Date().getTime();
     }
   }, 25); // poll it so we can detect "oh it worked once but then was legit paused after"
 }
