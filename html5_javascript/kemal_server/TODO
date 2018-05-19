@@ -6,6 +6,8 @@
  
 == sometime ==
 
+pay flds
+
 youtubes them :|
 
 us passes:
@@ -48,16 +50,14 @@ kickstarter
   movie, tweak,
   fire!
 
-
 iphone: control computer(s) with it :\
   try youtube/normal/user-agent?
 
 some preliminary facebook ads [?]
-  need base, maybe...like...some...
 
 super soft launch looks like: easy links...ycombinator...reddit [? more?] betterlogic
 
-Try and go everywhere with ads/pub...
+Try and go everywhere with ads/pub...blogs...
   also ads for "vidangel" "clearplay" "pureflix" [?]
   
 figure out plan to collect emails/logins?
@@ -71,42 +71,39 @@ does personalize still work?
   groom personalized
   personalize: defaults?
 
-android: try out again :|
+android: try out again, give up :|
 
 mention the "demo" movie on our site more? :|
   finish "real" demo big buck :)
    
 combine/re-arrange in the db the subcats that were combined (art-based...)
-  some assume their new level?  That one movie the "latter" were lesser cleavage... :|
+  some assume their new level?
+  move some more into suicidal if description says so
+    were there any sexual shirtless males? tag their level as such, we expanded that tag...
+    split out more shirtless male front vs. back
+    possibly some more into underwear tag
 
-move some more into suicidal if description says so
-  were there any sexual shirtless males? tag their level as such, we expanded that tag...
-  split out more shirtless male front vs. back
-  possibly some more into underwear tag
-
-add tags (possibly after multi-tags): lds, vidangel doesn't have it
+add tags (possibly after multi-tags): lds, "vidangel doesn't have it"
 
 more answer big questions: TV, vidangel, netflix
 
-you can't even tell youtubes exist...
+allow them to pay us [finally] LOL
+
+edited facebook vids LOL
 
 ================= todo all never LOL =======================
 
-add "advanced, copy thsi javascript in" link to ... somewhere...for hard core firefox users? Are they out there?
+sell them prime subscriptions LOL
 
-doesn't update_javascript if 1* add subs 2* create
+add "advanced, copy this javascript in" link to ... somewhere...for hard core firefox users? Are they out there?
 
 google search result looks awful text LOL
 
-better "rank" for controlling order
-
 try out on ipad :|
-
-probably can't "browser through" to tags where 2 end at exactly same time :|
 
 go back and "re tag" all the levels of sexual with their severity
 
-tag edits as originated auto sub :|
+tag edits as originated auto sub or not :|
 
 currently "xx" displays wrong in big buck :|
 
@@ -118,7 +115,7 @@ notifies on big buck mute seemed to go over and over...though they did disappear
 
 "disabled" edit still shows its popup? maybe does...
 
-plugin text on amazon comes in...too slow :|
+plugin text on amazon comes in...too slow, and ugly! :|
   
 1st passes us:
   everything we own that's not even edited yet [m. prof's?]
@@ -132,7 +129,7 @@ edit greg's one movie [sync? :| ]
 
 sticky-er notifications os x :/
 
-move "our actual requests" to the uservoice :)
+move "our own requests" to the uservoice :)
 
 get real permission to use movie poster images full :|
   rewrite legal at the bottom to be just a link
@@ -141,8 +138,9 @@ figure out a way to have "edited subtitles" (maybe below it?)
   either edited or...something like that.  Not show them when near a mute?
   easy'ish-er on youtube embed than amazon :)
 
-faq: mention chrome remote desktop
+faq: mention chrome remote desktop (as a remote)
   vudu transferrable
+  try out more remotes, on everything!
 
 Have somebody 5th pass everything for the synopses :|
 
@@ -154,9 +152,7 @@ listen to all greg's' youtubes...
 
 email feedback is a screwy page freelds :\
 
-Tie into amazon reseller?
-
-experiment with my TV options :\
+experiment with TV options :\
   pick up speakers from granny's
   trash TV
   try out chromecast et al.
@@ -205,7 +201,7 @@ saner url's :| more human
 
 groom the "sell it to them edited" options :|
 
-watch edited on view_url doesn't warn if wrong :|
+watch edited on view_url doesn't warn if not installed yet :|
 
 add multiple tags "new releases" "enjoyable by whole family"
 add an "edited" moniker underneath each image?
@@ -213,9 +209,6 @@ add an "edited" moniker underneath each image?
 break questions out to their own thing, we want to be pro-family don't we?? :)
 
 "celebrate our grand opening like this post for a free subscription!"
-
-allow them to pay us [finally] LOL
-  when they can start LOL
 
 add youtube preview ID's :|
   and inline previews :|
@@ -235,8 +228,6 @@ if they came from google say something "spezal" LOL
   maybe if "cookie x not set"?
 
 list for "watch later" for them :)
-
-make R-rated "opt in"?
 
 add an "edited" tag underneath images in the amazon "watchlist" "my video library" page
 
@@ -274,15 +265,13 @@ an app that says "start this movie playing" (on that desktop computer) so they d
 
 vimeo api??? :| legal? I've got like 3 movies on there only, man!
 
-profile javascript is something in there expensive?
-
 edited amazon previews :|
 
 allow tags to be tagged with multiples "it's an opening scene and it's x" [?]
 
 if you're on firefox, it should say "click here to be redirected to chrome" and it does but not clearly enough yet...
 
-get facebook gender
+store facebook gender
   and birthday LOL
 
 select by genre/original rating :|
@@ -295,12 +284,10 @@ figure out a way to do DB backups...though...actually..that other git is good, i
 prettier movie url LOL
   one they can "like" on facebook'ish more? easily? share?
 
-patent??
-
 crystal:
   double check, sockets should have some ping/timeout thing so I don't get stuck with old connections...at least that...
   slam it with wrk, everything barfs all over the place :(
-  stack traces come out ugly?
+  stack traces come out so often, ugly
   various crystal bugs I could "help out with" (gzip, escape_javascript, server conns shuck...)
   figure out why query {"SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type asc, create_timestamp desc, name, episode_number"} took 00:00:00.0634933
     takes 0.06 in crystal and 0.01 in mysql console :|
@@ -316,13 +303,9 @@ private list of edits are shareable...or does that only make sense in the other 
 resurrect "fake" netflix playback :|
 can upload file for image
 
-an option "never show me r, or horror" :|
+an option "never show me r, or horror" in index
 
-edited facebook vids LOL
-
-ask those one people to link to me
-
-more market research...maybe?
+ask those one people to link to me (enjoymoviesyourway)
 
 they can "at least playback" movies from google play index
   jQuery(".playing-title").text() => "Ice Age: Dawn of the Dinosaurs"
