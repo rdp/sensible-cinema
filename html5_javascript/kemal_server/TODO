@@ -6,6 +6,8 @@
  
 == sometime ==
 
+respond that one email
+
 youtubes them :|
 
 us passes:
@@ -48,7 +50,6 @@ kickstarter
   movie, tweak,
   fire!
 
-
 iphone: control computer(s) with it :\
   try youtube/normal/user-agent?
 
@@ -90,15 +91,19 @@ more answer big questions: TV, vidangel, netflix
 
 you can't even tell youtubes exist...
 
+allow them to pay us [finally] LOL
+
+edited facebook vids LOL
+
 ================= todo all never LOL =======================
 
-add "advanced, copy thsi javascript in" link to ... somewhere...for hard core firefox users? Are they out there?
+sell them prime subscriptions
+
+add "advanced, copy this javascript in" link to ... somewhere...for hard core firefox users? Are they out there?
 
 doesn't update_javascript if 1* add subs 2* create
 
 google search result looks awful text LOL
-
-better "rank" for controlling order
 
 try out on ipad :|
 
@@ -132,7 +137,7 @@ edit greg's one movie [sync? :| ]
 
 sticky-er notifications os x :/
 
-move "our actual requests" to the uservoice :)
+move "our own requests" to the uservoice :)
 
 get real permission to use movie poster images full :|
   rewrite legal at the bottom to be just a link
@@ -141,8 +146,9 @@ figure out a way to have "edited subtitles" (maybe below it?)
   either edited or...something like that.  Not show them when near a mute?
   easy'ish-er on youtube embed than amazon :)
 
-faq: mention chrome remote desktop
+faq: mention chrome remote desktop (as a remote)
   vudu transferrable
+  try out more remotes, on everything!
 
 Have somebody 5th pass everything for the synopses :|
 
@@ -205,7 +211,7 @@ saner url's :| more human
 
 groom the "sell it to them edited" options :|
 
-watch edited on view_url doesn't warn if wrong :|
+watch edited on view_url doesn't warn if not installed yet :|
 
 add multiple tags "new releases" "enjoyable by whole family"
 add an "edited" moniker underneath each image?
@@ -213,9 +219,6 @@ add an "edited" moniker underneath each image?
 break questions out to their own thing, we want to be pro-family don't we?? :)
 
 "celebrate our grand opening like this post for a free subscription!"
-
-allow them to pay us [finally] LOL
-  when they can start LOL
 
 add youtube preview ID's :|
   and inline previews :|
@@ -300,7 +303,7 @@ patent??
 crystal:
   double check, sockets should have some ping/timeout thing so I don't get stuck with old connections...at least that...
   slam it with wrk, everything barfs all over the place :(
-  stack traces come out ugly?
+  stack traces come out so often, ugly
   various crystal bugs I could "help out with" (gzip, escape_javascript, server conns shuck...)
   figure out why query {"SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type asc, create_timestamp desc, name, episode_number"} took 00:00:00.0634933
     takes 0.06 in crystal and 0.01 in mysql console :|
@@ -316,13 +319,9 @@ private list of edits are shareable...or does that only make sense in the other 
 resurrect "fake" netflix playback :|
 can upload file for image
 
-an option "never show me r, or horror" :|
+an option "never show me r, or horror" in index
 
-edited facebook vids LOL
-
-ask those one people to link to me
-
-more market research...maybe?
+ask those one people to link to me (enjoymoviesyourway)
 
 they can "at least playback" movies from google play index
   jQuery(".playing-title").text() => "Ice Age: Dawn of the Dinosaurs"
