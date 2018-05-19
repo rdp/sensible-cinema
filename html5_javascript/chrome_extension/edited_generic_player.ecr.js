@@ -174,7 +174,7 @@ function getStandardizedCurrentUrl() { // duplicated with contentscript .js
     // -> canonical, the crystal code does this for everything so guess we should do here as well...ex youtube it strips off any &t=2 or something...
     current_url = document.querySelector('link[rel="canonical"]').href; // seems to always convert from "/gp/" to "/dp/" and sometimes even change the ID :|
   }
-  // attempt to leave the rest in cyrstal
+  // attempt to leave the rest in crystal
   return current_url;
 }
 
@@ -415,8 +415,8 @@ function checkIfShouldDoActionAndUpdateUI() {
       second_line += "<br/>";
       // third_line now
       if (faux_tag_being_tested && uiTagDiffersFromOriginalOrNoOriginal()) {
-        second_line += "(testing using your updated values)"; // or new tag...
-      }
+        second_line += "(using your new values)";
+      } // else it's a new tag
       second_line += "(" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
       if (!next_future_tag.default_enabled) {
         second_line += " (disabled)";

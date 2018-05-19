@@ -158,7 +158,7 @@ function getStandardizedCurrentUrl() { // duplicated with other .js
     // -> canonical, the crystal code does this for everything so guess we should do here as well...ex youtube it strips off any &t=2 or something...
     current_url = document.querySelector('link[rel="canonical"]').href; // seems to always convert from "/gp/" to "/dp/" and sometimes even change the ID :|
   }
-  // attempt to leave the rest in cyrstal
+  // attempt to leave the rest in crystal
   return current_url;
 }
 
