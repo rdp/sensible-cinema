@@ -20,6 +20,9 @@ Content tags in our system for this movie:
 <br/>
 <%= tags_by_category_with_size(url) %>
 <hr/>
+<% if editor?(env) %>
+  Editor: <a href=/edit_url/<%= url.id %>>modify these movie details</a>
+<% end %>
 
 <table class="table table-striped" style="width: auto;">
   <thead>
@@ -48,9 +51,6 @@ Content tags in our system for this movie:
   </tbody>
 </table>
 <br/>
-<% if editor?(env) %>
-  <a href=/edit_url/<%= url.id %>>modify these movie details</a>
-<% end %>
 
 <hr/>
 <h3>Personalize your playback!</h3>
