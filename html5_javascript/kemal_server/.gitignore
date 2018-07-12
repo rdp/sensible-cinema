@@ -1,7 +1,8 @@
 /doc/
-/libs/
+/lib/
 /.crystal/
 /.shards/
 public/movie_images/**
-
-
+*.pem
+db/connection_string_local_box_no_commit.txt
+db/local_cookie_secret
