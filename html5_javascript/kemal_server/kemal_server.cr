@@ -25,7 +25,7 @@ class CustomHandler < Kemal::Handler # don't know how to interrupt it from a bef
       end # else too hard
       add_to_flash env, "Please login to unleash the Play it My Way's full awesomeness (#{path}), first, here:"
       env.redirect "/login" 
-    elsif env.request.host !~ /localhost|playitmyway/
+    elsif env.request.host !~ /localhost|127.0.0.1|playitmyway/
       # sometimes some crawlers were calling https://freeldssheetmusic.org as if it were this, weird, attempt redirect for SEO
       env.redirect "https://playitmyway.org#{env.request.path}#{"?" + query if query}" 
     elsif env.request.host == "playitmyway.inet2.org"
@@ -635,7 +635,14 @@ def put_test_last(urls)
   urls
 end
 
-get "/" do |env| # index home
+get "/" do |env|
+  all_urls = get_all_urls
+  all_urls_done = all_urls.select{|url| url.editing_status == editing_phases[:done_second_pass] }
+  most_recent = all_urls_done.sort_by{|u| u.status_last_modified_timestamp}.last(5)
+  render "views/main_nik.ecr"
+end
+
+get "/full_list" do |env| # index home
   all_urls = get_all_urls
   all_urls_done = all_urls.select{|url| url.editing_status == editing_phases[:done_second_pass] }
   all_urls_half_way = all_urls.select{|url| url.editing_status == editing_phases[:done_first_pass] }

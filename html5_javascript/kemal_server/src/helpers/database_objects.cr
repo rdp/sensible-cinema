@@ -659,7 +659,7 @@ class User
     type: String,
     email_subscribe: Bool,
     editor: Bool,
-    admin: Bool
+    is_admin: Bool
   })
   DB.mapping({
     id: Int32,
@@ -670,15 +670,15 @@ class User
     type: String,
     email_subscribe: Bool,
     editor: Bool,
-    admin: Bool
+    is_admin: Bool
   })
 
-  def initialize(@amazon_id, @facebook_id, @name, @email, @type, @email_subscribe, @editor, @admin) # no id on purpose
+  def initialize(@amazon_id, @facebook_id, @name, @email, @type, @email_subscribe, @editor, @is_admin) # no id on purpose
     @id = 0
   end
 
   def create_or_update
-    # don't save admin, that's just manual on purpose :|
+    # don't save is_admin, that's just manual on purpose :|
     with_db do |conn|
       if @id == 0
         @id = conn.exec("insert into users (amazon_id, facebook_id, name, email, type, email_subscribe, editor) values (?, ?, ?, ?, ?, ?, ?)", amazon_id, facebook_id, name, email, type, email_subscribe, editor).last_insert_id.to_i32
@@ -727,8 +727,8 @@ class User
       out
     else
       editor = false # must manually promote them these days
-      admin = false
-      out = User.new(amazon_id, facebook_id, name, email, type, email_subscribe, editor, admin)
+      is_admin = false
+      out = User.new(amazon_id, facebook_id, name, email, type, email_subscribe, editor, is_admin)
       out.create_or_update # create
       out
     end

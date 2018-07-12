@@ -151,7 +151,8 @@ ALTER TABLE users ADD CONSTRAINT unique_email UNIQUE (email);
 alter table users add column email_subscribe BOOL DEFAULT false; -- actually 0 or 1 apparently
 alter table users add column editor BOOL DEFAULT false; -- actually 0 or 1 apparently
 update users set editor=1; -- we're all editors in test :)
-alter table users add column admin BOOL DEFAULT false; -- actually 0 or 1 apparently
+alter table users add column is_admin BOOL DEFAULT false; -- actually 0 or 1 apparently
+-- if necessary: ALTER TABLE users CHANGE COLUMN admin is_admin BOOL;;
 
 alter table urls ADD COLUMN amazon_third_url VARCHAR(2014) NOT NULL DEFAULT '';
 CREATE INDEX url_amazon_third_url_episode_idx  ON urls(amazon_third_url(256), episode_number); -- non unique on purpose XXX do queries use this?

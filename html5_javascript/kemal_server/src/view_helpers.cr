@@ -53,7 +53,7 @@ def editor?(env)
 end
 
 def admin?(env)
-  logged_in?(env) && logged_in_user(env).admin
+  logged_in?(env) && logged_in_user(env).is_admin
 end
 
 def humanize_category(category)

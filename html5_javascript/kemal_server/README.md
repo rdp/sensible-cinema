@@ -16,13 +16,14 @@ though there was a lot of pre-existing art (including edited youtube API/google,
 
 # OS X
 
-brew install crystal-lang kqwait mysql imagemagick pidof   
-brew services start mysql  
+brew install crystal kqwait mysql@5.7 imagemagick pidof fish
+brew services start mysql@5.7  
 
-# for both, after:
+# for both, after, also do this:
 
 mkdir edit_descriptors
 login to mysql, SET PASSWORD FOR root@localhost=PASSWORD('');
+# or possibly ALTER USER 'root'@'localhost' IDENTIFIED BY ''; 
 $ cp db/connection_string_local_box_no_commit.txt.template db/connection_string_local_box_no_commit.txt
 $ touch this_is_development
 ./db/nuke*
