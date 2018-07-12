@@ -638,7 +638,7 @@ end
 get "/" do |env|
   all_urls = get_all_urls
   all_urls_done = all_urls.select{|url| url.editing_status == editing_phases[:done_second_pass] }
-  most_recent = all_urls_done.sort_by{|u| u.status_last_modified_timestamp}.last(5)
+  most_recent = all_urls_done.sort_by{|u| u.status_last_modified_timestamp}.last(8)
   render "views/main_nik.ecr"
 end
 
