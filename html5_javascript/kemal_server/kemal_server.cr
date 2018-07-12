@@ -111,7 +111,7 @@ get "/sync_web_server" do |env|
   # raise_unless_editor(env) # allow curl to do it :|
   system("git pull") || raise "unable to git pull"
   puts "doing rebuild..."
-  if system("crystal build --debug ./kemal_server.cr")
+  if system("crystal build ./kemal_server.cr")
     Kemal.stop # should allow this process to die as well...
     "kemal has been stopped/should be exiting..." # have to let it die so the bash script can set permissions :| this should be fast enough, right? I mean seriously...
   else

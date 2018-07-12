@@ -8,7 +8,7 @@ else
   echo "use like https://playitmyway.org"
 fi
 # no release since super slow plus crashes out of RAM :|
-sudo -u rdp crystal build --debug ./kemal_server.cr || exit 1 # prime the pump :)
+sudo -u rdp crystal build ./kemal_server.cr || exit 1 # prime the pump :)
 while true; do
   ./_prod_ssl_go # wait for it to get killed by cron etc.
 done
