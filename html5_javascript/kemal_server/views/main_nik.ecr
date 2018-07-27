@@ -126,8 +126,8 @@
     </div>
 
     <div class="grid-x grid-padding-x small-up-3 medium-up-5 large-up-8">
-      <% most_recent.each{ |movie| %>
-        <div class="cell"> <!-- TODO show-for-medium -->
+      <% most_recent.each_with_index { |movie, idx| %>
+        <div class="cell <%= idx > 4 ? "show-for-large" : idx > 2 ? "show-for-medium" : "" %>>
               <a href="<%= movie.url %>" target="_blank">
                  <%= movie.image_tag "alt=\"#{movie.name_with_episode}\"", ImageSize::VerySmall %>
               </a>
