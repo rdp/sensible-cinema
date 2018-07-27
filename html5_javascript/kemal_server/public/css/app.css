@@ -214,9 +214,9 @@ ul {
     animation: imageAnimation 40s linear infinite 0s;
 }
 
-.cb-slideshow li:nth-child(1) span { background-image: url(../images/family1.jpg) }
+.cb-slideshow li:nth-child(1) span { background-image: url(../images/family1_hd720.jpg) }
 .cb-slideshow li:nth-child(2) span {
-    background-image: url(../images/family2.jpg);
+    background-image: url(../images/family2_hd720.jpg);
     -webkit-animation-delay: 10s;
     -moz-animation-delay: 10s;
     -o-animation-delay: 10s;
@@ -224,7 +224,7 @@ ul {
     animation-delay: 10s;
 }
 .cb-slideshow li:nth-child(3) span {
-    background-image: url(../images/family3.jpg);
+    background-image: url(../images/family3_hd720.jpg);
     -webkit-animation-delay: 20s;
     -moz-animation-delay: 20s;
     -o-animation-delay: 20s;
@@ -232,7 +232,7 @@ ul {
     animation-delay: 20s;
 }
 .cb-slideshow li:nth-child(4) span {
-    background-image: url(../images/family4.jpg);
+    background-image: url(../images/family4_hd720.jpg);
     -webkit-animation-delay: 30s;
     -moz-animation-delay: 30s;
     -o-animation-delay: 30s;
