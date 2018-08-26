@@ -375,7 +375,7 @@ post "/save_tag/:url_id" do |env|
   end
 
   if tag2 = tag.overlaps_any? url.tags
-    add_to_flash(env, "appears this tag might accidentally [or purposefully] have an overlap with a different #{tag2.default_action} tag that starts at #{seconds_to_human tag2.start} and ends at #{seconds_to_human tag2.endy}, expected?")
+    add_to_flash(env, "appears this tag (#{tag2.start} #{tag2.endy}) might accidentally [or purposefully] have an overlap with a different #{tag2.default_action} tag that starts at #{seconds_to_human tag2.start} and ends at #{seconds_to_human tag2.endy}, expected?")
   end
   
   if page = env.request.headers["Origin"]? # XHR
