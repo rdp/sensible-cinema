@@ -445,8 +445,8 @@ Lewdness level:
   <option value="0">please select</option>
   <option value="2">Cartoon (non sensual)</option>
   <option value="2">Art-based (non sensual)</option>
-  <option value="10">Non sensual, not well visible</option>
-  <option value="3">Non sensual</option>
+  <option value="10">Non sensual, hard to even see</option>
+  <option value="3">Non sensual/revealing</option>
   <option value="4">Mild sensual</option>
   <option value="5">Art-based (moderate sensual)</option>
   <option value="6">Moderate sensual</option>
