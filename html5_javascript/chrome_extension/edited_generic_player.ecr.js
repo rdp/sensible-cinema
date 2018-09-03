@@ -101,7 +101,7 @@ function addEditUiOnce() {
       <input type='button' onclick="seekToTime(getCurrentTime() - 2); return false;" value='-2s'/> 
       <input type='button' onclick="seekToTime(getCurrentTime() + 2); return false;" value='+2s'/> 
       <input type='button' onclick="seekToBeforeSkip(-5); return false;" value='-5s'/>
-      <input type='button' onclick="seekToTime(getCurrentTime() + 5); return false;" value='+5s'/> 
+      <input type='button' onclick="seekToTime(getCurrentTime() - 1); return false;" value='1s-'/> 
       <input type='button' onclick="stepFrameBack(); return false;" value='.1s -'/>
       <input type='button' onclick="stepFrame(); return false;" value='.1s +'/>
 
@@ -129,7 +129,7 @@ function addEditUiOnce() {
         <input type='submit' value='&gt;&gt;' id='open_prev_tag_id' onclick="openTagAfterOneInUi(); return false;">
         <br/>
         <input type='button' id='destroy_button_id' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
-        <button type="" value="" onclick="clearButton(); return false;">Clear/start over</button>
+        <button type="" value="" onclick="clearButton(); return false;">Clear/new tag</button>
         <button type="" id='reload_tag_button_id' value="" onclick="reloadTagButton(); return false;">Reload This Tag</button>
 
       </form>

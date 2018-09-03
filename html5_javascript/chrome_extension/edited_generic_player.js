@@ -102,7 +102,7 @@ function addEditUiOnce() {
       <input type='button' onclick="seekToTime(getCurrentTime() - 2); return false;" value='-2s'/> 
       <input type='button' onclick="seekToTime(getCurrentTime() + 2); return false;" value='+2s'/> 
       <input type='button' onclick="seekToBeforeSkip(-5); return false;" value='-5s'/>
-      <input type='button' onclick="seekToTime(getCurrentTime() + 5); return false;" value='+5s'/> 
+      <input type='button' onclick="seekToTime(getCurrentTime() - 1); return false;" value='1s-'/> 
       <input type='button' onclick="stepFrameBack(); return false;" value='.1s -'/>
       <input type='button' onclick="stepFrame(); return false;" value='.1s +'/>
 
@@ -446,7 +446,7 @@ Lewdness level:
   <option value="2">Cartoon (non sensual)</option>
   <option value="2">Art-based (non sensual)</option>
   <option value="10">Non sensual, hard to even see</option>
-  <option value="3">Non sensual/revealing</option>
+  <option value="3">Non sensual/barely revealing</option>
   <option value="4">Mild sensual</option>
   <option value="5">Art-based (moderate sensual)</option>
   <option value="6">Moderate sensual</option>
@@ -509,7 +509,7 @@ default edit on?
         <input type='submit' value='&gt;&gt;' id='open_prev_tag_id' onclick="openTagAfterOneInUi(); return false;">
         <br/>
         <input type='button' id='destroy_button_id' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
-        <button type="" value="" onclick="clearButton(); return false;">Clear/start over</button>
+        <button type="" value="" onclick="clearButton(); return false;">Clear/new tag</button>
         <button type="" id='reload_tag_button_id' value="" onclick="reloadTagButton(); return false;">Reload This Tag</button>
 
       </form>
