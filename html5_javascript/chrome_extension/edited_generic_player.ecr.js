@@ -87,6 +87,7 @@ function addEditUiOnce() {
         <span id="current_timestamp_span_id"> <!-- 0m32s --> </span> <span id="next_will_be_at_x_span_id" > <!-- next will be at x for y --> </span>
         <br/>
         <span id="next_will_be_at_x_second_line_span_id" > <!-- skip for 6.86x --> </span>
+        <br/>
       </div>
       <form target="_blank" action="filled_in_later_if_you_see_this_it_may_mean_an_onclick_method_threw" method="POST" id="create_new_tag_form_id">
         from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
@@ -398,7 +399,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   }
   updateHTML(document.getElementById("currently_xxx_span_id"), top_line_text);
   
-  if (isAddtagStuffVisible()) { // uses a bit o' cpu, is editor only...
+  if (isAddtagStuffVisible()) { // uses a bit o' cpu, is editor only...so don't calc typically...
     updateHTML(document.getElementById("current_timestamp_span_id"), "now: " + timeStampToHuman(cur_time)); 
     var nextline = "";
     var nextsecondline = "";
@@ -423,7 +424,6 @@ function checkIfShouldDoActionAndUpdateUI() {
     }
     else {
       document.getElementById("open_next_tag_id").style.visibility = "hidden";
-      nextline += "<br/>";
     }
     var next_earlier_tag = getFirstTagStartingBefore(searchForPreviousTime(),  getAllTagsIncludingReplacedFromUISorted(current_json.tags));
     if (next_earlier_tag) {
@@ -432,7 +432,6 @@ function checkIfShouldDoActionAndUpdateUI() {
       document.getElementById("open_prev_tag_id").style.visibility = "hidden";
     }
 
-    
     var save_button = document.getElementById("save_tag_button_id");
     var destroy_button = document.getElementById("destroy_button_id");
     var before_test_edit_span = document.getElementById("before_test_edit_span_id");
@@ -441,6 +440,9 @@ function checkIfShouldDoActionAndUpdateUI() {
       save_button.value = "Create New Tag";
       destroy_button.style.visibility = "hidden"; // couldn't figure out how to grey it
       reload_tag_button.style.visibility = "hidden";
+      if (createFauxTagForCurrentUI().start > 0) {
+        nextsecondline = "new tag..." + nextsecondline;
+      } // else already obvious because all 0's
     } else {
       save_button.value = "Update This Tag";
       destroy_button.style.visibility = "visible";
