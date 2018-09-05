@@ -26,7 +26,6 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
 </div>
 
 <div id="subcategory_div_id">
-subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
 <select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);" onchange="">
     <option value="">unknown -- please select subcategory</option> <!-- this one sticks around no matter which category you select -->
     <% subcategory_map().each{|subcat_name, entries| %>

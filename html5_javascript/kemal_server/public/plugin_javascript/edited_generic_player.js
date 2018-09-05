@@ -85,8 +85,9 @@ function addEditUiOnce() {
     </div>
     <div id="tag_details_div_id"  style='display: none;'>
       <div id='tag_layer_top_section'>
-        <span id="current_timestamp_span_id"> <!-- 0m32s --> </span> <span id="next_will_be_at_x_span_id" /> <!-- next will be at x for y -->
-        <span id="next_will_be_at_x_second_line_span_id" /> <!-- skip for 6.86x -->
+        <span id="current_timestamp_span_id"> <!-- 0m32s --> </span> <span id="next_will_be_at_x_span_id" > <!-- next will be at x for y --> </span>
+        <br/>
+        <span id="next_will_be_at_x_second_line_span_id" > <!-- skip for 6.86x --> </span>
       </div>
       <form target="_blank" action="filled_in_later_if_you_see_this_it_may_mean_an_onclick_method_threw" method="POST" id="create_new_tag_form_id">
         from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
@@ -147,7 +148,6 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
 </div>
 
 <div id="subcategory_div_id">
-subcategory:<br/><!-- it wraps in the plugin "sometimes" so always wrap -->
 <select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);" onchange="">
     <option value="">unknown -- please select subcategory</option> <!-- this one sticks around no matter which category you select -->
     
@@ -499,7 +499,6 @@ default edit on?
 
 <!-- can't put javascript since don't know how to inject it quite right in plugin, though I could use a separate render... -->
  <!-- render full filename cuz macro -->
-        <br/>
         <input type='submit' id='save_tag_button_id' value='Save Tag' onclick="saveTagButton(); return false;">
         <br/>
         <br/>
@@ -781,6 +780,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   if (isAddtagStuffVisible()) { // uses a bit o' cpu, is editor only...
     updateHTML(document.getElementById("current_timestamp_span_id"), "now: " + timeStampToHuman(cur_time)); 
     var nextline = "";
+    var nextsecondline = "";
     var next_future_tag = getFirstTagEndingAfter(cur_time, getAllTagsIncludingReplacedFromUISorted(current_json.tags)); // so we can see stuff if "unedited" dropdown selected, also endingAfter so we can show the "currently playing" edit
     if (next_future_tag) {
       nextline += "next: " + timeStampToHuman(next_future_tag.start);
@@ -789,21 +789,20 @@ function checkIfShouldDoActionAndUpdateUI() {
         time_until =  next_future_tag.endy - cur_time; // we're in the heart of one, don't show a negative :|
       }
       time_until = Math.round(time_until);
-      nextline +=  " in " + timeStampToHuman(time_until).replace( new RegExp('.00s$'), 's');
-      nextline += "<br/>";
-      // third_line now
+      nextline +=  " in " + timeStampToHuman(time_until).replace(new RegExp('.00s$'), 's'); // humanish friendly numbers
+
       if (faux_tag_being_tested && uiTagDiffersFromOriginalOrNoOriginal()) {
-        nextline += "(using your new values)";
+        nextsecondline += "(using your new values)";
       } // else it's a new tag
-      nextline += "(" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
+      nextsecondline += "(" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
       if (!next_future_tag.default_enabled) {
-        nextline += " (disabled)";
+        nextsecondline += " (disabled)";
       }
       document.getElementById("open_next_tag_id").style.visibility = "visible";
     }
     else {
       document.getElementById("open_next_tag_id").style.visibility = "hidden";
-      nextline += "<br/><br/>";
+      nextline += "<br/>";
     }
     var next_earlier_tag = getFirstTagStartingBefore(searchForPreviousTime(),  getAllTagsIncludingReplacedFromUISorted(current_json.tags));
     if (next_earlier_tag) {
@@ -812,23 +811,23 @@ function checkIfShouldDoActionAndUpdateUI() {
       document.getElementById("open_prev_tag_id").style.visibility = "hidden";
     }
 
-    updateHTML(document.getElementById('next_will_be_at_x_span_id'), nextline);
     
     var save_button = document.getElementById("save_tag_button_id");
     var destroy_button = document.getElementById("destroy_button_id");
     var before_test_edit_span = document.getElementById("before_test_edit_span_id");
     var reload_tag_button = document.getElementById("reload_tag_button_id");
     if (uiTagIsNotInDb()) {
-      save_button.value = "Save New Tag";
+      save_button.value = "Create New Tag";
       destroy_button.style.visibility = "hidden"; // couldn't figure out how to grey it
       reload_tag_button.style.visibility = "hidden";
-      updateHTML(before_test_edit_span, "new tag...");
     } else {
       save_button.value = "Update This Tag";
       destroy_button.style.visibility = "visible";
       reload_tag_button.style.visibility = "visible";
-      updateHTML(before_test_edit_span, "re-editing existing tag...");
+      nextsecondline = "re-editing existing tag..." + nextsecondline;
     }
+    updateHTML(document.getElementById('next_will_be_at_x_span_id'), nextline);
+    updateHTML(document.getElementById('next_will_be_at_x_second_line_span_id'), nextsecondline);
     
     updateHTML(document.getElementById("playback_rate"), twoDecimals(getPlaybackRate()) + "x");
   }
