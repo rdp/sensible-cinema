@@ -84,8 +84,8 @@ function addEditUiOnce() {
     </div>
     <div id="tag_details_div_id"  style='display: none;'>
       <div id='tag_layer_top_section'>
-        <span id="current_timestamp_span_id"> <!-- 0m32s --> </span>
-        <span id="next_will_be_at_x_span_id" /> <!-- next will be at x for y -->
+        <span id="current_timestamp_span_id"> <!-- 0m32s --> </span> <span id="next_will_be_at_x_span_id" /> <!-- next will be at x for y -->
+        <span id="next_will_be_at_x_second_line_span_id" /> <!-- skip for 6.86x -->
       </div>
       <form target="_blank" action="filled_in_later_if_you_see_this_it_may_mean_an_onclick_method_threw" method="POST" id="create_new_tag_form_id">
         from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
@@ -115,7 +115,7 @@ function addEditUiOnce() {
       
        <br/>
 
-  <span id="before_test_edit_span_id"></span>        <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
+        <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
         <br/>
        action:
         <%= pre_details = "tag details"; pre_popup = "popup text"; io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared.ecr", io2; io2.to_s %> <!-- render full filename cuz macro -->
@@ -123,10 +123,8 @@ function addEditUiOnce() {
         <input type='submit' id='save_tag_button_id' value='Save Tag' onclick="saveTagButton(); return false;">
         <br/>
         <br/>
-        <input type='submit' value='&lt;&lt;' id='open_prev_tag_id' onclick="openTagBeforeOneInUi(); return false;">
-        <input type='submit' value='Re-Edit Just Passed Tag' id='open_prev_tag_id' onclick="openTagPreviousToNowButton(); return false;">
-        <input type='submit' value='Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
-        <input type='submit' value='&gt;&gt;' id='open_prev_tag_id' onclick="openTagAfterOneInUi(); return false;">
+        <input type='submit' value='&lt;&lt; prev tag' id='open_prev_tag_id' onclick="openTagBeforeOneInUi(); return false;">
+        <input type='submit' value='next tag &gt;&gt;' id='open_next_tag_id' onclick="openTagAfterOneInUi(); return false;">
         <br/>
         <input type='button' id='destroy_button_id' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
         <button type="" value="" onclick="clearButton(); return false;">Clear/new tag</button>
@@ -402,32 +400,39 @@ function checkIfShouldDoActionAndUpdateUI() {
   
   if (isAddtagStuffVisible()) { // uses a bit o' cpu, is editor only...
     updateHTML(document.getElementById("current_timestamp_span_id"), "now: " + timeStampToHuman(cur_time)); 
-    var second_line = "";
+    var nextline = "";
     var next_future_tag = getFirstTagEndingAfter(cur_time, getAllTagsIncludingReplacedFromUISorted(current_json.tags)); // so we can see stuff if "unedited" dropdown selected, also endingAfter so we can show the "currently playing" edit
     if (next_future_tag) {
-      second_line += "next: " + timeStampToHuman(next_future_tag.start);
+      nextline += "next: " + timeStampToHuman(next_future_tag.start);
       var time_until = next_future_tag.start - cur_time;
       if (time_until < 0) {
         time_until =  next_future_tag.endy - cur_time; // we're in the heart of one, don't show a negative :|
       }
       time_until = Math.round(time_until);
-      second_line +=  " in " + timeStampToHuman(time_until).replace( new RegExp('.00s$'), 's');
-      second_line += "<br/>";
+      nextline +=  " in " + timeStampToHuman(time_until).replace( new RegExp('.00s$'), 's');
+      nextline += "<br/>";
       // third_line now
       if (faux_tag_being_tested && uiTagDiffersFromOriginalOrNoOriginal()) {
-        second_line += "(using your new values)";
+        nextline += "(using your new values)";
       } // else it's a new tag
-      second_line += "(" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
+      nextline += "(" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
       if (!next_future_tag.default_enabled) {
-        second_line += " (disabled)";
+        nextline += " (disabled)";
       }
       document.getElementById("open_next_tag_id").style.visibility = "visible";
     }
     else {
       document.getElementById("open_next_tag_id").style.visibility = "hidden";
-      second_line += "<br/><br/>";
+      nextline += "<br/><br/>";
     }
-    updateHTML(document.getElementById('next_will_be_at_x_span_id'), second_line);
+    var next_earlier_tag = getFirstTagStartingBefore(searchForPreviousTime(),  getAllTagsIncludingReplacedFromUISorted(current_json.tags));
+    if (next_earlier_tag) {
+      document.getElementById("open_prev_tag_id").style.visibility = "visible";
+    } else {
+      document.getElementById("open_prev_tag_id").style.visibility = "hidden";
+    }
+
+    updateHTML(document.getElementById('next_will_be_at_x_span_id'), nextline);
     
     var save_button = document.getElementById("save_tag_button_id");
     var destroy_button = document.getElementById("destroy_button_id");
@@ -1010,10 +1015,6 @@ function getCurrentVideoTimestampHuman() {
   return timeStampToHuman(getCurrentTime());
 }
 
-function openTagPreviousToNowButton() {
-  var search_time = getCurrentTime();
-  openTagEndingBefore(search_time);
-}
 
 function openTagStartingBefore(search_time) {
   var tag = getFirstTagStartingBefore(search_time);
@@ -1023,7 +1024,6 @@ function openTagStartingBefore(search_time) {
     alert("none found ending before current playback position");
   }
 }
-
 
 function openTagEndingBefore(search_time) {
   var tag = getFirstTagEndingBefore(search_time);
@@ -1060,12 +1060,16 @@ function getFirstTagStartingBefore(search_time) { // somewhat duplicate but seem
 }
 
 function openTagBeforeOneInUi() {
+  openTagStartingBefore(searchForPreviousTime()); // will warn if absent... 
+}
+
+function searchForPreviousTime() {
   if (!uiTagIsNotInDb()) {
     var search_time = createFauxTagForCurrentUI().start - 0.01; // get the next down...
-    openTagStartingBefore(search_time);
   } else {
-    alert("have to have a previously saved tag to get prev");  // :|
+    var search_time = getCurrentTime();
   }
+  return search_time;
 }
 
 function openTagAfterOneInUi() {
@@ -1073,7 +1077,7 @@ function openTagAfterOneInUi() {
     var search_time = createFauxTagForCurrentUI().start + 0.01;
     openFirstTagStartingAfter(search_time);
   } else {
-    alert("have to have a previously saved tag to get next"); // :|
+    openNextTagButton();     
   }
 }
 
