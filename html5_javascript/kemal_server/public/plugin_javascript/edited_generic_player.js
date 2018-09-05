@@ -1061,14 +1061,23 @@ function refreshVideoElement() {
     video_element.addEventListener("seeking",  // there is also seeked and timeupdate (timeupdate typically not granular enough for much)
       function() {
         console.log("got seeking event received cur_time=" + getCurrentTime()); // time will already be updated...I think...or at least most of the time LOL
-        checkStatus(); // do it "fast/immediately" in case need to blank [saves 0.007 yes!]
+        checkStatus(); // do a normal pass "fast/immediately" in case need to blank [saves 0.007s, woot!]
       }
     );
-    video_element.addEventListener("play",
-      function() {
-        console.log("got play event isPaused()=" + isPaused());
+    var listener = function(event) {
+      console.log("got " + event.type + " event isPaused()=" + isPaused());
+      if (event.type == "canplaythrough") {
+        if (seek_timer) {
+          console.log("doing early seek callback"); // XXX could I use this instead of the timer, so I can avoid the weird spinner/hang issue?
+          seek_timer_callback.call();
+        }
       }
-    );
+    };
+    video_element.addEventListener("play", listener);
+    video_element.addEventListener("canplay", listener);
+    video_element.addEventListener("canplaythrough", listener);
+    video_element.addEventListener("seeked", listener);
+    video_element.addEventListener("readystatechange", listener);
   }
 }
 
@@ -2000,9 +2009,10 @@ function seekToTime(ts, callback) {
       callback(); // scawah?? but thought it might be useful in case we "seek into" another seek...etc...seems to work OK...
     }
   } else {
-    seek_timer = setInterval(function() {
+    seek_timer_callback = function() {
         check_if_done_seek(start_time, ts, did_preseek_pause, callback);
-    }, 25);
+    };
+    seek_timer = setInterval(seek_timer_callback, 25);
   }
 }
 
