@@ -25,7 +25,7 @@ var last_audio_percent = null;
 var i_unfullscreened_it_element = null;
 var i_paused_it = null;
 
-function addEditUiOnce() { 
+function addEditUiOnce() {
   all_pimw_stuff = document.createElement('div');
   all_pimw_stuff.id = "all_pimw_stuff_id";
   all_pimw_stuff.style.color = "white";
@@ -36,7 +36,7 @@ function addEditUiOnce() {
   all_pimw_stuff.style.zIndex = "99999999";
   all_pimw_stuff.style.width = "400px";
   all_pimw_stuff.style.position = 'absolute';
-  
+
   all_pimw_stuff.innerHTML = `
    <!-- our own styles, # means id -->
   <style>
@@ -45,9 +45,9 @@ function addEditUiOnce() {
     #all_pimw_stuff_id { text-align: right;}
     #all_pimw_stuff_id input_disabled { margin-left: .0;}
   </style>
-  
+
   <!-- no pre-load message here since...we don't start the watcher thread until after the first fail or success to give us the right coords, and possibly annoying... -->
-    
+
   <div id=load_failed_div_id style='display: none; a:link {font-size: 10px;}'>
   <style>
     #load_failed_div_id a:link { font-size: 10px; }
@@ -63,14 +63,14 @@ function addEditUiOnce() {
   <div id=server_down_div_id style='display: none;' style='font-size: 14px;'> <!-- big -->
     Play it my way Server down, please alert us and try again later...
   </div>
-  
+
   <div id="load_succeeded_div_id" style='display: none;'>
     <div id="currently_playing_it_your_way_id" style="color: rgb(188, 188, 188);">
       <svg id="big_edited_text_svg_id" style="font: 50px 'Arial'; height: 50px;" viewBox="0 0 350 50">
         <text style="fill: none; stroke: white; stroke-width: 0.5px; stroke-linejoin: round;" y="40" x="175" id="big_edited_text_id">Edited</text>
       </svg>
        <br/>
-      Currently Editing out: <select id='tag_edit_list_dropdown_id' onChange='personalizedDropdownChanged();'></select> <!-- javascript will set up this select --> 
+      Currently Editing out: <select id='tag_edit_list_dropdown_id' onChange='personalizedDropdownChanged();'></select> <!-- javascript will set up this select -->
       <br/>
       <a href=# onclick="openPersonalizedEditList(); return false">Personalize which parts you edit out</a>
       <br/>
@@ -96,14 +96,14 @@ function addEditUiOnce() {
         &nbsp;&nbsp;&nbsp;&nbsp;to:<input type='text' name='endy' style='width: 150px; font-size: 12pt; height: 20px;' id='endy' value='0m 0.00s'/>
         <input id='' type='button' value='<--set to current time' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
         <br/>
-        
-        
-      <!-- no special method for seek forward since it'll at worst seek to a skip then skip --> 
+
+
+      <!-- no special method for seek forward since it'll at worst seek to a skip then skip -->
       <input type='button' onclick="seekToBeforeSkip(-30); return false;" value='-30s'/>
-      <input type='button' onclick="seekToTime(getCurrentTime() - 2); return false;" value='-2s'/> 
-      <input type='button' onclick="seekToTime(getCurrentTime() + 2); return false;" value='+2s'/> 
+      <input type='button' onclick="seekToTime(getCurrentTime() - 2); return false;" value='-2s'/>
+      <input type='button' onclick="seekToTime(getCurrentTime() + 2); return false;" value='+2s'/>
       <input type='button' onclick="seekToBeforeSkip(-5); return false;" value='-5s'/>
-      <input type='button' onclick="seekToTime(getCurrentTime() - 1); return false;" value='1s-'/> 
+      <input type='button' onclick="seekToTime(getCurrentTime() - 1); return false;" value='1s-'/>
       <input type='button' onclick="stepFrameBack(); return false;" value='.1s -'/>
       <input type='button' onclick="stepFrame(); return false;" value='.1s +'/>
 
@@ -113,8 +113,8 @@ function addEditUiOnce() {
       <span ><a id='playback_rate' href=# onclick="setPlaybackRate(1.0); return false">1.00x</a></span> <!--XX remove link -->
       <input type='button' onclick="increasePlaybackRate(); return false;" value='&gt;&gt;'/>
       <input type='button' onclick="doPause(); return false;" value='&#9612;&#9612;'/>
-      <input type='button' onclick="playButtonClicked(); return false;" value='&#9654;'>      
-      
+      <input type='button' onclick="playButtonClicked(); return false;" value='&#9654;'>
+
        <br/>
 
         <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
@@ -132,7 +132,7 @@ function addEditUiOnce() {
         <button type="" id='reload_tag_button_id' value="" onclick="reloadTagButton(); return false;">Reload This Tag</button>
 
       </form>
-      
+
       <a id=reload_tags_a_id href=# onclick="reloadForCurrentUrl(''); return false;" </a>Reload tags</a>
       &nbsp;&nbsp;&nbsp;
       <a href=# onclick="getSubtitleLink(); return false;" </a>Get subtitles</a>
@@ -141,9 +141,9 @@ function addEditUiOnce() {
       <input type='submit' onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
     </div>
   </div>`;
-  
+
   document.body.appendChild(all_pimw_stuff);
-  
+
   addMouseAnythingListener(mouseJustMoved);
   mouseJustMoved({pageX: 0, pageY: 0}); // start its timer, prime it :|
   editDropdownsCreated(); // from shared javascript, means "the HTML elements are in there"
@@ -153,9 +153,9 @@ function addEditUiOnce() {
     $("#action_sel option[value='mute']").remove();
     $("#action_sel option[value='mute_audio_no_video']").remove();
   }
-  
+
   setInterval(doPeriodicChecks, 250); // too cpu hungry :|
-  
+
 } // end addEditUiOnce
 
 
@@ -203,7 +203,7 @@ function liveEpisodeName() {
       if (numberNameDiv) {
         var numberName = numberNameDiv.innerHTML; // like " 3. Return to Omashu "
         var numberName = numberName.trim();
-        var regex =  /(\d+)\. /; 
+        var regex =  /(\d+)\. /;
         if (regex.test(numberName)) {
           return numberName.split(regex)[2];
         }
@@ -264,7 +264,7 @@ function areWeWithin(desiredAction, cur_time) {
 function checkIfShouldDoActionAndUpdateUI() {
   var cur_time = getCurrentTime();
   var tag;
-  
+
   tag = areWeWithin('mute', cur_time);
   tag = tag || areWeWithin('mute_audio_no_video', cur_time);
   var extra_message = "";
@@ -282,11 +282,11 @@ function checkIfShouldDoActionAndUpdateUI() {
       if (i_muted_it) {
         setMute(false);
         console.log("unmuted at=" + cur_time);
-        i_muted_it = false;      
+        i_muted_it = false;
       }
     }
   }
-  
+
   tag = areWeWithin('yes_audio_no_video', cur_time);
   tag = tag || areWeWithin('mute_audio_no_video', cur_time);
   if (tag) {
@@ -308,7 +308,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       doneWithPossibleHeartBlankUnlessImpending(true);
     }
   }
-  
+
   tag = areWeWithin('skip', cur_time); // do after unhiding so it can use 'right now' to know if should heart blank :|
   if (tag) {
     timestamp_log("seeking forward", cur_time, tag);
@@ -318,7 +318,7 @@ function checkIfShouldDoActionAndUpdateUI() {
     extra_message += "Skipping forward...";
     seekToTime(tag.endy, doneWithPossibleHeartBlankUnlessImpending);
   }
-  
+
   tag = areWeWithin('make_video_smaller', cur_time);
   if (tag) {
     // assume youtube :|
@@ -344,13 +344,13 @@ function checkIfShouldDoActionAndUpdateUI() {
       }
     }
   }
-  
+
   tag = areWeWithin('change_speed', cur_time);
   if (tag) {
     var desired_speed = getEndSpeedOrAlert(tag.details);
     if (desired_speed) {
       if (getPlaybackRate() != desired_speed) {
-        timestamp_log("setting speed=" + desired_speed, cur_time, tag);      
+        timestamp_log("setting speed=" + desired_speed, cur_time, tag);
         last_speed_value = getPlaybackRate();
         setPlaybackRate(desired_speed);
         i_changed_its_speed = true;
@@ -364,7 +364,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       setPlaybackRate(last_speed_value);
     }
   }
-  
+
   tag = areWeWithin('set_audio_percent', cur_time);
   if (tag) {
     var desired_percent = getAudioPercentOrAlert(tag.details);
@@ -398,9 +398,9 @@ function checkIfShouldDoActionAndUpdateUI() {
     top_line_text = "<br>"; // NB can't use <br/> since trailing slash gets sanitized out so can't detect changes right FWIW :| <br> is OK :)
   }
   updateHTML(document.getElementById("currently_xxx_span_id"), top_line_text);
-  
+
   if (isAddtagStuffVisible()) { // uses a bit o' cpu, is editor only...so don't calc typically...
-    updateHTML(document.getElementById("current_timestamp_span_id"), "now: " + timeStampToHuman(cur_time)); 
+    updateHTML(document.getElementById("current_timestamp_span_id"), "now: " + timeStampToHuman(cur_time));
     var nextline = "";
     var nextsecondline = "";
     var next_future_tag = getFirstTagEndingAfter(cur_time, getAllTagsIncludingReplacedFromUISorted(current_json.tags)); // so we can see stuff if "unedited" dropdown selected, also endingAfter so we can show the "currently playing" edit
@@ -451,7 +451,7 @@ function checkIfShouldDoActionAndUpdateUI() {
     }
     updateHTML(document.getElementById('next_will_be_at_x_span_id'), nextline);
     updateHTML(document.getElementById('next_will_be_at_x_second_line_span_id'), nextsecondline);
-    
+
     updateHTML(document.getElementById("playback_rate"), twoDecimals(getPlaybackRate()) + "x");
   }
   // XXXX cleanup the below needed huh?
@@ -467,7 +467,7 @@ var i_heart_blanked_it = false;
 function blankScreenIfWithinHeartOfSkip(skipish_tag, cur_time) {
   // if it's trying to seek out of something baaad then don't show a still frame of the bad stuff in the meanwhile
   var within_heart_of_skipish = !withinDelta(skipish_tag.start, cur_time, 0.05); // but don't show black blips on normal seek from playing continuous...
-  if (within_heart_of_skipish) { 
+  if (within_heart_of_skipish) {
     startHeartBlank(skipish_tag, cur_time);
   } else {
     //console.log("not blanking it because it's normal playing continuous beginning of skip..." + skipish_tag.start);
@@ -576,7 +576,7 @@ function optionally_show_notification(seek_tag) {
       var char = popup.charAt(i);
       if (char == " " || char == "") { // "" means "past end" for shorter ones...
         var title = popup.substring(0, i);
-        var body = popup.substring(i); 
+        var body = popup.substring(i);
         // XXXX if body too large still, split to second notification?
         break;
       }
@@ -626,10 +626,10 @@ function checkStatus() { // called 100 fps
       if (!i_set_it_to_add) {
         i_set_it_to_add = true;
         var dark_yellow = "#CCCC00";
-        sendMessageToPlugin({text: "add?", color: dark_yellow, details: "Watching add? edits disabled"}); 
+        sendMessageToPlugin({text: "add?", color: dark_yellow, details: "Watching add? edits disabled"});
       }
       // and enforce no mutes etc...since it's an add
-      // still fall through in case amazon reloaded :\ 
+      // still fall through in case amazon reloaded :\
     }
     else {
       if (i_set_it_to_add) {
@@ -668,7 +668,7 @@ function checkStatus() { // called 100 fps
       last_timestamp = cur_time;
 
       // GO!
-      checkIfShouldDoActionAndUpdateUI();      
+      checkIfShouldDoActionAndUpdateUI();
     }
   }
 }
@@ -680,14 +680,14 @@ function refreshVideoElement() {
     console.log("video element changed...");
     // only add event thing once :)
     video_element.addEventListener("seeking",  // there is also seeked and timeupdate (timeupdate typically not granular enough for much)
-      function() { 
-        console.log("seeking event received cur_time=" + getCurrentTime()); // time will already be updated...I think...or at least most of the time LOL
+      function() {
+        console.log("got seeking event received cur_time=" + getCurrentTime()); // time will already be updated...I think...or at least most of the time LOL
         checkStatus(); // do it "fast/immediately" in case need to blank [saves 0.007 yes!]
       }
     );
-    video_element.addEventListener("play", 
-      function() { 
-        console.log("got onplay event isPaused()=" + isPaused());
+    video_element.addEventListener("play",
+      function() {
+        console.log("got play event isPaused()=" + isPaused());
       }
     );
   }
@@ -701,9 +701,9 @@ function timestamp_log(message, cur_time, tag) {
 function seekToBeforeSkip(delta, callback) {
   var cur_time = getCurrentTime();
   var desired_time = cur_time + delta;
-  var tag = areWeWithin('skip', desired_time);  
+  var tag = areWeWithin('skip', desired_time);
   if (tag) {
-    var new_delta = tag.start - cur_time - 5; // youtube with 2 would fail here seeking backward and loop forever :\ 
+    var new_delta = tag.start - cur_time - 5; // youtube with 2 would fail here seeking backward and loop forever :\
     console.log("would have sought to middle of " + twoDecimals(tag.start) + " -> " + twoDecimals(tag.endy) + " going back further instead old_delta=" + delta + " new_delta=" + new_delta + " cur_time=" + cur_time);
     seekToBeforeSkip(new_delta, callback); // in case we run into another'un right there ... :|
   }
@@ -748,7 +748,7 @@ function getAllTagsIncludingReplacedFromUISorted(tags_wanting_replacement_insert
   }
 }
 
-function getFirstTagEndingAfter(cur_time, all_tags) {  
+function getFirstTagEndingAfter(cur_time, all_tags) {
   for (var i = 0; i < all_tags.length; i++) {
     var tag = all_tags[i];
     var end_time = tag.endy;
@@ -759,7 +759,7 @@ function getFirstTagEndingAfter(cur_time, all_tags) {
   return null; // none found
 }
 
-function getFirstTagStartingAfter(cur_time, all_tags) {  
+function getFirstTagStartingAfter(cur_time, all_tags) {
   for (var i = 0; i < all_tags.length; i++) {
     var tag = all_tags[i];
     var start_time = tag.start;
@@ -888,7 +888,7 @@ function addForNewVideo() {
   }
   window.open("https://" + request_host + "/new_url_from_plugin?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name="  +
           encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + videoDuration(), "_blank");
-  setTimeout(loadForNewUrl, 4000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|         
+  setTimeout(loadForNewUrl, 4000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|
   // once took longer than 2000 :|
   doPause();
 }
@@ -915,7 +915,7 @@ function setEditedControlsToMovieRight() {
   if (isAmazon()) {
     desired_top += 200; // make top amazon stuff visible, plus ability to see subs dropdown ...
   }
-    
+
   if ((getLocationOfElement(all_pimw_stuff).height + desired_top) > getLocationOfElement(video_element).height) {
     // video is too small to fit all the edit stuff, so nuke the useful top padding :|
     desired_top = getLocationOfElement(video_element).top;
@@ -957,10 +957,10 @@ function loadTagIntoUI(tag) {
   document.getElementById('start').value = timeStampToHuman(tag.start);
   document.getElementById('endy').value = timeStampToHuman(tag.endy);
   document.getElementById('details_input_id').value = htmlDecode(tag.details);
-  document.getElementById('popup_text_after_id').value = htmlDecode(tag.popup_text_after);  
+  document.getElementById('popup_text_after_id').value = htmlDecode(tag.popup_text_after);
   document.getElementById('category_select').value = tag.category; // XXX rename category_select_id
   document.getElementById('category_select').dispatchEvent(new Event('change')); // so it'll prune the subcats
-  
+
   var subcat_select = document.getElementById('subcategory_select_id');
   var desired_value = htmlDecode(tag.subcategory);
   if (!selectHasOption(subcat_select, desired_value)) {
@@ -1021,7 +1021,7 @@ function getCurrentVideoTimestampHuman() {
 function openTagStartingBefore(search_time) {
   var tag = getFirstTagStartingBefore(search_time);
   if (tag){
-    loadTagIntoUI(tag);    
+    loadTagIntoUI(tag);
   } else {
     alert("none found ending before current playback position");
   }
@@ -1030,7 +1030,7 @@ function openTagStartingBefore(search_time) {
 function openTagEndingBefore(search_time) {
   var tag = getFirstTagEndingBefore(search_time);
   if (tag){
-    loadTagIntoUI(tag);    
+    loadTagIntoUI(tag);
   } else {
     alert("none found ending before current playback position");
   }
@@ -1062,7 +1062,7 @@ function getFirstTagStartingBefore(search_time) { // somewhat duplicate but seem
 }
 
 function openTagBeforeOneInUi() {
-  openTagStartingBefore(searchForPreviousTime()); // will warn if absent... 
+  openTagStartingBefore(searchForPreviousTime()); // will warn if absent...
 }
 
 function searchForPreviousTime() {
@@ -1079,7 +1079,7 @@ function openTagAfterOneInUi() {
     var search_time = createFauxTagForCurrentUI().start + 0.01;
     openFirstTagStartingAfter(search_time);
   } else {
-    openNextTagButton();     
+    openNextTagButton();
   }
 }
 
@@ -1114,7 +1114,7 @@ function saveTagButton() {
     return;
   }
   var endy = humanToTimeStamp(document.getElementById('endy').value);
-  
+
   if (endy > videoDuration()) {
     alert("tag goes past end of movie? aborting...");
     return;
@@ -1169,8 +1169,8 @@ function clearForm() {
   document.getElementById('impact_to_movie_id').value = "0"; // force them to choose one
   setImpactIfMute(); // reset if mute :|
   document.getElementById('tag_hidden_id').value = '0'; // reset
-  document.getElementById('default_enabled_id').value = 'true';  
- 
+  document.getElementById('default_enabled_id').value = 'true';
+
   document.getElementById('action_sel').dispatchEvent(new Event('change')); // so it'll set impact if mute
   faux_tag_being_tested = null;
 }
@@ -1221,7 +1221,7 @@ function stepFrameBack() {
 function stepFrame() {
   doPlay();
   setTimeout(function() {
-    doPause(); 
+    doPause();
   }, 1/10*1000); // audio needs some pretty high granularity :|
 }
 
@@ -1239,9 +1239,9 @@ function reloadForCurrentUrl(additional_string) {
     var reload_tags_link = document.getElementById('reload_tags_a_id');
     reload_tags_link.innerHTML = additional_string + "Reloading...";
     getRequest(
-      function(json_string) { reloadSucceeded(json_string, additional_string); }, 
+      function(json_string) { reloadSucceeded(json_string, additional_string); },
       loadFailed // straight load failed since shouldn't happen, riiiight?
-    ); 
+    );
   }
   else {
     alert("not reloading, possibly no edits loaded?"); // amazon already went to next episode??
@@ -1252,7 +1252,7 @@ function reloadSucceeded(json_string, additional_string) {
   loadSucceeded(json_string);
   var reload_tags_link = document.getElementById('reload_tags_a_id');
   reload_tags_link.innerHTML = additional_string + "Reloaded!";
-  setTimeout(function() {reload_tags_link.innerHTML = "Reload tags";}, 5000);  
+  setTimeout(function() {reload_tags_link.innerHTML = "Reload tags";}, 5000);
 }
 
 function loadSucceeded(json_string) {
@@ -1305,10 +1305,10 @@ function loadFailed(status) {
   hideDiv(document.getElementById("load_succeeded_div_id"));
   displayDiv(document.getElementById("load_failed_div_id"));
   hideDiv(document.getElementById("server_down_div_id"));
-  
+
   removeAllOptions(document.getElementById("tag_edit_list_dropdown_id")); // clean up...in case it matters...
   old_current_url = getStandardizedCurrentUrl();
-  old_episode = liveEpisodeNumber(); 
+  old_episode = liveEpisodeNumber();
   sendMessageToPlugin({color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
   if (status == 412) {
     // not in our system yet
@@ -1329,16 +1329,16 @@ function loadFailed(status) {
   else {
     // just let it stay saying unedited :|
   }
-  
+
   startWatcherTimerSingleton(); // so it can check if episode changes to one we like magically LOL [amazon...]
   console.log("got failure/ABSENT HTML response status=" + status);
 }
 
 function parseSuccessfulJson(json_string) {
   current_json = JSON.parse(json_string); // non var on purpose
-  
+
   refreshPersonalizedDropdownOptions(current_json);
-  
+
   var big_edited = document.getElementById("big_edited_text_id");
   if (current_json.url.editing_status == 'Done with second review, tags viewed as complete') {
     big_edited.innerHTML = "Edited";
@@ -1352,7 +1352,7 @@ function parseSuccessfulJson(json_string) {
 function refreshPersonalizedDropdownOptions() {
   var dropdown = document.getElementById("tag_edit_list_dropdown_id");
   var old_selected = dropdown.value;
-  removeAllOptions(dropdown); // out with any old...    
+  removeAllOptions(dropdown); // out with any old...
   var option = document.createElement("option");
   option.text = "Default (all tags) (" + countDoSomethingTags(current_json.tags) + ")";
   option.value = "-1"; // special case :|
@@ -1363,7 +1363,7 @@ function refreshPersonalizedDropdownOptions() {
     console.log("list size greater than 1???" + current_json.tag_edit_lists);
   }
   dropdown.add(option);
-  
+
   for (var i = 0; i < current_json.tag_edit_lists.length; i++) {
     var tag_edit_list_and_its_tags = current_json.tag_edit_lists[i];
     var tag_edit_list = tag_edit_list_and_its_tags[0];
@@ -1375,7 +1375,7 @@ function refreshPersonalizedDropdownOptions() {
     dropdown.add(option);
     option.setAttribute('selected', true); // hope this overrides, we want it to be the default for now uh guess...
   }
-  
+
   option = document.createElement("option");
   option.text = "Watch Unedited (0 tags)";
   option.value = "-2"; // special case "unedited" :|
@@ -1410,7 +1410,7 @@ function setEditsToUseFromSelectedPersonalizeDropdown() {
     setTheseTagsAsTheOnesToUse([]); // i.e. no-tags LOl
     return;
   }
-  
+
   if (selected_edit_list_id == "-1") {
     setTheseTagsAsTheOnesToUse(current_json.tags);
     return;
@@ -1421,7 +1421,7 @@ function setEditsToUseFromSelectedPersonalizeDropdown() {
     if (tag_edit_list_and_its_tags[0].id == selected_edit_list_id) {
       setTheseTagsAsTheOnesToUse(tag_edit_list_and_its_tags[1]);
       return;
-    }   
+    }
   }
   alert("unable to select " + dropdown.value + "shouldn't get here ever");
 }
@@ -1436,7 +1436,7 @@ function checkIfEpisodeChanged() {
     console.log("detected move to another video, to\n" + getStandardizedCurrentUrl() + "\nep. " + liveEpisodeNumber() + "\nfrom\n" +
                  old_current_url + "\n ep. " + old_episode + "\nwill try to load its edited settings now for the new movie...");
     old_current_url = getStandardizedCurrentUrl(); // set them now so it doesn't re-get them next loop
-    old_episode = liveEpisodeNumber(); 
+    old_episode = liveEpisodeNumber();
     setTimeout(loadForNewUrl, 1000); // youtube has the "old name" still for awhile, so for the new prompt wait
   }
 }
@@ -1468,7 +1468,7 @@ function startOnce() {
       return; // avoid future prompts which don't matter anyway for now :|
     }
   }
-  
+
   // ready to try and load the editor LOL
   console.log("adding edit UI, requesting for current URL...");
 
@@ -1488,7 +1488,7 @@ function mouseJustMoved(event) {
   var enough_focus = isAmazon() || document.hasFocus(); // only enforce this for youtube :|
   if (!mouse_move_timer || (mouse_within_video && enough_focus)) {
     displayDiv(all_pimw_stuff);
-  
+
     clearTimeout(mouse_move_timer); // in case previously set
     if (mouse_within_all_pimw_stuff) {
       if (!isAddtagStuffVisible()) {
@@ -1517,19 +1517,19 @@ function hideAllPimwStuff() {
 }
 
 function isGoogleIframe() {
-  return inIframe() && /google.com/.test(window.location.hostname); 
+  return inIframe() && /google.com/.test(window.location.hostname);
 }
 
 function currentUrlNotIframe() { // hopefully better alternate to window.location.href, though somehow this doesn't always work still [ex: netflix.com iframes?]
   return (window.location != window.parent.location) ? document.referrer : document.location.href;
-} 
+}
 
 function isAmazon() {
   return currentUrlNotIframe().includes("amazon.com");
 }
 
 function isYoutube() {
-  return currentUrlNotIframe().includes("www.youtube.com");  
+  return currentUrlNotIframe().includes("www.youtube.com");
 }
 
 function withinDelta(first, second, delta) {
@@ -1556,7 +1556,7 @@ function doPause() {
   } else {
     video_element.pause();
   }
-  paused_requested = true;
+  pause_since_requested = true;
 }
 
 function rawRequestSeekToTime(ts) {
@@ -1591,11 +1591,11 @@ var current_seek_ts;
 
 function seekToTime(ts, callback) {
   if (seek_timer) {
-    console.log("still seeking from previous_requested=" + current_seek_ts + ", not trying that again...new_requested=" + ts);
+    console.log("still seeking from previous_requested=" + current_seek_ts + ", not trying that again...new_requested_was=" + ts);
     return;
   }
   current_seek_ts = ts;
-  
+
   if (ts < 0) {
     console.log("not seeking to before 0, seeking to 0 instead, seeking to negative doesn't work well " + ts);
     ts = 0;
@@ -1606,27 +1606,28 @@ function seekToTime(ts, callback) {
   // [amazon] if this is far enough away from current, it also implies a "play" call...oddly. I mean seriously that is bizarre.
   // however if it close enough, then we need to call play
   // some shenanigans to pretend to work around this...
-  var did_arbitrary_pause = false; // youtube loses 0.05 with these shenanigans needed on amazon, so attempt avoid :|
-  var already_cached = ts > getCurrentTime() && ts < (getCurrentTime() + getSecondsBufferedAhead() - 0.6); // 0.4 seemed to really quite fail in amazon
+  var did_preseek_pause = false; // youtube loses 0.05 with these shenanigans needed on amazon, so attempt avoid :|
+  var already_cached = ts > getCurrentTime() && ts < (getCurrentTime() + getSecondsBufferedAhead() - 1); // 0.4 seemed to really quite fail in amazon
   if (isAmazon() && !isPaused() && !already_cached) {
-    doPause();
-    did_arbitrary_pause = true;
+    doPause(); // amazon just seems to need this, no idea why...
+    console.log("doing preseek pause ts=" + ts);
+    did_preseek_pause = true;
   }
   rawRequestSeekToTime(ts);
-  
+
   if (already_cached && !isYoutubePimw()) { // youtube a "raw request" doesn't actually change the time instantaneously...
     if (callback) {
-      console.log("quick seek assuming...");
-      callback(); // scawah
+      console.log("quick seek assuming possible since cached...");
+      callback(); // scawah?? but thought it might be useful in case we "seek into" another seek...etc...seems to work OK...
     }
   } else {
     seek_timer = setInterval(function() {
-        check_if_done_seek(start_time, ts, did_arbitrary_pause, callback);
+        check_if_done_seek(start_time, ts, did_preseek_pause, callback);
     }, 25);
   }
 }
 
-function check_if_done_seek(start_time, ts, did_arbitrary_pause, callback) {
+function check_if_done_seek(start_time, ts, did_preseek_pause, callback) {
   if (isYoutubePimw()) {
     console.log("check_if_done_seek youtube_player_state=" + youtube_pimw_player.getPlayerState());
     var done_buffering = (youtube_pimw_player.getPlayerState() == YT.PlayerState.PAUSED); // This "might" mean done buffering :| [we pause it ourselves first...hmm...maybe don't have to?]
@@ -1638,11 +1639,11 @@ function check_if_done_seek(start_time, ts, did_arbitrary_pause, callback) {
 
     if (seconds_buffered > 2) { // usually 4 or 6...
       console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " ts=" + ts + " length_was=" + twoDecimals(ts - start_time) + " buffered_ahead=" + twoDecimals(seconds_buffered) + " from=" + twoDecimals(start_time) + " cur_time_actually=" + twoDecimals(getCurrentTime()) + " state=" + video_element.readyState);
-      if (did_arbitrary_pause) {
+      if (did_preseek_pause) {
         doPlay();
         make_sure_does_not_get_stuck_after_play(); // doPlay isn't always enough sadly...and then it gets stuck in this weird half paused state :| hopefully rare!
       } else {
-        console.log("not doing doPlay after seek because !did_arbitrary_pause");
+        console.log("not doing doPlay after seek because !did_preseek_pause");
       }
       clearInterval(seek_timer);
       if (callback) {
@@ -1657,21 +1658,34 @@ function check_if_done_seek(start_time, ts, did_arbitrary_pause, callback) {
   }
 }
 
+function spinner_present() {
+  var elements = document.getElementsByClassName('loadingSpinner');
+  len = elements.length;
+  for (i=0; i<len; ++i) {
+    var s = elements[i];
+    if (s.style.display != "none") {
+      return true;
+    }
+  }
+  return false;
+}
+
 function make_sure_does_not_get_stuck_after_play() {
-  paused_requested = false; // :|
+  pause_since_requested = false; // needed for our quick pauses :|
   var start = new Date().getTime();
   var timer = setInterval(function() {
     var millisPassed = (new Date().getTime()) - start;
-    console.log("millisPassed waiting for it to play=" + millisPassed);;
-    if (!isPaused() || paused_requested) {
-      console.log("detected it did not get stuck after play");;
-      clearInterval(timer);
+    console.log("millisPassed waiting for it to play=" + millisPassed);
+    // it's either check for spinner or...uh...could we check for this earlier??????? and avoid this? but without introducing any possible latencies???
+    if ((!isPaused() || pause_since_requested) && !spinner_present()) {
+      console.log("detected it did not get stuck after play (or recovered)");
+      clearInterval(timer); // we're done
     }
     if (millisPassed > 1500) {
       console.log("EMERGENCY seemed to still be stuck after play, beep beep");
       doPause(); // needed to get rid of that annoying twisting circle seemingly...
       doPlay();
-      start = new Date().getTime();
+      start = new Date().getTime(); // start timer over...
     }
   }, 25); // poll it so we can detect "oh it worked once but then was legit paused after"
 }
@@ -1731,13 +1745,13 @@ function liveTitleNoEpisode() {
     // don't add episode name
   }
   if (isYoutube()) {
-    title = youtubeChannelName() + title; 
+    title = youtubeChannelName() + title;
   }
   return title;
 }
 
 function liveFullNameEpisode() {
-  return liveTitleNoEpisode() + liveEpisodeString(); 
+  return liveTitleNoEpisode() + liveEpisodeString();
 }
 
 <%= io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared_js.ecr", io2; io2.to_s %> <!-- render inline cuz uses macro, putting this at the end isn't enough to not mess up line numbers because dropdowns are injected :| -->
