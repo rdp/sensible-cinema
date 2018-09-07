@@ -187,25 +187,15 @@ function setupSafeSeekOnce() {
 
   addListenerMulti(seek_dragger, "mousedown touchstart", function() {
     seek_dragger_being_dragged = true;
-    console.log("start drag");
   });
-
-  // hrm...
-  // addListenerMulti(seek_dragger, "mousemove touchmove", function() {
-  //  var desired_time_seconds = youtube_pimw_player.getDuration() / 100.0 * this.value;
-  //  document.getElementById('current_time_id').innerHTML = timeStampToHumanHere(desired_time_seconds, 0) + "/" + timeStampToHumanHere(youtube_pimw_player.getDuration(), 0);
-  //  // but don't seek yet :)
-  // });
 
   addListenerMulti(seek_dragger, "mouseup touchend", function() {
     seek_dragger_being_dragged = false;
-    console.log("end drag");
     seekToPercentage(this.value);
   });
 
   setInterval(updateSafeSeekTime, 250); // only 4/sec because if they happen to do their "own" seek this could interfere and "seek to no where" (well, still could but more rare? :\  TODO
 }
-
 
 function playButtonClicked() {
   if (isPaused()) {
