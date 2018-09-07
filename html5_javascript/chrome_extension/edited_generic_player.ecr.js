@@ -75,6 +75,8 @@ function addEditUiOnce() {
       <a href=# onclick="openPersonalizedEditList(); return false">Personalize which parts you edit out</a>
       <br/>
       We're still in Beta, did we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
+      <br/>
+      <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id"/>
       <div style="display: inline-block"> <!-- prevent line feed before this div -->
         <span id="currently_xxx_span_id"> <!-- "currently: muting" --></span>
         <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable if flagged as editor -->
@@ -156,9 +158,53 @@ function addEditUiOnce() {
     $("#action_sel option[value='mute_audio_no_video']").remove();
   }
 
+  setupSafeSeekOnce();
+
   setInterval(doPeriodicChecks, 250); // too cpu hungry :|
+  // we don't start the "real" interval until after first safe load...apparently...odd...
 
 } // end addEditUiOnce
+
+var seek_dragger_being_dragged = false;
+
+function updateSafeSeekTime() {
+  if (!seek_dragger_being_dragged) {
+    var seek_dragger =  document.getElementById('safe_seek_id');
+    seek_dragger.value = getCurrentTime() / videoDuration() * 100;
+  }
+}
+
+function seekToPercentage(valMaxOneHundred) {
+  var desired_time_seconds = videoDuration() / 100.0 * valMaxOneHundred;
+  console.log("safe seek slider seeking to " + timeStampToHuman(desired_time_seconds));
+  seekToTime(desired_time_seconds);
+}
+
+function setupSafeSeekOnce() {
+
+  // basically copied from edited_youtube but scary...
+  var seek_dragger = document.getElementById('safe_seek_id');
+
+  addListenerMulti(seek_dragger, "mousedown touchstart", function() {
+    seek_dragger_being_dragged = true;
+    console.log("start drag");
+  });
+
+  // hrm...
+  // addListenerMulti(seek_dragger, "mousemove touchmove", function() {
+  //  var desired_time_seconds = youtube_pimw_player.getDuration() / 100.0 * this.value;
+  //  document.getElementById('current_time_id').innerHTML = timeStampToHumanHere(desired_time_seconds, 0) + "/" + timeStampToHumanHere(youtube_pimw_player.getDuration(), 0);
+  //  // but don't seek yet :)
+  // });
+
+  addListenerMulti(seek_dragger, "mouseup touchend", function() {
+    seek_dragger_being_dragged = false;
+    console.log("end drag");
+    seekToPercentage(this.value);
+  });
+
+  setInterval(updateSafeSeekTime, 250); // only 4/sec because if they happen to do their "own" seek this could interfere and "seek to no where" (well, still could but more rare? :\  TODO
+}
 
 
 function playButtonClicked() {
@@ -442,7 +488,7 @@ function checkIfShouldDoActionAndUpdateUI() {
     var before_test_edit_span = document.getElementById("before_test_edit_span_id");
     var reload_tag_button = document.getElementById("reload_tag_button_id");
     if (uiTagIsNotInDb()) {
-      save_button.value = "Create New Tag";
+      save_button.value = "Save New Tag";
       destroy_button.style.visibility = "hidden"; // couldn't figure out how to grey it
       reload_tag_button.style.visibility = "hidden";
       if (createFauxTagForCurrentUI().start > 0) {

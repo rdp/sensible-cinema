@@ -5,9 +5,9 @@
   <h3 style="margin-top: 5px;">
     <!-- play -->
     <a href='' onclick="youtube_pimw_player.playVideo(); return false">&#9654;</a>&nbsp;&nbsp;<a href='' onclick="youtube_pimw_player.pauseVideo(); return false">&#9612;&#9612;</a>
-    Seek:<input id="seek-control-id" type="range" min="0" max="100" step="1" style="max-width: 150px; display:inline;"></input><!-- not sure how to not super seek here on drag :| -->
+    Seek:<input id="seek-control-id" type="range" min="0" max="100" step="1" style="max-width: 150px; display:inline;"></input>
     <!-- time -->
-    <div id="current_time_id" style="display: inline;"></div>  
+    <div id="current_time_id" style="display: inline;"></div>
     <a href='' onclick="seekToDelta(-10); return false">-10s</a>
     <a href='' onclick="seekToDelta(10); return false">+10s</a>
     <!-- fullscreen -->
@@ -16,11 +16,11 @@
     <br/>
     Volume:<input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)" style="max-width: 100px; display:inline;"></input>
     <!-- XXXX put volume percent? -->
-    Resolution: <div id="quality_div_id" style="display: inline;"></div> 
+    Resolution: <div id="quality_div_id" style="display: inline;"></div>
     <input id="hd_checkbox_id" type="checkbox" onchange="hd_checkbox_changed(this.checked);">
     <a href=# onclick="hd_checkbox_changed(true); return false;">use max</a>.
   </h3>
-  
+
 </div>
 
 <div id="below_vid_stuff">
@@ -79,52 +79,52 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
       }
       document.getElementById('hd_checkbox_id').checked = to_this;
     }
-    
+
     function seekToDelta(delta) {
       youtube_pimw_player.seekTo(youtube_pimw_player.getCurrentTime() + delta);
     }
-    
-    function seekToPercentage(val) {
+
+    function seekToPercentageHere(val) {
       var desired_time_seconds = youtube_pimw_player.getDuration() / 100.0 * val;
       console.log("built-in slider seeking to " + desired_time_seconds);
       youtube_pimw_player.seekTo(desired_time_seconds);
     }
-    
+
     function setTime(val) {
       youtube_pimw_player.setVolume(val);
     }
-       
+
     var seek_dragger = document.getElementById('seek-control-id');
-    var seek_dragger_being_dragged = false;
+    var seek_dragger_being_dragged_here = false;
     function updateTime() {
-      if (!seek_dragger_being_dragged) {
-        seek_dragger.value = youtube_pimw_player.getCurrentTime() / youtube_pimw_player.getDuration() * 100; 
+      if (!seek_dragger_being_dragged_here) {
+        seek_dragger.value = youtube_pimw_player.getCurrentTime() / youtube_pimw_player.getDuration() * 100;
         document.getElementById('current_time_id').innerHTML = timeStampToHumanHere(youtube_pimw_player.getCurrentTime(), 0) + "/" + timeStampToHumanHere(youtube_pimw_player.getDuration(), 0);
       }
       document.getElementById('quality_div_id').innerHTML = youtube_pimw_player.getPlaybackQuality();
     }
-    
-    addListenerMulti(seek_dragger, "mousedown touchstart", function() {
-      seek_dragger_being_dragged = true;
+
+    addListenerMultiHere(seek_dragger, "mousedown touchstart", function() {
+      seek_dragger_being_dragged_here = true;
       console.log("start drag");
     });
-    
-    addListenerMulti(seek_dragger, "mousemove touchmove", function() {
+
+    addListenerMultiHere(seek_dragger, "mousemove touchmove", function() {
         var desired_time_seconds = youtube_pimw_player.getDuration() / 100.0 * this.value;
         document.getElementById('current_time_id').innerHTML = timeStampToHumanHere(desired_time_seconds, 0) + "/" + timeStampToHumanHere(youtube_pimw_player.getDuration(), 0);
         // but don't seek yet :)
     });
 
-    addListenerMulti(seek_dragger, "mouseup touchend", function() {
-      seek_dragger_being_dragged = false;
+    addListenerMultiHere(seek_dragger, "mouseup touchend", function() {
+      seek_dragger_being_dragged_here = false;
       console.log("end drag");
-      seekToPercentage(this.value);
+      seekToPercentageHere(this.value);
     });
-    
+
 
     function toggleFullScreen() {
       var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
-    
+
       if (fullscreenElement) {
         exitFullScreen(); // from plugin
         return;
@@ -137,7 +137,7 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
         requestFullScreen.bind(iframe)();
       }
     }
-    
+
     function timeStampToHumanHere(timestamp, tenth_digits) {
       var hours = Math.floor(timestamp / 3600);
       timestamp -= hours * 3600;
@@ -150,15 +150,15 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
       else
         return minutes + "m " + seconds + "s";
     }
-    
-    function addListenerMulti(element, eventNames, listener) {
+
+    function addListenerMultiHere(element, eventNames, listener) {
       var events = eventNames.split(' ');
       for (var i=0, iLen=events.length; i<iLen; i++) {
         element.addEventListener(events[i], listener, false);
       }
     }
 
-    
+
   // Load the IFrame Player API code asynchronously.
   var tag = document.createElement('script');
   tag.src = "https://www.youtube.com/player_api";
@@ -188,7 +188,7 @@ function onPlayerReady(event) {
   <% if !mobile?(env) && url %>
     event.target.playVideo(); // otherwise it can get in this weird pause state on android at least...
   <% end %>
-  
+
   var start_vol = window.localStorage.getItem("youtube_volume") || 50; // default isn't 100? or seemed to be once...
   SetVolume(start_vol);
   document.getElementById('vol-control-id').value = start_vol; // waiting for 500ms seems whack but..but...
@@ -197,23 +197,23 @@ function onPlayerReady(event) {
       // sometimes this doesn't work if run ja [?]
       document.getElementById('vol-control-id').value = youtube_pimw_player.getVolume();
     }, 500);
-    
+
     setTimeout(function() {
-      if (start_hd && start_hd == "true") {  
+      if (start_hd && start_hd == "true") {
         hd_checkbox_changed(start_hd); // needed apparently
-      } // default unchecked      
+      } // default unchecked
     }, 1500); // doesn't even take at 500ms what XXXX
 
-  setInterval(updateTime, 250); // only 1/sec because if they happen to do their "own" seek this could interfere and "seek to no where" (well, still could but more rare? :\  TODO
+  setInterval(updateTime, 250); // only 4/sec because if they happen to do their "own" seek this could interfere and "seek to no where" (well, still could but more rare? :\  TODO
 
-  // inject copy of plugin FTW :|  
+  // inject copy of plugin FTW :|
   var my_awesome_script = document.createElement('script');
   my_awesome_script.setAttribute('src','https://playitmyway.org/plugin_javascript/edited_generic_player.js');
   document.head.appendChild(my_awesome_script);
 }
 
-function onPlayerStateChange(event) {        
-    if(event.data === 0) {          
+function onPlayerStateChange(event) {
+    if(event.data === 0) {
         console.log('video just ended');
         exitFullScreen();
     }

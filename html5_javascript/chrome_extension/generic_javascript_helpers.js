@@ -6,6 +6,13 @@ function updateHTML(div, new_value) {
   }
 }
 
+function addListenerMulti(element, eventNames, listener) {
+  var events = eventNames.split(' ');
+  for (var i=0, iLen=events.length; i<iLen; i++) {
+    element.addEventListener(events[i], listener, false);
+  }
+}
+
 function videoNotBuffering() {
   if (isYoutubePimw()) {
     // -1 – unstarted 0 – ended 1 – playing 2 – paused 3 – buffering 5 – video cued assume paused means not buffering? huh wuh? XXXX experiment...
@@ -56,7 +63,7 @@ function createNotification(notification_desired) { // shared with background.js
   }
   setTimeout(function() {
     notification.close();
-  }, 
+  },
   10000);
 }
 
@@ -155,27 +162,27 @@ function submitFormXhr(oFormElement, success, failure)
   return false;
 }
 
-function getRequest(success, error) {  
+function getRequest(success, error) {
   var url = lookupUrl();
   console.log("starting attempt GET download " + url);
-  var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"); 
-  xhr.open("GET", url); 
+  var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+  xhr.open("GET", url);
   xhr.withCredentials = true; // the only request we do is the json one which should work secured...
   xhr.onreadystatechange = function(){  // or onload for newer browsers LOL onload == success
-    if ( xhr.readyState == 4 ) { 
-      if ( xhr.status == 200 ) { 
-        success(xhr.responseText); 
-      } else { 
-        error && error(xhr.status); 
+    if ( xhr.readyState == 4 ) {
+      if ( xhr.status == 200 ) {
+        success(xhr.responseText);
+      } else {
+        error && error(xhr.status);
         error = null;
-      } 
-    } 
-  }; 
-  xhr.onerror = function () { 
-    error && error(xhr.status); 
+      }
+    }
+  };
+  xhr.onerror = function () {
+    error && error(xhr.status);
     error = null;
-  }; 
-  xhr.send(); 
+  };
+  xhr.send();
 }
 
 
@@ -247,7 +254,7 @@ function findFirstVideoTagOrNull() {
   if (isYoutubePimw()) {
     return document.getElementById("show_your_instructions_here_id");
   }
-  
+
   var all = document.getElementsByTagName("video");
   // search iframes in case people try to load it manually, non plugin, and we happen to have access to iframes, which will be about never
   // it hopefully won't hurt anything tho...since with the plugin way and most pages "can't access child iframes" the content script injected into all iframes will take care of business instead.
