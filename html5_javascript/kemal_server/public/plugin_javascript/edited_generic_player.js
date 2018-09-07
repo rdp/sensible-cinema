@@ -35,7 +35,7 @@ function addEditUiOnce() {
   all_pimw_stuff.style.fontSize = "15px";
   all_pimw_stuff.style.textShadow="2px 1px 1px black";
   all_pimw_stuff.style.zIndex = "99999999";
-  all_pimw_stuff.style.width = "400px";
+  all_pimw_stuff.style.width = "440px";
   all_pimw_stuff.style.position = 'absolute';
 
   all_pimw_stuff.innerHTML = `
@@ -66,9 +66,9 @@ function addEditUiOnce() {
   </div>
 
   <div id="load_succeeded_div_id" style='display: none;'>
-    <div id="currently_playing_it_your_way_id" style="color: rgb(188, 188, 188);">
-      <svg id="big_edited_text_svg_id" style="font: 50px 'Arial'; height: 50px;" viewBox="0 0 350 50">
-        <text style="fill: none; stroke: white; stroke-width: 0.5px; stroke-linejoin: round;" y="40" x="175" id="big_edited_text_id">Edited</text>
+    <div id="currently_playing_it_your_way_id" style="color: rgb(148, 148, 148);">
+      <svg id="big_edited_text_svg_id" style="font: 50px 'Arial'; height: 50px;" viewBox="0 0 350 50"> <!-- svg shenanigans seem only way to get outlined text -->
+        <text style="fill: none; stroke: rgb(188, 188, 188); stroke-width: 0.5px; stroke-linejoin: round;" y="40" x="175" id="big_edited_text_id">Edited</text>
       </svg>
        <br/>
       Currently Editing out: <select id='tag_edit_list_dropdown_id' onChange='personalizedDropdownChanged();'></select> <!-- javascript will set up this select -->
@@ -503,8 +503,10 @@ default edit on?
         <input type='submit' id='save_tag_button_id' value='Save Tag' onclick="saveTagButton(); return false;">
         <br/>
         <br/>
-        <input type='submit' value='&lt;&lt; prev tag' id='open_prev_tag_id' onclick="openTagBeforeOneInUi(); return false;">
-        <input type='submit' value='next tag &gt;&gt;' id='open_next_tag_id' onclick="openTagAfterOneInUi(); return false;">
+        <input type='submit' value='&lt;&lt;' id='open_tag_before_current_id' onclick="openTagBeforeOneInUi(); return false;">
+        <input type='submit' value='Re-Edit Just Passed Tag' id='open_prev_tag_id' onclick="openTagPreviousToNowButton(); return false;">
+        <input type='submit' value='Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
+        <input type='submit' value='&gt;&gt;' id='open_tag_after_current_id' onclick="openTagAfterOneInUi(); return false;">
         <br/>
         <input type='button' id='destroy_button_id' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
         <button type="" value="" onclick="clearButton(); return false;">Clear/new tag</button>
@@ -629,6 +631,9 @@ function areWeWithin(desiredAction, cur_time) {
   for (var i = 0; i < all.length; i++) {
     var tag = all[i];
     if (tag.default_action != desiredAction) {
+      continue;
+    }
+    if (!tag.default_enabled) { // also means "personalized enabled" as it were...
       continue;
     }
     if(areWeWithinTag(tag, cur_time)) {
@@ -782,7 +787,7 @@ function checkIfShouldDoActionAndUpdateUI() {
     updateHTML(document.getElementById("current_timestamp_span_id"), "now: " + timeStampToHuman(cur_time));
     var nextline = "";
     var nextsecondline = "";
-    var next_future_tag = getFirstTagEndingAfter(cur_time, getAllTagsIncludingReplacedFromUISorted(current_json.tags)); // so we can see stuff if "unedited" dropdown selected, also endingAfter so we can show the "currently playing" edit
+    var next_future_tag = getFirstTagEndingAfter(cur_time, getAllTagsIncludingReplacedFromUISorted(current_json.tags)); // so we can see stuff if "unedited" dropdown selected, "endingAfter" so we can show the "currently playing" edit
     if (next_future_tag) {
       nextline += "next: " + timeStampToHuman(next_future_tag.start);
       var time_until = next_future_tag.start - cur_time;
@@ -792,9 +797,9 @@ function checkIfShouldDoActionAndUpdateUI() {
       time_until = Math.round(time_until);
       nextline +=  " in " + timeStampToHuman(time_until).replace(new RegExp('.00s$'), 's'); // humanish friendly numbers
 
-      if (faux_tag_being_tested && uiTagDiffersFromOriginalOrNoOriginal()) {
+      if (faux_tag_being_tested && uiTagDiffersFromOriginalOrNoOriginal()) { // faux_tag_being_tested means they hit "test"
         nextsecondline += "(using your new values)";
-      } // else it's a new tag
+      }
       nextsecondline += "(" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
       if (!next_future_tag.default_enabled) {
         nextsecondline += " (disabled)";
@@ -804,7 +809,7 @@ function checkIfShouldDoActionAndUpdateUI() {
     else {
       document.getElementById("open_next_tag_id").style.visibility = "hidden";
     }
-    var next_earlier_tag = getFirstTagStartingBefore(searchForPreviousTime(),  getAllTagsIncludingReplacedFromUISorted(current_json.tags));
+    var next_earlier_tag = getFirstTagEndingBefore(cur_time);
     if (next_earlier_tag) {
       document.getElementById("open_prev_tag_id").style.visibility = "visible";
     } else {
@@ -1384,7 +1389,7 @@ function testCurrentFromUi() {
 
   var rewindSeconds = 2;
   var start = faux_tag.start - rewindSeconds;
-  faux_tag_being_tested = faux_tag; // just concretize for now :|
+  faux_tag_being_tested = faux_tag; // just concretize for now...i.e. if they hit "test" then save/keep saved one...wait what if they change values?  maybe shouldn't concretize?
   doPlay(); // seems like we want it like this...
   seekToTime(start);
 }
@@ -1405,7 +1410,6 @@ function getCurrentVideoTimestampHuman() {
   return timeStampToHuman(getCurrentTime());
 }
 
-
 function openTagStartingBefore(search_time) {
   var tag = getFirstTagStartingBefore(search_time);
   if (tag){
@@ -1415,7 +1419,8 @@ function openTagStartingBefore(search_time) {
   }
 }
 
-function openTagEndingBefore(search_time) {
+function openTagPreviousToNowButton() {
+  var search_time = getCurrentTime();
   var tag = getFirstTagEndingBefore(search_time);
   if (tag){
     loadTagIntoUI(tag);
@@ -1450,16 +1455,12 @@ function getFirstTagStartingBefore(search_time) { // somewhat duplicate but seem
 }
 
 function openTagBeforeOneInUi() {
-  openTagStartingBefore(searchForPreviousTime()); // will warn if absent...
-}
-
-function searchForPreviousTime() {
   if (!uiTagIsNotInDb()) {
     var search_time = createFauxTagForCurrentUI().start - 0.01; // get the next down...
+    openTagStartingBefore(search_time);
   } else {
-    var search_time = getCurrentTime();
+    alert("have to have a previously saved tag to get prev");  // :|
   }
-  return search_time;
 }
 
 function openTagAfterOneInUi() {
@@ -1560,7 +1561,7 @@ function clearForm() {
   document.getElementById('default_enabled_id').value = 'true';
 
   document.getElementById('action_sel').dispatchEvent(new Event('change')); // so it'll set impact if mute
-  faux_tag_being_tested = null;
+  faux_tag_being_tested = null; // give up testing anything if anything happened to be doing so...
 }
 
 function destroyCurrentTagButton() {
