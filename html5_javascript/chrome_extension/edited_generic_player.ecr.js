@@ -682,7 +682,7 @@ function checkStatus() { // called 100 fps
       // an initial blip [video] is OK [this should be super rare, and is "hard" to avoid], just try not to crash for now...
       if (!video_ever_initialized) {
         if (!videoNotBuffering() || video_element.offsetWidth == 0) {
-          console.log("appears video never initialized yet...doing nothing! readyState=" + video_element.readyState + " width=" + video_element.offsetWidth);
+          console.log("appears video never initialized yet...doing nothing! readyState=" + video_element.readyState + " width=" + video_element.offsetWidth + " cur_time=" + getCurrentTime());
           return;
         } else {
           console.log("video is firstly initialized readyState=" + video_element.readyState + " width=" + video_element.offsetWidth);

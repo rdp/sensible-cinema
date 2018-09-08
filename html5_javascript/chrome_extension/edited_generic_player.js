@@ -134,6 +134,7 @@ function addEditUiOnce() {
           <option value="make_video_smaller">make_video_smaller</option>
           <option value="change_speed">change_speed</option>
           <option value="set_audio_volume">set_audio_volume</option>
+          <option value="do_nothing">do_nothing</option>
         </select>
 
 
@@ -1104,6 +1105,7 @@ function refreshVideoElement() {
         checkStatus(); // do a normal pass "fast/immediately" in case need to blank [saves 0.007s, woot!]
       };
     // time will already be updated to "seek to time" with seeking event...I think...or at least most of the time LOL so do seeked too
+    // sometimes "seeking" comes after a few ms...bizarrely..maybe that's what lets stuff through sometime TODO add events to the +10 and dragger so they tell me earlier
     video_element.addEventListener("seeking", seek_func);
     video_element.addEventListener("seeked", seek_func);
     var listener = function(event) {
@@ -1118,8 +1120,6 @@ function refreshVideoElement() {
     video_element.addEventListener("play", listener);
     video_element.addEventListener("canplay", listener);
     video_element.addEventListener("canplaythrough", listener);
-    video_element.addEventListener("seeked", listener);
-    video_element.addEventListener("seeked", listener);
     video_element.addEventListener("readystatechange", listener);
    // timeupdate is not granular enough for much
   }
