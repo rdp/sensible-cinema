@@ -725,6 +725,7 @@ function refreshVideoElement() {
         checkStatus(); // do a normal pass "fast/immediately" in case need to blank [saves 0.007s, woot!]
       };
     // time will already be updated to "seek to time" with seeking event...I think...or at least most of the time LOL so do seeked too
+    // sometimes "seeking" comes after a few ms...bizarrely..maybe that's what lets stuff through sometime TODO add events to the +10 and dragger so they tell me earlier
     video_element.addEventListener("seeking", seek_func);
     video_element.addEventListener("seeked", seek_func);
     var listener = function(event) {
