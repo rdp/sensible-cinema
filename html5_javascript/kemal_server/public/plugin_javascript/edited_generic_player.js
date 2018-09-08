@@ -1096,17 +1096,18 @@ function checkStatus() { // called 100 fps
 function refreshVideoElement() {
   var old_video_element = video_element;
   video_element = findFirstVideoTagOrNull() || video_element; // refresh it in case changed, but don't switch to null between clips, I don't think our code handles nulls very well...
+  // only add event things once :)
   if (video_element != old_video_element) {
     console.log("video element changed...");
-    // only add event thing once :)
-    video_element.addEventListener("seeking",  // there is also seeked and timeupdate (timeupdate typically not granular enough for much)
-      function() {
-        console.log("got seeking event received cur_time=" + getCurrentTime()); // time will already be updated...I think...or at least most of the time LOL
+    var seek_func = function(event) {
+        console.log("got " + event.type + " event cur_time=" + getCurrentTime());
         checkStatus(); // do a normal pass "fast/immediately" in case need to blank [saves 0.007s, woot!]
-      }
-    );
+      };
+    // time will already be updated to "seek to time" with seeking event...I think...or at least most of the time LOL so do seeked too
+    video_element.addEventListener("seeking", seek_func);
+    video_element.addEventListener("seeked", seek_func);
     var listener = function(event) {
-      console.log("got " + event.type + " event isPaused()=" + isPaused());
+      console.log("got " + event.type + " event isPaused()=" + isPaused() + " cur_time=" + getCurrentTime());
       if (event.type == "canplaythrough") {
         if (seek_timer) {
           console.log("doing early seek callback"); // XXX could I use this instead of the timer, so I can avoid the weird spinner/hang issue?
@@ -1118,7 +1119,9 @@ function refreshVideoElement() {
     video_element.addEventListener("canplay", listener);
     video_element.addEventListener("canplaythrough", listener);
     video_element.addEventListener("seeked", listener);
+    video_element.addEventListener("seeked", listener);
     video_element.addEventListener("readystatechange", listener);
+   // timeupdate is not granular enough for much
   }
 }
 
