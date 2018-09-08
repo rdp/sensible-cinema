@@ -75,12 +75,12 @@ function addEditUiOnce() {
       <br/>
       <a href=# onclick="openPersonalizedEditList(); return false">Personalize which parts you edit out</a>
       <br/>
-      We're still in Beta, did we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
+      Pimw is still in Beta, did we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
       <br/>
-      <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id"/>
+      Seek: <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 200px;" />
       <div style="display: inline-block"> <!-- prevent line feed before this div -->
         <span id="currently_xxx_span_id"> <!-- "currently: muting" --></span>
-        <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable if flagged as editor -->
+        <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable this later if flagged as editor -->
            <a href=# onclick="toggleAddNewTagStuff(); return false;">[add/edit tag]</a>
         </div>
       </div>
@@ -566,25 +566,15 @@ function setupSafeSeekOnce() {
 
   addListenerMulti(seek_dragger, "mousedown touchstart", function() {
     seek_dragger_being_dragged = true;
-    console.log("start drag");
   });
-
-  // hrm...
-  // addListenerMulti(seek_dragger, "mousemove touchmove", function() {
-  //  var desired_time_seconds = youtube_pimw_player.getDuration() / 100.0 * this.value;
-  //  document.getElementById('current_time_id').innerHTML = timeStampToHumanHere(desired_time_seconds, 0) + "/" + timeStampToHumanHere(youtube_pimw_player.getDuration(), 0);
-  //  // but don't seek yet :)
-  // });
 
   addListenerMulti(seek_dragger, "mouseup touchend", function() {
     seek_dragger_being_dragged = false;
-    console.log("end drag");
     seekToPercentage(this.value);
   });
 
-  setInterval(updateSafeSeekTime, 250); // only 4/sec because if they happen to do their "own" seek this could interfere and "seek to no where" (well, still could but more rare? :\  TODO
+  setInterval(updateSafeSeekTime, 250); // only 4/sec because if they happen to do their "own" seek this could interfere and "seek to no where" (well, still could but more rare? :\  XXX
 }
-
 
 function playButtonClicked() {
   if (isPaused()) {
@@ -726,7 +716,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       video_element.style.visibility = "hidden";
       i_hid_it = true;
     }
-    extra_message += "doing a no video yes audio";
+    extra_message += "doing a no video yes audio black screen";
     notify_if_new(tag);
   }
   else {
@@ -1505,7 +1495,7 @@ function openTagBeforeOneInUi() {
     var search_time = createFauxTagForCurrentUI().start - 0.01; // get the next down...
     openTagStartingBefore(search_time);
   } else {
-    alert("have to have a previously saved tag to get prev");  // :|
+    openTagPreviousToNowButton();
   }
 }
 
