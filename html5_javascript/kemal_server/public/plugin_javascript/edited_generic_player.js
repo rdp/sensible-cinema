@@ -566,7 +566,7 @@ function seekToPercentage(valMaxOneHundred) {
   var desired_time_seconds = videoDuration() / 100.0 * valMaxOneHundred;
   console.log("safe seek slider seeking to " + timeStampToHuman(desired_time_seconds));
   seekToTime(desired_time_seconds);
-  checkStatus{); // may as well, save 0.01, plus we are "safe seek" after all 
+  checkStatus(); // may as well, save 0.01, plus we are "safe seek" after all 
 }
 
 function setupSafeSeekOnce() {
