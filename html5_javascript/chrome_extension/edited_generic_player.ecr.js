@@ -152,10 +152,18 @@ function addEditUiOnce() {
   mouseJustMoved({pageX: 0, pageY: 0}); // start its timer, prime it :|
   editDropdownsCreated(); // from shared javascript, means "the HTML elements are in there"
   if (isYoutubePimw()) {
-    // assume it can never change to a different type of movie...I doubt it :|
+    // assume it can never change to a different type of movie...I doubt it :| can use jquery since on my site...
     $("#action_sel option[value='yes_audio_no_video']").remove();
     $("#action_sel option[value='mute']").remove();
     $("#action_sel option[value='mute_audio_no_video']").remove();
+  }
+
+  if (isAmazon()) {
+    // guess these don't qualify as "making imperceptible" we already have black screen, these are kinder work arounds for youtube anyway...
+    var select =  document.getElementById("action_sel");
+//    removeOptionByName(select, "make_video_smaller"); // this one might be legit if they made it "impercetibly small" hmm...
+    removeOptionByName(select, "change_speed");
+//    removeOptionByName(select, "set_audio_volume"); // this one miiight be legit if it makes it super soft...hmm...
   }
 
   setupSafeSeekOnce();
@@ -1331,7 +1339,8 @@ function doPeriodicChecks() {
 
 function addPluginEnabledTextOnce() {
   if (isAmazon() && current_json) {
-    var span = document.getElementsByClassName("dv-provenence-msg")[0];
+    var span = document.getElementsByClassName("av-playback-messages")[0]; // just random from their UI
+    span = span || document.getElementsByClassName("av-alert-inline")[0];
     if (span && !span.innerHTML.includes("it my way")) {
       var extra = "<br/><small>(Play it my way enabled! Disclaimer: Performance of the motion picture will be altered from the performance intended by the director/copyright holder, we're required to mention that)";
       if (current_json.url.editing_status != "Done with second review, tags viewed as complete") {
@@ -1504,8 +1513,8 @@ function startOnce() {
 
   if (video_element == null) {
     // maybe could get here if they raw load the javascript?
-    console.log("unable to find a video playing, not loading edited playback..."); // hopefully never get here :|
-    setTimeout(startOnce, 500); // just retry forever :| [seems to work OK in pimw_youtube, never retries...]
+    console.log("unable to find a video playing, not loading edited playback, should never get here...");
+    setTimeout(startOnce, 500); // just retry forever :|
     return;
   }
 

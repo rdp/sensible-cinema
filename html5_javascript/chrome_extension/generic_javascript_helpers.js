@@ -19,10 +19,9 @@ function videoNotBuffering() {
     return youtube_pimw_player.getPlayerState() == YT.PlayerState.PAUSED || youtube_pimw_player.getPlayerState() == YT.PlayerState.PLAYING;
   } else {
     var HAVE_ENOUGH_DATA_HTML5 = 4;
-    return video_element.readyState == HAVE_ENOUGH_DATA_HTML5;// it's HAVE_NOTHING, HAVE_METADATA, HAVE_CURRENT_DATA [i.e. 1 frame], HAVE_FUTURE_DATA [i.e. 2 frames], HAVE_ENOUGH_DATA == 4 [i.e. lots of data buffered]
+    return video_element.readyState == HAVE_ENOUGH_DATA_HTML5;// it's HAVE_NOTHING, HAVE_METADATA, HAVE_CURRENT_DATA [i.e. 1 frame], HAVE_FUTURE_DATA [i.e. 2 frames], HAVE_ENOUGH_DATA_HTML5 == 4 [i.e. lots of data buffered]
   }
 }
-
 
 function sendNotification(notification_desired) {
   if (isYoutubePimw()) {
@@ -113,7 +112,6 @@ function getLocationOfElement(el) {
   }
 }
 
-
 function addMouseAnythingListener(func) {
   // some "old IE" browser compat stuff :|
   var addListener, removeListener;
@@ -130,7 +128,6 @@ function addMouseAnythingListener(func) {
   addListener(document, 'mousedown', func);
 }
 
-
 function onReady(yourMethod) { // polling one, from SO :)
   if (document.readyState === 'complete') {
     setTimeout(yourMethod, 1); // schedule to run immediately
@@ -144,7 +141,6 @@ function onReady(yourMethod) { // polling one, from SO :)
      }, 10);
   }
 }
-
 
 function pointWithinElement(cursorX, cursorY, element) {
   var coords = getLocationOfElement(element);
@@ -185,9 +181,14 @@ function getRequest(success, error) {
   xhr.send();
 }
 
+function removeOptionByName(selectobject, nameToRemove) {
+  for (var i=0; i<selectobject.length; i++){
+  if (selectobject.options[i].value == nameToRemove ) // seems required sadly
+     selectobject.remove(i);
+  }
+}
 
-function removeAllOptions(selectbox)
-{
+function removeAllOptions(selectbox) {
   for(var i = selectbox.options.length - 1 ; i >= 0 ; i--) {
     selectbox.remove(i);
   }
