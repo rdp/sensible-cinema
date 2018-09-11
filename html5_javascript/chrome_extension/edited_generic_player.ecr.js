@@ -76,7 +76,7 @@ function addEditUiOnce() {
       <br/>
       Pimw is still in Beta, did we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
       <br/>
-      Seek: <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 200px;" />
+      Safe seek: <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 200px;" />
       <div style="display: inline-block"> <!-- prevent line feed before this div -->
         <span id="currently_xxx_span_id"> <!-- "currently: muting" --></span>
         <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable this later if flagged as editor -->
@@ -304,11 +304,10 @@ function areWeWithin(desiredAction, cur_time) {
     if(areWeWithinTag(tag, cur_time)) {
       return tag;
     }
-    // no early out/break yet because 1) test unsaved edits uses push/pop and 2) even if we did, at the end of movies it would still be junk so...fix it different...
+    // no early out/break yet because 1) test unsaved edits uses push/pop and 2) even if we did, at the end of movies it would still be slow so...fix it different?
   }
   return false;
 }
-
 
 function checkIfShouldDoActionAndUpdateUI() {
   var cur_time = getCurrentTime();
@@ -667,8 +666,8 @@ var i_set_it_to_add = false;
 var video_ever_initialized = false; // can't do seeks "off the bat" in amazon [while still obscured] -> spinner then crash!
 var last_timestamp = 0;
 
-function checkStatus() { // called 100 fps
-
+function checkStatus() { // called 100 fps i.e. 0.01
+  // while playing, current timestamp is different each time...
   // avoid unmuting videos playing that we don't even control [like youtube main page] with this if...
   if (current_json != null) {
     if (isWatchingAdd()) {
@@ -749,7 +748,14 @@ function refreshVideoElement() {
     video_element.addEventListener("canplay", listener);
     video_element.addEventListener("canplaythrough", listener);
     video_element.addEventListener("readystatechange", listener);
-   // timeupdate is not granular enough for much
+    // timeupdate is not granular enough for much
+    if (isAmazon()) {
+      var progressbar = document.getElementsByClassName("bottomPanel")[0];
+      progressbar.addEventListener("mouseup", function (event) {
+        console.log("clicked on amazon seek bar " + " cur_time=" + getCurrentTime()); 
+        setTimeout(function() { console.log("after timeout 10 time=" +  getCurrentTime()  + " paused=" + isPaused()); }, 10);
+     });
+    }
   }
 }
 
@@ -1501,7 +1507,7 @@ function checkIfEpisodeChanged() {
 var clean_stream_timer = null;
 
 function startWatcherTimerSingleton() {
-  var fps = 100; // 100 fps since that's the granularity of our time entries :|
+  var fps = 100; // 100 fps since that's the granularity of our time entries :| wait or should it be 200? 200 actually is an option...binary search? RAM usage?
   if (!clean_stream_timer) {
     clean_stream_timer = setInterval(checkStatus, 1000/fps);
     // guess we just never turn it off, on purpose :)
