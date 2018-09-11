@@ -367,21 +367,20 @@ function checkIfShouldDoActionAndUpdateUI() {
     seekToTime(tag.endy, doneWithPossibleHeartBlankUnlessImpending);
   }
 
-  tag = areWeWithin('make_video_smaller', cur_time);
-  if (tag) {
-    // assume youtube :|
-    var iframe = youtube_pimw_player.getIframe();
-    if (iframe.width == "100%") {
-      timestamp_log("making small", cur_time, tag);
-      youtube_pimw_player.setSize(200, 200); // smallest youtube's terms of use permits :)
-      var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
-      if (fullscreenElement) {
-        exitFullScreen(); // :| XXXX
+  if (isYoutubePimw()) {
+    tag = areWeWithin('make_video_smaller', cur_time);
+    if (tag) {
+      var iframe = youtube_pimw_player.getIframe();
+      if (iframe.width == "100%") {
+        timestamp_log("making small", cur_time, tag);
+        youtube_pimw_player.setSize(200, 200); // smallest youtube's terms of use permits :)
+        var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
+        if (fullscreenElement) {
+          exitFullScreen(); // :| XXXX
+        }
       }
-    }
-    extra_message += "making small";
-  } else {
-    if (isYoutubePimw()) {
+      extra_message += "making small";
+    } else {
       var iframe = youtube_pimw_player.getIframe();
       if (iframe.height == "200") {
         console.log("back to normal size cur_time=" + cur_time);
@@ -391,51 +390,51 @@ function checkIfShouldDoActionAndUpdateUI() {
         // can't refullscreen it "programmatically" at least in chrome, so punt!
       }
     }
-  }
 
-  tag = areWeWithin('change_speed', cur_time);
-  if (tag) {
-    var desired_speed = getEndSpeedOrAlert(tag.details);
-    if (desired_speed) {
-      if (getPlaybackRate() != desired_speed) {
-        timestamp_log("setting speed=" + desired_speed, cur_time, tag);
-        last_speed_value = getPlaybackRate();
-        setPlaybackRate(desired_speed);
-        i_changed_its_speed = true;
+    tag = areWeWithin('change_speed', cur_time);
+    if (tag) {
+      var desired_speed = getEndSpeedOrAlert(tag.details);
+      if (desired_speed) {
+        if (getPlaybackRate() != desired_speed) {
+          timestamp_log("setting speed=" + desired_speed, cur_time, tag);
+          last_speed_value = getPlaybackRate();
+          setPlaybackRate(desired_speed);
+          i_changed_its_speed = true;
+        }
+        extra_message += "speed=" + desired_speed + "x";
       }
-      extra_message += "speed=" + desired_speed + "x";
+    } else {
+      if (i_changed_its_speed && getPlaybackRate() != last_speed_value) {
+        i_changed_its_speed = false;
+        console.log("back to speed=" + last_speed_value + " cur_time=" + cur_time);
+        setPlaybackRate(last_speed_value);
+      }
     }
-  } else {
-    if (i_changed_its_speed && getPlaybackRate() != last_speed_value) {
-      i_changed_its_speed = false;
-      console.log("back to speed=" + last_speed_value + " cur_time=" + cur_time);
-      setPlaybackRate(last_speed_value);
-    }
-  }
 
-  tag = areWeWithin('set_audio_percent', cur_time);
-  if (tag) {
-    var desired_percent = getAudioPercentOrAlert(tag.details);
-    if (desired_percent) {
-      var relative_desired_percent;
-      if (i_changed_audio_percent) {
-        relative_desired_percent = last_audio_percent * desired_percent / 100;
-      } else {
-        relative_desired_percent = getAudioVolumePercent() * desired_percent / 100;
+    tag = areWeWithin('set_audio_percent', cur_time);
+    if (tag) {
+      var desired_percent = getAudioPercentOrAlert(tag.details);
+      if (desired_percent) {
+        var relative_desired_percent;
+        if (i_changed_audio_percent) {
+          relative_desired_percent = last_audio_percent * desired_percent / 100;
+        } else {
+          relative_desired_percent = getAudioVolumePercent() * desired_percent / 100;
+        }
+        if (!withinDelta(getAudioVolumePercent(), relative_desired_percent, 1)) { // we never changed it, or they did after it was decreased :\
+          timestamp_log("setting audio=" + desired_percent, cur_time, tag);
+          last_audio_percent = getAudioVolumePercent();
+          setAudioVolumePercent(relative_desired_percent);
+          i_changed_audio_percent = true;
+        }
+        extra_message += "audio percent=" + desired_percent + "%";
       }
-      if (!withinDelta(getAudioVolumePercent(), relative_desired_percent, 1)) { // we never changed it, or they did after it was decreased :\
-        timestamp_log("setting audio=" + desired_percent, cur_time, tag);
-        last_audio_percent = getAudioVolumePercent();
-        setAudioVolumePercent(relative_desired_percent);
-        i_changed_audio_percent = true;
+    } else {
+      if (i_changed_audio_percent && getAudioVolumePercent() != last_audio_percent) {
+        i_changed_audio_percent = false;
+        console.log("back to audio_percent=" + last_audio_percent + " cur_time=" + cur_time);
+        setAudioVolumePercent(last_audio_percent);
       }
-      extra_message += "audio percent=" + desired_percent + "%";
-    }
-  } else {
-    if (i_changed_audio_percent && getAudioVolumePercent() != last_audio_percent) {
-      i_changed_audio_percent = false;
-      console.log("back to audio_percent=" + last_audio_percent + " cur_time=" + cur_time);
-      setAudioVolumePercent(last_audio_percent);
     }
   }
 
@@ -752,8 +751,8 @@ function refreshVideoElement() {
     if (isAmazon()) {
       var progressbar = document.getElementsByClassName("bottomPanel")[0];
       progressbar.addEventListener("mouseup", function (event) {
-        console.log("clicked on amazon seek bar " + " cur_time=" + getCurrentTime()); 
-        setTimeout(function() { console.log("after timeout 10 time=" +  getCurrentTime()  + " paused=" + isPaused()); }, 10);
+        console.log("clicked on amazon seek bar " + " cur_time=" + getCurrentTime());  // we don't know the time even for 10ms after...
+        // XXXX do a preemptive heartblank?
      });
     }
   }
