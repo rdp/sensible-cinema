@@ -4,10 +4,8 @@ figure out how to differentiate "2nd pass but not ready for kids"
   add another field "what confidence level in edits" :)
   yes how many passes
   "stuff we decided not to edit out"
-
-add more events, fun!
-
-split internal notes from external for movies
+  split internal notes from external for movies
+  add field: recommended way for adults to consume this...
 
 allow subscriptions
 
@@ -16,27 +14,30 @@ nik layout moh moh moh
 
 NY doll doesn't work??
 
+fix seeks iOS
+  buy 5s first...ksl
+  iphone: control computer(s) with it :\
+  try youtube/normal/user-agent?
+
 youtubes them :|
 
 add youtube preview ID's :|
   and inline youtube previews on our site :|
 
-fix seeks iOS
-  buy 5S first...ksl
-  iphone: control computer(s) with it :\
-  try youtube/normal/user-agent?
+super soft launch looks like: easy links...ycombinator...reddit [? more?] betterlogic why be afraid? :)
 
-get feedback
+groom personalized
+some personalize icons are absent
+  personalize: defaults?
+
+get user feedback
   installation
   TV
   business model
   youtube
+  android: try out again, give up :|
   (android?) try out first
   groom the directions first!
-
-GoT failure!
-  fix 10s :\
-  hbo tab
   
 kickstarter
   decide on prizes
@@ -48,32 +49,26 @@ kickstarter
   movie, tweak,
   fire!
 
-
-some preliminary facebook ads [?]
-
-super soft launch looks like: easy links...ycombinator...reddit [? more?] betterlogic
+somehow try and get a following pre kickstarter...hmm
 
 Try and go everywhere with ads/pub...blogs...
   also ads for "vidangel" "clearplay" "pureflix" [?]
   
-some personalize icons are absent??
-  pinged M
-
 private edits...
 
 clarify anterior
-  
-does personalize still work?
-  if I create personalized, then somebody creates a new tag "default disabled" then on my list it's enabled I think...
-    in general something seems bworked there with personalized...
-  groom personalized
-  personalize: defaults?
-
-android: try out again, give up :|
-
-mention the "demo" movie on our site more? :|
-  finish "real" demo big buck :)
    
+us passes: everything that hasn't a 3rd...
+
+GoT failure!
+  fix 10s :\
+  hbo tab
+
+add tags (possibly after multi-tags): "vidangel doesn't have it"
+  for sales
+
+================= todo all never LOL =======================
+
 combine/re-arrange in the db the subcats that were combined (art-based...)
   some assume their new level?
   move some more into suicidal if description says so
@@ -81,25 +76,19 @@ combine/re-arrange in the db the subcats that were combined (art-based...)
     split out more shirtless male front vs. back
     possibly some more into underwear tag
 
-add tags (possibly after multi-tags): lds, "vidangel doesn't have it"
-
 uplifting "level" -> types/categories
 
-allow them to pay us
+mention the "demo" movie on our site more? :|
+  finish "real" demo big buck :)
+  meh they can just watch youtubes...can they?
 
 edited facebook vids LOL
 
-add field: recommended way for adults to consume this...
+heartblank if they seek it from their progress bar
 
-us passes:
-  everything prime that's already done 2nd pass
-  new releases we own that are done 2nd pass.
-  3rd passes
-    Things we don't own, already done 2nd passes
+heartblankif the thing is out of visibility too?? surely that's low though...
 
-make seeks from amazon UI show us less crud :)
-
-================= todo all never LOL =======================
+use binary search to make it use...almost no cpu
 
 It should load plugin enabled text waaaay faster.
 
