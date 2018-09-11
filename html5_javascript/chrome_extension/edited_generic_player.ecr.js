@@ -186,6 +186,7 @@ function seekToPercentage(valMaxOneHundred) {
   var desired_time_seconds = videoDuration() / 100.0 * valMaxOneHundred;
   console.log("safe seek slider seeking to " + timeStampToHuman(desired_time_seconds));
   seekToTime(desired_time_seconds);
+  checkStatus{); // may as well, save 0.01, plus we are "safe seek" after all 
 }
 
 function setupSafeSeekOnce() {
@@ -665,7 +666,7 @@ var i_set_it_to_add = false;
 var video_ever_initialized = false; // can't do seeks "off the bat" in amazon [while still obscured] -> spinner then crash!
 var last_timestamp = 0;
 
-function checkStatus() { // called 100 fps i.e. 0.01
+function checkStatus() { // called 100 fps i.e. 0.01 and by events...
   // while playing, current timestamp is different each time...
   // avoid unmuting videos playing that we don't even control [like youtube main page] with this if...
   if (current_json != null) {
