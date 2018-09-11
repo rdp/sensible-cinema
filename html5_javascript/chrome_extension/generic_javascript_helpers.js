@@ -235,7 +235,11 @@ function paddTo2(n) {
 }
 
 function twoDecimals(thisNumber) {
-  return thisNumber.toFixed(2);
+  return thisNumber.toFixed(2); // rounds it
+}
+
+function truncTwoDecimals(thisNumber) {
+  return Math.floor(thisNumber * 100) / 100; // https://stackoverflow.com/a/41259341/32453
 }
 
 // method to bind easily to resize event (with compat. with old browsers)

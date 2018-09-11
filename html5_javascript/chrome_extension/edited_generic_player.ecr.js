@@ -186,7 +186,7 @@ function seekToPercentage(valMaxOneHundred) {
   var desired_time_seconds = videoDuration() / 100.0 * valMaxOneHundred;
   console.log("safe seek slider seeking to " + timeStampToHuman(desired_time_seconds));
   seekToTime(desired_time_seconds);
-  checkStatus(); // may as well, save 0.01, plus we are "safe seek" after all 
+  checkStatus(); // may as well, save 0.01, plus we are "safe seek" after all
 }
 
 function setupSafeSeekOnce() {
@@ -664,11 +664,23 @@ function isWatchingAdd() {
 
 var i_set_it_to_add = false;
 var video_ever_initialized = false; // can't do seeks "off the bat" in amazon [while still obscured] -> spinner then crash!
-var last_timestamp = 0;
+var last_timestamp = -1;
 
-function checkStatus() { // called 100 fps i.e. 0.01 and by events...
-  // while playing, current timestamp is different each time...
-  // avoid unmuting videos playing that we don't even control [like youtube main page] with this if...
+function checkStatus() { // called 1000 fps (didn't seem to increase too much cpu to poll like this?)
+
+  // while playing, current timestamp is basically different each time...
+  // we're guaranteed a video element, that's about it at this point...
+  var cur_time = getCurrentTime();
+//  console.log("checkStatus cur=" + cur_time + " rounded=" + truncTwoDecimals(cur_time) + " last=" + last_timestamp + " rounded=" + truncTwoDecimals(last_timestamp));
+  if (truncTwoDecimals(cur_time) == truncTwoDecimals(last_timestamp)) {
+    // we've "already handled" this millisecond...hopefully...
+    // basically restrict to 100 fps but try and do it at the "start" of the hundredth...
+    // when slammed it gets in by like 0.03 still...
+    // also avoids calling more than once/ms imagine the saving! :)
+    return;
+  }
+  console.log("continuing=" + cur_time);
+  // avoid unmuting videos playing that we don't even control [like youtube main page] with this...basically if the movie changes to something else unedited,
   if (current_json != null) {
     if (isWatchingAdd()) {
       if (!i_set_it_to_add) {
@@ -685,8 +697,8 @@ function checkStatus() { // called 100 fps i.e. 0.01 and by events...
         i_set_it_to_add = false;
       }
 
-      // seems necessary to let it "come alive" first in amazon before we can hide it, even if within heart of seek <sigh> I guess... :|
-      // an initial blip [video] is OK [this should be super rare, and is "hard" to avoid], just try not to crash for now...
+      // seems necessary to let it "come alive" first in amazon before we can begin to hide it, even if within heart of seek <sigh> I guess... :|
+      // an initial blip [video] is OK [this should be super rare, and is "hard" to avoid], just try not to crash working around it for now...
       if (!video_ever_initialized) {
         if (!videoNotBuffering() || video_element.offsetWidth == 0) {
           console.log("appears video never initialized yet...doing nothing! readyState=" + video_element.readyState + " width=" + video_element.offsetWidth + " cur_time=" + getCurrentTime());
@@ -696,16 +708,16 @@ function checkStatus() { // called 100 fps i.e. 0.01 and by events...
           video_ever_initialized = true;
         }
       }
-      var cur_time = getCurrentTime();
-      if (cur_time < last_timestamp) {
+      if (cur_time < last_timestamp) { // needs some TLC
         console.log("Something (possibly pimw) just sought backwards to=" + cur_time + " from=" + last_timestamp + " to=" + timeStampToHuman(cur_time) + " from=" + timeStampToHuman(last_timestamp) + " readyState=" + video_element.readyState);
         var tag = areWeWithinNoShowVideoTag(cur_time);
         if (tag) {
           blankScreenIfWithinHeartOfSkip(tag, cur_time);
         }
-        tag = areWeWithin('skip', cur_time); // just skips for this one (also happens to avoid infinite loop...["seek to before skip oh it's the current location..., repeat"])
+        tag = areWeWithin('skip', cur_time);
+        // just skips for this one (also happens to avoid infinite loop...["seek to before skip oh it's the current location..., repeat"])
+        // was the seek to within an edit? Since this was a "rewind" let's actually go to *before* the bad spot, so the traditional +-10 buttons can work from UI
         if (tag) {
-          // was the seek to within an edit? Since this was a "rewind" let's actually go to *before* the bad spot, so the traditional +-10 buttons can work from UI
           console.log("they just seeked backward to within a skip, rewinding more..."); // tag already gets logged in seekToBeforeSkip
           blankScreenIfWithinHeartOfSkip(tag, cur_time);
           var delta_right_now = 0;
@@ -717,8 +729,8 @@ function checkStatus() { // called 100 fps i.e. 0.01 and by events...
 
       // GO!
       checkIfShouldDoActionAndUpdateUI();
-    }
-  }
+    } // end "am I add?"
+  } // end if current_json != null
 }
 
 function refreshVideoElement() {
@@ -1507,16 +1519,15 @@ function checkIfEpisodeChanged() {
 var clean_stream_timer = null;
 
 function startWatcherTimerSingleton() {
-  var fps = 100; // 100 fps since that's the granularity of our time entries :| wait or should it be 200? 200 actually is an option...binary search? RAM usage?
   if (!clean_stream_timer) {
-    clean_stream_timer = setInterval(checkStatus, 1000/fps);
+    clean_stream_timer = setInterval(checkStatus, 1); // 1000 times/sec it'll restrict itself to X fps though...
     // guess we just never turn it off, on purpose :)
   }
 }
 
 function startOnce() {
-  refreshVideoElement(); // prime pump :)
-
+  // sanity check
+  refreshVideoElement();
   if (video_element == null) {
     // maybe could get here if they raw load the javascript?
     console.log("unable to find a video playing, not loading edited playback, should never get here...");
