@@ -55,6 +55,7 @@ class Url
     genre: String,
     original_rating: String,
     editing_notes: String,
+    edit_passes_completed: Int32,
   })
 
   JSON.mapping({
@@ -85,6 +86,7 @@ class Url
     genre: String,
     original_rating: String,
     editing_notes: String,
+    edit_passes_completed: Int32,
   })
 
   def self.count
@@ -170,6 +172,7 @@ class Url
     @genre = ""
     @original_rating = ""
     @editing_notes = ""
+    @edit_passes_completed = 0
   end
 
   def tag_count
