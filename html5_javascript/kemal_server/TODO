@@ -1,11 +1,13 @@
 == todo list (me ja, ordered) ==
 
 figure out how to differentiate "2nd pass but not ready for kids" 
-  add another field "what confidence level in edits" :)
-  yes how many passes
-  "stuff we decided not to edit out"
-  split internal notes from external for movies
-  add field: recommended way for adults to consume this...
+editing_status to num_edits_completed
+add sell_it_edited
+add advice_for_adult_viewing
+add stuff_not_edited_out
+add edit_most_recent_status_level
+  use new fields...modal
+    and to display confidence level warning! :)
 
 allow subscriptions
 
