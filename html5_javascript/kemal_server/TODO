@@ -2,10 +2,12 @@
 
 figure out how to differentiate "2nd pass but not ready for kids" 
 editing_status to num_edits_completed
+  UI
 add sell_it_edited
-add advice_for_adult_viewing
+add advice_for_adult_personalization
 add stuff_not_edited_out
-add edit_most_recent_status_level
+add edit_most_recent_discovery_level
+  cats for it: unedited, most recent pass added or modified edits.  most recent pass groomed some existing edits, groomed edits need review.  most recent pass created no new edits that need review ("totally done to level of 3 year old"). most recent pass found nothing new to edit but left in some material that was integral. no longer available on amazon
   use new fields...modal
     and to display confidence level warning! :)
 

@@ -173,14 +173,15 @@ alter table users add facebook_id VARCHAR(1024) NOT NULL DEFAULT '';
 -- last login type alter table users drop column type;
 ALTER TABLE users ADD CONSTRAINT unique_email_user_id UNIQUE (email);
 
-alter table tags add column lewdness_level INT DEFAULT 0;
-alter table tags modify column lewdness_level INT NOT NULL DEFAULT 0;
+alter table tags add column lewdness_level INT NOT NULL DEFAULT 0;
 
 alter table urls add column status_last_modified_timestamp TIMESTAMP not null DEFAULT now(); -- default for the existings
 
 alter table urls add column edit_passes_completed INT not null default 0;
 update urls set edit_passes_completed = 1 where Editing_Status = 'Done with first pass tagging, could use second review';
 update urls set edit_passes_completed = 2 where Editing_Status = 'Done with second review, tags viewed as complete';
+
+alter table urls add column edit_most_recent_discovery_level VARCHAR(1024) not null default 'unedited';
 
 -- and output to screen to show success...
 select * from urls;
