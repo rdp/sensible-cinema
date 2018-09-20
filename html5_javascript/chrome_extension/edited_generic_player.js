@@ -1795,7 +1795,7 @@ function parseSuccessfulJson(json_string) {
   refreshPersonalizedDropdownOptions(current_json);
 
   var big_edited = document.getElementById("big_edited_text_id");
-  if (current_json.url.editing_status == 'Done with second review, tags viewed as complete') {
+  if (current_json.url.edit_passes_completed == 2) {
     big_edited.innerHTML = "Edited";
   } else {
     big_edited.innerHTML = "Partially edited...";
