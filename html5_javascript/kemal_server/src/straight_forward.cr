@@ -6,6 +6,10 @@ get "/privacy" do |env|
   render "views/privacy.ecr", "views/layout_yes_nav.ecr"
 end
 
+get "/test_nik" do |env|
+  render "views/test_nik.ecr", "views/layout_nik.ecr"
+end
+
 get "/faq" do |env|
   render "views/faq.ecr", "views/layout_yes_nav.ecr"
 end
