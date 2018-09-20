@@ -181,7 +181,10 @@ alter table urls add column edit_passes_completed INT not null default 0;
 update urls set edit_passes_completed = 1 where Editing_Status = 'Done with first pass tagging, could use second review';
 update urls set edit_passes_completed = 2 where Editing_Status = 'Done with second review, tags viewed as complete';
 
-alter table urls add column edit_most_recent_discovery_level VARCHAR(1024) not null default 'unedited';
+alter table urls add column most_recent_pass_discovery_level INT;
+update urls set most_recent_pass_discovery_level = 0; -- avoid specifying unused default...
+alter table urls modify column most_recent_pass_discovery_level INT NOT NULL;
+update urls set most_recent_pass_discovery_level = 2 where edit_passes_completed > 0; -- "normal pass"
 
 -- and output to screen to show success...
 select * from urls;

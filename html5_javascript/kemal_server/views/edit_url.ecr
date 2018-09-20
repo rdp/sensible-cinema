@@ -51,6 +51,18 @@ episode_number (if any):<input type="text" name="episode_number" size="5" value=
   <br/>
 </div>
 
+most_recent_pass_discovery_level
+<select name="most_recent_pass_discovery_level" id="most_recent_pass_discovery_level"> 
+  <% most_recent_pass_levels.each { |name, options| %>
+   <option value="<%= options[0] %>"><%= options[1] %></option>
+  <% } %>
+</select>
+<script>
+  document.getElementById('most_recent_pass_discovery_level').value = '<%= url.most_recent_pass_discovery_level %>';
+</script>
+<br/>
+<br/>
+
 number of edit passes that have been completed to date:
 <select name="edit_passes_completed" id="edit_passes_completed"> 
   <% (1..10).each {|option| %>

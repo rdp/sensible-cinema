@@ -6,6 +6,17 @@ def editing_phases # DB sync necessary
  {just_started: "Just started, tags might not be fully complete yet", done_first_pass: "Done with first pass tagging, could use second review", done_second_pass: "Done with second review, tags viewed as complete"}
 end
 
+def most_recent_pass_levels # attempt to use int's so I can tweak verbiage but...hmm...
+ {
+  unedited: {0, "unedited/never edited"}, 
+  unavailable: {1, "no longer for sale on amazon/unavailable"},
+  normal_pass: {2, "most recent pass added or modified at least some edits (may have groomed some as well)"}, 
+  groom_only: {3, "most recent pass groomed some existing edits, only freshly groomed edits need review"}, 
+  some_impossible: {4, "most recent pass found nothing new to edit but left in some material that was too hard to edit out ever/integral"}, 
+  totally_done: {5, "most recent pass created no new edits that need review (\"totally done to level of 3 year old\")" },
+ }
+end
+
 # if you change ANYTHING here do a sub auto rescan "test" after! (or convert it all to named everywhere!)
 def subcategory_map
   {

@@ -56,6 +56,7 @@ class Url
     original_rating: String,
     editing_notes: String,
     edit_passes_completed: Int32,
+    most_recent_pass_discovery_level: Int32
   })
 
   JSON.mapping({
@@ -87,6 +88,7 @@ class Url
     original_rating: String,
     editing_notes: String,
     edit_passes_completed: Int32,
+    most_recent_pass_discovery_level: Int32
   })
 
   def self.count
@@ -137,9 +139,9 @@ class Url
   def save
     with_db do |conn|
       if @id == 0
-       @id = conn.exec("insert into urls (name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, create_timestamp, status_last_modified_timestamp, subtitles, genre, original_rating, editing_notes, edit_passes_completed) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, create_timestamp, status_last_modified_timestamp, subtitles, genre, original_rating, editing_notes, edit_passes_completed).last_insert_id.to_i32
+       @id = conn.exec("insert into urls (name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, create_timestamp, status_last_modified_timestamp, subtitles, genre, original_rating, editing_notes, edit_passes_completed, most_recent_pass_discovery_level) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, create_timestamp, status_last_modified_timestamp, subtitles, genre, original_rating, editing_notes, edit_passes_completed, most_recent_pass_discovery_level).last_insert_id.to_i32
       else
-       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, amazon_third_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_local_filename = ?, review = ?, wholesome_review = ?, count_downloads = ?, amazon_prime_free_type = ?, rental_cost = ?, rental_cost_sd = ?, purchase_cost = ?, purchase_cost_sd = ?, total_time = ?, create_timestamp = ?, status_last_modified_timestamp = ?, subtitles = ?, genre = ?, original_rating = ?, editing_notes = ?, edit_passes_completed = ?  where id = ?", name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, create_timestamp, status_last_modified_timestamp, subtitles, genre, original_rating, editing_notes, edit_passes_completed, id
+       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, amazon_third_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_local_filename = ?, review = ?, wholesome_review = ?, count_downloads = ?, amazon_prime_free_type = ?, rental_cost = ?, rental_cost_sd = ?, purchase_cost = ?, purchase_cost_sd = ?, total_time = ?, create_timestamp = ?, status_last_modified_timestamp = ?, subtitles = ?, genre = ?, original_rating = ?, editing_notes = ?, edit_passes_completed = ?, most_recent_pass_discovery_level = ? where id = ?", name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, create_timestamp, status_last_modified_timestamp, subtitles, genre, original_rating, editing_notes, edit_passes_completed, most_recent_pass_discovery_level, id
       end
     end
   end
@@ -173,6 +175,11 @@ class Url
     @original_rating = ""
     @editing_notes = ""
     @edit_passes_completed = 0
+    @most_recent_pass_discovery_level = 0
+  end
+
+  def most_recent_pass_discovery_level_string
+    most_recent_pass_levels.to_a.select{|name, options| options[0] == @most_recent_pass_discovery_level }.map{|name, options| options[1]}.first
   end
 
   def tag_count
