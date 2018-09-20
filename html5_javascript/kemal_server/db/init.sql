@@ -186,6 +186,8 @@ update urls set most_recent_pass_discovery_level = 0; -- avoid specifying unused
 alter table urls modify column most_recent_pass_discovery_level INT NOT NULL;
 update urls set most_recent_pass_discovery_level = 2 where edit_passes_completed > 0; -- "normal pass"
 
+alter table urls drop column editing_status;
+
 -- and output to screen to show success...
 select * from urls;
 select * from tags;

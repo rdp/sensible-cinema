@@ -36,7 +36,6 @@ class Url
     details: String,
     episode_number: Int32,
     episode_name: String,
-    editing_status: String,
     wholesome_uplifting_level: Int32,
     good_movie_rating: Int32,
     image_local_filename: String,
@@ -68,7 +67,6 @@ class Url
     details: String,
     episode_number: Int32,
     episode_name: String,
-    editing_status: String,
     wholesome_uplifting_level: Int32,
     good_movie_rating: Int32,
     image_local_filename: String,
@@ -139,9 +137,9 @@ class Url
   def save
     with_db do |conn|
       if @id == 0
-       @id = conn.exec("insert into urls (name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, create_timestamp, status_last_modified_timestamp, subtitles, genre, original_rating, editing_notes, edit_passes_completed, most_recent_pass_discovery_level) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, create_timestamp, status_last_modified_timestamp, subtitles, genre, original_rating, editing_notes, edit_passes_completed, most_recent_pass_discovery_level).last_insert_id.to_i32
+       @id = conn.exec("insert into urls (name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, create_timestamp, status_last_modified_timestamp, subtitles, genre, original_rating, editing_notes, edit_passes_completed, most_recent_pass_discovery_level) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, create_timestamp, status_last_modified_timestamp, subtitles, genre, original_rating, editing_notes, edit_passes_completed, most_recent_pass_discovery_level).last_insert_id.to_i32
       else
-       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, amazon_third_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_local_filename = ?, review = ?, wholesome_review = ?, count_downloads = ?, amazon_prime_free_type = ?, rental_cost = ?, rental_cost_sd = ?, purchase_cost = ?, purchase_cost_sd = ?, total_time = ?, create_timestamp = ?, status_last_modified_timestamp = ?, subtitles = ?, genre = ?, original_rating = ?, editing_notes = ?, edit_passes_completed = ?, most_recent_pass_discovery_level = ? where id = ?", name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, create_timestamp, status_last_modified_timestamp, subtitles, genre, original_rating, editing_notes, edit_passes_completed, most_recent_pass_discovery_level, id
+       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, amazon_third_url = ?, details = ?, episode_number = ?, episode_name = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_local_filename = ?, review = ?, wholesome_review = ?, count_downloads = ?, amazon_prime_free_type = ?, rental_cost = ?, rental_cost_sd = ?, purchase_cost = ?, purchase_cost_sd = ?, total_time = ?, create_timestamp = ?, status_last_modified_timestamp = ?, subtitles = ?, genre = ?, original_rating = ?, editing_notes = ?, edit_passes_completed = ?, most_recent_pass_discovery_level = ? where id = ?", name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, create_timestamp, status_last_modified_timestamp, subtitles, genre, original_rating, editing_notes, edit_passes_completed, most_recent_pass_discovery_level, id
       end
     end
   end
@@ -155,7 +153,6 @@ class Url
     @details = ""
     @episode_number = 0
     @episode_name = ""
-    @editing_status = ""
     @wholesome_uplifting_level = 0
     @good_movie_rating = 0
     @image_local_filename = ""

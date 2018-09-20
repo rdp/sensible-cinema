@@ -2,10 +2,6 @@ def all_genres # obviously DB must sync here :|
   ["romance/chick flick", "romantic comedy", "animation/cartoon", "documentary", "horror", "action/adventure", "western", "military/war", "comedy", "music/musical", "drama", "sports", "holiday", "fantasy", "sci-fi", "mystery/thriller", "faith/spirituality"].sort
 end
 
-def editing_phases # DB sync necessary
- {just_started: "Just started, tags might not be fully complete yet", done_first_pass: "Done with first pass tagging, could use second review", done_second_pass: "Done with second review, tags viewed as complete"}
-end
-
 def most_recent_pass_levels # attempt to use int's so I can tweak verbiage but...hmm...
  {
   unedited: {0, "unedited/never edited"}, 

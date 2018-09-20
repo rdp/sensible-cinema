@@ -1741,7 +1741,7 @@ function addPluginEnabledTextOnce() {
     span = span || document.getElementsByClassName("av-alert-inline")[0];
     if (span && !span.innerHTML.includes("it my way")) {
       var extra = "<br/><small>(Play it my way enabled! Disclaimer: Performance of the motion picture will be altered from the performance intended by the director/copyright holder, we're required to mention that)";
-      if (current_json.url.editing_status != "Done with second review, tags viewed as complete") {
+      if (current_json.url.edit_passes_completed < 2) { // XXXX use the new status...somehow...??
         extra += " (not fully edited yet)";
       }
       extra += "</small";

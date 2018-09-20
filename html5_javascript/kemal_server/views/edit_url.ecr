@@ -75,18 +75,6 @@ number of edit passes that have been completed to date:
 <br/>
 <br/>
 
-editing status
-<select name="editing_status" id="editing_status"> 
-  <% editing_phases.values.each {|option| %>
-   <option value="<%= option %>"><%= option %></option>
-  <% } %>
-</select>
-<script>
-  document.getElementById('editing_status').value = '<%= url.editing_status %>';
-</script>
-<br/>
-<br/>
-
 editing_notes (if not finished: "got to minute 45", "only did the mutes so far") (if finished, then "sell" it edited, like "Watch without the innuendo and gore and violence! (still has some scary scenes that may not be appropriate for children, or 'still has some bare midriffs edited')") (if there is more to fine-tune after "done" then mention that on the google spreadsheet).
 <br/>
 <textarea name="editing_notes" rows="1" cols="150" ><%= url.editing_notes %></textarea>

@@ -122,7 +122,7 @@ end
 get "/look_for_outdated_primes" do |env|
   raise_unless_editor(env)
   all = Url.all # TODO real api instead?
-  all.select!{|url| url.editing_status == editing_phases[:done_second_pass]}
+  all.select!{|url| url.edit_passes_completed >= 2}
   all_with_curl = all.map{ |url| 
    curl = download(HTML.unescape url.url)
    currently_prime = (curl =~ /0.00 with a Prime membership/ || curl =~ /0.00 with Prime Video/)
@@ -594,7 +594,6 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     url.url = sanitized_url
     url.episode_name = episode_name
     url.episode_number = episode_number
-    url.editing_status = editing_phases[:just_started]
     url.edit_passes_completed = 0
     url.most_recent_pass_discovery_level = 0
     raise "need duration" unless duration > 0
@@ -638,16 +637,16 @@ end
 
 get "/" do |env|
   all_urls = get_all_urls
-  all_urls_done = all_urls.select{|url| url.editing_status == editing_phases[:done_second_pass] }
+  all_urls_done = all_urls.select{|url| url.edit_passes_completed >= 2 }
   most_recent = all_urls_done.sort_by{|u| u.status_last_modified_timestamp}.last(8)
   render "views/main_nik.ecr"
 end
 
 get "/full_list" do |env| # index home
   all_urls = get_all_urls
-  all_urls_done = all_urls.select{|url| url.editing_status == editing_phases[:done_second_pass] }
-  all_urls_half_way = all_urls.select{|url| url.editing_status == editing_phases[:done_first_pass] }
-  all_urls_just_started = all_urls.select{|url| url.editing_status == editing_phases[:just_started] }
+  all_urls_done = all_urls.select{|url| url.edit_passes_completed >= 2 }
+  all_urls_half_way = all_urls.select{|url| url.edit_passes_completed == 1 }
+  all_urls_just_started = all_urls.select{|url| url.edit_passes_completed == 1 }
   start = Time.now
   out = render "views/main.ecr", "views/layout_yes_nav.ecr"
   puts "view took #{Time.now - start}"  # pre view takes as long as first query :|
@@ -655,8 +654,8 @@ get "/full_list" do |env| # index home
 end
 
 get "/movies_in_works" do |env|
-  urls = get_all_urls.reject{|url| url.editing_status == editing_phases[:done_second_pass] }
-  if env.params.query["by_self"]? # the default uh think?
+  urls = get_all_urls.reject{|url| url.edit_passes_completed == 0 }
+  if env.params.query["by_self"]? # the default uh think these days?
     render "views/_list_movies.ecr"
   else
     render "views/_list_movies.ecr", "views/layout_yes_nav.ecr"
@@ -841,15 +840,13 @@ post "/save_url" do |env|
   db_url.name = resanitize_html(params["name"]) # resanitize in case previously escaped case of re-save [otherwise it grows and grows in error...]
   db_url.url = incoming_url
   db_url.details = resanitize_html(params["details"])
-  new_editing_status = resanitize_html(params["editing_status"])
-  if new_editing_status != db_url.editing_status
-    puts "updating status_last_modified_timestamp"
+  old_passes = db_url.edit_passes_completed
+  db_url.edit_passes_completed = get_int(params, "edit_passes_completed")
+  if old_passes != db_url.edit_passes_completed
+    puts "updating status_last_modified_timestamp as well..."
     db_url.status_last_modified_timestamp = Time.now
   end
-  db_url.editing_status = new_editing_status
-  db_url.edit_passes_completed = get_int(params, "edit_passes_completed")
   db_url.most_recent_pass_discovery_level = get_int(params, "most_recent_pass_discovery_level")
-  puts "got=#{params} #{db_url.edit_passes_completed}"
   db_url.amazon_second_url = amazon_second_url
   db_url.amazon_third_url = amazon_third_url
   db_url.episode_number = get_int(params, "episode_number")
