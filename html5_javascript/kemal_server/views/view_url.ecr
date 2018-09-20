@@ -35,6 +35,7 @@ Content tags in our system for this movie:
       <%= table_row_or_nothing("prime?", url.human_readable_company) %>
     <% end %>
     <%= table_row_or_nothing("Editing status", url.editing_status) %>
+    <%= table_row_or_nothing("Num passes done", url.edit_passes_completed) %>
     <%= table_row_or_nothing("Editing notes", url.editing_notes) %>
     <%= table_row_or_nothing("Price to rent/purchase", url.cost_string) %>
     <% if url.total_time > 0 %>

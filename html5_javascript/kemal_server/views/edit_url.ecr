@@ -51,7 +51,19 @@ episode_number (if any):<input type="text" name="episode_number" size="5" value=
   <br/>
 </div>
 
-editing status:
+number of edit passes that have been completed to date:
+<select name="edit_passes_completed" id="edit_passes_completed"> 
+  <% (1..10).each {|option| %>
+   <option value="<%= option %>"><%= option %></option>
+  <% } %>
+</select>
+<script>
+  document.getElementById('edit_passes_completed').value = '<%= url.edit_passes_completed %>';
+</script>
+<br/>
+<br/>
+
+editing status
 <select name="editing_status" id="editing_status"> 
   <% editing_phases.values.each {|option| %>
    <option value="<%= option %>"><%= option %></option>

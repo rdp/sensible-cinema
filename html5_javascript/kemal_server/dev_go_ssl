@@ -6,8 +6,12 @@ fi
 if [[ ! -d sessions ]]; then
   mkdir sessions
 fi
+if [[ ! -d edit_descriptors ]]; then
+  mkdir edit_descriptors
+fi
 if [[ ! -f _key.pem ]]; then
-  echo "generating dev keys"
+  echo "generating dev ssl keys"
   openssl req -x509 -newkey rsa:4096 -keyout _key.pem -out cert.pem -days 365 -nodes
 fi
-crystal run ./kemal_server.cr -- --ssl --ssl-key-file _key.pem --ssl-cert-file cert.pem or exit 1
+crystal build ./kemal_server.cr
+./kemal_server --ssl --ssl-key-file _key.pem --ssl-cert-file cert.pem or exit 1

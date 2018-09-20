@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
-kqwait (find . | grep -v session | grep -v edit_descriptors | grep -v public/movie_images)
-kill (pidof crystal | cut -d " " -f 1)
+kqwait (find . | grep -v session | grep -v edit_descriptors | grep -v public/movie_images | grep -v kemal_server)
+kill (pidof kemal_server | cut -d " " -f 1)
 sleep 0.1
-kill (pidof crystal | cut -d " " -f 1)
+kill (pidof kemal_server | cut -d " " -f 1)
 

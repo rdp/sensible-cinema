@@ -595,7 +595,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     url.episode_name = episode_name
     url.episode_number = episode_number
     url.editing_status = editing_phases[:just_started]
-    raise "unknown status #{url.editing_status}" unless editing_phases.values.includes?(url.editing_status)
+    url.edit_passes_completed = 0
     raise "need duration" unless duration > 0
     url.total_time = duration
     if episode_number > 0
@@ -846,6 +846,8 @@ post "/save_url" do |env|
     db_url.status_last_modified_timestamp = Time.now
   end
   db_url.editing_status = new_editing_status
+  db_url.edit_passes_completed = get_int(params, "edit_passes_completed")
+  puts "got=#{params} #{db_url.edit_passes_completed}"
   db_url.amazon_second_url = amazon_second_url
   db_url.amazon_third_url = amazon_third_url
   db_url.episode_number = get_int(params, "episode_number")
