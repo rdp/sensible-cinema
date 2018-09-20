@@ -1,4 +1,11 @@
             <%= if_present_with_break url.details %>
+            <% if url.most_recent_pass_discovery_level != 4 %>
+              This movie has been edited but we're still working on getting everything, please report anything you notice!
+              <br/>
+            <% else %>
+              This movie is fully edited, ready to go for you and your family!
+              <!-- TODO the "can't edit" status more here... -->
+            <% end %>
             <%= if_present_with_break url.editing_notes, "" %>
             <% if url.tag_count > 0 %>
               What you can edit out: 
