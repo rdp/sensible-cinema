@@ -2,8 +2,8 @@
   "manifest_version": 2,
 
   "name": "Play it my way",
-  "description": "Enables the playback of online videos edited",
-  "version": "0.0.136",
+  "description": "Watch movies online without the profanity and lewdity",
+  "version": "0.0.137",
 
   "browser_action": {
     "default_icon": "camera.128.png",
