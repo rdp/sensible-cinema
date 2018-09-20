@@ -10,6 +10,10 @@ get "/faq" do |env|
   render "views/faq.ecr", "views/layout_yes_nav.ecr"
 end
 
+get "/questions" do |env|
+  render "views/questions.ecr", "views/layout_yes_nav.ecr"
+end
+
 get "/add_movie" do |env|
   render "views/add_movie.ecr", "views/layout_yes_nav.ecr"
 end

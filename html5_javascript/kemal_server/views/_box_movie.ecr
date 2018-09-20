@@ -15,7 +15,7 @@
               <%= url.image_tag "id='box_movie_#{url.id}_image' style='max-height: 300px; max-width: 300px; filter: drop-shadow(5px 5px 5px #222); padding: 5px; margin-left: auto; margin-right: auto; display: block; margin-bottom: 5px;'", ImageSize::VerySmall %>
               Watch <%= url.name_with_episode %>
             </a>
-            <% if url.edit_passes_completed == 2 %>
+            <% if url.edit_passes_completed >= 2 %>
                edited now!
             <% elsif url.tag_count == 0 %>
               (not started, click here to watch unedited anyway)
@@ -32,6 +32,7 @@
            Or <a href=/personalized_edit_list/<%=url.id%>>personalize edits</a> your way!
           </div>
           <div style="text-align: center;">		  
+            <a href="#" data-reveal-id="myModal_<%=  url.id %>">Click Me For A Modal</a>
             <button onclick="expandBoxOrOpen('box_movie_<%= url.id %>'); return false;">Details &darr;</button>
           </div>
           <div id=box_movie_<%= url.id %>_details style="display:none;">
@@ -39,3 +40,9 @@
           </div>
          </div>
        </div>
+
+<div id="myModal_<%=  url.id %>" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+  <h2 id="modalTitle"><%= url.name_with_episode %></h2>
+  <p>more url stuff </p>
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
