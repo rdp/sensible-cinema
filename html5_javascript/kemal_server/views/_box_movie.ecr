@@ -35,13 +35,7 @@
             <button onclick="expandBoxOrOpen('box_movie_<%= url.id %>'); return false;">Details &darr;</button>
           </div>
           <div id=box_movie_<%= url.id %>_details style="display:none;">
-            Loading...
+            Loading... <!-- loads single_movie_lower -->
           </div>
          </div>
        </div>
-
-<div id="myModal_<%=  url.id %>" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-  <h2 id="modalTitle"><%= url.name_with_episode %></h2>
-  <p>more url stuff </p>
-  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
-</div>
