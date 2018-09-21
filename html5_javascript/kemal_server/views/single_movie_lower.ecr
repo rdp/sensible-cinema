@@ -1,4 +1,5 @@
             <%= if_present_with_break url.details %>
+            <br/>
             <% if url.most_recent_pass_discovery_level == 1 %>
               This movie has not yet been edited. 
             <% elsif url.most_recent_pass_discovery_level == 5 %>
@@ -7,6 +8,7 @@
               This movie has been edited but we're still working on getting everything, please report anything you notice!
               <!-- TODO the "can't edit" status more here... -->
             <% end %>
+            <br/>
             <br/>
             <%= if_present_with_break url.editing_notes, "" %>
             <% if url.tag_count > 0 %>
