@@ -516,6 +516,7 @@ function blankScreenIfWithinHeartOfSkip(skipish_tag, cur_time) {
   // if it's trying to seek out of something baaad then don't show a still frame of the bad stuff in the meanwhile
   var within_heart_of_skipish = !withinDelta(skipish_tag.start, cur_time, 0.05); // but don't show black blips on normal seek from playing continuous...
   if (within_heart_of_skipish) {
+    console.log("within_heart_of_skipish doing startHeartBlank");
     startHeartBlank(skipish_tag, cur_time);
   } else {
     //console.log("not blanking it because it's normal playing continuous beginning of skip..." + skipish_tag.start);
@@ -525,7 +526,7 @@ function blankScreenIfWithinHeartOfSkip(skipish_tag, cur_time) {
 function heartBlankScreenIfImpending(start_time) { // basically for pre-emptively knowing when skips will end :|
   var just_before_bad_stuff = areWeWithinNoShowVideoTag(start_time + 0.02); // if about to re-non-video, don't show blip of bad stuff if two such edits back to back
   if (just_before_bad_stuff) {
-    console.log("starting heartblank straight will be impending");
+    console.log("starting heartblank b/c just_before_bad_stuff");
     startHeartBlank(just_before_bad_stuff, start_time);
   } else {
     // console.log("not heartblanking it, not in middle of anything");
