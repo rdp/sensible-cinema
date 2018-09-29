@@ -894,15 +894,19 @@ post "/upload_from_subtitles_post/:url_id" do |env|
   params = env.params.body # POST params
   add_to_beginning = params["add_to_beginning"].to_f
   add_to_end = params["add_to_end"].to_f
-  
-  if env.params.files["srt_upload"]? && env.params.files["srt_upload"].filename && env.params.files["srt_upload"].filename.not_nil!.size > 0 # kemal bug'ish :|?? also nil??
-    db_url.subtitles = File.read(env.params.files["srt_upload"].tmpfile.path) # saves contents, why not? :) XXX save euphemized? actually original might be more powerful somehow...
+ 
+  upload_io = nil 
+  HTTP::FormData.parse(env.request) do |upload|
+    upload_io = upload.body
+  end
+  if upload_io
+    db_url.subtitles = upload_io.gets_to_end # saves contents, why not? :) XXX save euphemized? actually original might be more powerful somehow...
     profs, all_euphemized = SubtitleProfanityFinder.mutes_from_srt_string(db_url.subtitles)
   elsif params["amazon_subtitle_url"]?
     db_url.subtitles = download(params["amazon_subtitle_url"])
     profs, all_euphemized = SubtitleProfanityFinder.mutes_from_amazon_string(db_url.subtitles)
   else
-    raise "no subtitle file to parse?"
+    raise "no subtitle file uploaded to parse?"
   end
   profs.each { |prof|
     tag = Tag.new(db_url)
