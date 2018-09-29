@@ -50,7 +50,7 @@
   <h3><%= subcategory %></h3>
   <input id="unused" type="checkbox" checked 
     onchange='updateSelectAll(<%= subcategory_tags_and_enableds.map{|tag, action| tag.id}.pretty_inspect %>, this.checked);'
-  > Select all "<%= subcategory %>"
+  > Edit out all "<%= subcategory %>"
   <br/>
   <table class="table table-striped">
   <% subcategory_tags_and_enableds.each{|tag, enabled| %>
