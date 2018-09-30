@@ -646,7 +646,7 @@ get "/full_list" do |env| # index home
   all_urls = get_all_urls
   all_urls_done = all_urls.select{|url| url.edit_passes_completed >= 2 }
   all_urls_half_way = all_urls.select{|url| url.edit_passes_completed == 1 }
-  all_urls_just_started = all_urls.select{|url| url.edit_passes_completed == 1 }
+  all_urls_just_started = all_urls.select{|url| url.edit_passes_completed == 0 }
   start = Time.now
   out = render "views/main.ecr", "views/layout_yes_nav.ecr"
   puts "view took #{Time.now - start}"  # pre view takes as long as first query :|
