@@ -10,7 +10,7 @@ shards:
 
   kemal:
     github: sdogruyol/kemal
-    commit: b389022b35202319b59396f30b3cac87fd8d393a
+    commit: a5870e7d24e5ec75c956bcf3e4423f55a2c4ff78
 
   kemal-session:
     github: kemalcr/kemal-session

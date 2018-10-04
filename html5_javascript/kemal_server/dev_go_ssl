@@ -13,5 +13,7 @@ if [[ ! -f _key.pem ]]; then
   echo "generating dev ssl keys"
   openssl req -x509 -newkey rsa:4096 -keyout _key.pem -out cert.pem -days 365 -nodes
 fi
-crystal build ./kemal_server.cr
-./kemal_server --ssl --ssl-key-file _key.pem --ssl-cert-file cert.pem or exit 1
+echo "building"
+crystal build ./kemal_server.cr -o bin.kemal_server
+echo "running"
+./bin.kemal_server --ssl --ssl-key-file _key.pem --ssl-cert-file cert.pem or exit 1

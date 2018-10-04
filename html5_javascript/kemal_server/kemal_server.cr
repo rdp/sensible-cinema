@@ -815,7 +815,7 @@ end
 
 post "/save_url" do |env|
   params = env.params.body # POST params
-  puts "got save_url params=#{params}"
+  puts "got save_url params=#{params} env.params=#{env.params} keys#{params.keys}"
   if params.has_key? "id"
     # these day
     db_url = Url.get_only_by_id(params["id"])
@@ -863,7 +863,9 @@ post "/save_url" do |env|
   db_url.total_time = human_to_seconds params["total_time"]
   db_url.genre = resanitize_html(params["genre"])
   db_url.original_rating = resanitize_html(params["original_rating"])
-  db_url.editing_notes = resanitize_html(params["editing_notes"])
+  db_url.sell_it_edited = resanitize_html(params["sell_it_edited"])
+  db_url.internal_editing_notes = resanitize_html(params["internal_editing_notes"])
+  db_url.stuff_not_edited_out = resanitize_html(params["stuff_not_edited_out"])
   db_url.save
   
   image_url = params["image_url"]

@@ -14,7 +14,7 @@
 <a href="/">&lt;&lt; back to list of all movies</a>
 <br/>
 <%= url.image_tag style: "", size: ImageSize::VerySmall, postpend_html: "<br/>" %> <!-- at least we high high dps -->
-<h4>Details</h4>
+<h4>Our Details:</h4>
 <br/>
 Content tags in our system for this movie:
 <br/>
@@ -36,7 +36,9 @@ Content tags in our system for this movie:
     <% end %>
     <%= table_row_or_nothing("Editing status most recent pass", url.most_recent_pass_discovery_level_string) %>
     <%= table_row_or_nothing("Num passes done", url.edit_passes_completed) %>
-    <%= table_row_or_nothing("Editing notes", url.editing_notes) %>
+    <%= table_row_or_nothing("Why watch edited?", url.sell_it_edited) %>
+    <!-- internal_editing_notes ... -->
+    <%= table_row_or_nothing("Editor advisory:", url.stuff_not_edited_out) %>
     <%= table_row_or_nothing("Price to rent/purchase", url.cost_string) %>
     <% if url.total_time > 0 %>
       <%= table_row_or_nothing("Total movie time", seconds_to_human url.total_time) %>

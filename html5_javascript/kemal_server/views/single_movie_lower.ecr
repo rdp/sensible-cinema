@@ -10,7 +10,9 @@
             <% end %>
             <br/>
             <br/>
-            <%= if_present_with_break url.editing_notes, "" %>
+            <%= if_present_with_break url.sell_it_edited, "Why watch edited?" %>
+            <%= if_present_with_break url.stuff_not_edited_out, "Stuff not edited out:" %>
+            <!-- internal editing notes not show -->
             <% if url.tag_count > 0 %>
               What you can edit out: 
               <%= tags_by_category_with_size(url) %> <!-- if this blows up its a tag with unknown category -->

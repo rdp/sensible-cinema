@@ -75,9 +75,21 @@ number of edit passes that have been completed to date:
 <br/>
 <br/>
 
-editing_notes (if not finished: "got to minute 45", "only did the mutes so far") (if finished, then "sell" it edited, like "Watch without the innuendo and gore and violence! (still has some scary scenes that may not be appropriate for children, or 'still has some bare midriffs edited')") (if there is more to fine-tune after "done" then mention that on the google spreadsheet).
+internal_editing_notes ("got to minute 45", "only did the mutes so far", "violence at end could use grooming", "too much is cut at beginning, needs groming")
 <br/>
-<textarea name="editing_notes" rows="1" cols="150" ><%= url.editing_notes %></textarea>
+<textarea name="internal_editing_notes" rows="1" cols="150" ><%= url.internal_editing_notes %></textarea>
+<br/>
+<br/>
+
+stuff not edited out (either on purpose or haven't gotten to it yet, for customers to know: ex still has some scary scenes that may not be appropriate for children, or 'still has some bare midriffs edited')
+<br/>
+<textarea name="url.stuff_not_edited_out" rows="1" cols="150" ><%= url.stuff_not_edited_out  %></textarea>
+<br/>
+<br/>
+
+sell_it_edited like "Watch without the innuendo and gore and violence!
+<br/>
+<textarea name="sell_it_edited" rows="1" cols="150" ><%= url.sell_it_edited %></textarea>
 <br/>
 <br/>
 

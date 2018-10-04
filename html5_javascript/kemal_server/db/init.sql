@@ -188,6 +188,12 @@ update urls set most_recent_pass_discovery_level = 2 where edit_passes_completed
 
 alter table urls drop column editing_status;
 
+alter table urls CHANGE editing_notes internal_editing_notes TEXT;
+alter table urls add column sell_it_edited TEXT;
+update urls set sell_it_edited = ''; -- default
+alter table urls add column stuff_not_edited_out TEXT;
+update urls set stuff_not_edited_out = ''; -- default
+
 -- and output to screen to show success...
 select * from urls;
 select * from tags;
