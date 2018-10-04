@@ -815,7 +815,7 @@ end
 
 post "/save_url" do |env|
   params = env.params.body # POST params
-  puts "got save_url params=#{params} env.params=#{env.params} keys#{params.keys}"
+  puts "got save_url params=#{params} env.params=#{env.params}"
   if params.has_key? "id"
     # these day
     db_url = Url.get_only_by_id(params["id"])
