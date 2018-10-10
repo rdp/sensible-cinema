@@ -594,8 +594,6 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     url.url = sanitized_url
     url.episode_name = episode_name
     url.episode_number = episode_number
-    url.edit_passes_completed = 0
-    url.most_recent_pass_discovery_level = 0
     raise "need duration" unless duration > 0
     url.total_time = duration
     if episode_number > 0
@@ -847,6 +845,7 @@ post "/save_url" do |env|
     db_url.status_last_modified_timestamp = Time.now
   end
   db_url.most_recent_pass_discovery_level = get_int(params, "most_recent_pass_discovery_level")
+  db_url.age_recommendation_after_edited = get_int(params, "age_recommendation_after_edited")
   db_url.amazon_second_url = amazon_second_url
   db_url.amazon_third_url = amazon_third_url
   db_url.episode_number = get_int(params, "episode_number")

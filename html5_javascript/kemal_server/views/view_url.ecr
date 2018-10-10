@@ -39,6 +39,7 @@ Content tags in our system for this movie:
     <%= table_row_or_nothing("Why watch edited?", url.sell_it_edited) %>
     <!-- internal_editing_notes ... -->
     <%= table_row_or_nothing("Editor advisory:", url.stuff_not_edited_out) %>
+    <%= table_row_or_nothing("Age recommendation after edited:", url.age_recommendation_after_edited) %>
     <%= table_row_or_nothing("Price to rent/purchase", url.cost_string) %>
     <% if url.total_time > 0 %>
       <%= table_row_or_nothing("Total movie time", seconds_to_human url.total_time) %>

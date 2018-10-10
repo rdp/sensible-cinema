@@ -81,13 +81,25 @@ internal_editing_notes ("got to minute 45", "only did the mutes so far", "violen
 <br/>
 <br/>
 
-stuff not edited out (either on purpose or haven't gotten to it yet, for customers to know: ex still has some scary scenes that may not be appropriate for children, or 'still has some bare midriffs not edited') If it's inappropriate for children, mention it here.
+stuff not edited out (either on purpose or haven't gotten to it yet, for customers to know: ex still has some scary scenes that may not be appropriate for children, or 'still has some bare midriffs not edited') If movie's inappropriate for children, mention why here.
 <br/>
 <textarea name="stuff_not_edited_out" rows="1" cols="150" ><%= url.stuff_not_edited_out  %></textarea>
 <br/>
 <br/>
 
-sell_it_edited like "Watch without the innuendo and gore and violence!
+age_recommendation_after_edited (just loose estimate like "around age 10" choose 10)
+<select name="age_recommendation_after_edited" id="age_recommendation_after_edited"> 
+  <% (1..17).each {|option| %>
+   <option value="<%= option %>"><%= option %></option>
+  <% } %>
+</select>
+<script>
+  document.getElementById('age_recommendation_after_edited').value = '<%= url.age_recommendation_after_edited %>';
+</script>
+<br/>
+<br/>
+
+sell_it_edited, like "Watch without the crude jokes" mostly for movies where it's not obvious why editing would even be useful.
 <br/>
 <textarea name="sell_it_edited" rows="1" cols="150" ><%= url.sell_it_edited %></textarea>
 <br/>

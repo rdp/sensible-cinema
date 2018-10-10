@@ -12,6 +12,7 @@
             <br/>
             <%= if_present_with_break url.sell_it_edited, "Why watch edited?" %>
             <%= if_present_with_break url.stuff_not_edited_out, "Stuff not edited out:" %>
+            <%= if_present_with_break url.age_recommendation_after_edited, "Minimum age recommended, to watch edited:" %>
             <!-- internal editing notes not show -->
             <% if url.tag_count > 0 %>
               What you can edit out: 
