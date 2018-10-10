@@ -636,7 +636,7 @@ end
 get "/" do |env|
   all_urls = get_all_urls
   all_urls_done = all_urls.select{|url| url.edit_passes_completed >= 2 }
-  most_recent = all_urls_done.sort_by{|u| u.status_last_modified_timestamp}.last(8)
+  most_recent = all_urls_done.sort_by{|u| u.status_last_modified_timestamp}.last(8).reverse # XXX inject some series, some movies?
   render "views/main_nik.ecr", "views/layout_nik.ecr"
 end
 
