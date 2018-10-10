@@ -1048,14 +1048,14 @@ var video_ever_initialized = false; // can't do seeks "off the bat" in amazon [w
 var last_timestamp = -1;
 var last_timestamp_trunc = -1;
 
-function checkStatus() { // called 1000 fps (didn't seem to increase too much cpu to poll like this?)
+function checkStatus() { // called "at a lot of" fps (didn't seem to increase too much cpu to poll like this?)
 
   // while playing, current timestamp is basically different each time...
   // we're guaranteed a video element, that's about it, at this point...
   var cur_time = getCurrentTime();
   if (truncTwoDecimals(cur_time) == last_timestamp_trunc) {
     // we've "already handled" this millisecond...hopefully...
-    // basically restrict to 100 fps but try and do it at the "start" of the hundredth...
+    // basically restrict to 100 fps but try and run only at the "start" of the hundredth...
     // when slammed it gets in by like 0.04 still...every so often 9, seems to always get it though...so possibly better than 100/s like before there...
     // sometimes 3, sometimes 2/sec [macbook] with logging so...some timer limit?
     // also avoids calling more than once/ms the saving! :)
@@ -1903,8 +1903,10 @@ var clean_stream_timer = null;
 
 function startWatcherTimerSingleton() {
   if (!clean_stream_timer) {
-    clean_stream_timer = setInterval(checkStatus, 1); // 1000 times/sec it'll restrict itself to X fps though...
-    // guess we just never turn it off, on purpose :)
+    // could do 1000 times/sec it'll restrict itself to 100 fps though...
+    // 4 ms should be enough to "hit each 100th once" 1000 fps is hard to understand...until can spend more time on it
+    clean_stream_timer = setInterval(checkStatus, 4);
+    // guess we just never turn interval off, on purpose :)
   }
 }
 
