@@ -17,6 +17,7 @@ end
 def subcategory_map
   {
   "movie-content": [
+    # db_name is also what "they" will see as its cat
     {db_name: "initial theme song", human_name: "initial theme song", sub_sub_cat: ""},
     {db_name: "initial credits", human_name: "initial company credits before intro/before songs", sub_sub_cat: ""},
     {db_name: "closing credits", human_name: "closing credits/songs", sub_sub_cat: ""},
@@ -40,7 +41,7 @@ def subcategory_map
     {db_name: "deity reference", human_name: "deity use appropriate but non religious context like \"in this game you are G...\"", sub_sub_cat: "deity"},
     {db_name: "deity exclamation mild", human_name: "deity exclamation mild like Good L...", sub_sub_cat: "deity"},
     {db_name: "deity exclamation euphemized", human_name: "deity euphemized like 'oh my gosh'", sub_sub_cat: "deity"},
-    {db_name: "deity exclamation harsh", human_name: "deity exclamation harsh, name of the Lord (omg, etc.)", sub_sub_cat: "deity"},
+    {db_name: "deity exclamation", human_name: "deity exclamation harsh, name of the Lord (omg, etc.)", sub_sub_cat: "deity"},
     {db_name: "deity expletive", human_name: "deity expletive (es: goll durn, the real words)", sub_sub_cat: "deity"},
     {db_name: "deity greek", human_name: "deity greek (Zeus, etc.)", sub_sub_cat: "deity"},
     {db_name: "deity foreign language", human_name: "deity different language, like Allah or French equivalents, etc", sub_sub_cat: "deity"},
