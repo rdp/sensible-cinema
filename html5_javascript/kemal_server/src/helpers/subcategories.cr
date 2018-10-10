@@ -17,7 +17,7 @@ end
 def subcategory_map
   {
   "movie-content": [
-    # db_name is also what "they" will see as its cat
+    # db_name is also what "they" will see as its cat, so changing that you need to release plugin, update db...
     {db_name: "initial theme song", human_name: "initial theme song", sub_sub_cat: ""},
     {db_name: "initial credits", human_name: "initial company credits before intro/before songs", sub_sub_cat: ""},
     {db_name: "closing credits", human_name: "closing credits/songs", sub_sub_cat: ""},

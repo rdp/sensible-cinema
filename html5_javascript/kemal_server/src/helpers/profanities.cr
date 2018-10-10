@@ -56,7 +56,7 @@
       Arse => ["a..", "a word"],
       "dieu" => ["deity", "deity foreign language"],
       "chri" +
-      "st"=> ["___", "deity exclamation harsh"],
+      "st"=> ["___", "deity exclamation"],
       "cock" => ["....", "bodily part reference harsh"],
       "jove" => ["jove", "deity greek"],
       "beaner" => ["beaner", "derogatory slur"],
@@ -72,7 +72,7 @@
       "s" => ["deitys", "deity greek"],
       "g" +
       111.chr + 
-      100.chr => ["___", "deity exclamation harsh"],
+      100.chr => ["___", "deity exclamation"],
       "meu deus" => ["___", "deity foreign language"],
       "lo" + 
       "rd" => ["....", "deity exclamation mild"], # there are things like "fire lord" that aren't harsh...
@@ -94,7 +94,7 @@
       Arse + "w" +
       "ipe" => ["a..w...", "a word"],
       "jes" +
-      "u" + "s" => ["___", "deity exclamation harsh"],
+      "u" + "s" => ["___", "deity exclamation"],
       "sh" +
        "i" + "t" => ["s...", "s word"],
       "cu" +
