@@ -668,7 +668,7 @@ var video_ever_initialized = false; // can't do seeks "off the bat" in amazon [w
 var last_timestamp = -1;
 var last_timestamp_trunc = -1;
 
-function checkStatus() { // called 1000 fps (didn't seem to increase too much cpu to poll like this?)
+function checkStatus() { // called 300 fps (didn't seem to increase too much cpu to poll like this?)
 
   // while playing, current timestamp is basically different each time...
   // we're guaranteed a video element, that's about it, at this point...
@@ -1523,8 +1523,10 @@ var clean_stream_timer = null;
 
 function startWatcherTimerSingleton() {
   if (!clean_stream_timer) {
-    clean_stream_timer = setInterval(checkStatus, 1); // 1000 times/sec it'll restrict itself to X fps though...
-    // guess we just never turn it off, on purpose :)
+    // could do 1000 times/sec it'll restrict itself to 100 fps though...
+    // 4 ms should be enough to "hit each 100th once" 1000 fps is hard to understand...
+    clean_stream_timer = setInterval(checkStatus, 4);
+    // guess we just never turn interval off, on purpose :)
   }
 }
 
