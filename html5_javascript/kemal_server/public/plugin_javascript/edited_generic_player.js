@@ -232,7 +232,7 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
         
           <option value="deity exclamation euphemized">profanity -- deity euphemized like &#39;oh my gosh&#39;</option>    
         
-          <option value="deity exclamation harsh">profanity -- deity exclamation harsh, name of the Lord (omg, etc.)</option>    
+          <option value="deity exclamation">profanity -- deity exclamation harsh, name of the Lord (omg, etc.)</option>    
         
           <option value="deity expletive">profanity -- deity expletive (es: goll durn, the real words)</option>    
         
@@ -1582,7 +1582,7 @@ function saveTagButton() {
     reloadForCurrentUrl("SAVED tag! "); // it's done saving so we can do this ja
   }, function(xhr) {
     alert("save didn't take? website down?");
-    // and don't clear?
+    // and don't clear uh guess...
   });
 }
 
