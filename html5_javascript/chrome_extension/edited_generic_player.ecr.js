@@ -666,13 +666,14 @@ function isWatchingAdd() {
 var i_set_it_to_add = false;
 var video_ever_initialized = false; // can't do seeks "off the bat" in amazon [while still obscured] -> spinner then crash!
 var last_timestamp = -1;
+var last_timestamp_trunc = -1;
 
 function checkStatus() { // called 1000 fps (didn't seem to increase too much cpu to poll like this?)
 
   // while playing, current timestamp is basically different each time...
   // we're guaranteed a video element, that's about it, at this point...
   var cur_time = getCurrentTime();
-  if (truncTwoDecimals(cur_time) == truncTwoDecimals(last_timestamp)) {
+  if (truncTwoDecimals(cur_time) == last_timestamp_trunc) {
     // we've "already handled" this millisecond...hopefully...
     // basically restrict to 100 fps but try and do it at the "start" of the hundredth...
     // when slammed it gets in by like 0.04 still...every so often 9, seems to always get it though...so possibly better than 100/s like before there...
@@ -727,6 +728,7 @@ function checkStatus() { // called 1000 fps (didn't seem to increase too much cp
         }
       }
       last_timestamp = cur_time;
+      last_timestamp_trunc = truncTwoDecimals(cur_time);
 
       // GO!
       checkIfShouldDoActionAndUpdateUI();
