@@ -1202,7 +1202,7 @@ function saveTagButton() {
     reloadForCurrentUrl("SAVED tag! "); // it's done saving so we can do this ja
   }, function(xhr) {
     alert("save didn't take? website down?");
-    // and don't clear?
+    // and don't clear uh guess...
   });
 }
 
