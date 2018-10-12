@@ -1,0 +1,13 @@
+            <a href="<%= movie.url %>" target="_blank" 
+              onclick="
+               <% if movie.url !~ /edited_youtube/ %>
+                 if (!alertIfNoExtension()) return false;
+              <% else %>
+                <!-- let mobile/firefox through -->
+              <% end %>
+              <% if movie.episode_number != 0 && movie.amazon? %>
+                 alert('after opening the series, click play button for episode <%= movie.episode_number %> (<%= movie.episode_name %>)');
+              <% end %>
+            ">
+              <%= movie.image_tag "alt=\"#{movie.name_with_episode}\" style='max-height: 300px; max-width: 300px;", ImageSize::VerySmall %>
+            </a>
