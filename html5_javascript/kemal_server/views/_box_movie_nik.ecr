@@ -8,7 +8,6 @@
     </p>
 
     <div class="small reveal" id="exampleModal<%= movie.id %>" data-reveal style="background-color:black; color:white;">
-    Watch <%= movie.name_with_episode %>
             <a href="<%= movie.url %>" target="_blank" 
               onclick="
                <% if movie.url !~ /edited_youtube/ %>
@@ -21,6 +20,7 @@
               <% end %>
             ">
               <%= movie.image_tag "alt=\"#{movie.name_with_episode}\" style='max-height: 300px; max-width: 300px;'", ImageSize::VerySmall %>
+    Watch <%= movie.name_with_episode %>
 
             </a>
             <% if movie.edit_passes_completed >= 2 %>
@@ -38,6 +38,8 @@
           <div style="text-align: center;">
            Or <a href=/personalized_edit_list/<%=movie.id%>>personalize edits</a> your way!
           </div>
+
+      <br/>
        <%= render "views/single_movie_lower.ecr"  %>
 
       <button class="close-button" data-close aria-label="Close reveal" type="button">
