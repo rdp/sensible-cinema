@@ -640,7 +640,7 @@ get "/" do |env|
   render "views/main_nik.ecr", "views/layout_nik.ecr"
 end
 
-get "/full_list" do |env| # index home
+get "/full_list" do |env| # index home old index
   all_urls = get_all_urls
   all_urls_done = all_urls.select{|url| url.edit_passes_completed >= 2 }
   all_urls_half_way = all_urls.select{|url| url.edit_passes_completed == 1 }
@@ -649,6 +649,35 @@ get "/full_list" do |env| # index home
   out = render "views/main.ecr", "views/layout_yes_nav.ecr"
   puts "view took #{Time.now - start}"  # pre view takes as long as first query :|
   out
+end
+
+get "/list/all_movies" do |env|
+  movies = get_movies_sorted.select{ |group| group[:type] == :all_movies}[0]
+  render "views/list_movies_nik.ecr", "views/layout_nik.ecr"
+end
+
+def get_movies_sorted
+  all_urls = get_all_urls
+  all_urls_done = all_urls.select{|url| url.edit_passes_completed >= 2 }
+  all_urls_half_way = all_urls.select{|url| url.edit_passes_completed == 1 }
+  all_urls_just_started = all_urls.select{|url| url.edit_passes_completed == 0 }
+
+non_youtubes = all_urls_done.reject{|u| u.url =~ /edited_youtube/}
+new_releases = non_youtubes.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number == 0}
+
+# XXX better named here?
+settings = [
+  {type: :all_movies, title: "All Movies", urls: non_youtubes.select{|u| u.episode_number == 0}, message: "All movies"},
+  {type: :all_series, title: "All Series", urls: non_youtubes.select{|u| u.episode_number > 0}, message: "All TV series"},
+  {type: :new_releases, title: "Movie New Releases (and older classics) Rent/Purchase", urls: new_releases, message: "Movies and new releases for rent/purchase"},
+  {type: :pay_tv_series, title: "TV Series (Rent/Purchase)", urls: non_youtubes.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number > 0}, message: "TV Series for rent/buy"},
+  {type: :youtubes, title: "Youtubes (Free)", urls: all_urls_done.select{|u| u.url =~ /edited_youtube/}, message: "You can watch these youtubes edited right now, on your current device, free!  To watch full length movies, use our free <a href=/installation>app</a>!"},
+  {type: :prime_movies, title: "Free With Prime Movies", urls: non_youtubes.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number == 0}, message: "Movies for free with prime"},
+  {type: :prime_tv, title: "Free With Prime TV Series", urls: non_youtubes.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number > 0}, message: "TV Series for free with prime"},
+  # too cluttered on desktop {type: :everything, title: "Everything", urls: all_urls_done, message: "Everything we have edited!"},
+  {type: :in_the_works, title: "Videos in the works (please support us!)", urls: (all_urls_half_way + all_urls_just_started), message: "Things we want to get to, with your support!"}
+]
+
 end
 
 get "/movies_in_works" do |env|
