@@ -30,18 +30,21 @@
                 <div class="top-bar-left">
                     <ul class="menu vertical medium-horizontal dropdown" data-responsive-menu="accordion medium-dropdown">
                         <li class="show-for-medium">
-                            <a href="index.html"><img id="logo-words" src="/images/camera-logo-side-words.png" alt="logo with words"></a>
+                            <a href="/"><img id="logo-words" src="/images/camera-logo-side-words.png" alt="logo with words"></a>
                         </li>
                         <li class="is-dropdown-submenu-parent">
                             <a href="">Browse</a>
                             <ul class="menu dropdown" data-dropdown-menu>
-                                <li><a href="">Home</a></li>
-                                <li><a href="">Recently Filtered</a></li>
+                                <li><a href="/">Home</a></li>
+                                <% cats = get_movies_sorted 
+                                   cats.each{ |category| %>
+                                  <li><a href="/list/<%= category[:type] %>"><%= category[:title] %></a></li>
+                                <% } %>
                                 <li><a href="">By Genre</a></li>
                             </ul>
                         </li>
                         <li>
-                            <a href="">FAQ</a>
+                            <a href="/faq">FAQ</a>
                         </li>
                         <li class="show-for-large">
                             <a href=""><img id="donate" src="/images/donate-button.gif"></a>
