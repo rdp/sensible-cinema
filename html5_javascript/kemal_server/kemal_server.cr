@@ -628,7 +628,8 @@ end
 
 def put_test_last(urls)
   if urls[0].human_readable_company == "playitmyway"
-    urls.push urls.shift # move it to last :|
+    pimw = urls.shift
+    urls.push pimw # put at end
   end
   urls
 end
@@ -651,8 +652,9 @@ get "/full_list" do |env| # index home old index
   out
 end
 
-get "/list/all_movies" do |env|
-  movies = get_movies_sorted.select{ |group| group[:type] == :all_movies}[0]
+get "/list/:type" do |env| # like all_movies
+  type = env.params.url["type"]
+  movies = get_movies_sorted.select{ |group| group[:type].to_s == type}[0]
   render "views/list_movies_nik.ecr", "views/layout_nik.ecr"
 end
 
@@ -662,8 +664,8 @@ def get_movies_sorted
   all_urls_half_way = all_urls.select{|url| url.edit_passes_completed == 1 }
   all_urls_just_started = all_urls.select{|url| url.edit_passes_completed == 0 }
 
-non_youtubes = all_urls_done.reject{|u| u.url =~ /edited_youtube/}
-new_releases = non_youtubes.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number == 0}
+  non_youtubes = all_urls_done.reject{|u| u.url =~ /edited_youtube/}
+  new_releases = non_youtubes.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number == 0}
 
 # XXX better named here?
 settings = [
