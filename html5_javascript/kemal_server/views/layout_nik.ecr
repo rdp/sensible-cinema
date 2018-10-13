@@ -68,6 +68,7 @@
 
   <%= content %>
 
+ <div style="clear: both;"></div>. <!-- some do, some don't need? -->
     <footer>
         <div class="grid-x">
             <div class="cell auto">
@@ -86,6 +87,16 @@
     <script src="/js/vendor/what-input.js"></script>
     <script src="/js/vendor/foundation.js"></script>
     <script src="/js/app.js"></script>
+
+<% if !editor?(env) %>
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-4531218-7', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+<% end %>
+
 </body>
 
 </html>
