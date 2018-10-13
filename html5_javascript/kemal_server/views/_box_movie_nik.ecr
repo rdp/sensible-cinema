@@ -3,7 +3,7 @@
       <% if movie.image_local_filename.present? %>
        <%= movie.image_tag "alt=\"#{movie.name_with_episode}\" style=''", ImageSize::VerySmall %> <!-- get size from cell -->
       <% else %>
-        <p style="color:red"><%= movie.name_with_episode %></p>
+        <p style=""><%= movie.name_with_episode %></p> <!-- it's a link so can't easily set color here... -->
       <% end %>
       </a>
     </p>
