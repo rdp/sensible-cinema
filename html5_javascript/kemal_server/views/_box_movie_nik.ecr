@@ -3,6 +3,7 @@
       <% if movie.image_local_filename.present? %>
        <%= movie.image_tag "alt=\"#{movie.name_with_episode}\" style=''", ImageSize::VerySmall %> <!-- get size from cell -->
        <% if movie.episode_number > 0 %> <!-- assume it doesn't have text, and has a cruddy image... -->
+          <div style="clear: both;"></div> <!-- don't show half text to right of image -->
           <%= movie.name_with_episode %>
         <% end %>
       <% else %>
