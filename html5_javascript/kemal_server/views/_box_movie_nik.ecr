@@ -20,10 +20,10 @@
                  alert('after opening the series, click play button for episode <%= movie.episode_number %> (<%= movie.episode_name %>)');
               <% end %>
             ">
-              <%= movie.image_tag "alt=\"#{movie.name_with_episode}\" style=''", ImageSize::VerySmall %>
+              <%= movie.image_tag "alt=\"#{movie.name_with_episode}\" style='display: block; margin: 0 auto;'", ImageSize::VerySmall %>
           <div style="clear: both;"></div>
           <div style="text-align: center;">
-            Watch <%= movie.name_with_episode %>
+            Click to watch <%= movie.name_with_episode %> <!-- XXX say something else if can't actually watch edited? -->
 
             </a>
             <% if movie.edit_passes_completed >= 2 %>
@@ -39,7 +39,6 @@
            Or <a href=/personalized_edit_list/<%=movie.id%>>personalize edits</a> your way!
           </div>
 
-      <br/>
        <%= render "views/single_movie_lower.ecr"  %>
 
       <button class="close-button" data-close aria-label="Close reveal" type="button">
