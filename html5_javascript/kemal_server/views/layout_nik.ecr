@@ -27,7 +27,7 @@
                  </a>
             </div>
 
-            <!-- Top Bar for Medium and Larger Screens -->
+            <!-- Top Bar for Medium and Larger Screens, with the shared -->
             <div class="top-bar" id="responsive-menu" data-margin-top="0" data-sticky>
                 <div class="top-bar-left">
                     <ul class="menu vertical medium-horizontal dropdown" data-responsive-menu="accordion medium-dropdown">
@@ -37,12 +37,15 @@
                         <li class="is-dropdown-submenu-parent">
                             <a href="">Browse</a>
                             <ul class="menu dropdown" data-dropdown-menu>
-                                <li><a href="/">Home</a></li>
                                 <% cats = get_movies_sorted 
                                    cats.each{ |category| %>
                                   <li><a href="/list/<%= category[:type] %>"><%= category[:title] %></a></li>
                                 <% } %>
+                                <li><a href="/">Home</a></li>
                             </ul>
+                        </li>
+                        <li>
+                            <a href="/">Home</a>
                         </li>
                         <li>
                             <a href="/questions">About</a>
