@@ -18,11 +18,13 @@
     <div data-sticky-container>
 
         <!-- Hamburger Menu for Small Screens -->
-        <div data-sticky data-options="marginTop:0;">
+        <div data-sticky data-options="marginTop:0;" data-sticky-on="small"> <!-- don't bug out mobile https://github.com/zurb/foundation-sites/issues/11098 -->
             <div class="title-bar" data-responsive-toggle="responsive-menu" data-hide-for="medium">
                 <button class="menu-icon" type="button" data-toggle="responsive-menu"></button>
-                <img id="logo" src="/images/camera-logo.png" alt="logo">
-                <div class="title-bar-title">Play It My Way</div>
+                 <a href="/">
+                   <img id="logo" src="/images/camera-logo.png" alt="logo">
+                  <div class="title-bar-title">Play It My Way</div>
+                 </a>
             </div>
 
             <!-- Top Bar for Medium and Larger Screens -->
