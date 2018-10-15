@@ -25,6 +25,9 @@ a:hover {
 
 /* MAIN NAVIGATION */
 
+.is-at-bottom {
+  top: 0 !important;
+}
 
 /* Small only */
 
