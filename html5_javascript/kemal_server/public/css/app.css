@@ -117,7 +117,7 @@ a:hover {
 }
 
 .is-dropdown-submenu-parent a {
-   margin-left: -30px; 
+   padding-right: 30px;  /* some weird overlap bug... */
 }
 
 #donate {
