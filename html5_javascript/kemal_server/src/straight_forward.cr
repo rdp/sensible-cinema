@@ -2,6 +2,10 @@ get "/installation" do |env|
   render "views/installation.ecr", "views/layout_yes_nav.ecr"
 end
 
+get "/search" do |env|
+  render "views/search.ecr", "views/layout_yes_nav.ecr"
+end
+
 get "/privacy" do |env|
   render "views/privacy.ecr", "views/layout_yes_nav.ecr"
 end
