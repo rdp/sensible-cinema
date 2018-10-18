@@ -622,8 +622,7 @@ def sanitize_html(name)
 end
 
 def get_all_urls
-  urls = Url.all
-  put_test_last(urls)
+  urls = Url.all.sort_by{|u| u.name}
 end
 
 def put_test_last(urls)
@@ -680,18 +679,19 @@ settings = [
   {type: :in_the_works, title: "Videos in the works (please support us!)", urls: get_in_works(all_urls), message: "Things we want to get to, with your support!"},
   {type: :everything, title: "Everything edited", urls: all_urls_done, message: "Everything we have edited!"},
 ]
-
 end
 
 def get_in_works(all_urls)
   all_urls_half_way = all_urls.select{|url| url.edit_passes_completed == 1 }
   all_urls_just_started = all_urls.select{|url| url.edit_passes_completed == 0 }
   in_works = all_urls_half_way + all_urls_just_started
-  return in_works.sort_by{|u| u.name}.sort_by{|u| (u.name =~ /game of thrones/i) == nil} # put them last, there's soo many
+  in_works.sort_by!{|u| u.name}
+  put_test_last(in_works) # not reallly for human consumption in lists...
+  return in_works.sort_by{|u| (u.name =~ /game of thrones/i) == nil} # put them last, there's soo many
 end
 
-get "/movies_in_works" do |env|
-  urls = get_all_urls.reject{|url| url.edit_passes_completed == 0 }.sort_by{|u| u.name}
+get "/movies_in_works" do |env| # old way...
+  urls = get_all_urls.reject{|url| url.edit_passes_completed == 0 }
   if env.params.query["by_self"]? # the default uh think these days?
     render "views/_list_movies.ecr"
   else
