@@ -2,11 +2,27 @@
         <h4><%= movies[:title] %></h4> <%=  movies[:message] %>
     </div>
 
-      <% movies[:urls].each { |movie| %>
-        <div style="margin: 10px; float: left; max-width: 350px; min-height: 400;">
-          <%= render "views/_box_movie_nik.ecr" %> 
-        </div>
-     <% } %>
+    <% by_series = movies[:urls].group_by{|u| u.name} %>
+    <% by_series.each_with_index{ |series_episodes, idx| series, episodes = series_episodes; %>
+      <% if episodes.size == 1 %> <!-- ex a movie -->
+        <%= movie = episodes.first; render "views/_box_movie_nik.ecr" %>
+      <% else %>
+         <!-- a series -->
+         <div style="clear: both;"></div>
+         <a href=# onclick="$('.series_div_<%= idx %>').toggle(); $('.series_image_<%= idx %>').toggle(); return false;">
+           <h4><%= series %> (<%= episodes.size %> episode<%= "s" if episodes.size > 1 %> <%= "so far" if episodes.size < 10 %>)</h4>
+           <%= episodes[0].image_tag "alt='#{series}' class='series_image_#{idx}'", ImageSize::VerySmall %>
+           Click to see all episodes &darr;
+         </a>
+         <div class=series_div_<%= idx %> style="display: none;" >
+           <% episodes.each{ |movie| %>
+             <%= render "views/_box_movie_nik.ecr" %>
+           <% } %>
+         </div>
+         <div style="clear: both;"></div>
+      <% end %>
+    <% } %>
 
 <div style="clear: both;"></div>.
+
 Movies, characters art, etc. are properties of their respective studios and I am making no particular claims about them. Some words like "Amazon" and movie titles, etc. are trademark of their respective companies.

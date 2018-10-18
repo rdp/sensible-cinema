@@ -1,4 +1,5 @@
-    <p>
+<div style="margin: 10px; float: left; max-width: 350px; min-height: 400;">
+  <p>
       <a data-toggle="exampleModal<%= movie.id %>" aria-controls="exampleModal<%= movie.id %>">
       <% if movie.image_local_filename.present? %>
        <%= movie.image_tag "alt=\"#{movie.name_with_episode}\" style=''", ImageSize::VerySmall %> <!-- get size from cell -->
@@ -51,3 +52,4 @@
       <input type="button" value="Back" onclick="$('#exampleModal<%= movie.id %>').foundation('close');" style="height: 60px; width: 60px;"/> 
     </div> <!-- end modal -->
 
+</div>
