@@ -626,7 +626,7 @@ def get_all_urls
 end
 
 def put_test_last(urls)
-  if urls[0].human_readable_company == "playitmyway"
+  if urls.size > 0 && urls[0].human_readable_company == "playitmyway"
     pimw = urls.shift
     urls.push pimw # put at end
   end

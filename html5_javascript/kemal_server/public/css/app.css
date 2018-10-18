@@ -1,7 +1,7 @@
 /* GENERAL STYLES */
 
 body {
-    background-color: #001270;
+    background-color: rgb(0, 9, 56);
     font-family: 'Istok Web', sans-serif;
 }
 
@@ -63,7 +63,7 @@ a:hover {
 /* Hamburger Menu at Small Screen Size */
 
 .title-bar {
-    background-color: rgba(0, 18, 112, 0.75);
+    background-color: rgba(0, 8, 56, 0.75);
 }
 
 #logo {
@@ -93,13 +93,13 @@ a:hover {
 /* Top Bar Menu at Medium and Up Screen Sizes */
 
 .top-bar {
-    background-color: rgba(0, 18, 112, 0.75);
+    background-color: rgba(0, 9, 56, 0.75);
     color: white;
     padding: 0;
 }
 
 .top-bar ul {
-    background-color: rgba(0, 18, 112, 0.0);
+    background-color: rgba(0, 9, 56, 0.0);
     color: white;
 }
 
@@ -145,11 +145,11 @@ a:hover {
 }
 
 .top-bar a {
-    background-color: rgba(0, 18, 112, 0.0);
+    background-color: rgba(0, 9, 56, 0.0);
 }
 
 .submenu a {
-    background-color: rgba(0, 18, 112, 0.75);
+    background-color: rgba(0, 9, 56, 0.75);
     width: 100%;
 }
 
@@ -378,7 +378,7 @@ ul {
 
 .action-box {
     height: auto;
-    background-color: rgba(0, 18, 112, 0.65);
+    background-color: rgba(0, 9, 56, 0.65);
     color: white;
     margin-left: 3vh;
     padding-left: 25px;
@@ -447,7 +447,7 @@ ul {
 /* NEWLY FILTERED GALLERY */
 
 .mid-bar {
-    background-color: rgba(0, 18, 112, 0.75);
+    background-color: rgba(0, 9, 56, 0.75);
     padding-left: 3vh;
     color: white;
     padding-top: 2vh;
