@@ -2,7 +2,7 @@
         <h4><%= movies[:title] %></h4> <%=  movies[:message] %>
     </div>
 
-      <% movies[:urls].each_with_index { |movie, idx| %>
+      <% movies[:urls].each { |movie| %>
         <div style="margin: 10px; float: left; max-width: 350px; min-height: 400;">
           <%= render "views/_box_movie_nik.ecr" %> 
         </div>
