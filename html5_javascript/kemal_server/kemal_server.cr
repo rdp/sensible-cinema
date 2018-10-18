@@ -686,7 +686,7 @@ def get_in_works(all_urls)
   in_works.sort_by!{|u| u.name} # combine lists
   puts "after name=", in_works.map &.name
   puts "sort=", in_works.map{|u|  (u.name =~ /game of thrones/i) == nil}
-  in_works.sort_by!{|u| (u.name =~ /game of thrones/i) == nil} # put last there's soo many
+  in_works.sort_by!{|u| (u.name =~ /game of thrones/i) !== nil} # put last there's soo many
   puts "after got=", in_works.map &.name
   put_test_last(in_works) # not reallly for human consumption in lists...
   puts "after test last=", in_works.map &.name
