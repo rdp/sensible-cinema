@@ -661,8 +661,6 @@ end
 def get_movies_sorted
   all_urls = get_all_urls
   all_urls_done = all_urls.select{|url| url.edit_passes_completed >= 2 }
-  all_urls_half_way = all_urls.select{|url| url.edit_passes_completed == 1 }
-  all_urls_just_started = all_urls.select{|url| url.edit_passes_completed == 0 }
 
   non_youtubes = all_urls_done.reject{|u| u.url =~ /edited_youtube/}
   new_releases = non_youtubes.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number == 0}
@@ -677,10 +675,17 @@ settings = [
   {type: :prime_movies, title: "Free With Prime Movies", urls: non_youtubes.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number == 0}, message: "Movies for free with prime"},
   {type: :prime_tv, title: "Free With Prime TV Series", urls: non_youtubes.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number > 0}, message: "TV Series for free with prime"},
   {type: :recent, title: "Recently Edited", urls: all_urls_done.sort_by{|u| u.status_last_modified_timestamp}.reverse.first(45), message: "Our most recently edited"},
-  {type: :in_the_works, title: "Videos in the works (please support us!)", urls: (all_urls_half_way + all_urls_just_started), message: "Things we want to get to, with your support!"},
-  {type: :everything, title: "Everything", urls: all_urls_done, message: "Everything we have edited!"},
+  {type: :in_the_works, title: "Videos in the works (please support us!)", urls: get_in_works(all_urls), message: "Things we want to get to, with your support!"},
+  {type: :everything, title: "Everything edited", urls: all_urls_done, message: "Everything we have edited!"},
 ]
 
+end
+
+def get_in_works(all_urls)
+  all_urls_half_way = all_urls.select{|url| url.edit_passes_completed == 1 }
+  all_urls_just_started = all_urls.select{|url| url.edit_passes_completed == 0 }
+  in_works = all_urls_half_way + all_urls_just_started
+  return in_works.sort_by{|u| (u.name =~ /game of thrones/i) != nil} # put them last, there's soo many
 end
 
 get "/movies_in_works" do |env|
