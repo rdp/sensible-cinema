@@ -641,7 +641,7 @@ get "/" do |env|
   render "views/main_nik.ecr", "views/layout_nik.ecr"
 end
 
-get "/full_list" do |env| # old home index...
+get "/old_list" do |env| # old home index...
   all_urls = get_all_urls
   all_urls_done = all_urls.select{|url| url.edit_passes_completed >= 2 }
   all_urls_half_way = all_urls.select{|url| url.edit_passes_completed == 1 }
