@@ -9,7 +9,8 @@
       <% else %>
         <!-- a series -->
         <div style="clear: both;"></div>
-         <a href=# onclick="$('.series_div_<%= idx %>').toggle(); $('.series_image_<%= idx %>').toggle(); return false;">
+        <div style="border: dashed grey 2px;"> 
+          <a href=# onclick="$('.series_div_<%= idx %>').toggle(); $('.series_image_<%= idx %>').toggle(); return false;">
            <%= episodes[0].image_tag "alt='#{series}' class='series_image_#{idx}'", ImageSize::VerySmall %>
            <div style="margin: 10px; float: left; max-width: 350px; min-height: 400;"> <!-- duplicated from box ... -->
              <div style="clear: both;"></div> <!-- don't show half text to right of image -->
@@ -21,6 +22,7 @@
              <%= render "views/_box_movie_nik.ecr" %>
            <% } %>
          </div>
+        </div>
         <div style="clear: both;"></div>
       <% end %>
     <% } %>
