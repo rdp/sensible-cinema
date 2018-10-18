@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <% action = env.request.path.split("/")[1]; english_action = action.gsub("_", " ").split.map{|word| word.capitalize}.join(" ") %>
     <title>
       <%= " DEV |" if is_dev? %>
       <% if env.response.title.present? %>
@@ -28,7 +29,11 @@
 </head>
 
 <body>
-
+    <% if env.session.string?("flash") %>
+      <p class="" style="padding: 10px;">
+         <span style="font-size: 30px;"><%= out = env.session.string("flash"); env.session.delete_string("flash"); out %> </span>
+      </p>
+    <% end %>
     <div data-sticky-container>
 
         <!-- Hamburger Menu for Small Screens -->
@@ -83,7 +88,13 @@
                                 </div>
                             </form>
                         </li>
-                        <li><a id="log-in" href="https://playitmyway.org/login">Log In</a></li>
+                        <li>
+                          <% if logged_in?(env) %>
+                            <a id="log-out" href="https://playitmyway.org/logout">Log Out <%= logged_in_user(env).name %> </a>
+                          <% else %>
+                            <a id="log-in" href="https://playitmyway.org/login">Log In</a>
+                          <% end %>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -124,7 +135,7 @@
   <script async src='https://www.google-analytics.com/analytics.js'></script>
 <% end %>
 
-<%= render "views/_installed_js.ecr" %>
+<%= render "views/_installed_js.ecr" %> <!-- several wanted it LOL -->
 </body>
 
 </html>
