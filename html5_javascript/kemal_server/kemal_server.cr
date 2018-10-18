@@ -622,7 +622,7 @@ def sanitize_html(name)
 end
 
 def get_all_urls
-  urls = Url.all.sort_by{|u| u.name}
+  urls = Url.all.sort_by{|u| [u.name, u.episode_number]}
 end
 
 def put_test_last(urls)
@@ -684,13 +684,11 @@ def get_in_works(all_urls)
   all_urls_just_started = all_urls.select{|url| url.edit_passes_completed == 0 }
   in_works = all_urls_half_way + all_urls_just_started
   in_works.sort_by!{|u| u.name} # combine lists
-  puts "after name=", in_works.map &.name
-  puts "sort=", in_works.map{|u|  (u.name =~ /game of thrones/i) != nil}
-  in_works.sort_by!{|u| (u.name =~ /game of thrones/i) != nil} # put last there's soo many
-  puts "after got=", in_works.map &.name
-  put_test_last(in_works) # not reallly for human consumption in lists...
-  puts "after test last=", in_works.map &.name
-  return in_works
+
+  # crystal's sort is a WiP so work around it...??? it lost orderings and crud...
+  thrones, others = in_works.partition{|u| u.name =~ /game of thrones/i }
+  put_test_last(others)
+  return others + thrones
 end
 
 get "/movies_in_works" do |env| # old way...
