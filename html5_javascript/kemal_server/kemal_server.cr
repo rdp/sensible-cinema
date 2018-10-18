@@ -637,7 +637,7 @@ end
 get "/" do |env|
   all_urls = get_all_urls
   all_urls_done = all_urls.select{|url| url.edit_passes_completed >= 2 }
-  most_recent = all_urls_done.sort_by{|u| u.status_last_modified_timestamp}.reverse.first(8) # XXX some series, some movies on purpose?
+  most_recent = all_urls_done.sort_by{|u| u.status_last_modified_timestamp}.last(8) # XXX some series, some movies on purpose?
   render "views/main_nik.ecr", "views/layout_nik.ecr"
 end
 
@@ -660,6 +660,8 @@ end
 
 def get_movies_sorted
   all_urls = get_all_urls
+  puts "all="
+  puts all_urls
   all_urls_done = all_urls.select{|url| url.edit_passes_completed >= 2 }
 
   non_youtubes = all_urls_done.reject{|u| u.url =~ /edited_youtube/}
@@ -685,7 +687,7 @@ def get_in_works(all_urls)
   all_urls_half_way = all_urls.select{|url| url.edit_passes_completed == 1 }
   all_urls_just_started = all_urls.select{|url| url.edit_passes_completed == 0 }
   in_works = all_urls_half_way + all_urls_just_started
-  return in_works.sort_by{|u| (u.name =~ /game of thrones/i) != nil} # put them last, there's soo many
+  return in_works.sort_by{|u| u.name}.sort_by{|u| (u.name =~ /game of thrones/i) != nil} # put them last, there's soo many
 end
 
 get "/movies_in_works" do |env|
