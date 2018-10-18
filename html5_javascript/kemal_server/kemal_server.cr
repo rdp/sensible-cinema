@@ -659,8 +659,6 @@ end
 
 def get_movies_sorted
   all_urls = get_all_urls
-  puts "all="
-  puts all_urls.map &.name
   all_urls_done = all_urls.select{|url| url.edit_passes_completed >= 2 }
 
   non_youtubes = all_urls_done.reject{|u| u.url =~ /edited_youtube/}
