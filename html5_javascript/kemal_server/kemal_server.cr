@@ -622,7 +622,7 @@ def sanitize_html(name)
 end
 
 def get_all_urls
-  urls = Url.all.sort_by{|u| [u.name, u.episode_number]}
+  urls = Url.all.sort_by{|u| {u.name, u.episode_number}}
 end
 
 def put_test_last(urls)
