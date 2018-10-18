@@ -67,7 +67,13 @@ end
 
 struct Bool
   def <=>(other : Bool)
-    self == other ? 0 : -1
+    if self == other
+      return 0
+    elsif self
+      return 1
+    else
+      return 0
+    end
   end
 end
 
