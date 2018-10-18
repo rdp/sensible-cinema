@@ -3,7 +3,7 @@ get "/installation" do |env|
 end
 
 get "/search" do |env|
-  render "views/search.ecr", "views/layout_yes_nav.ecr"
+  render "views/search.ecr", "views/layout_nik.ecr"
 end
 
 get "/privacy" do |env|
