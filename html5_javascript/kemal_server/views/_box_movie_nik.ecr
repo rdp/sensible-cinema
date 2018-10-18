@@ -45,9 +45,9 @@
 
        <%= render "views/single_movie_lower.ecr"  %>
 
-      <button class="close-button" data-close aria-label="Close reveal" type="button">
+      <button class="close-button" data-close aria-label="Close reveal" type="button"> <!-- top right x -->
         <span aria-hidden="true">&times;</span>
       </button>
-      <input type="button" value="Close" onclick="$('#exampleModal<%= movie.id %>').foundation('close');"/> 
+      <input type="button" value="Back" onclick="$('#exampleModal<%= movie.id %>').foundation('close');" style="height: 60px; width: 60px;"/> 
     </div> <!-- end modal -->
 
