@@ -676,7 +676,7 @@ settings = [
   {type: :youtubes, title: "Youtubes (Free)", urls: all_urls_done.select{|u| u.url =~ /edited_youtube/}, message: "You can watch these youtubes edited right now, on your current device, free!  To watch full length movies, use our free <a href=/installation>app</a>!"},
   {type: :prime_movies, title: "Free With Prime Movies", urls: non_youtubes.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number == 0}, message: "Movies for free with prime"},
   {type: :prime_tv, title: "Free With Prime TV Series", urls: non_youtubes.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number > 0}, message: "TV Series for free with prime"},
-  {type: :recent, title: "Recently Edited", urls: all_urls_done.sort_by{|u| u.status_last_modified_timestamp}.reverse.first(15), message: "Our most recently edited"},
+  {type: :recent, title: "Recently Edited", urls: all_urls_done.sort_by{|u| u.status_last_modified_timestamp}.reverse.first(45), message: "Our most recently edited"},
   # too cluttered on desktop {type: :everything, title: "Everything", urls: all_urls_done, message: "Everything we have edited!"},
   {type: :in_the_works, title: "Videos in the works (please support us!)", urls: (all_urls_half_way + all_urls_just_started), message: "Things we want to get to, with your support!"}
 ]
