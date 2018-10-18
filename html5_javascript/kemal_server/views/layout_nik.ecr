@@ -46,13 +46,16 @@
                  </a>
             </div>
 
-            <!-- Top Bar for Medium and Larger Screens, with the shared -->
+            <!-- Top Bar for All Screens -->
             <div class="top-bar" id="responsive-menu" data-margin-top="0" data-sticky>
                 <div class="top-bar-left">
                     <ul class="menu vertical medium-horizontal dropdown" data-responsive-menu="accordion medium-dropdown">
                         <li class="show-for-medium">
                             <a href="/"><img id="logo-words" src="/images/camera-logo-side-words.png" alt="logo with words"></a>
                         </li>
+                        <li>
+                          <%= english_name %>
+                        </li> 
                         <li class="is-dropdown-submenu-parent">
                             <a href="">Browse</a>
                             <ul class="menu dropdown" data-dropdown-menu>
@@ -60,7 +63,6 @@
                                    cats.each{ |category| %>
                                   <li><a href="/list/<%= category[:type] %>"><%= category[:title] %> (<%= category[:urls].size %>)</a></li>
                                 <% } %>
-                                <li><a href="/">Home</a></li>
                             </ul>
                         </li>
                         <li>
