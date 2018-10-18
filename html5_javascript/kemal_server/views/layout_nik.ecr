@@ -5,9 +5,23 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Play It My Way</title>
+    <title>
+      <%= " DEV |" if is_dev? %>
+      <% if env.response.title.present? %>
+        <%= env.response.title %>
+        (Play it My Way)
+      <% elsif action.present? %>
+        <%= " #{english_action} |" %>
+        (Play it My Way)
+      <% else %>
+        Play it My Way : Edited streaming movies
+      <% end %>
+    </title>
+ 
     <link rel="stylesheet" href="/css/foundation.min.css">
     <link rel="stylesheet" href="/css/app.css">
+    <link rel="icon" type="image/png" href="/images/camera.128.png"  sizes="128x128" />
+    <link rel="icon" type="image/png" href="/images/camera.32.png"  sizes="32x32" />
     <link href="https://fonts.googleapis.com/css?family=Bitter:700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Istok+Web" rel="stylesheet">
     <%= yield_content "header" %>
