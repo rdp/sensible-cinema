@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <% action = env.request.path.split("/")[1]; english_action = action.gsub("_", " ").split.map{|word| word.capitalize}.join(" ") %>
+    <% action = env.request.path.split("/")[-1]; english_action = action.gsub("_", " ").split.map{|word| word.capitalize}.join(" ") %>
     <title>
       <%= " DEV |" if is_dev? %>
       <% if env.response.title.present? %>
