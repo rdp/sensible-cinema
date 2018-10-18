@@ -58,7 +58,7 @@
                             <ul class="menu dropdown" data-dropdown-menu>
                                 <% cats = get_movies_sorted 
                                    cats.each{ |category| %>
-                                  <li><a href="/list/<%= category[:type] %>"><%= category[:title] %></a></li>
+                                  <li><a href="/list/<%= category[:type] %>"><%= category[:title] %> (<%= category[:urls].size %>)</a></li>
                                 <% } %>
                                 <li><a href="/">Home</a></li>
                             </ul>
