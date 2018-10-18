@@ -685,9 +685,10 @@ def get_in_works(all_urls)
   all_urls_half_way = all_urls.select{|url| url.edit_passes_completed == 1 }
   all_urls_just_started = all_urls.select{|url| url.edit_passes_completed == 0 }
   in_works = all_urls_half_way + all_urls_just_started
-  in_works.sort_by!{|u| u.name}
+  in_works.sort_by!{|u| u.name} # combine lists
+  in_works.sort_by!{|u| (u.name =~ /game of thrones/i) != nil} # put last there's soo many
   put_test_last(in_works) # not reallly for human consumption in lists...
-  return in_works.sort_by{|u| (u.name =~ /game of thrones/i) == nil} # put them last, there's soo many
+  return in_works
 end
 
 get "/movies_in_works" do |env| # old way...
