@@ -636,7 +636,7 @@ end
 get "/" do |env|
   all_urls = get_all_urls
   all_urls_done = all_urls.select{|url| url.edit_passes_completed >= 2 }
-  most_recent = all_urls_done.sort_by{|u| u.status_last_modified_timestamp}.last(8) # XXX some series, some movies on purpose?
+  most_recent = all_urls_done.sort_by{|u| u.status_last_modified_timestamp}.last(8).reverse # XXX some series, some movies on purpose, here?
   render "views/main_nik.ecr", "views/layout_nik.ecr"
 end
 
@@ -667,7 +667,7 @@ def get_movies_sorted
 # XXX better named here?
 settings = [
   {type: :all_movies, title: "All Movies", urls: non_youtubes.select{|u| u.episode_number == 0}, message: "All movies we have edited"},
-  {type: :all_series, title: "All Series", urls: non_youtubes.select{|u| u.episode_number > 0}, message: "All TV series we have edited"},
+  {type: :all_series, title: "All TV Series", urls: non_youtubes.select{|u| u.episode_number > 0}, message: "All TV series we have edited"},
   {type: :pay_movies, title: "Movies Rent/Purchase", urls: new_releases, message: "Movies new releases and older titles, for rent/purchase"},
   {type: :pay_tv_series, title: "TV Series (Rent/Purchase)", urls: non_youtubes.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number > 0}, message: "TV Series for rent/buy"},
   {type: :youtubes, title: "Youtubes (Free)", urls: all_urls_done.select{|u| u.url =~ /edited_youtube/}, message: "You can watch these youtubes edited right now, on your current device, free!"},
