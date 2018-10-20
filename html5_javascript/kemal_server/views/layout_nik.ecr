@@ -42,7 +42,8 @@
                 <button class="menu-icon" type="button" data-toggle="responsive-menu"></button>
                  <a href="/">
                    <img id="logo" src="/images/camera-logo.png" alt="logo">
-                  <div class="title-bar-title">Play It My Way</div>
+                   <div class="title-bar-title">Play It My Way</div>
+                   <%= yield_content "navbar" %>
                  </a>
             </div>
 
@@ -51,7 +52,9 @@
                 <div class="top-bar-left">
                     <ul class="menu vertical medium-horizontal dropdown" data-responsive-menu="accordion medium-dropdown">
                         <li class="show-for-medium">
-                            <a href="/"><img id="logo-words" src="/images/camera-logo-side-words.png" alt="logo with words"></a>
+                            <a href="/"><img id="logo-words" src="/images/camera-logo-side-words.png" alt="logo with words">
+                   <%= yield_content "navbar" %>
+</a>
                         </li>
                         <li class="is-dropdown-submenu-parent">
                             <a href="">Browse</a>
@@ -96,7 +99,6 @@
                         </li>
                     </ul>
                 </div>
-                <%= yield_content "navbar" %>
             </div>
         </div>
     </div>
