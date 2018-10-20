@@ -65,7 +65,7 @@
     <div class="grid-x grid-padding-x small-up-3 medium-up-5 large-up-8">
       <% most_recent.each_with_index { |movie, idx| %>
         <div class="cell <%= idx > 4 ? "show-for-large" : idx > 2 ? "show-for-medium" : "" %>">
-          <% box_max_width = "100%" %>
+          <% box_style = "" %>
           <%= render "views/_box_movie_nik.ecr" %> 
         </div>
      <% } %>
