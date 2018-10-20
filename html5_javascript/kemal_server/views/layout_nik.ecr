@@ -92,7 +92,7 @@
                         </li>
                         <li>
                           <% if logged_in?(env) %>
-                            <a id="log-out" href="https://playitmyway.org/logout">Log Out <%= logged_in_user(env).name %> </a>
+                            <a id="log-out" href="https://playitmyway.org/logout">Log Out <%= logged_in_user(env).name.split.first %> </a>
                           <% else %>
                             <a id="log-in" href="https://playitmyway.org/login">Log In</a>
                           <% end %>
