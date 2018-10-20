@@ -63,7 +63,7 @@
         <h4>Newly Filtered</h4>
     </div>
 
-    <div class="grid-x grid-padding-x small-up-3 medium-up-5 large-up-8">
+    <div class="grid-x grid-padding-x small-up-4 medium-up-6 large-up-9">
       <% most_recent.each_with_index { |movie, idx| %>
         <div class="cell <%= idx > 4 ? "show-for-large" : idx > 2 ? "show-for-medium" : "" %>">
           <%= render "views/_box_movie_nik.ecr" %> 
