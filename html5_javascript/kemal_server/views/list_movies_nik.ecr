@@ -13,6 +13,7 @@
       <% if episodes.size == 1 %> <!-- ex a movie -->
         <%= movie = episodes.first; render "views/_box_movie_nik.ecr" %>
       <% else %>
+        <% episodes.sort_by{|u| u.episode_number} %> <!-- ??? -->
         <!-- a series -->
         <div style="margin: 2px; float:left;"> 
           <a href=# onclick="$('.series_div_<%= idx %>').toggle(); $('.series_image_<%= idx %>').toggle(); return false;">
