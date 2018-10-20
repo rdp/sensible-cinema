@@ -74,7 +74,7 @@
 <br/>
 <% all = get_movies_sorted 
   all.each{|category|  %>
-<a href="/list/<%= category[:type] %>" class="button get-app"><%= category[:title] %></a>
+<a href="/list/<%= category[:type] %>" class="button get-app"><%= category[:title] %> (<%= category[:urls].size %>)</a>
 <br/>
 <% } %>
 
