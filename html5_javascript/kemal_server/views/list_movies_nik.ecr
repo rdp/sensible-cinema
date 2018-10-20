@@ -4,7 +4,7 @@
     </div>
 
     <% by_series = movies[:urls].group_by{|u| u.name} %>
-    <% box_style = "max-width: 45%; min-height: 260px;" %> <!-- not 300 because gets smashed by width iphone -->
+    <% box_style = "max-width: 45%; min-height: 270px;" %> <!-- not 300 because gets smashed by width iphone -->
     <% by_series.each_with_index{ |series_episodes, idx| series_or_movie, episodes = series_episodes; %>
       <% if episodes.size == 1 %> <!-- ex a movie -->
         <%= movie = episodes.first; render "views/_box_movie_nik.ecr" %>
