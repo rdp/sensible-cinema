@@ -8,7 +8,7 @@
         <%= movie = episodes.first; render "views/_box_movie_nik.ecr" %>
       <% else %>
         <!-- a series -->
-        <div style="border: dashed grey 1px; margin: 2px; float:left;"> 
+        <div style="margin: 2px; float:left;"> 
           <a href=# onclick="$('.series_div_<%= idx %>').toggle(); $('.series_image_<%= idx %>').toggle(); return false;">
            <%= episodes[0].image_tag "alt='#{series}' class='series_image_#{idx}'", ImageSize::VerySmall %>
            <div style="margin: 10px; max-width: 350px; min-height: 400;"> <!-- duplicated from box ... -->
@@ -22,6 +22,7 @@
            <% } %>
          </div>
         </div>
+        <div style="clear: both;"></div>.
       <% end %>
     <% } %>
 
