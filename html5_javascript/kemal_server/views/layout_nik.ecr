@@ -53,9 +53,6 @@
                         <li class="show-for-medium">
                             <a href="/"><img id="logo-words" src="/images/camera-logo-side-words.png" alt="logo with words"></a>
                         </li>
-                        <li>
-                          Current: <%= english_action %>
-                        </li> 
                         <li class="is-dropdown-submenu-parent">
                             <a href="">Browse</a>
                             <ul class="menu dropdown" data-dropdown-menu>
@@ -99,6 +96,7 @@
                         </li>
                     </ul>
                 </div>
+                <%= yield_content "navbar" %>
             </div>
         </div>
     </div>
