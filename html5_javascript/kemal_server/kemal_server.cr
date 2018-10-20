@@ -668,14 +668,14 @@ def get_movies_sorted
 settings = [
   {type: :all_movies, title: "All Movies", urls: non_youtubes.select{|u| u.episode_number == 0}, message: "All movies we have edited"},
   {type: :all_series, title: "All TV Series", urls: non_youtubes.select{|u| u.episode_number > 0}, message: "All TV series we have edited"},
+  {type: :youtubes, title: "Youtubes (Free)", urls: all_urls_done.select{|u| u.url =~ /edited_youtube/}, message: "You can watch these youtubes edited right now, on your current device, free!"},
   {type: :pay_movies, title: "Movies Rent/Purchase", urls: new_releases, message: "Movies new releases and older titles, for rent/purchase"},
   {type: :pay_tv_series, title: "TV Series (Rent/Purchase)", urls: non_youtubes.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number > 0}, message: "TV Series for rent/buy"},
-  {type: :youtubes, title: "Youtubes (Free)", urls: all_urls_done.select{|u| u.url =~ /edited_youtube/}, message: "You can watch these youtubes edited right now, on your current device, free!"},
   {type: :prime_movies, title: "Free With Prime Movies", urls: non_youtubes.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number == 0}, message: "Got prime? These are free."},
   {type: :prime_tv_series, title: "Free With Prime TV Series", urls: non_youtubes.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number > 0}, message: "Got prime? These are free."},
   {type: :recently_added, title: "Recently Edited", urls: all_urls_done.sort_by{|u| u.status_last_modified_timestamp}.reverse.first(45), message: "Our most recently edited movies/TV shows."},
+  {type: :everything, title: "Everything we have edited", urls: all_urls_done, message: "All movies and TV shows we have edited!"},
   {type: :in_the_works, title: "Videos in the works (please support us!)", urls: get_in_works(all_urls), message: "Things we want to get to, with your support!"},
-  {type: :everything, title: "Everything", urls: all_urls_done, message: "All movies and TV shows we have edited!"},
 ]
 end
 
