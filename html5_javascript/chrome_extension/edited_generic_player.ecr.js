@@ -1644,7 +1644,7 @@ function rawRequestSeekToTime(ts) {
 
   if (isYoutubePimw()) {
     var allowSeekAhead = true; // "allow to seek past buffered" but doesn't quite work well iOS?
-    youtube_pimw_player.seekTo(ts, allowSeekAhead); // no callback option seemingly...
+    youtube_pimw_player.seekTo(ts, allowSeekAhead); // no callback option seemingly...can take floats...
   } else {
     if (isAmazon()) {
       video_element.currentTime = ts + 10;
