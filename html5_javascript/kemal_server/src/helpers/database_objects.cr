@@ -95,6 +95,10 @@ class Url
     age_recommendation_after_edited: Int32
   })
 
+  def is_youtube?
+    self.url =~ /edited_youtube/
+  end
+
   def self.count
     with_db do |conn|
       conn.scalar("select count(*) from urls").as(Int64)
