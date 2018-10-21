@@ -1644,7 +1644,7 @@ function rawRequestSeekToTime(ts) {
 
   if (isYoutubePimw()) {
     var allowSeekAhead = true; // something about dragging the mouse
-    youtube_pimw_player.seekTo(ts, allowSeekAhead); // no callback option
+    youtube_pimw_player.seekTo(ts, allowSeekAhead); // no callback option seemingly...
   } else {
     if (isAmazon()) {
       video_element.currentTime = ts + 10;
