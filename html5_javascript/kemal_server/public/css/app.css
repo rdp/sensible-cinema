@@ -74,7 +74,7 @@ a:hover {
 .title-bar-title {
     font-family: 'Bitter', serif;
     font-weight: 700;
-    font-size: 1.4em;
+ #   font-size: 1.4em; # don't want it to wrap iphone 5S
     padding-left: 2vh;
 }
 
