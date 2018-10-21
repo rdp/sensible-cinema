@@ -52,16 +52,19 @@
                 <div class="top-bar-left">
                     <ul class="menu vertical medium-horizontal dropdown" data-responsive-menu="accordion medium-dropdown">
                         <li class="show-for-medium">
-                            <a href="/"><img id="logo-words" src="/images/camera-logo-side-words.png" alt="logo with words">
-                   <%= yield_content "navbar" %>
-</a>
+                            <a href="/"><img id="logo-words" src="/images/camera-logo-side-words.png" alt="play it my way"> </a>
                         </li>
                         <li class="is-dropdown-submenu-parent">
                             <a href="">Browse</a>
                             <ul class="menu dropdown" data-dropdown-menu>
                                 <% cats = get_movies_sorted 
                                    cats.each{ |category| %>
-                                  <li><a href="/list/<%= category[:type] %>"><%= category[:title] %> </a></li>
+
+                                  <% want_bold = action == category[:type] %>
+                                  <%= "<big><b>" if want_bold %>
+                                    <li><a href="/list/<%= category[:type] %>"><%= category[:title] %> </a></li>
+                                  <%= "</b></big>" if want_bold %>
+
                                 <% } %>
                             </ul>
                         </li>
