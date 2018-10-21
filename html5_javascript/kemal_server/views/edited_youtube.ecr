@@ -15,7 +15,6 @@
 
     <br/>
     Volume:<input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)" style="max-width: 100px; display:inline;"></input>
-    <!-- XXXX put volume percent? -->
     Resolution: <div id="quality_div_id" style="display: inline;"></div>
     <input id="hd_checkbox_id" type="checkbox" onchange="hd_checkbox_changed(this.checked);">
     <a href=# onclick="hd_checkbox_changed(true); return false;">use max</a>.
@@ -176,7 +175,7 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
       videoId: '<%= youtube_id %>',
       enablejsapi: true,
       playsinline: 1,
-      playerVars: { 'fs': 1, 'controls': 0, 'rel': 0 },
+      playerVars: { 'fs': 1, 'controls': 0, 'rel': 0, 'playsinline': 1 },
       events: {
         'onReady': onPlayerReady,
          onStateChange: onPlayerStateChange
