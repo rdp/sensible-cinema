@@ -13,7 +13,7 @@
       </a>
     </p>
 
-    <div class="tiny reveal" id="exampleModal<%= movie.id %>" data-reveal style="background-color:black; color:white;">
+    <div class="small reveal" id="exampleModal<%= movie.id %>" data-reveal style="background-color:black; color:white;">
             <a href="<%= movie.url %>" <%= "target='_blank'" unless movie.is_youtube? %>
               onclick="
                <% if movie.url !~ /edited_youtube/ %>
