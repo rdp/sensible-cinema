@@ -109,6 +109,7 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
     });
 
     addListenerMultiHere(seek_dragger, "mousemove touchmove", function() {
+       // if seek_dragger_being_dragged_here ???
         var desired_time_seconds = youtube_pimw_player.getDuration() / 100.0 * this.value;
         document.getElementById('current_time_id').innerHTML = timeStampToHumanHere(desired_time_seconds, 0) + "/" + timeStampToHumanHere(youtube_pimw_player.getDuration(), 0);
         // but don't seek yet :)

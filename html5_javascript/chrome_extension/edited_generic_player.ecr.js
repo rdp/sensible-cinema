@@ -76,7 +76,7 @@ function addEditUiOnce() {
       <br/>
       Pimw is still in Beta, did we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
       <br/>
-      Safe seek: <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 200px;" />
+      Safe seek: <span id='safe_seek_ts_id'>32m 10s</span> <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 180px;" />
       <div style="display: inline-block"> <!-- prevent line feed before this div -->
         <span id="currently_xxx_span_id"> <!-- "currently: muting" --></span>
         <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable this later if flagged as editor -->
@@ -179,7 +179,8 @@ function updateSafeSeekTime() {
   if (!seek_dragger_being_dragged) {
     var seek_dragger =  document.getElementById('safe_seek_id');
     seek_dragger.value = getCurrentTime() / videoDuration() * 100;
-  }
+    document.getElementById('safe_seek_ts_id').innerHTML = timeStampToHumanRoundSecond(getCurrentTime());
+  } // else let the mouse movement change it only...it's about to seek soon'ish...
 }
 
 function seekToPercentage(valMaxOneHundred) {
@@ -201,6 +202,14 @@ function setupSafeSeekOnce() {
   addListenerMulti(seek_dragger, "mouseup touchend", function() {
     seek_dragger_being_dragged = false;
     seekToPercentage(this.value);
+  });
+
+  addListenerMulti(seek_dragger, "mousemove touchmove", function() {
+     if (seek_dragger_being_dragged) {
+       var desired_time_seconds = videoDuration() / 100.0 * this.value;
+       document.getElementById('safe_seek_ts_id').innerHTML = timeStampToHumanRoundSecond(desired_time_seconds);
+        // but don't seek yet :)
+      }
   });
 
   setInterval(updateSafeSeekTime, 250); // only 4/sec because if they happen to do their "own" seek this could interfere and "seek to no where" (well, still could but more rare? :\  XXX

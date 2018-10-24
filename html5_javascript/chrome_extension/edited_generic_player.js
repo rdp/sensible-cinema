@@ -77,7 +77,7 @@ function addEditUiOnce() {
       <br/>
       Pimw is still in Beta, did we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
       <br/>
-      Safe seek: <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 200px;" />
+      Safe seek: <span id='safe_seek_ts_id'>32m 10s</span> <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 180px;" />
       <div style="display: inline-block"> <!-- prevent line feed before this div -->
         <span id="currently_xxx_span_id"> <!-- "currently: muting" --></span>
         <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable this later if flagged as editor -->
@@ -559,7 +559,8 @@ function updateSafeSeekTime() {
   if (!seek_dragger_being_dragged) {
     var seek_dragger =  document.getElementById('safe_seek_id');
     seek_dragger.value = getCurrentTime() / videoDuration() * 100;
-  }
+    document.getElementById('safe_seek_ts_id').innerHTML = timeStampToHumanRoundSecond(getCurrentTime());
+  } // else let the mouse movement change it only...it's about to seek soon'ish...
 }
 
 function seekToPercentage(valMaxOneHundred) {
@@ -581,6 +582,14 @@ function setupSafeSeekOnce() {
   addListenerMulti(seek_dragger, "mouseup touchend", function() {
     seek_dragger_being_dragged = false;
     seekToPercentage(this.value);
+  });
+
+  addListenerMulti(seek_dragger, "mousemove touchmove", function() {
+     if (seek_dragger_being_dragged) {
+       var desired_time_seconds = videoDuration() / 100.0 * this.value;
+       document.getElementById('safe_seek_ts_id').innerHTML = timeStampToHumanRoundSecond(desired_time_seconds);
+        // but don't seek yet :)
+      }
   });
 
   setInterval(updateSafeSeekTime, 250); // only 4/sec because if they happen to do their "own" seek this could interfere and "seek to no where" (well, still could but more rare? :\  XXX
@@ -2024,7 +2033,7 @@ function rawRequestSeekToTime(ts) {
 
   if (isYoutubePimw()) {
     var allowSeekAhead = true; // "allow to seek past buffered" but doesn't quite work well iOS?
-    youtube_pimw_player.seekTo(ts, allowSeekAhead); // no callback option seemingly...
+    youtube_pimw_player.seekTo(ts, allowSeekAhead); // no callback option seemingly...can take floats...
   } else {
     if (isAmazon()) {
       video_element.currentTime = ts + 10;
@@ -2656,15 +2665,23 @@ function timeStampToHuman(timestamp) {
   timestamp -= hours * 3600;
   var minutes  = Math.floor(timestamp / 60);
   timestamp -= minutes * 60;
-  var seconds = twoDecimals(timestamp); //  -> "12.31" or "2.3"
-  // padding is "hard" apparently in javascript LOL
+  var seconds = Math.floor(timestamp);
+  timestamp -= seconds;
+  var hundredths = paddTo2(Math.floor(timestamp * 100)); // round to hundredth, pad the other way...
+  var secondsString = paddTo2(seconds) + "." + hundredths + "s";
   if (hours > 0)
-    return hours + "h " + minutes + "m " + seconds + "s";
+    return hours + "h " + paddTo2(minutes) + "m " + secondsString;
   else
-    return minutes + "m " + seconds + "s";
+    return minutes + "m " + secondsString;
 }
 
-function timeStampToEuropean(timestamp) { // for the subsyncer :| [used?]
+function timeStampToHumanRoundSecond(ts) {
+  var x = timeStampToHuman(ts);
+  return x.replace(/\.\d+s$/, "s");
+}
+
+function timeStampToEuropean(timestamp) { // for the subsyncer :|
+  // want 00:00:12,074
   var hours = Math.floor(timestamp / 3600);
   timestamp -= hours * 3600;
   var minutes  = Math.floor(timestamp / 60);
@@ -2672,11 +2689,12 @@ function timeStampToEuropean(timestamp) { // for the subsyncer :| [used?]
   var seconds = Math.floor(timestamp);
   timestamp -= seconds;
   var fractions = timestamp;
-  // want 00:00:12,074
+  // hope hundredths is enough
   return paddTo2(hours) + ":" + paddTo2(minutes) + ":" + paddTo2(seconds) + "," + paddTo2(Math.floor(fractions * 100));
 }
 
-function paddTo2(n) {
+function paddTo2(n) { // 1 becomes 01
+  // "hard" apparently...
   var pad = new Array(1 + 2).join('0');
   return (pad + n).slice(-pad.length);
 }

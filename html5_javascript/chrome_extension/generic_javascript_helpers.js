@@ -209,15 +209,23 @@ function timeStampToHuman(timestamp) {
   timestamp -= hours * 3600;
   var minutes  = Math.floor(timestamp / 60);
   timestamp -= minutes * 60;
-  var seconds = twoDecimals(timestamp); //  -> "12.31" or "2.3"
-  // padding is "hard" apparently in javascript LOL
+  var seconds = Math.floor(timestamp);
+  timestamp -= seconds;
+  var hundredths = paddTo2(Math.floor(timestamp * 100)); // round to hundredth, pad the other way...
+  var secondsString = paddTo2(seconds) + "." + hundredths + "s";
   if (hours > 0)
-    return hours + "h " + minutes + "m " + seconds + "s";
+    return hours + "h " + paddTo2(minutes) + "m " + secondsString;
   else
-    return minutes + "m " + seconds + "s";
+    return minutes + "m " + secondsString;
 }
 
-function timeStampToEuropean(timestamp) { // for the subsyncer :| [used?]
+function timeStampToHumanRoundSecond(ts) {
+  var x = timeStampToHuman(ts);
+  return x.replace(/\.\d+s$/, "s");
+}
+
+function timeStampToEuropean(timestamp) { // for the subsyncer :|
+  // want 00:00:12,074
   var hours = Math.floor(timestamp / 3600);
   timestamp -= hours * 3600;
   var minutes  = Math.floor(timestamp / 60);
@@ -225,11 +233,12 @@ function timeStampToEuropean(timestamp) { // for the subsyncer :| [used?]
   var seconds = Math.floor(timestamp);
   timestamp -= seconds;
   var fractions = timestamp;
-  // want 00:00:12,074
+  // hope hundredths is enough
   return paddTo2(hours) + ":" + paddTo2(minutes) + ":" + paddTo2(seconds) + "," + paddTo2(Math.floor(fractions * 100));
 }
 
-function paddTo2(n) {
+function paddTo2(n) { // 1 becomes 01
+  // "hard" apparently...
   var pad = new Array(1 + 2).join('0');
   return (pad + n).slice(-pad.length);
 }
