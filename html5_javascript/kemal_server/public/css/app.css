@@ -495,5 +495,9 @@ footer a {
 screen and (min-width: 40em) {}
 
 .menu-icon {
-    width: 30px; # gets teeny in mobile...original is 20..
+    width: 30px; /* gets teeny in mobile...original is 20.. */
+}
+
+.is-dropdown-submenu {
+  min-width: 250px; /* insane attempt with sticky menu to see more at least anyway in iOS horizontal, where you can't see it all... */
 }
