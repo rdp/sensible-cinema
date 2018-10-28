@@ -493,3 +493,7 @@ footer a {
 /* Print */
 @media print,
 screen and (min-width: 40em) {}
+
+.menu-icon {
+    width: 30px; # gets teeny in mobile...original is 20..
+}
