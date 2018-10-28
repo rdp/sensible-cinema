@@ -387,7 +387,7 @@ ul {
     top:10%;
     border-radius: 15px;
     position: absolute;
-    width: 47vh;
+    width: 25vw; # not height...
 }
 
 .action-box p {
