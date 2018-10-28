@@ -388,6 +388,7 @@ ul {
     border-radius: 15px;
     position: absolute;
     width: 25vw; # not height...
+    min-width: 200px; # mobile hack LOL
 }
 
 .action-box p {
