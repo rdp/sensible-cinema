@@ -83,7 +83,7 @@ get "/edited_youtube/:youtube_id" do |env|
   if url
     env.response.title = "Edited: " + url.name + " Youtube"
   end
-  render "views/edited_youtube.ecr", "views/layout_no_nav.ecr"
+  render "views/edited_youtube.ecr", "views/layout_no_nav.ecr" # TODO want nik non sticky? might not need top div anymore...
 end
 
 get "/redo_all_thumbnails" do |env|
