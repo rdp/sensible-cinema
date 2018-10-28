@@ -1,8 +1,9 @@
 <div style="height: 50px;">
-  <!-- make it possible to full screen'ish it in mobile... -->
+  <!-- make it possible to full screen'ish it in iOS... -->
 </div>
 <div id="player_with_controls" style="width: 100%;"> <!-- width for fullscreen needed it -->
-  <div id="ytplayer_wrapper_div_id" style="width: 100%; height: 100%;"> <!-- need wrapper div so when youtube gets small, doesn't rejostle everything -->
+  <div id="ytplayer_wrapper_div_id" style="width: 100%; height: 105vh;"> <!-- need wrapper div so when youtube gets small, doesn't rejostle everything -->
+    <!-- 105 so you can avoid those durn annoying margins, and 100% didn't "change" right in android?? -->
     <div id="ytplayer_div"></div>
   </div>
   <h3 style="margin-top: 5px;">
@@ -11,7 +12,7 @@
     <a href='' onclick="youtube_pimw_player.playVideo(); return false">&#9654;</a>&nbsp;&nbsp;<a href='' onclick="youtube_pimw_player.pauseVideo(); return false">&#9612;&#9612;</a>
     </big>
     Seek:<br>
-    <input id="seek-control-id" type="range" min="0" max="100" step="1" style="width: 100%; display:inline; margin-top: 10px;"></input> <!-- mobile you want it big -->
+    <input id="seek-control-id" type="range" min="0" max="100" step="1" style="width: 100%; display:inline; margin-top: 10px;"></input> <!-- mobile with layout "tall" you want it big as possible...-->
     <br>
     <br>
     <a href='' onclick="seekToDelta(-10); return false">-10s</a>
