@@ -154,14 +154,14 @@ function addEditUiOnce() {
   if (isYoutubePimw()) {
     // assume it can never change to a different type of movie...I doubt it :| can use jquery since on my site...
     $("#action_sel option[value='yes_audio_no_video']").remove();
-    $("#action_sel option[value='mute']").remove();
-    $("#action_sel option[value='mute_audio_no_video']").remove();
+    //$("#action_sel option[value='mute']").remove();
+    //$("#action_sel option[value='mute_audio_no_video']").remove();
   }
 
   if (isAmazon()) {
     // guess these don't qualify as "making imperceptible" we already have black screen, these are kinder work arounds for youtube anyway...
     var select =  document.getElementById("action_sel");
-//    removeOptionByName(select, "make_video_smaller"); // this one might be legit if they made it "impercetibly small" hmm...
+//    removeOptionByName(select, "make_video_smaller"); // this one might be legit if they made it "impercetibly small" LOL leave disabled
     removeOptionByName(select, "change_speed");
 //    removeOptionByName(select, "set_audio_volume"); // this one miiight be legit if it makes it super soft...hmm...
   }
