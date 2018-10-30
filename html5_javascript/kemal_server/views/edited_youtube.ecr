@@ -189,7 +189,8 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
       videoId: '<%= youtube_id %>',
       enablejsapi: true,
       playsinline: 1,
-      playerVars: { 'fs': 1, 'controls': 0, 'rel': 0, 'playsinline': 1 },
+      rel: 0,
+      playerVars: { 'fs': 1, 'controls': 0, 'playsinline': 1 }, // playsinline is for iOS
       events: {
         'onReady': onPlayerReady,
          onStateChange: onPlayerStateChange
