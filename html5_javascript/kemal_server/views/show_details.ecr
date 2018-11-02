@@ -17,7 +17,7 @@
 <%= url.image_tag style: "", size: ImageSize::VerySmall, postpend_html: "<br/>" %> <!-- at least we high high dps -->
 <h4>Our Details:</h4>
 <br/>
-Tags in our system for this movie:
+Things we found in this movie:
 <br/>
 <%= tags_by_category_with_size(url) %>
 <hr/>
@@ -41,7 +41,7 @@ You can tweak or change which of these content tags gets edited out, to your lik
 If you'd like to see the internal details of <b>all</b> tags, click <a href=/show_details/<%= url.id %>?show_tag_details=true#tags>here</a>.
 <br/>
 
-<table class="table table-striped" style="width: auto;">
+<table class="table table-striped" style="width: auto; color: black;">
   <thead>
     <tr>
       <th>start - end</th>
@@ -103,7 +103,7 @@ none yet, add one now!<br/><br/>
   Feedback on edits for this movie click <a href=http://freeldssheetmusic.org/questions/ask?pre_fill=<%= URI.escape "feedback for:" + url.name_with_episode %> target="_blank">here</a>.
 <br/>
 
-<table class="table table-striped" style="width: auto;">
+<table class="table table-striped" style="width: auto; color: black;">
   <thead>
   </thead>
   <tbody>
