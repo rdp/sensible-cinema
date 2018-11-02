@@ -3,6 +3,7 @@ get "/installation" do |env|
 end
 
 get "/search" do |env|
+  all_urls = get_all_urls
   render "views/search.ecr", "views/layout_nik.ecr"
 end
 
