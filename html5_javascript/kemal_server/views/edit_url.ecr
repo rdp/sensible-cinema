@@ -195,7 +195,7 @@ total movie length <!-- (netflix needs this, others can survive without it but s
 <input type="submit" value="Update Movie Info" class="btn btn-primary" class_means="blue" />
 </form>
 
-<br/><a href="/view_url/<%= url.id %>"><< back to movie page</a> (if you made any changes, hit "Update movie info" or changes will be lost)
+<br/><a href="/show_details/<%= url.id %>"><< back to movie page</a> (if you made any changes, hit "Update movie info" or changes will be lost)
 <br/>
 
 <a href=http://freeldssheetmusic.org/questions/ask?pre_fill=<%= URI.escape "Request to delete url #{url.name} #{url.id}" %> target="_blank" onClick="alert('redirecting you to another website where you can fill out a form to request its deletion...');">delete this movie from system</a>

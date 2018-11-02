@@ -271,7 +271,7 @@ get "/delete_tag/:tag_id" do |env|
   tag.destroy_no_cascade
   save_local_javascript tag.url, "removed tag", env
   add_to_flash env, "deleted tag #{tag.id}"
-  env.redirect "/view_url/#{tag.url.id}"
+  env.redirect "/show_details/#{tag.url.id}"
 end
 
 get "/view_tag/:tag_id" do |env|
@@ -407,11 +407,12 @@ get "/add_new_tag/:url_id" do |env|
   render "views/add_new_tag.ecr", "views/layout_yes_nav.ecr"
 end
 
-get "/view_url/:url_id" do |env|
+get "/show_details/:url_id" do |env|
+  all_urls = get_all_urls
   url = get_url_from_url_id(env)
   show_tag_details =  env.params.query["show_tag_details"]?
   env.response.title = url.name_with_episode + " Edited"
-  render "views/view_url.ecr", "views/layout_yes_nav.ecr"
+  render "views/show_details.ecr", "views/layout_nik.ecr"
 end
 
 get "/login_from_facebook" do |env|
@@ -587,7 +588,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     end
     already_by_name = Url.get_only_or_nil_by_name_and_episode_number(title, episode_number) # don't just blow up on DB constraint if from a non listed second url :|
     if already_by_name
-      return "appears we already have a movie by that title in our database, go to <a href=/view_url/#{already_by_name.id}>here</a> and if it's an exact match, add url #{sanitized_url} as its 'second' amazon url, or report this occurrence to us, we'll fix it"
+      return "appears we already have a movie by that title in our database, go to <a href=/show_details/#{already_by_name.id}>here</a> and if it's an exact match, add url #{sanitized_url} as its 'second' amazon url, or report this occurrence to us, we'll fix it"
     end
     url = Url.new
     url.name = title # or series name
@@ -737,7 +738,7 @@ get "/delete_tag_edit_list/:url_id" do |env|
   tag_edit_list.destroy_tag_edit_list_to_tags
   tag_edit_list.destroy_no_cascade
   add_to_flash env, "deleted one tag edit list"
-  env.redirect "/view_url/#{url_id}"
+  env.redirect "/show_details/#{url_id}"
 end
 
 get "/personalized_edit_list/:url_id" do |env|
@@ -796,7 +797,7 @@ post "/save_tag_edit_list" do |env|
   tag_edit_list.create_or_refresh(tag_ids)
   add_to_flash(env, "Success! saved personalized edits #{tag_edit_list.description}.  You may now watch edited with your edits applied.  If you are watching the movie in another  tab please refresh that browser tab")
   save_local_javascript tag_edit_list.url, "serialize user's tag edit list", env # will save it with a user's id noted but hopefully that's opaque enough...though will also cause some churn but then again...will save it... :|
-  env.redirect "/view_url/#{tag_edit_list.url_id}" # back to the movie page...
+  env.redirect "/show_details/#{tag_edit_list.url_id}" # back to the movie page...
 end
 
 def save_local_javascript(db_url, log_message, env) # actually just json these days...
@@ -918,7 +919,7 @@ post "/save_url" do |env|
   save_local_javascript db_url, "updated movie info #{db_url.name}", env
 	
   add_to_flash(env, "Success! saved #{db_url.name_with_episode}")
-  env.redirect "/view_url/" + db_url.id.to_s
+  env.redirect "/show_details/" + db_url.id.to_s
 end
 
 def download_youtube_image_if_possible(db_url)
@@ -969,7 +970,7 @@ post "/upload_from_subtitles_post/:url_id" do |env|
     add_to_flash(env, "You should see [#{middle_sub[:details]}] at #{seconds_to_human middle_sub[:start]} if the subtitle file timing is right, please double check it using the \"frame\" button!")
   end
   save_local_javascript db_url, "added subs", env
-  env.redirect "/view_url/#{db_url.id}?show_tag_details=true"
+  env.redirect "/show_details/#{db_url.id}?show_tag_details=true"
 end
 
 def add_to_flash(env, string)

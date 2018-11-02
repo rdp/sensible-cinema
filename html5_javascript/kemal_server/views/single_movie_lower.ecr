@@ -27,5 +27,5 @@
             <%= if_present_with_break "#{movie.genre} (#{movie.human_duration})", "Genre:" %>
             <%= if_present_with_break movie.cost_string, "Price:" %>
             <div style="text-align: center;">		  
-              <a href="/view_url/<%= movie.id %>">See individual tags</a>
+              <a href="/show_details/<%= movie.id %>">See individual tags</a>
             </div>
