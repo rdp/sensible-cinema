@@ -149,11 +149,13 @@
   <script>
   $( function() {
     var availableTags = 
-[ { label: "Choice1", value: "value1" },  { label: "Choice2", value: "value2" }];
+      <%= all_urls.map{|url| {label: url.name, id: url.id}}.to_json %>
     $( "#search_id" ).autocomplete({
       source: availableTags,
       select: function( event, ui ) {
-        console.log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+        console.log( "Selected: " + ui.item.label + " " + ui.item.value + " aka " + ui.item.id );
+        console.log('/view_url/' + ui.item.id);
+        // window.location.href =  ...
       }
     });
   } );
