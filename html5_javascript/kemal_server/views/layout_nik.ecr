@@ -148,30 +148,8 @@
 
   <script>
   $( function() {
-    var availableTags = [
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme"
-    ];
+    var availableTags = 
+[ { label: "Choice1", value: "value1" },  { label: "Choice2", value: "value2" }];
     $( "#search_id" ).autocomplete({
       source: availableTags,
       select: function( event, ui ) {
