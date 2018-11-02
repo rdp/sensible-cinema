@@ -148,14 +148,13 @@
 
   <script>
   $( function() {
-    var availableTags = 
-      <%= all_urls.map{|url| {label: url.name, id: url.id}}.to_json %>
+    var availableTags = <%= all_urls.map{|url| {label: url.name, id: url.id}}.to_json %>;
+
     $( "#search_id" ).autocomplete({
       source: availableTags,
+      minLength: 2,
       select: function( event, ui ) {
-        console.log( "Selected: " + ui.item.label + " " + ui.item.value + " aka " + ui.item.id );
-        console.log('/view_url/' + ui.item.id);
-        // window.location.href =  ...
+        window.location.href = '/view_url/' + ui.item.id; // u.item.anything you add, label is shown...
       }
     });
   } );
