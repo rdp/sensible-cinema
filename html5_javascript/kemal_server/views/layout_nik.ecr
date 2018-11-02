@@ -173,7 +173,10 @@
       "Scheme"
     ];
     $( "#search_id" ).autocomplete({
-      source: availableTags
+      source: availableTags,
+      select: function( event, ui ) {
+        console.log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+      }
     });
   } );
   </script>

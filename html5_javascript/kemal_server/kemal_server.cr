@@ -652,6 +652,7 @@ get "/old_list" do |env| # old home index...
 end
 
 get "/list/:type" do |env| # like all_movies
+  all_urls = get_all_urls
   type = env.params.url["type"]
   movies = get_movies_sorted.select{ |group| group[:type].to_s == type}[0]
   render "views/list_movies_nik.ecr", "views/layout_nik.ecr"
