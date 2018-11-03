@@ -5,5 +5,4 @@ fi
 cat connection_string_local_box_no_commit.txt
 A=`date`
 B=`echo $A | tr -d \\n`
-nice mysqldump -uUSER DB_NAME -p > "snap$B.sql" &&  gzip "snap$B.sql" && echo "created snap$B.sql.gz"
-echo "didn't add it to git or b2 yet ..."
+nice mysqldump -uUSER DB_NAME -p > "../edit_descriptors/snap$B.sql" && echo "created ../edit_descriptors/snap$B.sql.gz, didn't add it to git or b2 yet ..."
