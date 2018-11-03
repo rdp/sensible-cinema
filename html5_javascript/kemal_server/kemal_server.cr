@@ -104,7 +104,7 @@ get "/regen_all_javascript" do |env|
     write_internal_javascript_no_git_commit(url, env)
   }
   save_local_javascript Url.first, "regened all", env  # do git commit
-  "done all"
+  "done all safe"
 end
 
 get "/sync_web_server" do |env|
