@@ -101,9 +101,9 @@ end
 get "/regen_all_javascript" do |env|
   raise_unless_editor(env)
   Url.all.each{|url|
-    save_local_javascript url, nil, env # nil means "don't add a log message just arbitrarily"
-    # still doesn't work perfect it tries to do all the gits in simultaneous sub-threads :| doesn't work perfect it tries to do all the gits in simultaneous sub-threads :|
+    write_internal_javascript_no_git_commit(url, env)
   }
+  save_local_javascript Url.first, "regened all", env  # do git commit
   "done all"
 end
 
@@ -806,14 +806,17 @@ def save_local_javascript(db_url, log_message, env) # actually just json these d
       f.puts log_message + " worker:#{our_user_id(env)} ... " + db_url.name_with_episode
     end
   end
-  as_json = json_for(db_url, env)
-  escaped_url_no_slashes = URI.escape db_url.url
-  File.write("edit_descriptors/#{escaped_url_no_slashes}.ep#{db_url.episode_number}" + ".html5_edited.just_settings.json.rendered.js", "" + as_json) 
+  write_internal_javascript_no_git_commit(db_url, env)
   if !is_dev?
     spawn do
       system("cd edit_descriptors && git checkout master && git pull && git add . && git cam \"#{log_message}\" && git push origin master") # off-site backup 
     end
   end
+end
+
+def write_internal_javascript_no_git_commit(db_url, env)
+  as_json = json_for(db_url, env)
+  escaped_url_no_slashes = URI.escape db_url.url
 end
 
 def is_dev?

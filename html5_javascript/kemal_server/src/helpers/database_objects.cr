@@ -118,6 +118,12 @@ class Url
       end
   end
 
+  def self.first # this isn't a stable order though? ... 
+    query("SELECT * from urls limit 1") do |rs|
+      only_one!(Url.from_rs(rs))
+    end
+  end
+
   def self.latest
     query("SELECT * from urls ORDER BY status_last_modified_timestamp desc limit 1") do |rs|
       only_one!(Url.from_rs(rs))
