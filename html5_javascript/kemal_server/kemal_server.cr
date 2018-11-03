@@ -371,7 +371,7 @@ post "/save_tag/:url_id" do |env|
     add_to_flash(env, "Success! updated tag at #{seconds_to_human tag.start} duration #{tag.duration}s")
   else
     save_local_javascript url, "created tag", env
-    add_to_flash(env, "Success! created new tag at #{seconds_to_human tag.start} duration #{tag.duration}s.")
+    # came from inline plugin most likely so just flash nothing...
   end
 
   if tag2 = tag.overlaps_any? url.tags
