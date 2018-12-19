@@ -153,7 +153,7 @@ class Url
   def self.all_by_genre(genre)
     with_db do |conn|
       conn.query("SELECT * from urls where genre = ?", genre) do |rs|
-         Tag.from_rs(rs)
+         Url.from_rs(rs)
       end
     end
   end
