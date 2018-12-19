@@ -149,6 +149,14 @@ class Url
     end
     first_or_nil(urls)
   end
+
+  def self.all_by_genre(genre)
+    with_db do |conn|
+      conn.query("SELECT * from urls where genre = ?", genre) do |rs|
+         Tag.from_rs(rs)
+      end
+    end
+  end
   
   def save
     with_db do |conn|
@@ -476,20 +484,6 @@ class Tag
     end
   end
 
-  def self.get_only_by_name(name)
-    with_db do |conn|
-      conn.query("SELECT * from tags where name = ?", name) do |rs|
-         only_one!(Tag.from_rs(rs))
-      end
-    end
-  end
-
-  def urls
-    query("select * from urls where tag_id=? order by start asc", id) do |rs|
-      Url.from_rs rs
-    end
-  end
-  
   def self.get_only_by_id(id)
     with_db do |conn|
       conn.query("SELECT * from tags where id = ?", id) do |rs|

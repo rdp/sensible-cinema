@@ -662,7 +662,7 @@ end
 get "/list/genre/:genre" do |env|
   genre = env.params.url["genre"]
   all_urls = get_all_urls
-  tag = Tag.get_only_by_name(genre)
+  tag = Url.all_by_genre(genre)
   movies = {title: "By Genre: " + genre, urls: tag.urls, message: ""}
   render "views/list_movies_nik.ecr", "views/layout_nik.ecr"
 end
