@@ -408,7 +408,6 @@ get "/add_new_tag/:url_id" do |env|
 end
 
 get "/show_details/:url_id" do |env|
-  all_urls = get_all_urls
   url = get_url_from_url_id(env)
   show_tag_details =  env.params.query["show_tag_details"]?
   env.response.title = url.name_with_episode + " Edited"
@@ -653,7 +652,6 @@ get "/old_list" do |env| # old home index...
 end
 
 get "/list/:type" do |env| # like all_movies
-  all_urls = get_all_urls
   type = env.params.url["type"]
   movies = get_movies_sorted.select{ |group| group[:type].to_s == type}[0]
   render "views/list_movies_nik.ecr", "views/layout_nik.ecr"
@@ -661,7 +659,6 @@ end
 
 get "/list/genre/:genre" do |env|
   genre = env.params.url["genre"]
-  all_urls = get_all_urls
   by_genre = Url.all_by_genre(genre)
   movies = {title: "By Genre: " + genre, urls: by_genre, message: ""}
   render "views/list_movies_nik.ecr", "views/layout_nik.ecr"

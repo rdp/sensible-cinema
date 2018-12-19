@@ -149,6 +149,8 @@
   <script async src='https://www.google-analytics.com/analytics.js'></script>
 <% end %>
 
+<% all_urls = get_all_urls %>
+
   <script>
   $( function() {
     var availableTags = <%= all_urls.map{|url| {label: url.name, id: url.id}}.to_json %>;
