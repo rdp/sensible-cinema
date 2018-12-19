@@ -659,6 +659,14 @@ get "/list/:type" do |env| # like all_movies
   render "views/list_movies_nik.ecr", "views/layout_nik.ecr"
 end
 
+get "/list/genre/:genre" do |env|
+  genre = env.params.url["genre"]
+  all_urls = get_all_urls
+  tag = Tag.get_only_by_name(genre)
+  movies = {title: "By Genre: " + genre, urls: tag.urls, message: ""}
+  render "views/list_movies_nik.ecr", "views/layout_nik.ecr"
+end
+
 def get_movies_sorted
   all_urls = get_all_urls
   all_urls_done = all_urls.select{|url| url.edit_passes_completed >= 2 }
