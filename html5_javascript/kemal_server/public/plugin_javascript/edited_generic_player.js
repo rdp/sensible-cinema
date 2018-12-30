@@ -360,9 +360,9 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
         
           <option value="nudity posterior female">physical -- nudity (posterior) female</option>    
         
-          <option value="nudity anterior male">physical -- nudity (anterior) male</option>    
+          <option value="nudity anterior male">physical -- nudity (anterior) male [genital]</option>    
         
-          <option value="nudity anterior female">physical -- nudity (anterior) female</option>    
+          <option value="nudity anterior female">physical -- nudity (anterior) female [genital]</option>    
         
           <option value="nudity breast">physical -- nudity (breast)</option>    
         
