@@ -60,14 +60,20 @@ def humanize_category(category)
     category = "clothing/kissing etc" if category == "physical"
     category = "profanity etc" if category == "profanity"
     category = "substance use" if category == "substance-abuse"
-    category = "other" if category == "movie-content"
+    category = "credits/other" if category == "movie-content"
     # else [violence, suspense] stay XXXX constantize :\
     category
 end
 
 struct Bool
   def <=>(other : Bool)
-    self == other ? 0 : -1
+    if self == other
+      return 0
+    elsif self
+      return 1
+    else
+      return -1
+    end
   end
 end
 

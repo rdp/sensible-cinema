@@ -1,4 +1,14 @@
 
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.1&appId=16593771297&autoLogAppEvents=1';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<!-- they said "ideally right after body tag" hrm... -->
+
     <div class="hero-section">
         <div id="social-media-icons">
             <div class="grid-y">
@@ -8,12 +18,8 @@
                 <div class="cell small-3">
                     <a href=""><img src="images/twitter.png" alt="Twitter"></a>
                 </div>
-                <div class="cell small-3">
-                    <a href=""><img src="images/google.png" alt="Google Plus"></a>
-                </div>
                 <div class="cell small-3 ">
-                    <a href=""><img src="images/linkedin.png" alt="LinkedIn">
-                    </a>
+                    <a href=""><img src="images/instagram.75x75.png" alt="Instagram" style="opacity: 0.4;"> </a>
                 </div>
             </div>
         </div>
@@ -27,7 +33,7 @@
         </ul>
         
         <div class="action-box">
-            <h3>Install the FREE, customizable Chrome app for streamed video filtering!</h3>
+            <h3>Enjoy our FREE, customizable Chrome app for streamed video filtering!</h3>
             <p class="italic">Your movies. Your way.</p>
 
             <p></p>
@@ -53,17 +59,26 @@
 
 
     <div class="mid-bar">
-        <h4>Newly Filtered</h4>
+        <h4>Newly Edited</h4>
     </div>
 
     <div class="grid-x grid-padding-x small-up-3 medium-up-5 large-up-8">
       <% most_recent.each_with_index { |movie, idx| %>
         <div class="cell <%= idx > 4 ? "show-for-large" : idx > 2 ? "show-for-medium" : "" %>">
-              <a href="<%= movie.url %>" target="_blank">
-                 <%= movie.image_tag "alt=\"#{movie.name_with_episode}\"", ImageSize::VerySmall %>
-              </a>
+          <% box_style = "" %>
+          <%= render "views/_box_movie_nik.ecr" %> 
         </div>
      <% } %>
     </div>
+    <a href="/list/recently_added" class="button get-app">See more recently added</a>
 
-<a href="/full_list" class="success button">See full list of edited movies</a>
+<br/>
+<% all = get_movies_sorted 
+  all.each{|category|  %>
+<a href="/list/<%= category[:type] %>" class="button get-app"><%= category[:title] %> (<%= category[:urls].size %>)</a>
+<br/>
+<% } %>
+
+<div style="max-width: 80%"> <!-- don't let it get too big, confusing on how to scroll past it... -->
+<div class="fb-page" data-href="https://www.facebook.com/Play-it-My-Way-1812282865478777/?ref=bookmarks" data-tabs="timeline" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/Play-it-My-Way-1812282865478777/?ref=bookmarks" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/Play-it-My-Way-1812282865478777/?ref=bookmarks">Play it My Way</a></blockquote></div>
+</div>

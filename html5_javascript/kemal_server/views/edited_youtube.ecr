@@ -1,26 +1,36 @@
+<div style="height: 50px;">
+  <!-- make it possible to full screen'ish it in iOS... -->
+</div>
 <div id="player_with_controls" style="width: 100%;"> <!-- width for fullscreen needed it -->
-  <div id="ytplayer_wrapper_div_id" style="width: 100%; height: 90%;"> <!-- need wrapper div so when youtube gets small, doesn't rejostle everything -->
+  <div id="ytplayer_wrapper_div_id" style="width: 100%; height: 105vh;"> <!-- need wrapper div so when youtube gets small, doesn't rejostle everything -->
+    <!-- 105 so you can avoid those durn annoying margins, and 100% didn't "change" right in android?? -->
     <div id="ytplayer_div"></div>
   </div>
   <h3 style="margin-top: 5px;">
-    <!-- play -->
+    <!-- play button -->
+    <big>
     <a href='' onclick="youtube_pimw_player.playVideo(); return false">&#9654;</a>&nbsp;&nbsp;<a href='' onclick="youtube_pimw_player.pauseVideo(); return false">&#9612;&#9612;</a>
-    Seek:<input id="seek-control-id" type="range" min="0" max="100" step="1" style="max-width: 150px; display:inline;"></input>
-    <!-- time -->
-    <div id="current_time_id" style="display: inline;"></div>
+    </big>
+    Seek:<br>
+    <input id="seek-control-id" type="range" min="0" max="100" step="1" style="width: 100%; display:inline; margin-top: 10px;"></input> <!-- mobile with layout "tall" you want it big as possible...-->
+    <br>
+    <br>
     <a href='' onclick="seekToDelta(-10); return false">-10s</a>
     <a href='' onclick="seekToDelta(10); return false">+10s</a>
+    <!-- time -->
+    <div id="current_time_id" style="display: inline;"></div>
     <!-- fullscreen -->
     Go <a href='' onclick="toggleFullScreen(); return false">Fullscreen</a>
 
     <br/>
     Volume:<input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)" style="max-width: 100px; display:inline;"></input>
-    <!-- XXXX put volume percent? -->
     Resolution: <div id="quality_div_id" style="display: inline;"></div>
     <input id="hd_checkbox_id" type="checkbox" onchange="hd_checkbox_changed(this.checked);">
     <a href=# onclick="hd_checkbox_changed(true); return false;">use max</a>.
   </h3>
-
+  <input type="text" name="" style="width: 150px; height: 20px; font-size: 12pt;" id="seek_ts" value="0m 0.00s">
+  <input type="button" onclick="var a = timeStampToHuman(document.getElementById('seek_ts'); var b = timeStampToHuman(a); youtube_pimw_player.seekTo(b); return false;" value="go"/>
+  <!-- TODO add cur_ts here...and buffered -->
 </div>
 
 <div id="below_vid_stuff">
@@ -110,6 +120,7 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
     });
 
     addListenerMultiHere(seek_dragger, "mousemove touchmove", function() {
+       // if seek_dragger_being_dragged_here ???
         var desired_time_seconds = youtube_pimw_player.getDuration() / 100.0 * this.value;
         document.getElementById('current_time_id').innerHTML = timeStampToHumanHere(desired_time_seconds, 0) + "/" + timeStampToHumanHere(youtube_pimw_player.getDuration(), 0);
         // but don't seek yet :)
@@ -151,6 +162,8 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
         return minutes + "m " + seconds + "s";
     }
 
+
+
     function addListenerMultiHere(element, eventNames, listener) {
       var events = eventNames.split(' ');
       for (var i=0, iLen=events.length; i<iLen; i++) {
@@ -175,7 +188,9 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
       width: '100%',
       videoId: '<%= youtube_id %>',
       enablejsapi: true,
-      playerVars: { 'fs': 1, 'controls': 0, 'rel': 0 },
+      playsinline: 1,
+      rel: 0,
+      playerVars: { 'fs': 1, 'controls': 0, 'playsinline': 1 }, // playsinline is for iOS
       events: {
         'onReady': onPlayerReady,
          onStateChange: onPlayerStateChange

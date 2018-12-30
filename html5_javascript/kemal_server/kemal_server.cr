@@ -83,7 +83,7 @@ get "/edited_youtube/:youtube_id" do |env|
   if url
     env.response.title = "Edited: " + url.name + " Youtube"
   end
-  render "views/edited_youtube.ecr", "views/layout_no_nav.ecr"
+  render "views/edited_youtube.ecr", "views/layout_no_nav.ecr" # TODO want nik non sticky? might not need top div anymore...
 end
 
 get "/redo_all_thumbnails" do |env|
@@ -101,10 +101,10 @@ end
 get "/regen_all_javascript" do |env|
   raise_unless_editor(env)
   Url.all.each{|url|
-    save_local_javascript url, nil, env # nil means "don't add a log message just arbitrarily"
-    # still doesn't work perfect it tries to do all the gits in simultaneous sub-threads :| doesn't work perfect it tries to do all the gits in simultaneous sub-threads :|
+    write_internal_javascript_no_git_commit(url, env)
   }
-  "done all"
+  save_local_javascript Url.first, "regened all", env  # do git commit
+  "done all safe"
 end
 
 get "/sync_web_server" do |env|
@@ -271,7 +271,7 @@ get "/delete_tag/:tag_id" do |env|
   tag.destroy_no_cascade
   save_local_javascript tag.url, "removed tag", env
   add_to_flash env, "deleted tag #{tag.id}"
-  env.redirect "/view_url/#{tag.url.id}"
+  env.redirect "/show_details/#{tag.url.id}"
 end
 
 get "/view_tag/:tag_id" do |env|
@@ -371,7 +371,7 @@ post "/save_tag/:url_id" do |env|
     add_to_flash(env, "Success! updated tag at #{seconds_to_human tag.start} duration #{tag.duration}s")
   else
     save_local_javascript url, "created tag", env
-    add_to_flash(env, "Success! created new tag at #{seconds_to_human tag.start} duration #{tag.duration}s.")
+    # came from inline plugin most likely so just flash nothing...
   end
 
   if tag2 = tag.overlaps_any? url.tags
@@ -407,11 +407,11 @@ get "/add_new_tag/:url_id" do |env|
   render "views/add_new_tag.ecr", "views/layout_yes_nav.ecr"
 end
 
-get "/view_url/:url_id" do |env|
+get "/show_details/:url_id" do |env|
   url = get_url_from_url_id(env)
   show_tag_details =  env.params.query["show_tag_details"]?
   env.response.title = url.name_with_episode + " Edited"
-  render "views/view_url.ecr", "views/layout_yes_nav.ecr"
+  render "views/show_details.ecr", "views/layout_nik.ecr"
 end
 
 get "/login_from_facebook" do |env|
@@ -587,7 +587,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     end
     already_by_name = Url.get_only_or_nil_by_name_and_episode_number(title, episode_number) # don't just blow up on DB constraint if from a non listed second url :|
     if already_by_name
-      return "appears we already have a movie by that title in our database, go to <a href=/view_url/#{already_by_name.id}>here</a> and if it's an exact match, add url #{sanitized_url} as its 'second' amazon url, or report this occurrence to us, we'll fix it"
+      return "appears we already have a movie by that title in our database, go to <a href=/show_details/#{already_by_name.id}>here</a> and if it's an exact match, add url #{sanitized_url} as its 'second' amazon url, or report this occurrence to us, we'll fix it"
     end
     url = Url.new
     url.name = title # or series name
@@ -622,13 +622,13 @@ def sanitize_html(name)
 end
 
 def get_all_urls
-  urls = Url.all
-  put_test_last(urls)
+  urls = Url.all.sort_by{|u| {u.name, u.episode_number}}
 end
 
 def put_test_last(urls)
-  if urls[0].human_readable_company == "playitmyway"
-    urls.push urls.shift # move it to last :|
+  if urls.size > 0 && urls[0].human_readable_company == "playitmyway"
+    pimw = urls.shift
+    urls.push pimw # put at end
   end
   urls
 end
@@ -636,11 +636,11 @@ end
 get "/" do |env|
   all_urls = get_all_urls
   all_urls_done = all_urls.select{|url| url.edit_passes_completed >= 2 }
-  most_recent = all_urls_done.sort_by{|u| u.status_last_modified_timestamp}.last(8).reverse # XXX inject some series, some movies?
+  most_recent = all_urls_done.sort_by{|u| u.status_last_modified_timestamp}.last(8).reverse # XXX some series, some movies on purpose, here?
   render "views/main_nik.ecr", "views/layout_nik.ecr"
 end
 
-get "/full_list" do |env| # index home
+get "/old_list" do |env| # old home index...
   all_urls = get_all_urls
   all_urls_done = all_urls.select{|url| url.edit_passes_completed >= 2 }
   all_urls_half_way = all_urls.select{|url| url.edit_passes_completed == 1 }
@@ -651,7 +651,54 @@ get "/full_list" do |env| # index home
   out
 end
 
-get "/movies_in_works" do |env|
+get "/list/:type" do |env| # like all_movies
+  type = env.params.url["type"]
+  movies = get_movies_sorted.select{ |group| group[:type].to_s == type}[0]
+  render "views/list_movies_nik.ecr", "views/layout_nik.ecr"
+end
+
+get "/list/genre/:genre" do |env|
+  genre = env.params.url["genre"]
+  by_genre = Url.all_by_genre(genre)
+  movies = {title: "By Genre: " + genre, urls: by_genre, message: ""}
+  render "views/list_movies_nik.ecr", "views/layout_nik.ecr"
+end
+
+def get_movies_sorted
+  all_urls = get_all_urls
+  all_urls_done = all_urls.select{|url| url.edit_passes_completed >= 2 }
+
+  non_youtubes = all_urls_done.reject{|u| u.url =~ /edited_youtube/}
+  new_releases = non_youtubes.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number == 0}
+
+# XXX better named here?
+settings = [
+  {type: :all_movies, title: "All Movies", urls: non_youtubes.select{|u| u.episode_number == 0}, message: "All movies we have edited"},
+  {type: :all_series, title: "All TV Series", urls: non_youtubes.select{|u| u.episode_number > 0}, message: "All TV series we have edited"},
+  {type: :youtubes, title: "Youtubes Edited (Free)", urls: all_urls_done.select{|u| u.url =~ /edited_youtube/}, message: "You can watch these youtubes edited right now, on your current device, free!"},
+  {type: :pay_movies, title: "Movies Rent/Purchase", urls: new_releases, message: "Movies new releases and older titles, for rent/purchase"},
+  {type: :pay_tv_series, title: "TV Series (Rent/Purchase)", urls: non_youtubes.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number > 0}, message: "TV Series for rent/buy"},
+  {type: :prime_movies, title: "Free With Prime Movies", urls: non_youtubes.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number == 0}, message: "Got prime? These are free."},
+  {type: :prime_tv_series, title: "Free With Prime TV Series", urls: non_youtubes.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number > 0}, message: "Got prime? These are free."},
+  {type: :recently_added, title: "Recently Edited", urls: all_urls_done.sort_by{|u| u.status_last_modified_timestamp}.reverse.first(45), message: "Our most recently edited movies/TV shows."},
+  {type: :everything, title: "Everything we have edited", urls: all_urls_done, message: "All movies and TV shows we have edited!"},
+  {type: :in_the_works, title: "Videos in the works (please support us!)", urls: get_in_works(all_urls), message: "Things we want to get to, with your support!"},
+]
+end
+
+def get_in_works(all_urls)
+  all_urls_half_way = all_urls.select{|url| url.edit_passes_completed == 1 }
+  all_urls_just_started = all_urls.select{|url| url.edit_passes_completed == 0 }
+  in_works = all_urls_half_way + all_urls_just_started
+  in_works.sort_by!{|u| u.name} # combine lists
+
+  # crystal's sort is a WiP so work around it...??? it lost orderings and crud...
+  thrones, others = in_works.partition{|u| u.name =~ /game of thrones/i }
+  put_test_last(others)
+  return others + thrones
+end
+
+get "/movies_in_works" do |env| # old way...
   urls = get_all_urls.reject{|url| url.edit_passes_completed == 0 }
   if env.params.query["by_self"]? # the default uh think these days?
     render "views/_list_movies.ecr"
@@ -661,7 +708,7 @@ get "/movies_in_works" do |env|
 end
 
 get "/single_movie_lower/:url_id" do |env|
-  url = get_url_from_url_id(env)
+  movie = get_url_from_url_id(env)
   render "views/single_movie_lower.ecr" # no layout
 end
 
@@ -696,7 +743,7 @@ get "/delete_tag_edit_list/:url_id" do |env|
   tag_edit_list.destroy_tag_edit_list_to_tags
   tag_edit_list.destroy_no_cascade
   add_to_flash env, "deleted one tag edit list"
-  env.redirect "/view_url/#{url_id}"
+  env.redirect "/show_details/#{url_id}"
 end
 
 get "/personalized_edit_list/:url_id" do |env|
@@ -755,7 +802,7 @@ post "/save_tag_edit_list" do |env|
   tag_edit_list.create_or_refresh(tag_ids)
   add_to_flash(env, "Success! saved personalized edits #{tag_edit_list.description}.  You may now watch edited with your edits applied.  If you are watching the movie in another  tab please refresh that browser tab")
   save_local_javascript tag_edit_list.url, "serialize user's tag edit list", env # will save it with a user's id noted but hopefully that's opaque enough...though will also cause some churn but then again...will save it... :|
-  env.redirect "/view_url/#{tag_edit_list.url_id}" # back to the movie page...
+  env.redirect "/show_details/#{tag_edit_list.url_id}" # back to the movie page...
 end
 
 def save_local_javascript(db_url, log_message, env) # actually just json these days...
@@ -764,14 +811,17 @@ def save_local_javascript(db_url, log_message, env) # actually just json these d
       f.puts log_message + " worker:#{our_user_id(env)} ... " + db_url.name_with_episode
     end
   end
-  as_json = json_for(db_url, env)
-  escaped_url_no_slashes = URI.escape db_url.url
-  File.write("edit_descriptors/#{escaped_url_no_slashes}.ep#{db_url.episode_number}" + ".html5_edited.just_settings.json.rendered.js", "" + as_json) 
+  write_internal_javascript_no_git_commit(db_url, env)
   if !is_dev?
     spawn do
       system("cd edit_descriptors && git checkout master && git pull && git add . && git cam \"#{log_message}\" && git push origin master") # off-site backup 
     end
   end
+end
+
+def write_internal_javascript_no_git_commit(db_url, env)
+  as_json = json_for(db_url, env)
+  escaped_url_no_slashes = URI.escape db_url.url
 end
 
 def is_dev?
@@ -877,7 +927,7 @@ post "/save_url" do |env|
   save_local_javascript db_url, "updated movie info #{db_url.name}", env
 	
   add_to_flash(env, "Success! saved #{db_url.name_with_episode}")
-  env.redirect "/view_url/" + db_url.id.to_s
+  env.redirect "/show_details/" + db_url.id.to_s
 end
 
 def download_youtube_image_if_possible(db_url)
@@ -928,7 +978,7 @@ post "/upload_from_subtitles_post/:url_id" do |env|
     add_to_flash(env, "You should see [#{middle_sub[:details]}] at #{seconds_to_human middle_sub[:start]} if the subtitle file timing is right, please double check it using the \"frame\" button!")
   end
   save_local_javascript db_url, "added subs", env
-  env.redirect "/view_url/#{db_url.id}?show_tag_details=true"
+  env.redirect "/show_details/#{db_url.id}?show_tag_details=true"
 end
 
 def add_to_flash(env, string)

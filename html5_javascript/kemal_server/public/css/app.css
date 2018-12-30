@@ -1,7 +1,8 @@
 /* GENERAL STYLES */
 
 body {
-    background-color: #001270;
+    background-color: rgb(0, 9, 56);
+    color: white;
     font-family: 'Istok Web', sans-serif;
 }
 
@@ -25,6 +26,9 @@ a:hover {
 
 /* MAIN NAVIGATION */
 
+.is-at-bottom {
+  top: 0 !important;
+}
 
 /* Small only */
 
@@ -60,7 +64,7 @@ a:hover {
 /* Hamburger Menu at Small Screen Size */
 
 .title-bar {
-    background-color: rgba(0, 18, 112, 0.75);
+    background-color: rgba(0, 8, 56, 0.75);
 }
 
 #logo {
@@ -71,7 +75,7 @@ a:hover {
 .title-bar-title {
     font-family: 'Bitter', serif;
     font-weight: 700;
-    font-size: 1.4em;
+ #   font-size: 1.4em; # don't want it to wrap iphone 5S
     padding-left: 2vh;
 }
 
@@ -90,13 +94,13 @@ a:hover {
 /* Top Bar Menu at Medium and Up Screen Sizes */
 
 .top-bar {
-    background-color: rgba(0, 18, 112, 0.75);
+    background-color: rgba(0, 9, 56, 0.75);
     color: white;
     padding: 0;
 }
 
 .top-bar ul {
-    background-color: rgba(0, 18, 112, 0.0);
+    background-color: rgba(0, 9, 56, 0.0);
     color: white;
 }
 
@@ -114,7 +118,7 @@ a:hover {
 }
 
 .is-dropdown-submenu-parent a {
-   margin-left: -30px; 
+   padding-right: 30px;  /* some weird overlap bug... */
 }
 
 #donate {
@@ -142,11 +146,11 @@ a:hover {
 }
 
 .top-bar a {
-    background-color: rgba(0, 18, 112, 0.0);
+    background-color: rgba(0, 9, 56, 0.0);
 }
 
 .submenu a {
-    background-color: rgba(0, 18, 112, 0.75);
+    background-color: rgba(0, 9, 56, 0.75);
     width: 100%;
 }
 
@@ -375,7 +379,7 @@ ul {
 
 .action-box {
     height: auto;
-    background-color: rgba(0, 18, 112, 0.65);
+    background-color: rgba(0, 9, 56, 0.65);
     color: white;
     margin-left: 3vh;
     padding-left: 25px;
@@ -384,7 +388,8 @@ ul {
     top:10%;
     border-radius: 15px;
     position: absolute;
-    width: 30vh;
+    width: 25vw; # not height...
+    min-width: 200px; # mobile hack LOL
 }
 
 .action-box p {
@@ -444,7 +449,7 @@ ul {
 /* NEWLY FILTERED GALLERY */
 
 .mid-bar {
-    background-color: rgba(0, 18, 112, 0.75);
+    background-color: rgba(0, 9, 56, 0.75);
     padding-left: 3vh;
     color: white;
     padding-top: 2vh;
@@ -489,3 +494,15 @@ footer a {
 /* Print */
 @media print,
 screen and (min-width: 40em) {}
+
+.menu-icon {
+    width: 30px; /* gets teeny in mobile...original is 20.. */
+}
+
+.is-dropdown-submenu {
+  min-width: 250px; /* insane attempt with sticky menu to see more at least anyway in iOS horizontal, where you can't see it all... */
+}
+
+.ui-autocomplete-loading {
+    background: white url("images/ui-anim_basic_16x16.gif") right center no-repeat;
+  }

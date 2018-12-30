@@ -16,7 +16,7 @@ though there was a lot of pre-existing art (including edited youtube API/google,
 
 # OS X
 
-brew install crystal kqwait mysql@5.7 imagemagick pidof fish
+brew install crystal kqwait mysql@5.7 imagemagick pidof fish jhead
 brew services start mysql@5.7  
 
 # for both, after, also do this:

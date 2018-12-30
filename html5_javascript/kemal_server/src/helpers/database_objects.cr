@@ -95,6 +95,10 @@ class Url
     age_recommendation_after_edited: Int32
   })
 
+  def is_youtube?
+    self.url =~ /edited_youtube/
+  end
+
   def self.count
     with_db do |conn|
       conn.scalar("select count(*) from urls").as(Int64)
@@ -112,6 +116,12 @@ class Url
       query("SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type asc, status_last_modified_timestamp desc, name, episode_number") do |rs|
          Url.from_rs(rs);
       end
+  end
+
+  def self.first # this isn't a stable order though? ... 
+    query("SELECT * from urls limit 1") do |rs|
+      only_one!(Url.from_rs(rs))
+    end
   end
 
   def self.latest
@@ -139,11 +149,19 @@ class Url
     end
     first_or_nil(urls)
   end
+
+  def self.all_by_genre(genre)
+    with_db do |conn|
+      conn.query("SELECT * from urls where genre = ?", genre) do |rs|
+         Url.from_rs(rs)
+      end
+    end
+  end
   
   def save
     with_db do |conn|
       if @id == 0
-       @id = conn.exec("insert into urls (name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, create_timestamp, status_last_modified_timestamp, subtitles, genre, original_rating, sell_it_edited, internal_editing_notes, stuff_not_edited_out, edit_passes_completed, most_recent_pass_discovery_level) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, create_timestamp, status_last_modified_timestamp, subtitles, genre, original_rating, sell_it_edited, internal_editing_notes, stuff_not_edited_out,  edit_passes_completed, most_recent_pass_discovery_level, age_recommendation_after_edited).last_insert_id.to_i32
+       @id = conn.exec("insert into urls (name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, create_timestamp, status_last_modified_timestamp, subtitles, genre, original_rating, sell_it_edited, internal_editing_notes, stuff_not_edited_out, edit_passes_completed, most_recent_pass_discovery_level, age_recommendation_after_edited) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, create_timestamp, status_last_modified_timestamp, subtitles, genre, original_rating, sell_it_edited, internal_editing_notes, stuff_not_edited_out, edit_passes_completed, most_recent_pass_discovery_level, age_recommendation_after_edited).last_insert_id.to_i32
       else
        conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, amazon_third_url = ?, details = ?, episode_number = ?, episode_name = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_local_filename = ?, review = ?, wholesome_review = ?, count_downloads = ?, amazon_prime_free_type = ?, rental_cost = ?, rental_cost_sd = ?, purchase_cost = ?, purchase_cost_sd = ?, total_time = ?, create_timestamp = ?, status_last_modified_timestamp = ?, subtitles = ?, genre = ?, original_rating = ?, sell_it_edited = ?, internal_editing_notes = ?, stuff_not_edited_out = ?, edit_passes_completed = ?, most_recent_pass_discovery_level = ?, age_recommendation_after_edited = ? where id = ?", name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, create_timestamp, status_last_modified_timestamp, subtitles, genre, original_rating, sell_it_edited, internal_editing_notes, stuff_not_edited_out, edit_passes_completed, most_recent_pass_discovery_level, age_recommendation_after_edited, id
       end
@@ -466,7 +484,6 @@ class Tag
     end
   end
 
-  
   def self.get_only_by_id(id)
     with_db do |conn|
       conn.query("SELECT * from tags where id = ?", id) do |rs|
@@ -661,9 +678,7 @@ class TagEditList
       conn.exec("delete from tag_edit_list_to_tag where tag_edit_list_id = ?", id)
     end  
   end
-
 end
-
 
 class User
   JSON.mapping({

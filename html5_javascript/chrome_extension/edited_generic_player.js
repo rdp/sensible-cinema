@@ -77,7 +77,7 @@ function addEditUiOnce() {
       <br/>
       Pimw is still in Beta, did we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
       <br/>
-      Safe seek: <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 200px;" />
+      Safe seek: <span id='safe_seek_ts_id'>32m 10s</span> <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 180px;" />
       <div style="display: inline-block"> <!-- prevent line feed before this div -->
         <span id="currently_xxx_span_id"> <!-- "currently: muting" --></span>
         <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable this later if flagged as editor -->
@@ -534,14 +534,14 @@ default edit on?
   if (isYoutubePimw()) {
     // assume it can never change to a different type of movie...I doubt it :| can use jquery since on my site...
     $("#action_sel option[value='yes_audio_no_video']").remove();
-    $("#action_sel option[value='mute']").remove();
-    $("#action_sel option[value='mute_audio_no_video']").remove();
+    //$("#action_sel option[value='mute']").remove();
+    //$("#action_sel option[value='mute_audio_no_video']").remove();
   }
 
   if (isAmazon()) {
     // guess these don't qualify as "making imperceptible" we already have black screen, these are kinder work arounds for youtube anyway...
     var select =  document.getElementById("action_sel");
-//    removeOptionByName(select, "make_video_smaller"); // this one might be legit if they made it "impercetibly small" hmm...
+//    removeOptionByName(select, "make_video_smaller"); // this one might be legit if they made it "impercetibly small" LOL leave disabled
     removeOptionByName(select, "change_speed");
 //    removeOptionByName(select, "set_audio_volume"); // this one miiight be legit if it makes it super soft...hmm...
   }
@@ -559,7 +559,8 @@ function updateSafeSeekTime() {
   if (!seek_dragger_being_dragged) {
     var seek_dragger =  document.getElementById('safe_seek_id');
     seek_dragger.value = getCurrentTime() / videoDuration() * 100;
-  }
+    document.getElementById('safe_seek_ts_id').innerHTML = timeStampToHumanRoundSecond(getCurrentTime());
+  } // else let the mouse movement change it only...it's about to seek soon'ish...
 }
 
 function seekToPercentage(valMaxOneHundred) {
@@ -581,6 +582,14 @@ function setupSafeSeekOnce() {
   addListenerMulti(seek_dragger, "mouseup touchend", function() {
     seek_dragger_being_dragged = false;
     seekToPercentage(this.value);
+  });
+
+  addListenerMulti(seek_dragger, "mousemove touchmove", function() {
+     if (seek_dragger_being_dragged) {
+       var desired_time_seconds = videoDuration() / 100.0 * this.value;
+       document.getElementById('safe_seek_ts_id').innerHTML = timeStampToHumanRoundSecond(desired_time_seconds);
+        // but don't seek yet :)
+      }
   });
 
   setInterval(updateSafeSeekTime, 250); // only 4/sec because if they happen to do their "own" seek this could interfere and "seek to no where" (well, still could but more rare? :\  XXX
@@ -1048,14 +1057,14 @@ var video_ever_initialized = false; // can't do seeks "off the bat" in amazon [w
 var last_timestamp = -1;
 var last_timestamp_trunc = -1;
 
-function checkStatus() { // called 1000 fps (didn't seem to increase too much cpu to poll like this?)
+function checkStatus() { // called "at a lot of" fps (didn't seem to increase too much cpu to poll like this?)
 
   // while playing, current timestamp is basically different each time...
   // we're guaranteed a video element, that's about it, at this point...
   var cur_time = getCurrentTime();
   if (truncTwoDecimals(cur_time) == last_timestamp_trunc) {
     // we've "already handled" this millisecond...hopefully...
-    // basically restrict to 100 fps but try and do it at the "start" of the hundredth...
+    // basically restrict to 100 fps but try and run only at the "start" of the hundredth...
     // when slammed it gets in by like 0.04 still...every so often 9, seems to always get it though...so possibly better than 100/s like before there...
     // sometimes 3, sometimes 2/sec [macbook] with logging so...some timer limit?
     // also avoids calling more than once/ms the saving! :)
@@ -1903,8 +1912,10 @@ var clean_stream_timer = null;
 
 function startWatcherTimerSingleton() {
   if (!clean_stream_timer) {
-    clean_stream_timer = setInterval(checkStatus, 1); // 1000 times/sec it'll restrict itself to X fps though...
-    // guess we just never turn it off, on purpose :)
+    // could do 1000 times/sec it'll restrict itself to 100 fps though...
+    // 4 ms should be enough to "hit each 100th once" 1000 fps is hard to understand...until can spend more time on it
+    clean_stream_timer = setInterval(checkStatus, 4);
+    // guess we just never turn interval off, on purpose :)
   }
 }
 
@@ -2021,8 +2032,8 @@ function rawRequestSeekToTime(ts) {
   console.log("rawRequestSeekToTime paused=" + video_element.paused + " state=" + video_element.readyState + " buffered=" + twoDecimals(getSecondsBufferedAhead()));
 
   if (isYoutubePimw()) {
-    var allowSeekAhead = true; // something about dragging the mouse
-    youtube_pimw_player.seekTo(ts, allowSeekAhead); // no callback option
+    var allowSeekAhead = true; // "allow to seek past buffered" but doesn't quite work well iOS?
+    youtube_pimw_player.seekTo(ts, allowSeekAhead); // no callback option seemingly...can take floats...
   } else {
     if (isAmazon()) {
       video_element.currentTime = ts + 10;
@@ -2654,15 +2665,23 @@ function timeStampToHuman(timestamp) {
   timestamp -= hours * 3600;
   var minutes  = Math.floor(timestamp / 60);
   timestamp -= minutes * 60;
-  var seconds = twoDecimals(timestamp); //  -> "12.31" or "2.3"
-  // padding is "hard" apparently in javascript LOL
+  var seconds = Math.floor(timestamp);
+  timestamp -= seconds;
+  var hundredths = paddTo2(Math.floor(timestamp * 100)); // round to hundredth, pad the other way...
+  var secondsString = paddTo2(seconds) + "." + hundredths + "s";
   if (hours > 0)
-    return hours + "h " + minutes + "m " + seconds + "s";
+    return hours + "h " + paddTo2(minutes) + "m " + secondsString;
   else
-    return minutes + "m " + seconds + "s";
+    return minutes + "m " + secondsString;
 }
 
-function timeStampToEuropean(timestamp) { // for the subsyncer :| [used?]
+function timeStampToHumanRoundSecond(ts) {
+  var x = timeStampToHuman(ts);
+  return x.replace(/\.\d+s$/, "s");
+}
+
+function timeStampToEuropean(timestamp) { // for the subsyncer :|
+  // want 00:00:12,074
   var hours = Math.floor(timestamp / 3600);
   timestamp -= hours * 3600;
   var minutes  = Math.floor(timestamp / 60);
@@ -2670,11 +2689,12 @@ function timeStampToEuropean(timestamp) { // for the subsyncer :| [used?]
   var seconds = Math.floor(timestamp);
   timestamp -= seconds;
   var fractions = timestamp;
-  // want 00:00:12,074
+  // hope hundredths is enough
   return paddTo2(hours) + ":" + paddTo2(minutes) + ":" + paddTo2(seconds) + "," + paddTo2(Math.floor(fractions * 100));
 }
 
-function paddTo2(n) {
+function paddTo2(n) { // 1 becomes 01
+  // "hard" apparently...
   var pad = new Array(1 + 2).join('0');
   return (pad + n).slice(-pad.length);
 }

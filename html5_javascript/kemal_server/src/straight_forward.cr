@@ -2,12 +2,13 @@ get "/installation" do |env|
   render "views/installation.ecr", "views/layout_yes_nav.ecr"
 end
 
-get "/privacy" do |env|
-  render "views/privacy.ecr", "views/layout_yes_nav.ecr"
+get "/search" do |env|
+  all_urls = get_all_urls
+  render "views/search.ecr", "views/layout_nik.ecr"
 end
 
-get "/test_nik" do |env|
-  render "views/test_nik.ecr", "views/layout_nik.ecr"
+get "/privacy" do |env|
+  render "views/privacy.ecr", "views/layout_yes_nav.ecr"
 end
 
 get "/faq" do |env|

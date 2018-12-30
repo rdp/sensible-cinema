@@ -1,40 +1,75 @@
 == todo list (me ja, ordered) ==
-
-age?
-  wait each tag has it already, ask M...just
+creating new user account locks them out of system
 
 personalized didn't work so and so?
 
 add youtube preview ID's :|
   and inline youtube previews on our site :|
+  youtubes iOS
 
 allow subscriptions?
 
-nik layout moh moh moh
-  answer big questions: TV, vidangel, netflix
-  use new fields...modal
+nik layout
+  buttons in popout instead of links...
+  the x is too small
+  main page: description, sell it line
+    why you want us in the vidangel ocean?
+  personalize black background layout...
+  add "vote for more"
+  answer questions: TV, vidangel, netflix?
+  donate doesn't work LOL
+  iOS back button absent, x is teeeny?
+    maybe another back at the top??
+  better install...groom
+    where did all the questions go?
+  FAQ top thing weird
+  about top thing weird
+  search
+    topics
+    has some funky chars in it :)
+  call out prime better for mixed lists :)
+  popup: better buttons of what they can do or can't...
+  recently edited...come on guys...should be last one adjusted num edits??
+  Our latest news, like our facebook!
+  youtube embed page to right layout
+  genres moh 
+  can just do later:
+    youtube don't show related...hmm...how does bing handle this? LOL
+    don't say "install app" if already installed?
+    youtube play inline???
+    Honesty why....maybe? FAQ?
+    create various accounts all LOL
+    Copyright footer
+    real icon? hmm...mickey mouse...
+    make "all pages" black muhaha
+    use a min for foundation...
+    smaller hero images for mobile? ... speed, man!
+    blacker etc.
+    clarify subcats??
+    truly inline youtubes...
+    better search, this one has ads, leads to show details true?!
 
-NY doll doesn't work??
-
-fix seeks iOS
-  buy 5s first...ksl?
-  iphone: control computer(s) with it :\
-  try youtube/normal/user-agent?
-
+3rd pass shouldn't mark it as new again...
+_
 youtubes them :|
   previews
   normals
 
-make all opening credits stay
+watch movie edited -> name
+
+clean seek
+
+"watche edited" it says on the drilldown pages, even if not yet edited at all!"
+allos real email login
+make all opening credits stay...
 
 add more to the "will do" list...recent released, big shows, etc...
 
-super soft launch looks like: easy links...ycombinator...reddit [? more?] betterlogic why be afraid? :)
+soft launch looks like: easy links...ycombinator...reddit [? more?] betterlogic why be afraid? :)
   profiles LOL title on main page as well...
 
 groom personalized flow
 some personalize icons are absent
-  personalize: defaults?
 
 get user feedback
   installation
@@ -45,8 +80,12 @@ get user feedback
   (android?) try out first
   groom the directions first!
 
-safe seek: show time
-  
+NY doll doesn't work??
+
+"unedited" always to the very top...?
+
+doesn't always show disclamer? "layback edited..."
+
 kickstarter
   decide on prizes
   movie
@@ -56,29 +95,43 @@ kickstarter
   double check everything has "amazon second urls" and fully groomed as well... :| still on prime right prices (post sync with their API?)
   movie, tweak,
   fire!
+  somehow try and get a following pre kickstarter?? meh...
 
-complain crystal should still publish old versions…
-  wiki edit?
-
-somehow try and get a following pre kickstarter...hmm
+Tell so and so to vote for it.
+  tried once...
 
 Try and go everywhere with ads/pub...blogs...
   also ads for "vidangel" "clearplay" "pureflix" [?]
+
+iphone: control computer(s) with it :\
   
 private edits...
+  donation edits?
+  groom editor for normal humans 
 
 clarify anterior
    
-us passes: everything that hasn't a 3rd...
-
 GoT failure!
   fix 10s :\
-  hbo tab
-
-add tags (possibly after multi-tags): "vidangel doesn't have it"
-  for sales
 
 ================= todo all never LOL =======================
+us passes: everything that hasn't a 3rd...
+
+figure out longer term backupz and for flds
+
+add tags (possibly after multi-tags): "vidangel doesn't have it"
+  hbo tab?
+  for sales
+
+personalize: defaults
+  when requested?
+
+
+add "by genre"
+
+add "sort by..."??
+
+double check youtube license for plugging in...
 
 optimize cpu, the heck out of it! :)
   can we save cpu? still keep high fps? save in general?
@@ -220,7 +273,7 @@ saner url's :| more human
 
 groom the "sell it to them edited" options :|
 
-watch edited on view_url doesn't warn if not installed yet :|
+watch edited on show_details doesn't warn if not installed yet :|
 
 add multiple tags "new releases" "enjoyable by whole family"
 add an "edited" moniker underneath each image?

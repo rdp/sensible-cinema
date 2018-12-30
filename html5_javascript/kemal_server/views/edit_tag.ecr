@@ -29,7 +29,7 @@ If there are any categories missing let us know!
   <a href=/delete_tag/<%= tag.id %> onclick="return confirm('Are you sure? This removes this tag entirely, you may want to shorten it or fix it instead...');">delete this tag entirely from system &#10006; </a>
 <% end %>
 <br/>
-<a href=/view_url/<%= url.id %>><< back to movie edit page</a> (changes made here will be lost)
+<a href=/show_details/<%= url.id %>><< back to movie edit page</a> (changes made here will be lost)
 <br/>
 <% if previous_tag %>
   <a href=/edit_tag/<%= previous_tag.id %> >edit previous tag </a>

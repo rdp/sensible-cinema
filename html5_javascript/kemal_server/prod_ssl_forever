@@ -7,8 +7,9 @@ else
   echo "root successfully enabled...we'll need that in a sec..."
   echo "use like https://playitmyway.org"
 fi
+
 # no release since super slow plus crashes out of RAM :|
-sudo -u rdp crystal build ./kemal_server.cr || exit 1 # prime the pump :)
+CRYSTAL_PATH=~/me/src:lib sudo -E -u rdp ~/me/crystal build ./kemal_server.cr || exit 1 # prime the pump :)
 while true; do
   ./_prod_ssl_go # wait for it to get killed by cron etc.
 done

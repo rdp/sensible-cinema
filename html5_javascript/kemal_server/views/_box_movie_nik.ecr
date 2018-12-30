@@ -1,0 +1,55 @@
+<div style="margin: 5px; float: left; <%= box_style %>">
+  <p>
+      <a data-toggle="exampleModal<%= movie.id %>" aria-controls="exampleModal<%= movie.id %>">
+      <% if movie.image_local_filename.present? %>
+       <%= movie.image_tag "alt=\"#{movie.name_with_episode}\" title=\"#{movie.name_with_episode}\" style='display: block; margin-left: auto; margin-right: auto;'", ImageSize::VerySmall %> <!-- get size from cell -->
+       <% if movie.episode_number > 0 || movie.is_youtube? %> <!-- assume it doesn't have text, and has a cruddy image, so show text too. -->
+          <div style="clear: both;"></div> <!-- don't show half text to right of image -->
+          <%= movie.name_with_episode %>
+        <% end %>
+      <% else %>
+        <p style=""><%= movie.name_with_episode %></p> <!-- it's a link so can't easily set color here... -->
+      <% end %>
+      </a>
+    </p>
+
+    <div class="small reveal" id="exampleModal<%= movie.id %>" data-reveal style="background-color:black; color:white;">
+            <a href="<%= movie.url %>" <%= "target='_blank'" unless movie.is_youtube? %>
+              onclick="
+               <% if movie.url !~ /edited_youtube/ %>
+                 if (!alertIfNoExtension()) return false;
+              <% else %>
+                <!-- let mobile/firefox through -->
+              <% end %>
+              <% if movie.episode_number != 0 && movie.amazon? %>
+                 alert('after opening the series, click play button for episode <%= movie.episode_number %> (<%= movie.episode_name %>)');
+              <% end %>
+            ">
+              <%= movie.image_tag "alt=\"#{movie.name_with_episode}\" style='display: block; margin: 0 auto;'", ImageSize::VerySmall %>
+          <div style="clear: both;"></div>
+          <div style="text-align: center;">
+            Click to watch <%= movie.name_with_episode %> <!-- XXX say something else if can't actually watch edited? -->
+
+            </a>
+            <% if movie.edit_passes_completed >= 2 %>
+               edited now!
+            <% elsif movie.tag_count == 0 %>
+              (not started, click here to watch unedited anyway)
+            <% else # first or second pass
+             %>
+              (edits incomplete, work in progress, click here to watch anyway)
+            <% end %>
+          </div>
+          <div style="text-align: center;">
+           Or <a href=/personalized_edit_list/<%=movie.id%>>personalize edits</a> your way!
+          </div>
+
+       <%= render "views/single_movie_lower.ecr"  %>
+
+      <button class="close-button" data-close aria-label="Close reveal" type="button"> <!-- top right x -->
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <input type="button" value="Back" onclick="$('#exampleModal<%= movie.id %>').foundation('close');" style="height: 60px; width: 60px;"/> 
+    </div> <!-- end modal -->
+
+</div>

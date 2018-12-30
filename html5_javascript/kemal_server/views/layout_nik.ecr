@@ -5,62 +5,105 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="pinterest" content="nopin">
-    <title>Play It My Way | Home</title>
-    <link rel="stylesheet" href="css/foundation.min.css">
-    <link rel="stylesheet" href="css/app.css">
+    <% action = env.request.path.split("/")[-1]; english_action = action.gsub("_", " ").split.map{|word| word.capitalize}.join(" ") %>
+    <title>
+      <%= " DEV |" if is_dev? %>
+      <% if env.response.title.present? %>
+        <%= env.response.title %>
+        (Play it My Way)
+      <% elsif action.present? %>
+        <%= " #{english_action} |" %>
+        (Play it My Way)
+      <% else %>
+        Play it My Way : Edited streaming movies
+      <% end %>
+    </title>
+ 
+    <link rel="stylesheet" href="/css/foundation.css">
+    <link rel="stylesheet" href="/css/app.css">
+
+     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+    <link rel="icon" type="image/png" href="/images/camera.128.png"  sizes="128x128" />
+    <link rel="icon" type="image/png" href="/images/camera.32.png"  sizes="32x32" />
     <link href="https://fonts.googleapis.com/css?family=Bitter:700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Istok+Web" rel="stylesheet">
     <%= yield_content "header" %>
 </head>
 
 <body>
-
+    <% if env.session.string?("flash") %>
+      <p class="" style="padding: 10px;">
+         <span style="font-size: 30px;"><%= out = env.session.string("flash"); env.session.delete_string("flash"); out %> </span>
+      </p>
+    <% end %>
     <div data-sticky-container>
 
         <!-- Hamburger Menu for Small Screens -->
-        <div data-sticky data-options="marginTop:0;">
+        <div data-sticky data-options="marginTop:0;" data-sticky-on="small"> <!-- don't bug out mobile https://github.com/zurb/foundation-sites/issues/11098 -->
             <div class="title-bar" data-responsive-toggle="responsive-menu" data-hide-for="medium">
                 <button class="menu-icon" type="button" data-toggle="responsive-menu"></button>
-                <img id="logo" src="images/camera-logo.png" alt="logo">
-                <div class="title-bar-title">Play It My Way</div>
+                 <a href="/">
+                   <img id="logo" src="/images/camera-logo.png" alt="logo">
+                   <div class="title-bar-title">Play It My Way</div>
+                   <%= yield_content "navbar" %>
+                 </a>
             </div>
 
-            <!-- Top Bar for Medium and Larger Screens -->
+            <!-- Top Bar for All Screens -->
             <div class="top-bar" id="responsive-menu" data-margin-top="0" data-sticky>
                 <div class="top-bar-left">
                     <ul class="menu vertical medium-horizontal dropdown" data-responsive-menu="accordion medium-dropdown">
                         <li class="show-for-medium">
-                            <a href="index.html"><img id="logo-words" src="images/camera-logo-side-words.png" alt="logo with words"></a>
+                            <a href="/"><img id="logo-words" src="/images/camera-logo-side-words.png" alt="play it my way"> </a>
                         </li>
                         <li class="is-dropdown-submenu-parent">
                             <a href="">Browse</a>
                             <ul class="menu dropdown" data-dropdown-menu>
-                                <li><a href="">Home</a></li>
-                                <li><a href="">Recently Filtered</a></li>
-                                <li><a href="">By Genre</a></li>
+                                <% cats = get_movies_sorted 
+                                   cats.each{ |category| %>
+
+                                  <% want_bold = action == category[:type] %>
+                                  <%= "<big><b>" if want_bold %>
+                                    <li><a href="/list/<%= category[:type] %>"><%= category[:title] %> </a></li>
+                                  <%= "</b></big>" if want_bold %>
+
+                                <% } %>
                             </ul>
                         </li>
                         <li>
-                            <a href="">FAQ</a>
+                            <a href="/">Home</a>
+                        </li>
+                        <li>
+                            <a href="/questions">About</a>
+                        </li>
+                        <li>
+                            <a href="/faq">FAQ</a>
                         </li>
                         <li class="show-for-large">
-                            <a href=""><img id="donate" src="images/donate-button.gif"></a>
+                            <a href=""><img id="donate" src="/images/donate-button.gif"></a>
                         </li>
                     </ul>
                 </div>
                 <div class="top-bar-right">
                     <ul class="medium-horizontal menu align-left" data-responsive-menu="drilldown medium-dropdown">
-                        <li class="show-for-medium">
-                            <form action="" id="searchform" method="get" class="">
+                        <li class="show-for-small">
+                            <form action="/search" id="searchform" method="get" class="">
                                 <div id="search-wrapper">
-                                    <input id="new-search" type="text" name="new-search" value="" placeholder="Search Filtered Movies" size="15" /></div>
+                                    <input id="search_id" type="text" name="q" value="" placeholder="Search Edited Movies" size="15" /></div>
                                 <div id="search-icon">
-                                    <img src="images/search-icon.png">
+                                    <img src="/images/search-icon.png">
                                 </div>
                             </form>
                         </li>
-                        <li><a id="log-in" href="https://playitmyway.org/login">Log In</a></li>
+                        <li>
+                          <% if logged_in?(env) %>
+                            <a id="log-out" href="https://playitmyway.org/logout">Log Out <%= logged_in_user(env).name.split.first %> </a>
+                          <% else %>
+                            <a id="log-in" href="https://playitmyway.org/login">Log In</a>
+                          <% end %>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -69,8 +112,12 @@
 
   <%= content %>
 
+    <div style="clear: both;"></div> <!-- some do, some don't need? -->
     <footer>
         <div class="grid-x">
+            <div class="cell auto">
+                <a href="https://playitmyway.org/">Home/Browse</a>
+            </div>
             <div class="cell auto">
                 <a href="https://playitmyway.org/support">Contact</a>
             </div>
@@ -78,15 +125,47 @@
                 <a href="">Privacy</a>
             </div>
             <div class="cell auto">
-                <a href="">About</a>
+                <a href="/installation">Install</a>
+            </div>
+            <div class="cell auto">
+                (c) 2018 Goodness Plus LLC
             </div>
         </div>
     </footer>
 
-    <script src="js/vendor/jquery.js"></script>
-    <script src="js/vendor/what-input.js"></script>
-    <script src="js/vendor/foundation.js"></script>
-    <script src="js/app.js"></script>
+    <script src="/js/vendor/jquery.js"></script>
+    <script src="/js/vendor/what-input.js"></script>
+    <script src="/js/vendor/foundation.js"></script>
+    <script src="/js/app.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<% if !editor?(env) %>
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-4531218-7', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+<% end %>
+
+<% all_urls = get_all_urls %>
+
+  <script>
+  $( function() {
+    var availableTags = <%= all_urls.map{|url| {label: url.name, id: url.id}}.to_json %>;
+
+    $( "#search_id" ).autocomplete({
+      source: availableTags,
+      minLength: 2,
+      select: function( event, ui ) {
+        window.location.href = '/show_details/' + ui.item.id; // u.item.anything you add, label is shown...
+      }
+    });
+  } );
+  </script>
+
+<%= render "views/_installed_js.ecr" %> <!-- several wanted it LOL -->
 </body>
 
 </html>

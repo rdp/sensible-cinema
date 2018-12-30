@@ -1,0 +1,37 @@
+<% content_for "navbar" do %>
+  <%= movies[:title] %>
+<% end %>
+
+    <div class="mid-bar">
+        <%=  movies[:message] %>
+        <hr style="margin: 5px;"/>
+    </div>
+
+    <% by_series = movies[:urls].group_by{|u| u.name} %>
+    <% box_style = "max-width: 45%; min-height: 278px;" %> <!-- not 300 because gets smashed by width iphone -->
+    <% by_series.each_with_index{ |series_episodes, idx| series_or_movie, episodes = series_episodes; %>
+      <% if episodes.size == 1 %> <!-- ex a movie -->
+        <%= movie = episodes.first; render "views/_box_movie_nik.ecr" %>
+      <% else %>
+        <% episodes.sort_by!{|u| u.episode_number} %> <!-- ??? -->
+        <!-- a series -->
+        <div style="margin: 2px; float:left;"> 
+          <a href=# onclick="$('.series_div_<%= idx %>').toggle(); $('.series_image_<%= idx %>').toggle(); return false;">
+           <%= episodes[0].image_tag "alt='#{series_or_movie}' class='series_image_#{idx}' style='display: block; margin-left: auto; margin-right: auto;'", ImageSize::VerySmall %>
+           <div style="margin: 10px; max-width: 350px; min-height: 270;"> <!-- duplicated from box ... -->
+             <div style="clear: both;"></div> <!-- don't show half text to right of image -->
+             <%= series_or_movie %> (click to see <%= episodes.size %> episode<%= "s" if episodes.size > 1 %> <%= "so far" if episodes.size < 10 %>)
+           </div>
+         </a>
+         <div class=series_div_<%= idx %> style="display: none;" >
+           <% episodes.each{ |movie| %>
+             <%= render "views/_box_movie_nik.ecr" %>
+           <% } %>
+         </div>
+        </div>
+      <% end %>
+    <% } %>
+
+<div style="clear: both;"></div>
+
+Movies, characters art, etc. are properties of their respective studios and I am making no particular claims about them. Some words like "Amazon" and movie titles, etc. are trademark of their respective companies.

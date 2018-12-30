@@ -1,6 +1,7 @@
 <% content_for "header" do %>
   <% specs = url.image_specs(ImageSize::Medium) %>
   <% if specs %> <!-- TODO accomodate png here :| -->
+    <!-- make it show up for facebook first time -->
     <meta property="og:image" content="https://playitmyway.org<%= url.sized_relative_url(ImageSize::Medium) %>" />
     <meta property="og:image:width" content="<%= specs[:width] %>"/>
     <meta property="og:image:height" content="<%= specs[:height] %>"/>
@@ -16,7 +17,7 @@
 <%= url.image_tag style: "", size: ImageSize::VerySmall, postpend_html: "<br/>" %> <!-- at least we high high dps -->
 <h4>Our Details:</h4>
 <br/>
-Content tags in our system for this movie:
+Things we found in this movie:
 <br/>
 <%= tags_by_category_with_size(url) %>
 <hr/>
@@ -24,36 +25,6 @@ Content tags in our system for this movie:
   Editor: <a href=/edit_url/<%= url.id %>>modify these movie details</a>
 <% end %>
 
-<table class="table table-striped" style="width: auto;">
-  <thead>
-  </thead>
-  <tbody>
-    <%= table_row_or_nothing("URL", url.url) %>
-    <%= table_row_or_nothing("Alternate URL", url.amazon_second_url) %>
-    <%= table_row_or_nothing("Synopsis", url.details) %>
-    <% if url.amazon? %>
-      <%= table_row_or_nothing("prime?", url.human_readable_company) %>
-    <% end %>
-    <%= table_row_or_nothing("Editing status most recent pass", url.most_recent_pass_discovery_level_string) %>
-    <%= table_row_or_nothing("Num passes done", url.edit_passes_completed) %>
-    <%= table_row_or_nothing("Why watch edited?", url.sell_it_edited) %>
-    <!-- internal_editing_notes ... -->
-    <%= table_row_or_nothing("Editor advisory:", url.stuff_not_edited_out) %>
-    <%= table_row_or_nothing("Age recommendation after edited:", url.age_recommendation_after_edited) %>
-    <%= table_row_or_nothing("Price to rent/purchase", url.cost_string) %>
-    <% if url.total_time > 0 %>
-      <%= table_row_or_nothing("Total movie time", seconds_to_human url.total_time) %>
-    <% end %>
-    <%= table_row_or_nothing("Good movie rating (out of 10)", url.good_movie_rating) %>
-    <%= table_row_or_nothing("Our local review", url.review) %>
-    <%= table_row_or_nothing("Wholesome_uplifting_level (out of 10)", url.wholesome_uplifting_level) %>
-    <%= table_row_or_nothing("Wholesome review", url.wholesome_review) %>
-    <%= table_row_or_nothing("Genre", url.genre) %>
-    <%= table_row_or_nothing("Original MPAA Rating", url.original_rating) %>
-    <%= table_row_or_nothing("Download Count", url.count_downloads) %>
-    <%= table_row_or_nothing("Added to our system", url.create_timestamp) %>
-  </tbody>
-</table>
 <br/>
 
 <hr/>
@@ -66,15 +37,11 @@ You can tweak or change which of these content tags gets edited out, to your lik
 
 <hr/>
 <br/>
-<h3>Content tags for this movie</h3><a  name="tags"></a>
-Content tags are basically timestamps and descriptions of content that exists in a movie.
-<br>
-You can also <a href=/personalized_edit_list/<%=url.id%>>personalize</a> which parts you edit out.
-<br/>
-If you'd like to see the internal details of all tags, click <a href=/view_url/<%= url.id %>?show_tag_details=true#tags>here</a>.
+<h3>Tags for this movie</h3><a  name="tags"></a>
+If you'd like to see the internal details of <b>all</b> tags, click <a href=/show_details/<%= url.id %>?show_tag_details=true#tags>here</a>.
 <br/>
 
-<table class="table table-striped" style="width: auto;">
+<table class="table table-striped" style="width: auto; color: black;">
   <thead>
     <tr>
       <th>start - end</th>
@@ -135,6 +102,37 @@ none yet, add one now!<br/><br/>
 <% end %>
   Feedback on edits for this movie click <a href=http://freeldssheetmusic.org/questions/ask?pre_fill=<%= URI.escape "feedback for:" + url.name_with_episode %> target="_blank">here</a>.
 <br/>
+
+<table class="table table-striped" style="width: auto; color: black;">
+  <thead>
+  </thead>
+  <tbody>
+    <%= table_row_or_nothing("URL", url.url) %>
+    <%= table_row_or_nothing("Alternate URL", url.amazon_second_url) %>
+    <%= table_row_or_nothing("Synopsis", url.details) %>
+    <% if url.amazon? %>
+      <%= table_row_or_nothing("prime?", url.human_readable_company) %>
+    <% end %>
+    <%= table_row_or_nothing("Editing status most recent pass", url.most_recent_pass_discovery_level_string) %>
+    <%= table_row_or_nothing("Num passes done", url.edit_passes_completed) %>
+    <%= table_row_or_nothing("Why watch edited?", url.sell_it_edited) %>
+    <!-- internal_editing_notes ... -->
+    <%= table_row_or_nothing("Editor advisory:", url.stuff_not_edited_out) %>
+    <%= table_row_or_nothing("Age recommendation after edited:", url.age_recommendation_after_edited) %>
+    <%= table_row_or_nothing("Price to rent/purchase", url.cost_string) %>
+    <% if url.total_time > 0 %>
+      <%= table_row_or_nothing("Total movie time", seconds_to_human url.total_time) %>
+    <% end %>
+    <%= table_row_or_nothing("Good movie rating (out of 10)", url.good_movie_rating) %>
+    <%= table_row_or_nothing("Our local review", url.review) %>
+    <%= table_row_or_nothing("Wholesome_uplifting_level (out of 10)", url.wholesome_uplifting_level) %>
+    <%= table_row_or_nothing("Wholesome review", url.wholesome_review) %>
+    <%= table_row_or_nothing("Genre", url.genre) %>
+    <%= table_row_or_nothing("Original MPAA Rating", url.original_rating) %>
+    <%= table_row_or_nothing("Download Count", url.count_downloads) %>
+    <%= table_row_or_nothing("Added to our system", url.create_timestamp) %>
+  </tbody>
+</table>
 
 <br/>
 <br/>
