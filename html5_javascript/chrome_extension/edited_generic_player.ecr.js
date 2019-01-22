@@ -128,7 +128,7 @@ function addEditUiOnce() {
         <br/>
         <input type='submit' value='&lt;&lt;' id='open_tag_before_current_id' onclick="openTagBeforeOneInUi(); return false;">
         <input type='submit' value='Re-Edit Just Passed Tag' id='open_prev_tag_id' onclick="openTagPreviousToNowButton(); return false;">
-        <input type='submit' value='Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
+        <input type='submit' value='Re-Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
         <input type='submit' value='&gt;&gt;' id='open_tag_after_current_id' onclick="openTagAfterOneInUi(); return false;">
         <br/>
         <input type='button' id='destroy_button_id' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
@@ -137,11 +137,11 @@ function addEditUiOnce() {
 
       </form>
 
-      <a id=reload_tags_a_id href=# onclick="reloadForCurrentUrl(''); return false;" </a>Reload tags</a>
+      <a id=reloading_id href=# onclick="reloadForCurrentUrl(''); return false;" </a></a>
       &nbsp;&nbsp;&nbsp;
-      <a href=# onclick="getSubtitleLink(); return false;" </a>Get subtitles</a>
+      <a href=# onclick="getSubtitleLink(); return false;" </a>Get subtitle link</a>
       &nbsp;&nbsp;
-      <a href=# onclick="doneMoviePage(); return false;">Movie page </a>
+      <a href=# onclick="doneMoviePage(); return false;">Movie details</a>
       <input type='submit' onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
     </div>
   </div>`;
@@ -152,7 +152,7 @@ function addEditUiOnce() {
   mouseJustMoved({pageX: 0, pageY: 0}); // start its timer, prime it :|
   editDropdownsCreated(); // from shared javascript, means "the HTML elements are in there"
   if (isYoutubePimw()) {
-    // assume it can never change to a different type of movie...I doubt it :| can use jquery since on my site...
+    // assume it can never change on the fly to a different host of the movie...I doubt it :| can use jquery since on my site...
     $("#action_sel option[value='yes_audio_no_video']").remove();
     //$("#action_sel option[value='mute']").remove();
     //$("#action_sel option[value='mute_audio_no_video']").remove();
@@ -161,8 +161,8 @@ function addEditUiOnce() {
   if (isAmazon()) {
     // guess these don't qualify as "making imperceptible" we already have black screen, these are kinder work arounds for youtube anyway...
     var select =  document.getElementById("action_sel");
-//    removeOptionByName(select, "make_video_smaller"); // this one might be legit if they made it "impercetibly small" LOL leave disabled
     removeOptionByName(select, "change_speed");
+//    removeOptionByName(select, "make_video_smaller"); // this one might be legit if they made it "impercetibly small" LOL leave disabled
 //    removeOptionByName(select, "set_audio_volume"); // this one miiight be legit if it makes it super soft...hmm...
   }
 
@@ -682,14 +682,16 @@ function checkStatus() { // called "at a lot of" fps (didn't seem to increase to
   // while playing, current timestamp is basically different each time...
   // we're guaranteed a video element, that's about it, at this point...
   var cur_time = getCurrentTime();
-  if (truncTwoDecimals(cur_time) == last_timestamp_trunc) {
+  // sometimes an editor hits "clear tag" button, it won't do anything if we avoid recalc...hmm...
+  // seems to have some other optimization anyway that helps...low cpu...
+  //if (truncTwoDecimals(cur_time) == last_timestamp_trunc) {
     // we've "already handled" this millisecond...hopefully...
     // basically restrict to 100 fps but try and run only at the "start" of the hundredth...
     // when slammed it gets in by like 0.04 still...every so often 9, seems to always get it though...so possibly better than 100/s like before there...
     // sometimes 3, sometimes 2/sec [macbook] with logging so...some timer limit?
     // also avoids calling more than once/ms the saving! :)
-    return;
-  }
+    //return;
+  //}
 
   // avoid unmuting videos playing that we don't even control [like youtube main page] with this...basically if the movie changes to something else unedited,
   if (current_json != null) {
@@ -1267,7 +1269,7 @@ function destroyCurrentTagButton() {
     alert("cannot destroy non previously saved tag"); // should be impossible I don't even think we show the button these days...
     return;
   }
-  if (confirm("sure you want to nuke this tag all together?")) {
+  if (confirm("sure you want to nuke/remove from entire system this currently loaded tag?")) {
     window.open("https://" + request_host + "/delete_tag/" + id); // assume it works, and ja :)
     clearForm();
     setTimeout(function() { reloadForCurrentUrl('destroyed tag')}, 1000); // reload to get it "back" from the server after saved...longest I've seen like like 60ms
@@ -1316,17 +1318,17 @@ function lookupUrl() {
 }
 
 function loadForNewUrl() {
-  getRequest(loadSucceeded, loadFailed);
+  loadRequest(loadSucceeded, loadFailed);
 }
 
 function reloadForCurrentUrl(additional_string) {
   if (current_json != null) {
     console.log("submitting reload request...");
-    var reload_tags_link = document.getElementById('reload_tags_a_id');
-    reload_tags_link.innerHTML = additional_string + "Reloading...";
-    getRequest(
+    var reload_tags_link = document.getElementById('reloading_id');
+    reload_tags_link.innerHTML = additional_string + "-ing...";
+    loadRequest(
       function(json_string) { reloadSucceeded(json_string, additional_string); },
-      loadFailed // straight load failed since shouldn't happen, riiiight?
+      loadFailed // straight load failed since shouldn't ever happen, riiiight?
     );
   }
   else {
@@ -1336,9 +1338,9 @@ function reloadForCurrentUrl(additional_string) {
 
 function reloadSucceeded(json_string, additional_string) {
   loadSucceeded(json_string);
-  var reload_tags_link = document.getElementById('reload_tags_a_id');
-  reload_tags_link.innerHTML = additional_string + "Reloaded!";
-  setTimeout(function() {reload_tags_link.innerHTML = "Reload tags";}, 5000);
+  var reload_tags_link = document.getElementById('reloading_id');
+  reload_tags_link.innerHTML = additional_string;
+  setTimeout(function() {reload_tags_link.innerHTML = "";}, 5000); // clear it
 }
 
 function loadSucceeded(json_string) {

@@ -158,7 +158,7 @@ function submitFormXhr(oFormElement, success, failure)
   return false;
 }
 
-function getRequest(success, error) {
+function loadRequest(success, error) {
   var url = lookupUrl();
   console.log("starting attempt GET download " + url);
   var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
