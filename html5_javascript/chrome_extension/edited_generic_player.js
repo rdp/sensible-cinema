@@ -1143,7 +1143,7 @@ function refreshVideoElement() {
       console.log("got " + event.type + " event isPaused()=" + isPaused() + " cur_time=" + getCurrentTime());
       if (event.type == "canplaythrough") {
         if (seek_timer) {
-          console.log("doing early seek callback"); // XXX could I use this instead of the timer, so I can avoid the weird spinner/hang issue?
+          console.log("canplaythrough doing early seek callback"); // XXX could I use this instead of the timer, so I can avoid the weird spinner/hang issue?
           seek_timer_callback.call();
         }
       }
@@ -2045,69 +2045,78 @@ function rawRequestSeekToTime(ts) {
 }
 
 function getSecondsBufferedAhead() {
+  var cur_time = getCurrentTime();
+  var seconds_buffered=-1;
   if (isYoutubePimw()) {
-    var seconds_buffered = youtube_pimw_player.getDuration() * youtube_pimw_player.getVideoLoadedFraction() - getCurrentTime();
+    seconds_buffered = youtube_pimw_player.getDuration() * youtube_pimw_player.getVideoLoadedFraction() - cur_time;
   } else if (video_element.buffered.length > 0) { // amazon is this way...but not always...
-    var seconds_buffered = (video_element.buffered.end(0) - video_element.currentTime); // it reports buffered as "10s ago until 10s from now" or what have you
+    for (var i = 0; i < video_element.buffered.length; i++) {
+      if(video_element.buffered.end(i) <= cur_time && video_element.buffered.start(i) >= cur_time) {
+        seconds_buffered = (video_element.buffered.end(0) - cur_time); // it reports buffered as "10s ago until 10s from now" or what have you
+      }
+    }
   } else {
-    var seconds_buffered = -1;
+    console.log("huh");
   }
   return seconds_buffered;
 }
 
-var current_seek_ts;
+var save_seek_ts;
 
-function seekToTime(ts, callback) {
+function seekToTime(seek_to_ts, callback) {
   if (seek_timer) {
-    console.log("still seeking from previous_requested=" + current_seek_ts + ", not trying that again...new_requested_was=" + ts);
+    console.log("still seeking from previous_requested=" + save_seek_ts + ", not trying that again...new_requested_was=" + seek_to_ts);
     return;
   }
-  current_seek_ts = ts;
+  save_seek_ts = seek_to_ts;
 
-  if (ts < 0) {
-    console.log("not seeking to before 0, seeking to 0 instead, seeking to negative doesn't work well " + ts);
-    ts = 0;
+  if (seek_to_ts < 0) {
+    console.log("not seeking to before 0, seeking to 0 instead, seeking to negative doesn't work well " + seek_to_ts);
+    seek_to_ts = 0;
   }
   // try and avoid freezes after seeking...if it was playing first...
   var start_time = getCurrentTime();
-  console.log("seeking to " + timeStampToHuman(ts) + " from=" + timeStampToHuman(start_time) + " state=" + video_element.readyState + " to_ts=" + twoDecimals(ts));
+  var seeked_from_time = getCurrentTime();
+  console.log("seeking to " + timeStampToHuman(seek_to_ts) + " from=" + timeStampToHuman(start_time) + " state=" + video_element.readyState + " to_ts=" + twoDecimals(seek_to_ts));
   // [amazon] if this is far enough away from current, it also implies a "play" call...oddly. I mean seriously that is bizarre.
   // however if it close enough, then we need to call play
   // some shenanigans to pretend to work around this...
   var did_preseek_pause = false; // youtube loses 0.05 with these shenanigans needed on amazon, so attempt avoid :|
-  var already_cached = ts > getCurrentTime() && ts < (getCurrentTime() + getSecondsBufferedAhead() - 1); // 0.4 seemed to really quite fail in amazon
+  var already_cached = seek_to_ts > getCurrentTime() && seek_to_ts < (getCurrentTime() + getSecondsBufferedAhead() - 1); // 0.4 seemed to really quite fail in amazon
   if (isAmazon() && !isPaused() && !already_cached) {
     doPause(); // amazon just seems to need this, no idea why...
-    console.log("doing preseek pause ts=" + ts);
+    console.log("doing preseek pause seek_to_ts=" + seek_to_ts);
     did_preseek_pause = true;
   }
-  rawRequestSeekToTime(ts);
+  rawRequestSeekToTime(seek_to_ts);
 
-  if (already_cached && !isYoutubePimw()) { // youtube a "raw request" doesn't actually change the time instantaneously...
+  if (already_cached && !isYoutubePimw()) { // youtube a "raw request" doesn't actually change the time instantaneously...always use polling with callback so we can have the logic work out more eaisly...
     if (callback) {
       console.log("quick seek assuming possible since cached...");
       callback(); // scawah?? but thought it might be useful in case we "seek into" another seek...etc...seems to work OK...
     }
   } else {
     seek_timer_callback = function() {
-        check_if_done_seek(start_time, ts, did_preseek_pause, callback);
+        check_if_done_seek(seeked_from_time, seek_to_ts, did_preseek_pause, callback);
     };
     seek_timer = setInterval(seek_timer_callback, 25);
   }
 }
 
-function check_if_done_seek(start_time, ts, did_preseek_pause, callback) {
+// purpose of this mostly is to not hit play before amazon thought we "could"
+function check_if_done_seek(seeked_from_time, seek_to_ts, did_preseek_pause, callback) {
   if (isYoutubePimw()) {
     console.log("check_if_done_seek youtube_player_state=" + youtube_pimw_player.getPlayerState());
     var done_buffering = (youtube_pimw_player.getPlayerState() == YT.PlayerState.PAUSED); // This "might" mean done buffering :| [we pause it ourselves first...hmm...maybe don't have to?]
   } else {
     var done_buffering = videoNotBuffering();
   }
-  if ((isPaused() && done_buffering) || !isPaused()) {
+  if ((isPaused() && done_buffering) || !isPaused()) { // !isPaused meaning if it went on ahead already and is leaving us in the dust... for HTML5 got this once...maybe !isPaused implies done buffering there? gah...to repro in big buck test an edit at min 2 from just loaded...
     var seconds_buffered = getSecondsBufferedAhead();
 
-    if (seconds_buffered > 2) { // usually 4 or 6...
-      console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " ts=" + ts + " length_was=" + twoDecimals(ts - start_time) + " buffered_ahead=" + twoDecimals(seconds_buffered) + " from=" + twoDecimals(start_time) + " cur_time_actually=" + twoDecimals(getCurrentTime()) + " state=" + video_element.readyState);
+    if (seconds_buffered > 2 || !isPaused()) { // usually 4 or 6...
+      console.log("appears it just finished seeking successfully to " + timeStampToHuman(seek_to_ts) + " seek_to_ts=" + seek_to_ts + " length_was=" + twoDecimals(seek_to_ts - seeked_from_time) + " buffered_ahead=" 
+          + twoDecimals(seconds_buffered) + " from=" + twoDecimals(seeked_from_time) + " cur_time_actually=" + twoDecimals(getCurrentTime()) + " state=" + video_element.readyState);
       if (did_preseek_pause) {
         doPlay();
         make_sure_does_not_get_stuck_after_play(); // doPlay isn't always enough sadly...and then it gets stuck in this weird half paused state :| hopefully rare!
@@ -2120,10 +2129,10 @@ function check_if_done_seek(start_time, ts, did_preseek_pause, callback) {
       }
       seek_timer = null;
     } else {
-      console.log("waiting for it to finish buffering after seek seconds_buffered=" + seconds_buffered);
+      console.log("waiting for it to finish buffering after seek seconds_buffered=" + twoDecimals(seconds_buffered) + " seek_to_ts=" + seek_to_ts + " cur_time_actually=" + twoDecimals(getCurrentTime()));
     }
   } else {
-    console.log("seek_timer interval [i.e. still seeking...] paused=" + isPaused() + " desired_seek_to=" + ts + " state=" + video_element.readyState + " cur_time=" + getCurrentTime());
+    console.log("seek_timer interval [i.e. still seeking...] paused=" + isPaused() + " seek_to_ts=" + seek_to_ts + " state=" + video_element.readyState + " cur_time=" + getCurrentTime());
   }
 }
 
