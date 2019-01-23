@@ -3,7 +3,7 @@
 
   "name": "Play it my way",
   "description": "Watch movies online without the profanity and lewdity",
-  "version": "0.0.140",
+  "version": "0.0.141",
 
   "browser_action": {
     "default_icon": "camera.128.png",

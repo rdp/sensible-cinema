@@ -2048,17 +2048,19 @@ function rawRequestSeekToTime(ts) {
 
 function getSecondsBufferedAhead() {
   var cur_time = getCurrentTime();
-  var seconds_buffered=-1;
+  var seconds_buffered;
   if (isYoutubePimw()) {
     seconds_buffered = youtube_pimw_player.getDuration() * youtube_pimw_player.getVideoLoadedFraction() - cur_time;
   } else if (video_element.buffered.length > 0) { // amazon is this way...but not always...
+    cur_time = video_element.currentTime; // use raw time since amazon is += 10... :| XXX annoying/lame...
     for (var i = 0; i < video_element.buffered.length; i++) {
-      if(video_element.buffered.end(i) <= cur_time && video_element.buffered.start(i) >= cur_time) {
+      if(video_element.buffered.start(i) <= cur_time && video_element.buffered.end(i) >= cur_time) {
         seconds_buffered = (video_element.buffered.end(0) - cur_time); // it reports buffered as "10s ago until 10s from now" or what have you
       }
     }
   } else {
-    console.log("huh");
+    console.log("uninitialized html5 perhaps? for buffered");
+    seconds_buffered = -1;
   }
   return seconds_buffered;
 }
