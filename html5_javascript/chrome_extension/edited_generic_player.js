@@ -283,6 +283,8 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
         
           <option value="light fight">violence -- short fighting (single punch/kick/hit/push)</option>    
         
+          <option value="single hard hit">violence -- single hard punch/kick/hit/push</option>    
+        
           <option value="sustained fight">violence -- sustained punching/fighting</option>    
         
           <option value="threatening actions">violence -- threatening actions</option>    
