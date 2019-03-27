@@ -2,8 +2,11 @@ get "/installation" do |env|
   render "views/installation.ecr", "views/layout_yes_nav.ecr"
 end
 
+get "/jobs" do |env|
+  render "views/jobs.ecr", "views/layout_nik.ecr"
+end
+
 get "/search" do |env|
-  all_urls = get_all_urls
   render "views/search.ecr", "views/layout_nik.ecr"
 end
 
