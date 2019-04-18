@@ -1,3 +1,7 @@
+<% content_for "header" do %>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<% end %>
+
 <div style="height: 50px;">
   <!-- make it possible to full screen'ish it in iOS... -->
 </div>
@@ -11,16 +15,16 @@
     <big>
     <a href='' onclick="youtube_pimw_player.playVideo(); return false">&#9654;</a>&nbsp;&nbsp;<a href='' onclick="youtube_pimw_player.pauseVideo(); return false">&#9612;&#9612;</a>
     </big>
-    Seek:<br>
-    <input id="seek-control-id" type="range" min="0" max="100" step="1" style="width: 100%; display:inline; margin-top: 10px;"></input> <!-- mobile with layout "tall" you want it big as possible...-->
+    <!-- fullscreen -->
+    Go <a href='' onclick="toggleFullScreen(); return false">Fullscreen <i class="material-icons">&#xe5d0;</i></a>
+    Seek:
+    <input id="seek-control-id" type="range" min="0" max="100" step="1" style="width: 70%; display:inline; margin-top: 10px;"></input> <!-- mobile with layout "tall" you want it big as possible...-->
     <br>
     <br>
     <a href='' onclick="seekToDelta(-10); return false">-10s</a>
     <a href='' onclick="seekToDelta(10); return false">+10s</a>
     <!-- time -->
     <div id="current_time_id" style="display: inline;"></div>
-    <!-- fullscreen -->
-    Go <a href='' onclick="toggleFullScreen(); return false">Fullscreen</a>
 
     <br/>
     Volume:<input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)" style="max-width: 100px; display:inline;"></input>
