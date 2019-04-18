@@ -65,7 +65,7 @@
 
                                   <% want_bold = action == category[:type] %>
                                   <%= "<big><b>" if want_bold %>
-                                    <li><a href="/list/<%= category[:type] %>"><%= category[:title] %> </a></li>
+                                    <li><a href="/browse/<%= category[:type] %>"><%= category[:title] %> </a></li>
                                   <%= "</b></big>" if want_bold %>
 
                                 <% } %>

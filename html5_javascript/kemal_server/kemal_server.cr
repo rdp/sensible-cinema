@@ -640,7 +640,7 @@ get "/" do |env|
   render "views/main_nik.ecr", "views/layout_nik.ecr"
 end
 
-get "/old_list" do |env| # old home index...
+get "/old_home" do |env| # old home index...
   all_urls = get_all_urls
   all_urls_done = all_urls.select{|url| url.edit_passes_completed >= 2 }
   all_urls_half_way = all_urls.select{|url| url.edit_passes_completed == 1 }
@@ -651,13 +651,13 @@ get "/old_list" do |env| # old home index...
   out
 end
 
-get "/list/:type" do |env| # like all_movies
+get "/browse/:type" do |env| # like all_movies
   type = env.params.url["type"]
   movies = get_movies_sorted.select{ |group| group[:type].to_s == type}[0]
   render "views/list_movies_nik.ecr", "views/layout_nik.ecr"
 end
 
-get "/list/genre/:genre" do |env|
+get "/browse/genre/:genre" do |env|
   genre = env.params.url["genre"]
   by_genre = Url.all_by_genre(genre)
   movies = {title: "By Genre: " + genre, urls: by_genre, message: ""}
