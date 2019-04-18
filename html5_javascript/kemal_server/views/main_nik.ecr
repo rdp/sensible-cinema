@@ -36,8 +36,8 @@
             <h3>Enjoy our FREE, customizable Chrome app for streamed video filtering!</h3>
             <p class="italic">Your movies. Your way.</p>
 
-            <p></p>
-            <form action="https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml" target="_blank">
+<!-- XXX for chrome desktop just go straight there?? -->
+            <form action="/installation">
                 <div class="center">
                     <input class="button get-app" type="submit" value="GET APP" > </div>
             </form>
@@ -60,7 +60,7 @@
      <% } %>
     </div>
 
-Browse our collection!
+<h4>Browse our collection!</h4>
 <br/>
 <% all = get_movies_sorted 
   all.each{|category|  %>

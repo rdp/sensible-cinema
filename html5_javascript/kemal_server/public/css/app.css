@@ -388,7 +388,7 @@ ul {
     top:10%;
     border-radius: 15px;
     position: absolute;
-    width: 25vw; # not height...
+    width: 55vw; # not height...
     min-width: 200px; # mobile hack LOL
 }
 
@@ -434,6 +434,9 @@ ul {
     .action-box {
         top:20%;
     }
+   .hero-section {
+      height: 100vh;
+   }
 }
 
 
