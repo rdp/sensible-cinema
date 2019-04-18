@@ -39,18 +39,7 @@
             <p></p>
             <form action="https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml" target="_blank">
                 <div class="center">
-                    <input class="button get-app" type="submit" value="GET APP" onclick="installExtension(); return false;"> </div>
-                <script>
-                    function installExtension() {
-                        chrome.webstore.install("https://chrome.google.com/webstore/detail/ionkpaepibbmmhcijkhmamakpeclkdml",
-                            function() {
-                                console.log("installed it");
-                            },
-                            function() {
-                                console.log("rejected it");
-                            });
-                    }
-                </script>
+                    <input class="button get-app" type="submit" value="GET APP" > </div>
             </form>
         </div>
     </div>
