@@ -3,7 +3,7 @@
 <% end %>
 
     <div class="mid-bar">
-        <h4><%= movies[:title] %>:</h4>
+        <h4 style="display: inline;"><%= movies[:title] %>:</h4> <!-- display inline don't wrap -->
         <%=  movies[:message] %>
         <hr style="margin: 5px;"/>
     </div>
@@ -33,6 +33,8 @@
       <% end %>
     <% } %>
 
+<br/>
+<br>You can <a href=/add_movie >vote</a> for a movie you'd like to see done next!
 <div style="clear: both;"></div>
 
 Movies, characters art, etc. are properties of their respective studios and I am making no particular claims about them. Some words like "Amazon" and movie titles, etc. are trademark of their respective companies.
