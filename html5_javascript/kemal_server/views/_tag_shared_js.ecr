@@ -172,55 +172,71 @@ function removeElementFromArray(arr) {
 function doubleCheckValues() {
 
   var action = document.getElementById('action_sel').value;
-  var details = document.getElementById('details_input_id').value;
+  var details = document.getElementById('details_input_id');
   var start = humanToTimeStamp(document.getElementById('start').value);
   var endy = humanToTimeStamp(document.getElementById('endy').value);
-  if (!weakDoubleCheckTimestampsAndAlert(action, details, start, endy)) {
+  if (!weakDoubleCheckTimestampsAndAlert(action, details.value, start, endy)) {
+    addRedBorderTemporarily(document.getElementById('endy'));
+    addRedBorderTemporarily(document.getElementById('start'));
     return false;
   }
 
-  var category = document.getElementById('category_select').value;
+  var category_div = document.getElementById('category_select');
+  var category = category_div.value;
   if (category == "") {
     alert("please select category first");
+    addRedBorderTemporarily(category_div);
     return false;
-  }
-  
+  }  
  
   var subcat_select = document.getElementById('subcategory_select_id');
- 
   if (subcat_select.value == "") {
     alert("please select subcategory first");
+    addRedBorderTemporarily(subcat_select);
     return false;
   }
-  var impact = document.getElementById('impact_to_movie_id').value;
-  if (impact == "0") {
+  var impact = document.getElementById('impact_to_movie_id');
+  if (impact.value == "0") {
     alert("please select impact to story");
+    addRedBorderTemporarily(impact);
     return false;
   }
-  if (details == "") {
+  if (details.value == "") {
     alert("please enter tag details");
+    addRedBorderTemporarily(details);
     return false;
   }
   
-  var age = document.getElementById('age_maybe_ok_id').value;
-  if ((category == "violence" || category == "suspense") && age == "0") {
+  var age = document.getElementById('age_maybe_ok_id');
+  if ((category == "violence" || category == "suspense") && age.value == "0") {
     alert("for violence or suspense tags, please also select a value in the age specifier dropdown");
+    addRedBorderTemporarily(age);
     return false;
   }
-  var lewdness_level = document.getElementById('lewdness_level_id').value;
-  if ((category == "physical") && lewdness_level == "0") {
+  var lewdness_level = document.getElementById('lewdness_level_id');
+  if ((category == "physical") && lewdness_level.value == "0") {
     alert("for sex/nudity/lewdness, please also select a value in the lewdness_level dropdown");
+    addRedBorderTemporarily(lewdness_level);
     return false;
   }
-  var lip_readable = document.getElementById('lip_readable_id').value;
-  if ((category == "profanity") && lip_readable == "") {
+  var lip_readable = document.getElementById('lip_readable_id');
+  if ((category == "profanity") && lip_readable.value == "") {
     alert("for profanity please also select 'lip_readable?' dropdown");
+    addRedBorderTemporarily(lip_readable);
     return false;
   }
   if (subcat_select.options[subcat_select.selectedIndex].value == "joke edit" && document.getElementById('default_enabled_id').value == 'true') {
-    alert("for joking edits please save them with default_enabled as N");
+    alert("for joking edits please remember to save them with default_enabled as N!");
   }
   return true;
+}
+
+function addRedBorderTemporarily(to_this_div) {
+  to_this_div.classList.add("error");  // not ie 9 compat oh well!
+  setTimeout(function(){ 
+       to_this_div.classList.remove("error");
+     }, 
+    3000);
 }
 
 function editDropdownsCreated() {

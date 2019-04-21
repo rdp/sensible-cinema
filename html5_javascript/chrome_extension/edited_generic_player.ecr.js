@@ -40,10 +40,11 @@ function addEditUiOnce() {
   all_pimw_stuff.innerHTML = `
    <!-- our own styles, # means id -->
   <style>
-    #all_pimw_stuff_id a:link { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
-    #all_pimw_stuff_id a:visited { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
-    #all_pimw_stuff_id { text-align: right;}
-    #all_pimw_stuff_id input_disabled { margin-left: .0;}
+    #all_pimw_stuff_id a:link { color: rgb(255,228,181); text-shadow: 0px 0px 5px black; }
+    #all_pimw_stuff_id a:visited { color: rgb(255,228,181); text-shadow: 0px 0px 5px black; }
+    #all_pimw_stuff_id { text-align: right; }
+    #all_pimw_stuff_id input_disabled { margin-left: .0; }
+    #all_pimw_stuff_id .error {  border:2px solid red; }
   </style>
 
   <!-- no pre-load message here since...we don't start the watcher thread until after the first fail or success to give us the right coords, and possibly annoying... -->
