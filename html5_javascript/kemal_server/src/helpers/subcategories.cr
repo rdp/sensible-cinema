@@ -28,8 +28,6 @@ def subcategory_map
     {db_name: "movie content other", human_name: "other", sub_sub_cat: ""},
   ],
   "profanity": [
-    {db_name: "loud noise", human_name: "loud noise/screaming/yelling", sub_sub_cat: ""},
-    {db_name: "raucous music", human_name: "raucous music", sub_sub_cat: ""},
     {db_name: "personal insult mild", human_name: "insult (\"moron\", \"idiot\" etc.)", sub_sub_cat: "attack"},
     {db_name: "personal attack mild", human_name: "attack command (\"shut up\" etc.)", sub_sub_cat: "attack"},
     {db_name: "being mean", human_name: "being mean/cruel to another", sub_sub_cat: "attack"},
@@ -56,6 +54,8 @@ def subcategory_map
     {db_name: "f word", human_name: "f-bomb expletive", sub_sub_cat: "curse"},
     {db_name: "f word sex connotation", human_name: "f-bomb sexual connotation", sub_sub_cat: "curse"},
     {db_name: "profanity foreign language", human_name: "any other profanity different language, French, etc", sub_sub_cat: "curse"},
+    {db_name: "loud noise", human_name: "loud noise/screaming/yelling", sub_sub_cat: ""},
+    {db_name: "raucous music", human_name: "raucous music", sub_sub_cat: ""},
     {db_name: "profanity (other)", human_name: "other", sub_sub_cat: ""},
   ],
   "violence": [

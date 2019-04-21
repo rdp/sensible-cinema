@@ -181,16 +181,6 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
       
       
         
-        
-          <option value="loud noise">profanity -- loud noise/screaming/yelling</option>    
-        
-          <option value="raucous music">profanity -- raucous music</option>    
-        
-          <option value="profanity (other)">profanity -- other</option>    
-        
-        
-      
-        
           <optgroup label="profanity -- attack"> <!-- so it'll hide them when profanity not selected -->
         
         
@@ -272,6 +262,16 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
         
         
           </optgroup>
+        
+      
+        
+        
+          <option value="loud noise">profanity -- loud noise/screaming/yelling</option>    
+        
+          <option value="raucous music">profanity -- raucous music</option>    
+        
+          <option value="profanity (other)">profanity -- other</option>    
+        
         
       
     
@@ -460,6 +460,12 @@ Lewdness level:
   <option value="8">Severe sensual</option>
   <option value="9">Extreme sensual</option>
 </select>
+
+<select name="lip_readable" id="lip_readable_id"> <!-- check boxes have caveats avoid for now -->
+  <option value="">lip readable?</option>
+  <option value="true">Y lip-readable</option>
+  <option value="false">N lip-readable</option>
+</select>
 <br/>
 
 Impact to Story if edited:
@@ -560,7 +566,7 @@ var seek_dragger_being_dragged = false;
 function updateSafeSeekTime() {
   if (!seek_dragger_being_dragged) {
     var seek_dragger =  document.getElementById('safe_seek_id');
-    seek_dragger.value = getCurrentTime() / videoDuration() * 100;
+    seek_dragger.valure = getCurrentTime() / videoDuration() * 100;
     document.getElementById('safe_seek_ts_id').innerHTML = timeStampToHumanRoundSecond(getCurrentTime());
   } // else let the mouse movement change it only...it's about to seek soon'ish...
 }
@@ -1421,7 +1427,8 @@ function createFauxTagForCurrentUI() {
     subcategory: document.getElementById('subcategory_select_id').value,
     impact_to_movie: document.getElementById('impact_to_movie_id').value,
     age_maybe_ok: document.getElementById('age_maybe_ok_id').value,
-    lewdness_level: document.getElementById('lewdness_level_id').value
+    lewdness_level: document.getElementById('lewdness_level_id').value,
+    lip_readable: document.getElementById('lip_readable_id').value == 'true'
   }
   return faux_tag;
 }
@@ -1444,6 +1451,7 @@ function loadTagIntoUI(tag) {
   subcat_select.dispatchEvent(new Event('change')); // so it'll do the right size, needed apparently :|
   document.getElementById('age_maybe_ok_id').value = tag.age_maybe_ok;
   document.getElementById('lewdness_level_id').value = tag.lewdness_level;
+  document.getElementById('lip_readable_id').value = tag.lip_readable; // will come in as false for non profs...ah well...
   document.getElementById('impact_to_movie_id').value = tag.impact_to_movie;
   document.getElementById('default_enabled_id').value = tag.default_enabled;
   document.getElementById('action_sel').value = tag.default_action;
@@ -1636,6 +1644,7 @@ function clearForm() {
   showSubCatWithRightOptionsAvailable(); // resize it back to none, not sure how to auto-trigger this
   document.getElementById('age_maybe_ok_id').value = "0";
   document.getElementById('lewdness_level_id').value = "0";
+  document.getElementById('lip_readable_id').value = "";
   document.getElementById('impact_to_movie_id').value = "0"; // force them to choose one
   setImpactIfMute(); // reset if mute :|
   document.getElementById('tag_hidden_id').value = '0'; // reset
@@ -2242,20 +2251,32 @@ function showRightDropdownsForCategory() {
   var category = document.getElementById("category_select").value;
   var age_select = document.getElementById('age_maybe_ok_id');
   var lewdness_select = document.getElementById('lewdness_level_id');
+  var lip_readable = document.getElementById('lip_readable_id');
+  // this is basically called when they change category so only reset values "when should" I guess...
   if (category == "physical") {
     lewdness_select.style.visibility = "visible";
     age_select.style.visibility = "hidden";
     age_select.value = "0";
+    lip_readable.style.visibility = "hidden";
+    lip_readable.value = "";
   } else if (category == "violence" || category == "suspense" || category == "substance-abuse") {
-    lewdness_select.style.visibility = "hidden";
-    lewdness_select.value = "0";
     // sustance abuse optional for like hard core drugs...?
     age_select.style.visibility = "visible";
-  } else { // profanity, creditz -> neither
+    lip_readable.style.visibility = "hidden";
+    lip_readable.value = "";
+  } else if (category == "profanity") {
+    lip_readable.style.visibility = "visible";
     lewdness_select.style.visibility = "hidden";
     age_select.style.visibility = "hidden";
     lewdness_select.value = "0";
     age_select.value = "0";
+  } else { // creditz -> show hardly anything
+    lewdness_select.style.visibility = "hidden";
+    age_select.style.visibility = "hidden";
+    lewdness_select.value = "0";
+    age_select.value = "0";
+    lip_readable.style.visibility = "hidden";
+    lip_readable.value = "";
   }
 }
 
@@ -2438,6 +2459,11 @@ function doubleCheckValues() {
   var lewdness_level = document.getElementById('lewdness_level_id').value;
   if ((category == "physical") && lewdness_level == "0") {
     alert("for sex/nudity/lewdness, please also select a value in the lewdness_level dropdown");
+    return false;
+  }
+  var lip_readable = document.getElementById('lip_readable_id').value;
+  if ((category == "profanity") && lip_readable == "") {
+    alert("for profanity please also select 'lip_readable?' dropdown");
     return false;
   }
   if (subcat_select.options[subcat_select.selectedIndex].value == "joke edit" && document.getElementById('default_enabled_id').value == 'true') {

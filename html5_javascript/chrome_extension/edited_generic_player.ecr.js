@@ -178,7 +178,7 @@ var seek_dragger_being_dragged = false;
 function updateSafeSeekTime() {
   if (!seek_dragger_being_dragged) {
     var seek_dragger =  document.getElementById('safe_seek_id');
-    seek_dragger.value = getCurrentTime() / videoDuration() * 100;
+    seek_dragger.valure = getCurrentTime() / videoDuration() * 100;
     document.getElementById('safe_seek_ts_id').innerHTML = timeStampToHumanRoundSecond(getCurrentTime());
   } // else let the mouse movement change it only...it's about to seek soon'ish...
 }
@@ -1039,7 +1039,8 @@ function createFauxTagForCurrentUI() {
     subcategory: document.getElementById('subcategory_select_id').value,
     impact_to_movie: document.getElementById('impact_to_movie_id').value,
     age_maybe_ok: document.getElementById('age_maybe_ok_id').value,
-    lewdness_level: document.getElementById('lewdness_level_id').value
+    lewdness_level: document.getElementById('lewdness_level_id').value,
+    lip_readable: document.getElementById('lip_readable_id').value == 'true'
   }
   return faux_tag;
 }
@@ -1062,6 +1063,7 @@ function loadTagIntoUI(tag) {
   subcat_select.dispatchEvent(new Event('change')); // so it'll do the right size, needed apparently :|
   document.getElementById('age_maybe_ok_id').value = tag.age_maybe_ok;
   document.getElementById('lewdness_level_id').value = tag.lewdness_level;
+  document.getElementById('lip_readable_id').value = tag.lip_readable; // will come in as false for non profs...ah well...
   document.getElementById('impact_to_movie_id').value = tag.impact_to_movie;
   document.getElementById('default_enabled_id').value = tag.default_enabled;
   document.getElementById('action_sel').value = tag.default_action;
@@ -1254,6 +1256,7 @@ function clearForm() {
   showSubCatWithRightOptionsAvailable(); // resize it back to none, not sure how to auto-trigger this
   document.getElementById('age_maybe_ok_id').value = "0";
   document.getElementById('lewdness_level_id').value = "0";
+  document.getElementById('lip_readable_id').value = "";
   document.getElementById('impact_to_movie_id').value = "0"; // force them to choose one
   setImpactIfMute(); // reset if mute :|
   document.getElementById('tag_hidden_id').value = '0'; // reset

@@ -362,7 +362,7 @@ post "/save_tag/:url_id" do |env|
   end
   raise "needs details" unless tag.details.present?
   tag.default_enabled = (params["default_enabled"] == "true") # the string :|
-  tag.lip_readable = (params["default_enabled"] == "true") # the string, NB they don't have to set this if not profanity so it might be "" here, logic barely works LOL
+  tag.lip_readable = (params["lip_readable"] == "true") # the string, NB they don't have to set this if not profanity so it might be "" here, logic barely works LOL
   tag.save
   
   # do git stuff after tag.save to make it propagate "fastuh"

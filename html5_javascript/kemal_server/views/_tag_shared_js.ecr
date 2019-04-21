@@ -3,27 +3,31 @@ function showRightDropdownsForCategory() {
   var age_select = document.getElementById('age_maybe_ok_id');
   var lewdness_select = document.getElementById('lewdness_level_id');
   var lip_readable = document.getElementById('lip_readable_id');
+  // this is basically called when they change category so only reset values "when should" I guess...
   if (category == "physical") {
     lewdness_select.style.visibility = "visible";
     age_select.style.visibility = "hidden";
     age_select.value = "0";
+    lip_readable.style.visibility = "hidden";
+    lip_readable.value = "";
   } else if (category == "violence" || category == "suspense" || category == "substance-abuse") {
-    lewdness_select.style.visibility = "hidden";
-    lewdness_select.value = "0";
     // sustance abuse optional for like hard core drugs...?
     age_select.style.visibility = "visible";
-  } else if (category == "profanity"} {
+    lip_readable.style.visibility = "hidden";
+    lip_readable.value = "";
+  } else if (category == "profanity") {
     lip_readable.style.visibility = "visible";
     lewdness_select.style.visibility = "hidden";
     age_select.style.visibility = "hidden";
     lewdness_select.value = "0";
     age_select.value = "0";
-  } else { // creditz -> show neither
+  } else { // creditz -> show hardly anything
     lewdness_select.style.visibility = "hidden";
     age_select.style.visibility = "hidden";
     lewdness_select.value = "0";
     age_select.value = "0";
     lip_readable.style.visibility = "hidden";
+    lip_readable.value = "";
   }
 }
 
@@ -210,7 +214,7 @@ function doubleCheckValues() {
   }
   var lip_readable = document.getElementById('lip_readable_id').value;
   if ((category == "profanity") && lip_readable == "") {
-    alert("for sex/nudity/lewdness, please also select a value in the lip_readable dropdown");
+    alert("for profanity please also select 'lip_readable?' dropdown");
     return false;
   }
   if (subcat_select.options[subcat_select.selectedIndex].value == "joke edit" && document.getElementById('default_enabled_id').value == 'true') {
