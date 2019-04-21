@@ -2,6 +2,7 @@ function showRightDropdownsForCategory() {
   var category = document.getElementById("category_select").value;
   var age_select = document.getElementById('age_maybe_ok_id');
   var lewdness_select = document.getElementById('lewdness_level_id');
+  var lip_readable = document.getElementById('lip_readable_id');
   if (category == "physical") {
     lewdness_select.style.visibility = "visible";
     age_select.style.visibility = "hidden";
@@ -11,11 +12,18 @@ function showRightDropdownsForCategory() {
     lewdness_select.value = "0";
     // sustance abuse optional for like hard core drugs...?
     age_select.style.visibility = "visible";
-  } else { // profanity, creditz -> neither
+  } else if (category == "profanity"} {
+    lip_readable.style.visibility = "visible";
     lewdness_select.style.visibility = "hidden";
     age_select.style.visibility = "hidden";
     lewdness_select.value = "0";
     age_select.value = "0";
+  } else { // creditz -> show neither
+    lewdness_select.style.visibility = "hidden";
+    age_select.style.visibility = "hidden";
+    lewdness_select.value = "0";
+    age_select.value = "0";
+    lip_readable.style.visibility = "hidden";
   }
 }
 
@@ -198,6 +206,11 @@ function doubleCheckValues() {
   var lewdness_level = document.getElementById('lewdness_level_id').value;
   if ((category == "physical") && lewdness_level == "0") {
     alert("for sex/nudity/lewdness, please also select a value in the lewdness_level dropdown");
+    return false;
+  }
+  var lip_readable = document.getElementById('lip_readable_id').value;
+  if ((category == "profanity") && lip_readable == "") {
+    alert("for sex/nudity/lewdness, please also select a value in the lip_readable dropdown");
     return false;
   }
   if (subcat_select.options[subcat_select.selectedIndex].value == "joke edit" && document.getElementById('default_enabled_id').value == 'true') {

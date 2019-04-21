@@ -458,7 +458,8 @@ class Tag
     impact_to_movie: Int32,
     popup_text_after: String,
     default_enabled: Bool,
-    lewdness_level: Int32
+    lewdness_level: Int32,
+    lip_readable: Bool
   })
   DB.mapping({
     id: Int32,
@@ -473,7 +474,8 @@ class Tag
     impact_to_movie: Int32,
     popup_text_after: String,
     default_enabled: Bool,
-    lewdness_level: Int32
+    lewdness_level: Int32,
+    lip_readable: Bool
   })
 
   def self.all
@@ -531,14 +533,15 @@ class Tag
     @popup_text_after = ""
     @default_enabled = true
     @lewdness_level = 0
+    @lip_readable = false
   end
   
   def save
     with_db do |conn|
       if @id == 0
-        @id = conn.exec("insert into tags (start, endy, category, subcategory, details, default_action, age_maybe_ok, url_id, impact_to_movie, popup_text_after, default_enabled, lewdness_level) values (?,?,?,?,?,?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @details,  @default_action, @age_maybe_ok, @url_id, @impact_to_movie, @popup_text_after, @default_enabled, @lewdness_level).last_insert_id.to_i32
+        @id = conn.exec("insert into tags (start, endy, category, subcategory, details, default_action, age_maybe_ok, url_id, impact_to_movie, popup_text_after, default_enabled, lewdness_level, lip_readable) values (?,?,?,?,?,?,?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @details,  @default_action, @age_maybe_ok, @url_id, @impact_to_movie, @popup_text_after, @default_enabled, @lewdness_level, @lip_readable).last_insert_id.to_i32
       else
-        conn.exec "update tags set start = ?, endy = ?, category = ?, subcategory = ?, details = ?, default_action = ?, age_maybe_ok = ?, url_id = ?, impact_to_movie = ?, popup_text_after = ?, default_enabled = ?, lewdness_level = ? where id = ?", start, endy, category, subcategory, details, default_action, age_maybe_ok, url_id, impact_to_movie, popup_text_after, default_enabled, lewdness_level, id
+        conn.exec "update tags set start = ?, endy = ?, category = ?, subcategory = ?, details = ?, default_action = ?, age_maybe_ok = ?, url_id = ?, impact_to_movie = ?, popup_text_after = ?, default_enabled = ?, lewdness_level = ?, lip_readable = ? where id = ?", start, endy, category, subcategory, details, default_action, age_maybe_ok, url_id, impact_to_movie, popup_text_after, default_enabled, lewdness_level, lip_readable, id
       end
     end
   end

@@ -195,8 +195,8 @@ alter table urls add column stuff_not_edited_out TEXT;
 update urls set stuff_not_edited_out = ''; -- default
 
 alter table urls add column age_recommendation_after_edited INT NOT NULL DEFAULT 0;
+alter table tags add column lip_readable BOOL DEFAULT false;
 
 -- and output to screen to show success...
 select * from urls;
 select * from tags;
-
