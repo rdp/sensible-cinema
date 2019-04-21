@@ -368,7 +368,6 @@ post "/save_tag/:url_id" do |env|
   # do git stuff after tag.save to make it propagate "fastuh"
   if is_update
     save_local_javascript url, "updated tag", env
-    add_to_flash(env, "Success! updated tag at #{seconds_to_human tag.start} duration #{tag.duration}s")
   else
     save_local_javascript url, "created tag", env
     # came from inline plugin most likely so just flash nothing...
