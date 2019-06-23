@@ -121,7 +121,7 @@ function addEditUiOnce() {
 
        <br/>
 
-        <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
+        <input type='button' value='Test edit locally' onclick="testCurrentFromUi(); return false">
         <br/>
        action:
         <input type="hidden" id="tag_hidden_id" name="id" value="0"> <!-- 0 means new...I think... -->
@@ -512,13 +512,13 @@ default edit on?
 
 <!-- can't put javascript since don't know how to inject it quite right in plugin, though I could use a separate render... -->
  <!-- render full filename cuz macro -->
-        <input type='submit' id='save_tag_button_id' value='Save Tag' onclick="saveTagButton(); return false;">
+        <input type='button' id='save_tag_button_id' value='Save Tag' onclick="saveTagButton(); return false;">
         <br/>
         <br/>
-        <input type='submit' value='&lt;&lt;' id='open_tag_before_current_id' onclick="openTagBeforeOneInUi(); return false;">
-        <input type='submit' value='Re-Edit Just Passed Tag' id='open_prev_tag_id' onclick="openTagPreviousToNowButton(); return false;">
-        <input type='submit' value='Re-Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
-        <input type='submit' value='&gt;&gt;' id='open_tag_after_current_id' onclick="openTagAfterOneInUi(); return false;">
+        <input type='button' value='&lt;&lt;' id='open_tag_before_current_id' onclick="openTagBeforeOneInUi(); return false;">
+        <input type='button' value='Re-Edit Just Passed Tag' id='open_prev_tag_id' onclick="openTagPreviousToNowButton(); return false;">
+        <input type='button' value='Re-Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
+        <input type='button' value='&gt;&gt;' id='open_tag_after_current_id' onclick="openTagAfterOneInUi(); return false;">
         <br/>
         <input type='button' id='destroy_button_id' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
         <button type="" value="" onclick="clearButton(); return false;">Clear/new tag</button>

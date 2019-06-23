@@ -120,17 +120,17 @@ function addEditUiOnce() {
 
        <br/>
 
-        <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
+        <input type='button' value='Test edit locally' onclick="testCurrentFromUi(); return false">
         <br/>
        action:
         <%= pre_details = "tag details"; pre_popup = "popup text"; io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared.ecr", io2; io2.to_s %> <!-- render full filename cuz macro -->
-        <input type='submit' id='save_tag_button_id' value='Save Tag' onclick="saveTagButton(); return false;">
+        <input type='button' id='save_tag_button_id' value='Save Tag' onclick="saveTagButton(); return false;">
         <br/>
         <br/>
-        <input type='submit' value='&lt;&lt;' id='open_tag_before_current_id' onclick="openTagBeforeOneInUi(); return false;">
-        <input type='submit' value='Re-Edit Just Passed Tag' id='open_prev_tag_id' onclick="openTagPreviousToNowButton(); return false;">
-        <input type='submit' value='Re-Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
-        <input type='submit' value='&gt;&gt;' id='open_tag_after_current_id' onclick="openTagAfterOneInUi(); return false;">
+        <input type='button' value='&lt;&lt;' id='open_tag_before_current_id' onclick="openTagBeforeOneInUi(); return false;">
+        <input type='button' value='Re-Edit Just Passed Tag' id='open_prev_tag_id' onclick="openTagPreviousToNowButton(); return false;">
+        <input type='button' value='Re-Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
+        <input type='button' value='&gt;&gt;' id='open_tag_after_current_id' onclick="openTagAfterOneInUi(); return false;">
         <br/>
         <input type='button' id='destroy_button_id' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
         <button type="" value="" onclick="clearButton(); return false;">Clear/new tag</button>
