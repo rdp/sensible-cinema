@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 echo "attempting to load server to https://localhost:3000"
 if [[ ! -f db/local_cookie_secret ]]; then
-  crystal eval 'require "secure_random"; puts SecureRandom.hex(64)' > db/local_cookie_secret
+  crystal eval 'require "random/secure"; puts Random::Secure.hex(64)' > db/local_cookie_secret
 fi
 if [[ ! -d sessions ]]; then
   mkdir sessions
@@ -11,7 +11,7 @@ if [[ ! -d edit_descriptors ]]; then
 fi
 if [[ ! -f _key.pem ]]; then
   echo "generating dev ssl keys"
-  openssl req -x509 -newkey rsa:4096 -keyout _key.pem -out cert.pem -days 365 -nodes
+  /usr/local/Cellar/openssl/1.0.2s/bin/openssl req -x509 -newkey rsa:4096 -keyout _key.pem -out cert.pem -days 365 -nodes
 fi
 echo "building"
 crystal build ./kemal_server.cr -o bin.kemal_server || exit 1

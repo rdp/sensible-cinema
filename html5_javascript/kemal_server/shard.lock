@@ -10,11 +10,11 @@ shards:
 
   kemal:
     github: sdogruyol/kemal
-    commit: a5870e7d24e5ec75c956bcf3e4423f55a2c4ff78
+    commit: e3544a86bf002f75d2b341c5343e9ebdbf839f80
 
   kemal-session:
     github: kemalcr/kemal-session
-    commit: b98aec297110f148cfdf0c250810bdcce30aede9
+    commit: 9e4fd7336a09ec4dd0b2dbec49eb14aafc19890a
 
   kilt:
     github: jeromegn/kilt
@@ -22,7 +22,7 @@ shards:
 
   mysql:
     github: crystal-lang/crystal-mysql
-    commit: 9d8b9180c94381a33ba202d256a9d2b1f662d079
+    commit: cbc52ae9b14230d79062e15dbcc26dc27fe599f6
 
   radix:
     github: luislavena/radix
