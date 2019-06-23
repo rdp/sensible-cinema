@@ -143,7 +143,7 @@ function addEditUiOnce() {
       <a href=# onclick="getSubtitleLink(); return false;" </a>Get subtitle link</a>
       &nbsp;&nbsp;
       <a href=# onclick="doneMoviePage(); return false;">Movie details</a>
-      <input type='submit' onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
+      <input type="button" onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
     </div>
   </div>`;
 

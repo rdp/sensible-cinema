@@ -464,8 +464,8 @@ Lewdness level:
 
 <select name="lip_readable" id="lip_readable_id"> <!-- check boxes have caveats avoid for now -->
   <option value="">lip readable?</option>
-  <option value="true">Y lip-readable</option>
-  <option value="false">N lip-readable</option>
+  <option value="true">Yes lip-readable</option>
+  <option value="false">Not lip-readable</option>
 </select>
 <br/>
 
@@ -531,7 +531,7 @@ default edit on?
       <a href=# onclick="getSubtitleLink(); return false;" </a>Get subtitle link</a>
       &nbsp;&nbsp;
       <a href=# onclick="doneMoviePage(); return false;">Movie details</a>
-      <input type='submit' onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
+      <input type="button" onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
     </div>
   </div>`;
 
