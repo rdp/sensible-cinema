@@ -8,8 +8,8 @@ else
   echo "use like https://playitmyway.org"
 fi
 
-# no release since super slow plus crashes out of RAM :|
-CRYSTAL_PATH=~/me/src:lib sudo -E -u rdp ~/me/crystal build ./kemal_server.cr || exit 1 # prime the pump :)
+# no release since super slow on DO plus crashes out of RAM :|
+sudo -E -u rdp crystal build ./kemal_server.cr || exit 1 # prime the pump :)
 while true; do
-  ./_prod_ssl_go # wait for it to get killed by cron etc.
+  ./_prod_ssl_go # wait for it to get killed by cron or web server rebuild+restart etc.
 done
