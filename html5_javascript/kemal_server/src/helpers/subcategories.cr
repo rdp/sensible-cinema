@@ -60,7 +60,7 @@ def subcategory_map
   ],
   "violence": [
     {db_name: "violence reference", human_name: "violence reference (spoken)", sub_sub_cat: ""},
-    {db_name: "light fight", human_name: "short fighting (single punch/kick/hit/push)", sub_sub_cat: ""},
+    {db_name: "light fight", human_name: "short fighting (single light punch/kick/hit/push)", sub_sub_cat: ""},
     {db_name: "single hard hit", human_name: "single hard punch/kick/hit/push", sub_sub_cat: ""},
     {db_name: "sustained fight", human_name: "sustained punching/fighting", sub_sub_cat: ""},
     {db_name: "threatening actions", human_name: "threatening actions", sub_sub_cat: ""},

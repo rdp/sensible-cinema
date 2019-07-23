@@ -282,7 +282,7 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
         
           <option value="violence reference">violence -- violence reference (spoken)</option>    
         
-          <option value="light fight">violence -- short fighting (single punch/kick/hit/push)</option>    
+          <option value="light fight">violence -- short fighting (single light punch/kick/hit/push)</option>    
         
           <option value="single hard hit">violence -- single hard punch/kick/hit/push</option>    
         
@@ -528,9 +528,9 @@ default edit on?
 
       <a id=reloading_id href=# onclick="reloadForCurrentUrl(''); return false;" </a></a>
       &nbsp;&nbsp;&nbsp;
-      <a href=# onclick="getSubtitleLink(); return false;" </a>Get subtitle link</a>
+      <a href=# onclick="getSubtitleLink(); return false;" </a>Get subtitles link</a>
       &nbsp;&nbsp;
-      <a href=# onclick="doneMoviePage(); return false;">Movie details</a>
+      <a href=# onclick="doneMoviePage(); return false;">Movie page</a>
       <input type="button" onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
     </div>
   </div>`;
@@ -1163,6 +1163,8 @@ function refreshVideoElement() {
     video_element.addEventListener("canplay", listener);
     video_element.addEventListener("canplaythrough", listener);
     video_element.addEventListener("readystatechange", listener);
+    video_element.addEventListener("paused", listener);
+    video_element.addEventListener("abort", listener);
     // timeupdate is not granular enough for much
     if (isAmazon()) {
       var progressbar = document.getElementsByClassName("bottomPanel")[0];
@@ -2042,8 +2044,8 @@ function doPause() {
 }
 
 function rawRequestSeekToTime(ts) {
-  console.log("doing rawRequestSeekToTime=" + twoDecimals(ts));
-  console.log("rawRequestSeekToTime paused=" + video_element.paused + " state=" + video_element.readyState + " buffered=" + twoDecimals(getSecondsBufferedAhead()));
+  console.log("about to do rawRequestSeekToTime=" + twoDecimals(ts));
+  console.log("rawRequestSeekToTime paused=" + video_element.paused + " state=" + video_element.readyState + " buffered_was=" + twoDecimals(getSecondsBufferedAhead()));
 
   if (isYoutubePimw()) {
     var allowSeekAhead = true; // "allow to seek past buffered" but doesn't quite work well iOS?
@@ -2052,7 +2054,7 @@ function rawRequestSeekToTime(ts) {
     if (isAmazon()) {
       video_element.currentTime = ts + 10;
     } else {
-      // really raw LOL
+      // really raw HTML5 :)
       video_element.currentTime = ts;
     }
   }
@@ -2069,6 +2071,10 @@ function getSecondsBufferedAhead() {
       if(video_element.buffered.start(i) <= cur_time && video_element.buffered.end(i) >= cur_time) {
         seconds_buffered = (video_element.buffered.end(0) - cur_time); // it reports buffered as "10s ago until 10s from now" or what have you
       }
+    }
+    if (!seconds_buffered) {
+      // happens when it seeks way ahead and the buffering hasn't even caught up at all yet, amazon...
+      seconds_buffered =- 1;
     }
   } else {
     console.log("uninitialized html5 perhaps? for buffered");
@@ -2130,7 +2136,7 @@ function check_if_done_seek(seeked_from_time, seek_to_ts, did_preseek_pause, cal
   if ((isPaused() && done_buffering) || !isPaused()) { // !isPaused meaning if it went on ahead already and is leaving us in the dust... for HTML5 got this once...maybe !isPaused implies done buffering there? gah...to repro in big buck test an edit at min 2 from just loaded...
     var seconds_buffered = getSecondsBufferedAhead();
 
-    if (seconds_buffered > 2 || !isPaused()) { // usually 4 or 6...
+    if (seconds_buffered > 2 || !isPaused()) { // usually buffers 4 or 6...it auto plays if within buffered [amazon]
       console.log("appears it just finished seeking successfully to " + timeStampToHuman(seek_to_ts) + " seek_to_ts=" + seek_to_ts + " length_was=" + twoDecimals(seek_to_ts - seeked_from_time) + " buffered_ahead=" 
           + twoDecimals(seconds_buffered) + " from=" + twoDecimals(seeked_from_time) + " cur_time_actually=" + twoDecimals(getCurrentTime()) + " state=" + video_element.readyState);
       if (did_preseek_pause) {
@@ -2146,6 +2152,9 @@ function check_if_done_seek(seeked_from_time, seek_to_ts, did_preseek_pause, cal
       seek_timer = null;
     } else {
       console.log("waiting for it to finish buffering after seek seconds_buffered=" + twoDecimals(seconds_buffered) + " seek_to_ts=" + seek_to_ts + " cur_time_actually=" + twoDecimals(getCurrentTime()));
+      if (did_preseek_pause) {
+        doPlay();
+      }
     }
   } else {
     console.log("seek_timer interval [i.e. still seeking...] paused=" + isPaused() + " seek_to_ts=" + seek_to_ts + " state=" + video_element.readyState + " cur_time=" + getCurrentTime());
