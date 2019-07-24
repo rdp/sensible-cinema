@@ -55,7 +55,7 @@ function addEditUiOnce() {
     #load_failed_div_id a:link { font-size: 10px; }
   </style>
     <a href=# onclick="displayDiv(document.getElementById('click_to_add_to_system_div_id')); return false;">
-      Unedited...
+      PIMW unedited...
     </a>
     <div id=click_to_add_to_system_div_id style='display: none;'>
       <a href=# onclick="addForNewVideo(); return false;">Play it My Way: Click here to add to the system...</a> <!-- TODO disallow -->
@@ -1404,6 +1404,10 @@ function setEditedControlsToMovieRight() {
     // video is too small to fit all the edit stuff, so nuke the useful top padding :|
     desired_top = getLocationOfElement(video_element).top;
   }
+  if (current_json == null) {
+    // put "unedited" at the very top :| hopefully less intrusive
+    desired_top = getLocationOfElement(video_element).top;
+  }
   desired_left = desired_left + "px"; // has to be this way apparently
   desired_top = desired_top + "px";
   if (parseInt(all_pimw_stuff.style.left) != parseInt(desired_left) || parseInt(all_pimw_stuff.style.top) != parseInt(desired_top)) { // youtube had some weird off by 0.001
@@ -1769,7 +1773,7 @@ function addPluginEnabledTextOnce() {
     var span = document.getElementsByClassName("av-playback-messages")[0]; // just random from their UI
     span = span || document.getElementsByClassName("av-alert-inline")[0];
     if (span && !span.innerHTML.includes("it my way")) {
-      var extra = "<br/><small>(Play it my way enabled! Disclaimer: Performance of the motion picture will be altered from the performance intended by the director/copyright holder, we're required to mention that)";
+      var extra = "<br/><small>(Play it my way enabled! Disclaimer: Performance of the motion picture will be altered from the performance intended by the director/copyright holder, because play it my way enabled)";
       if (current_json.url.edit_passes_completed < 2) { // XXXX use the new status...somehow...??
         extra += " (not fully edited yet)";
       }
