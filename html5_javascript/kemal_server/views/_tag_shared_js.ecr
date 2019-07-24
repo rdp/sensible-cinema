@@ -5,26 +5,28 @@ function showRightDropdownsForCategory() {
   var lip_readable = document.getElementById('lip_readable_id');
   // this is basically called when they change category so only reset values "when should" I guess...
   if (category == "physical") {
-    lewdness_select.style.visibility = "visible";
     age_select.style.visibility = "hidden";
     age_select.value = "0";
+    lewdness_select.style.visibility = "visible";
     lip_readable.style.visibility = "hidden";
     lip_readable.value = "";
   } else if (category == "violence" || category == "suspense" || category == "substance-abuse") {
     // sustance abuse optional for like hard core drugs...?
     age_select.style.visibility = "visible";
+    lewdness_select.style.visibility = "hidden";
+    lewdness_select.value = "0";
     lip_readable.style.visibility = "hidden";
     lip_readable.value = "";
   } else if (category == "profanity") {
-    lip_readable.style.visibility = "visible";
     lewdness_select.style.visibility = "hidden";
-    age_select.style.visibility = "hidden";
     lewdness_select.value = "0";
+    age_select.style.visibility = "hidden";
     age_select.value = "0";
+    lip_readable.style.visibility = "visible";
   } else { // creditz -> show hardly anything
     lewdness_select.style.visibility = "hidden";
-    age_select.style.visibility = "hidden";
     lewdness_select.value = "0";
+    age_select.style.visibility = "hidden";
     age_select.value = "0";
     lip_readable.style.visibility = "hidden";
     lip_readable.value = "";

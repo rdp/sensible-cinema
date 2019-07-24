@@ -79,7 +79,7 @@ function addEditUiOnce() {
       Pimw is still in Beta, did we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
       <br/>
       Safe seek: <span id='safe_seek_ts_id'>32m 10s</span> <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 180px;" />
-      <div style="display: inline-block"> <!-- prevent line feed before this div -->
+      <div style=""> 
         <span id="currently_xxx_span_id"> <!-- "currently: muting" --></span>
         <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable this later if flagged as editor -->
            <a href=# onclick="toggleAddNewTagStuff(); return false;">[add/edit tag]</a>
@@ -567,7 +567,7 @@ var seek_dragger_being_dragged = false;
 function updateSafeSeekTime() {
   if (!seek_dragger_being_dragged) {
     var seek_dragger =  document.getElementById('safe_seek_id');
-    seek_dragger.valure = getCurrentTime() / videoDuration() * 100;
+    seek_dragger.value = getCurrentTime() / videoDuration() * 100;
     document.getElementById('safe_seek_ts_id').innerHTML = timeStampToHumanRoundSecond(getCurrentTime());
   } // else let the mouse movement change it only...it's about to seek soon'ish...
 }
@@ -1377,6 +1377,7 @@ function addForNewVideo() {
 }
 
 function toggleAddNewTagStuff() {
+  big_edited_text_svg_id.style.display = "none"; // make more space for small screens...
   toggleDiv(document.getElementById("tag_details_div_id"));
 }
 
@@ -1390,7 +1391,7 @@ function isAddtagStuffVisible() {
 
 function setEditedControlsToMovieRight() {
   if (videoCurrentlyBlackedByUs()) {
-    return; // we won't get the right coords to sync up with, and it makes our edit_tag area go off screen... [NB not enough if video "starts" right in a blank screen, but auto-corrects... :| ]
+    return; // we won't get the right coords to sync up with, which makes our edit_tag area go off screen... [NB not enough if video "starts" right in a blank screen, but auto-corrects after once is visible... :| ]
   }
   var width = parseInt(all_pimw_stuff.style.width, 10);
   var desired_left = getLocationOfElement(video_element).right - width - 10; // avoid amazon x-ray so go to right
@@ -1824,9 +1825,9 @@ function parseSuccessfulJson(json_string) {
 
   var big_edited = document.getElementById("big_edited_text_id");
   if (current_json.url.edit_passes_completed == 2) {
-    big_edited.innerHTML = "Edited";
+    big_edited.innerHTML = "PIMW Edited";
   } else {
-    big_edited.innerHTML = "Partially edited...";
+    big_edited.innerHTML = "PIMW Partially edited...";
     big_edited.setAttribute("x", "0"); // move it left so they can see all that text..
   }
   console.log("finished parsing response SUCCESS JSON");
@@ -2153,7 +2154,7 @@ function check_if_done_seek(seeked_from_time, seek_to_ts, did_preseek_pause, cal
     } else {
       console.log("waiting for it to finish buffering after seek seconds_buffered=" + twoDecimals(seconds_buffered) + " seek_to_ts=" + seek_to_ts + " cur_time_actually=" + twoDecimals(getCurrentTime()));
       if (did_preseek_pause) {
-        doPlay();
+        doPlay(); // das boot 2:05'ish needed this...whaat? I think we were sending play too early...but why?
       }
     }
   } else {
@@ -2264,26 +2265,28 @@ function showRightDropdownsForCategory() {
   var lip_readable = document.getElementById('lip_readable_id');
   // this is basically called when they change category so only reset values "when should" I guess...
   if (category == "physical") {
-    lewdness_select.style.visibility = "visible";
     age_select.style.visibility = "hidden";
     age_select.value = "0";
+    lewdness_select.style.visibility = "visible";
     lip_readable.style.visibility = "hidden";
     lip_readable.value = "";
   } else if (category == "violence" || category == "suspense" || category == "substance-abuse") {
     // sustance abuse optional for like hard core drugs...?
     age_select.style.visibility = "visible";
+    lewdness_select.style.visibility = "hidden";
+    lewdness_select.value = "0";
     lip_readable.style.visibility = "hidden";
     lip_readable.value = "";
   } else if (category == "profanity") {
-    lip_readable.style.visibility = "visible";
     lewdness_select.style.visibility = "hidden";
-    age_select.style.visibility = "hidden";
     lewdness_select.value = "0";
+    age_select.style.visibility = "hidden";
     age_select.value = "0";
+    lip_readable.style.visibility = "visible";
   } else { // creditz -> show hardly anything
     lewdness_select.style.visibility = "hidden";
-    age_select.style.visibility = "hidden";
     lewdness_select.value = "0";
+    age_select.style.visibility = "hidden";
     age_select.value = "0";
     lip_readable.style.visibility = "hidden";
     lip_readable.value = "";

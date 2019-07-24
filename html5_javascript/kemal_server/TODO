@@ -1,8 +1,6 @@
 == todo list (me ja, ordered) ==
 
   fix from feedback from him?
-  publish new plugin
-  bump server version
   add back in job add
      put on craigslist
 
@@ -10,12 +8,6 @@ fix GET APP button for iOS
   also firefox :|
   assume they're on chrome? LOL my test is!
 
-broken seek 2:0 das boot
-on screen should stay up waaay longer
-
-it should always go to top if doing a yes_audio_no_video assume it can't fit? :)
-
-safe seek doesn't keep up with current
 Report ubuntu bugs
 
 war games is all off by 5s?
@@ -23,8 +15,6 @@ war games is all off by 5s?
 youtube says "seemingly aren't allowed..."
 
 plugin after install should pop up the website again??
-
-cuts over to new lines sometimes? grr
 
 warn when overlaps...in UI
 
