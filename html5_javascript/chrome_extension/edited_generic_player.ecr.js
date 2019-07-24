@@ -68,7 +68,7 @@ function addEditUiOnce() {
   <div id="load_succeeded_div_id" style='display: none;'>
     <div id="currently_playing_it_your_way_id" style="color: rgb(148, 148, 148);">
       <svg id="big_edited_text_svg_id" style="font: 50px 'Arial'; height: 50px;" viewBox="0 0 350 50"> <!-- svg shenanigans seem only way to get outlined text -->
-        <text style="fill: none; stroke: rgb(188, 188, 188); stroke-width: 0.5px; stroke-linejoin: round;" y="40" x="175" id="big_edited_text_id">Edited</text>
+        <text style="fill: none; stroke: rgb(188, 188, 188); stroke-width: 0.5px; stroke-linejoin: round;" y="40" x="55" id="big_edited_text_id">Edited</text>
       </svg>
        <br/>
       Currently Editing out: <select id='tag_edit_list_dropdown_id' onChange='personalizedDropdownChanged();'></select> <!-- javascript will set up this select -->
@@ -77,7 +77,7 @@ function addEditUiOnce() {
       <br/>
       Pimw is still in Beta, did we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
       <br/>
-      Safe seek: <span id='safe_seek_ts_id'>32m 10s</span> <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 180px;" />
+      Pictureless seek: <span id='safe_seek_ts_id'>32m 10s</span> <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 180px;" />
       <div style=""> 
         <span id="currently_xxx_span_id"> <!-- "currently: muting" --></span>
         <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable this later if flagged as editor -->
@@ -133,7 +133,7 @@ function addEditUiOnce() {
         <input type='button' value='&gt;&gt;' id='open_tag_after_current_id' onclick="openTagAfterOneInUi(); return false;">
         <br/>
         <input type='button' id='destroy_button_id' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
-        <button type="" value="" onclick="clearButton(); return false;">Clear/new tag</button>
+        <button type="" value="" onclick="clearButton(); return false;">discard changes/new tag</button>
         <button type="" id='reload_tag_button_id' value="" onclick="reloadTagButton(); return false;">Reload This Tag</button>
 
       </form>
