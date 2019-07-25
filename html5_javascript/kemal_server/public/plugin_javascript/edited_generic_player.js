@@ -78,7 +78,7 @@ function addEditUiOnce() {
       <br/>
       Pimw is still in Beta, did we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
       <br/>
-      Pictureless seek: <span id='safe_seek_ts_id'>32m 10s</span> <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 180px;" />
+      Picture-free seek: <span id='safe_seek_ts_id'>32m 10s</span> <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 180px;" />
       <div style=""> 
         <span id="currently_xxx_span_id"> <!-- "currently: muting" --></span>
         <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable this later if flagged as editor -->
@@ -333,6 +333,8 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
           <option value="sports violence">violence -- sports violence part of game</option>    
         
           <option value="rape">violence -- rape</option>    
+        
+          <option value="almost dead body">violence -- nearly dead body visible</option>    
         
           <option value="dead body">violence -- dead body visible lifeless</option>    
         
@@ -893,7 +895,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       save_button.value = "Update This Tag";
       destroy_button.style.visibility = "visible";
       reload_tag_button.style.visibility = "visible";
-      nextsecondline = "re-editing existing tag..." + nextsecondline;
+      nextsecondline = "RE-EDITING existing tag..." + nextsecondline;
     }
     updateHTML(document.getElementById('next_will_be_at_x_span_id'), nextline);
     updateHTML(document.getElementById('next_will_be_at_x_second_line_span_id'), nextsecondline);
@@ -1207,12 +1209,12 @@ function compareTagStarts(tag1, tag2) {
 
 function getAllTagsIncludingReplacedFromUISorted(tags_wanting_replacement_inserted) {
   if (!faux_tag_being_tested) {
-    return tags_wanting_replacement_inserted; // should be sorted
+    return tags_wanting_replacement_inserted; // should be sorted, good to go
   }
   if (uiTagIsNotInDb()) {
     return [faux_tag_being_tested].concat(tags_wanting_replacement_inserted).sort(compareTagStarts); // add in new tag chronologically
   } else {
-    // UI tag is in DB, so we need to search out and replace it
+    // UI tag is in DB, so in the current list, we need to search out and replace it with what's in the UI
     var allWithReplacement = [];
     var found_it = false;
     for (var i = 0; i < tags_wanting_replacement_inserted.length; i++) {
