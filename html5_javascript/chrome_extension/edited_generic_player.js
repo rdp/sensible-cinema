@@ -710,6 +710,7 @@ function areWeWithin(desiredAction, cur_time) {
   return false;
 }
 
+
 function checkIfShouldDoActionAndUpdateUI() {
   var cur_time = getCurrentTime();
   var tag;
@@ -1488,8 +1489,8 @@ function testCurrentFromUi() {
 
   var rewindSeconds = 2;
   var start = faux_tag.start - rewindSeconds;
-  faux_tag_being_tested = faux_tag; // just concretize for now...i.e. if they hit "test" then save/keep saved one...wait what if they change values?  maybe shouldn't concretize?
-  doPlay(); // seems like we want it like this...
+  faux_tag_being_tested = faux_tag; // just concretize for now...i.e. if they hit "test" then save/keep saved one...seems to work OK :)
+  doPlay(); // seems like we want it this way...
   seekToTime(start);
 }
 
@@ -1602,6 +1603,7 @@ function saveTagButton() {
     return;
   }
   var endy = humanToTimeStamp(document.getElementById('endy').value);
+  var start = humanToTimeStamp(document.getElementById('start').value);
 
   if (endy > videoDuration()) {
     alert("tag goes past end of movie? aborting...");
