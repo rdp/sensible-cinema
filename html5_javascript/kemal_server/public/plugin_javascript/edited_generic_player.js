@@ -1394,7 +1394,7 @@ function isAddtagStuffVisible() {
 
 function setEditedControlsToMovieRight() {
   if (videoCurrentlyBlackedByUs()) {
-    return; // we won't get the right coords to sync up with, which makes our edit_tag area go off screen... [NB not enough if video "starts" right in a blank screen, but auto-corrects after once is visible... :| ]
+    return; // we won't get the right coords to sync up with, which if we try makes our edit_tag area go off screen... [NB not enough if video "starts" right in a blank screen, but auto-corrects after once is visible... :| ]
   }
   var width = parseInt(all_pimw_stuff.style.width, 10);
   var desired_left = getLocationOfElement(video_element).right - width - 10; // avoid amazon x-ray so go to right
@@ -1597,18 +1597,29 @@ function openFirstTagStartingAfter(search_time) {
   }
 }
 
-
 function saveTagButton() {
-  if (!doubleCheckValues()) {
+  if (!doubleCheckValues()) { // generic double check, just on form values, not relative to everything else :|
     return;
   }
-  var endy = humanToTimeStamp(document.getElementById('endy').value);
-  var start = humanToTimeStamp(document.getElementById('start').value);
 
-  if (endy > videoDuration()) {
+  var endy = humanToTimeStamp(document.getElementById('endy').value);
+
+  if (endy > videoDuration()) {s
     alert("tag goes past end of movie? aborting...");
     return;
   }
+
+  var start = humanToTimeStamp(document.getElementById('start').value);
+  var otherTags = allTagsExceptOneBeingEdited();
+  for (var i = 0; i < otherTags.length; i++) {
+     var x1 = start;
+     var x2 = endy;
+     var y1 = otherTags[i].start;
+     var y2 = otherTags[i].endy;
+     if (is_overlapping(start, endy, otherTags[i].start, otherTags[i].endy)) {
+       alert("warning: tag overlaps with other beginning at " + timeStampToHuman(otherTags[i].start));
+     }
+   }
 
   var submit_form = document.getElementById('create_new_tag_form_id');
   submit_form.action = "https://" + request_host + "/save_tag/" + current_json.url.id; // allow request_host to change :| NB this goes to the *movie* id on purpose
@@ -1619,6 +1630,26 @@ function saveTagButton() {
     alert("save didn't take? website down?");
     // and don't clear uh guess...
   });
+}
+
+function is_overlapping(x1,x2,y1,y2) {
+    return Math.max(x1,y1) <= Math.min(x2,y2)
+}
+
+function allTagsExceptOneBeingEdited() {
+  var tags = current_json.tags; // we've already avoided getting the "temp tag" being parsed...
+  var id_desired = document.getElementById('tag_hidden_id').value;
+  if (id_desired == '0') {
+    return tags;
+  }
+  tags = tags.slice(0); // clone since slice modifies the array :|
+  for (var i = 0; i < tags.length; i++) {
+    if (tags[i].id == parseInt(id_desired)) {
+      tags.splice(i, 1); // remove it
+      return tags;
+    } 
+  }
+  alert("should never get here allTagsExceptOneBeingEdited");
 }
 
 function reloadTagButton() {

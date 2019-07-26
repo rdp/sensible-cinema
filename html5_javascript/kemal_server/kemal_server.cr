@@ -270,7 +270,6 @@ get "/delete_tag/:tag_id" do |env|
   tag.destroy_in_tag_edit_lists
   tag.destroy_no_cascade
   save_local_javascript tag.url, "removed tag", env
-  add_to_flash env, "deleted tag #{tag.id}"
   env.redirect "/show_details/#{tag.url.id}"
 end
 
@@ -373,10 +372,6 @@ post "/save_tag/:url_id" do |env|
     # came from inline plugin most likely so just flash nothing...
   end
 
-  if tag2 = tag.overlaps_any? url.tags
-    add_to_flash(env, "appears this tag (#{tag2.start} #{tag2.endy}) might accidentally [or purposefully] have an overlap with a different #{tag2.default_action} tag that starts at #{seconds_to_human tag2.start} and ends at #{seconds_to_human tag2.endy}, expected?")
-  end
-  
   if page = env.request.headers["Origin"]? # XHR
     urlish = page.split("/")[0..2].join("/") # https://amazon.com or https://smile.amazon.com
     env.response.headers.add "Access-Control-Allow-Credentials", "true"
