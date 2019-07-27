@@ -1612,10 +1612,6 @@ function saveTagButton() {
   var start = humanToTimeStamp(document.getElementById('start').value);
   var otherTags = allTagsExceptOneBeingEdited();
   for (var i = 0; i < otherTags.length; i++) {
-     var x1 = start;
-     var x2 = endy;
-     var y1 = otherTags[i].start;
-     var y2 = otherTags[i].endy;
      if (is_overlapping(start, endy, otherTags[i].start, otherTags[i].endy)) {
        alert("warning: tag overlaps with other beginning at " + timeStampToHuman(otherTags[i].start));
      }
@@ -1633,7 +1629,7 @@ function saveTagButton() {
 }
 
 function is_overlapping(x1,x2,y1,y2) {
-    return Math.max(x1,y1) <= Math.min(x2,y2)
+  return Math.max(x1,y1) <= Math.min(x2,y2);
 }
 
 function allTagsExceptOneBeingEdited() {
