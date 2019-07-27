@@ -72,7 +72,10 @@ If you'd like to see the internal details of <b>all</b> tags, click <a href=/sho
     <%= "(disabled)" unless tag.default_enabled %>
   </td>
   <td><%= tag.category %></td>
-  <td><%= tag.subcategory %></td>
+  <td>
+      <%= tag.subcategory %>
+      <%= "(lip readable)" if tag.lip_readable %>
+  </td>
   <td>
     <% if tag.age_maybe_ok > 0 %>
       not OK age <%= tag.age_maybe_ok %> and under
