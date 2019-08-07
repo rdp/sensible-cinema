@@ -84,7 +84,7 @@ function onReady(yourMethod) {
 
 function injectEditedPlayerOnce() {
     console.log("injecting editor code...");
-    chrome.runtime.sendMessage({text: "load", color: "#008000", details: "Trying to load edited playback..."}); // last thing they see for non big 2 :|
+    chrome.runtime.sendMessage({text: "load", color: "#808080", details: "Trying to load edited playback..."}); // last thing they see for non big 2 :|
     if (already_loaded) {
         alert('edited player already loaded for this page...please use its UI. Try clicking "unedited" or the refresh button on your browser.');
     }
@@ -132,7 +132,7 @@ function autoStartIfShould() {
     var interval = setInterval(function(){
       var video_element = findFirstVideoTagOrNull();
       if (video_element != null) {
-        console.log("big 2 found video tag [or pimw non youtube], injecting...");
+        console.log("big 2 found video tag [or pimw non youtube page], injecting, even if it doesn't have edits...");
         injectEditedPlayerOnce();
         clearInterval(interval);
       }
