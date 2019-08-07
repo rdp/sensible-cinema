@@ -155,9 +155,11 @@ class Url
     name = url.split("&#x2F;")[3]
     name = "%#{name}%"
     # TODO this is a tidge lame tho??/
-    urls = query("SELECT * FROM urls WHERE (url like ? or amazon_second_url like ? or amazon_third_url like ?) AND episode_number = ?", url, url, url, episode_number) do |rs|
-      puts "success loose lookup #{name}"
+    urls = query("SELECT * FROM urls WHERE (url like ? or amazon_second_url like ? or amazon_third_url like ?) AND episode_number = ?", name, name, name, episode_number) do |rs|
        Url.from_rs(rs);
+    end
+    if urls.size > 0
+      puts "success loose"
     end
     first_or_nil(urls)
   end
