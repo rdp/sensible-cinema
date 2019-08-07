@@ -150,6 +150,18 @@ class Url
     first_or_nil(urls)
   end
 
+  def self.get_only_or_nil_by_loose_amazon_search(url, episode_number)
+    # url is like https://www.amazon.com/Ex-Machina-Alicia-Vikander/dp/B011KKCQH8
+    name = url.split("/")[3]
+    name = "%#{name}%"
+    # TODO this is a tidge lame tho??/
+    urls = query("SELECT * FROM urls WHERE (url like ? or amazon_second_url like ? or amazon_third_url like ?) AND episode_number = ?", url, url, url, episode_number) do |rs|
+      puts "success loose lookup #{name}"
+       Url.from_rs(rs);
+    end
+    first_or_nil(urls)
+  end
+
   def self.all_by_genre(genre)
     with_db do |conn|
       conn.query("SELECT * from urls where genre = ?", genre) do |rs|

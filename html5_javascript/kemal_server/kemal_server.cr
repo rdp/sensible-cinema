@@ -139,6 +139,9 @@ get "/for_current_just_settings_json" do |env|
   sanitized_url = db_style_from_query_url(env)
   episode_number = env.params.query["episode_number"].to_i # should always be present :)
   url_or_nil = Url.get_only_or_nil_by_urls_and_episode_number(sanitized_url, episode_number)
+  if (url_or_nil == nil && sanitized_url =~ /www.amazon.com/)
+    url_or_nil = Url.get_only_or_nil_by_loose_amazon_search(sanitized_url, episode_number)
+  end
   if page = env.request.headers["Origin"]? # XHR hmm...
     urlish = page.split("/")[0..2].join("/") # https://amazon.com or smile.amazon.com
   else
