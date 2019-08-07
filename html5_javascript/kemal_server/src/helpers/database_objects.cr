@@ -151,8 +151,8 @@ class Url
   end
 
   def self.get_only_or_nil_by_loose_amazon_search(url, episode_number)
-    # url is like https://www.amazon.com/Ex-Machina-Alicia-Vikander/dp/B011KKCQH8
-    name = url.split("/")[3]
+    # url is like https:&#x2F;&#x2F;www.amazon.com&#x2F;Ex-Machina-Alicia-Vikander&#x2F;dp/B011KKCQH8
+    name = url.split("&#x2F;")[3]
     name = "%#{name}%"
     # TODO this is a tidge lame tho??/
     urls = query("SELECT * FROM urls WHERE (url like ? or amazon_second_url like ? or amazon_third_url like ?) AND episode_number = ?", url, url, url, episode_number) do |rs|
