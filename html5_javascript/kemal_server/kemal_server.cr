@@ -104,7 +104,7 @@ get "/regen_all_javascript" do |env|
     write_internal_javascript_no_git_commit(url, env)
   }
   save_local_javascript Url.first, "regened all", env  # do git commit
-  "done all safe"
+  "done all regen"
 end
 
 get "/sync_web_server" do |env|
@@ -819,6 +819,8 @@ end
 def write_internal_javascript_no_git_commit(db_url, env)
   as_json = json_for(db_url, env)
   escaped_url_no_slashes = URI.escape db_url.url
+  File.write("edit_descriptors/#{escaped_url_no_slashes}.ep#{db_url.episode_number}" + ".html5_edited.just_
+settings.json.rendered.js", "" + as_json) 
 end
 
 def is_dev?
