@@ -16,4 +16,4 @@ fi
 echo "building"
 crystal build ./kemal_server.cr -o bin.kemal_server || exit 1
 echo "running"
-./bin.kemal_server --ssl --ssl-key-file _key.pem --ssl-cert-file cert.pem or exit 1
+./bin.kemal_server --ssl --ssl-key-file _key.pem --ssl-cert-file cert.pem -p 3000 || exit 1
