@@ -2423,13 +2423,12 @@ function weakDoubleCheckTimestampsAndAlert(action, details, start, endy) {
     return false;
   }
  
-  // XXXX don't really need anymore...wait maybe should allow so I can warn 'em?
-  if (isYoutubePimw() && (action == "mute" || action == "mute_audio_no_video")) {
-    alert("we seemingly aren't allowed to do mutes for youtube, you can either do a skip or set_audio_volume to low [5%], instead");
+  if (isYoutubePimw() && (action == "mute_audio_no_video")) {
+    alert("we seemingly aren't allowed to do mute_audio_no_video non-video for youtube, you could make it smaller and mute, two separate overlapping edits, instead");
     return false;
   }
   if (isYoutubePimw() && action == "yes_audio_no_video") {
-    alert("we seemingly aren't allowed to do yes_audio_no_video for youtube, just skip instead");
+    alert("we seemingly aren't allowed to do yes_audio_no_video (black screen) for youtube, just skip instead...");
     return false;
   }
   if (start == 0) {
