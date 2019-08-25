@@ -138,7 +138,7 @@ function addEditUiOnce() {
 
       </form>
 
-      <a id=reloading_id href=# onclick="reloadForCurrentUrl(''); return false;" </a></a>
+      <a id=reloading_id href=# onclick="reloadForCurrentUrl(''); return false;" </a></a> <!-- filled in later while things are going -->
       &nbsp;&nbsp;&nbsp;
       <a href=# onclick="getSubtitleLink(); return false;" </a>Get subtitles link</a>
       &nbsp;&nbsp;
@@ -500,7 +500,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       destroy_button.style.visibility = "hidden"; // couldn't figure out how to grey it
       reload_tag_button.style.visibility = "hidden";
       if (createFauxTagForCurrentUI().start > 0) {
-        nextsecondline = "new tag..." + nextsecondline;
+        nextsecondline = "CREATING NEW TAG..." + nextsecondline;
       } // else already obvious because all 0's
     } else {
       save_button.value = "Update This Tag";
@@ -1223,12 +1223,14 @@ function saveTagButton() {
   var otherTags = allTagsExceptOneBeingEdited();
   for (var i = 0; i < otherTags.length; i++) {
      if (is_overlapping(start, endy, otherTags[i].start, otherTags[i].endy)) {
-       alert("warning: tag overlaps with other beginning at " + timeStampToHuman(otherTags[i].start));
+       alert("warning: tag overlaps with other beginning at " + timeStampToHuman(otherTags[i].start) + " (this could be intentional, if not, double check)");
      }
    }
 
   var submit_form = document.getElementById('create_new_tag_form_id');
   submit_form.action = "https://" + request_host + "/save_tag/" + current_json.url.id; // allow request_host to change :| NB this goes to the *movie* id on purpose
+  var reload_tags_link = document.getElementById('reloading_id');
+  reload_tags_link.innerHTML = "saving..."; // :|
   submitFormXhr(submit_form, function(xhr) {
     clearForm();
     reloadForCurrentUrl("SAVED tag! "); // it's done saving so we can do this ja
@@ -1310,7 +1312,7 @@ function destroyCurrentTagButton() {
     return;
   }
   if (confirm("sure you want to nuke/remove from entire system this currently loaded tag?")) {
-    window.open("https://" + request_host + "/delete_tag/" + id); // assume it works, and ja :)
+    window.open("https://" + request_host + "/delete_tag/" + id); // assume it works, and ja :| used so rarely haven't made it inline
     clearForm();
     setTimeout(function() { reloadForCurrentUrl('destroyed tag')}, 1000); // reload to get it "back" from the server after saved...longest I've seen like like 60ms
   }
@@ -1320,6 +1322,7 @@ function doneMoviePage() {
   window.open("https://" + request_host + "/edit_url/" + current_json.url.id + "?status=done");
 }
 
+performance.setResourceTimingBufferSize(1000); // catch subtitles more consistently, seems to help, still needs a browser restart tho, or we could capture oveflow... :|
 function getSubtitleLink() {
   if (isYoutube()) {
     window.open("http://www.yousubtitles.com/load/?url=" + currentUrlNotIframe()); // go git 'em
@@ -1329,11 +1332,13 @@ function getSubtitleLink() {
     alert("subtitles not supported except on amazon/youtube today");
     return;
   }
-  var arr = window.performance.getEntriesByType("resource");
+  var arr = window.performance.getEntries();
   for (var i = arr.length - 1; i >= 0; --i) {
+    console.log(arr[i].name);
+
     if (arr[i].name.endsWith(".dfxp")) { // ex: https://dmqdd6hw24ucf.cloudfront.net/341f/e367/03b5/4dce-9c0e-511e3b71d331/15e8386e-0cb0-477f-b2e4-b21dfa06f1f7.dfxp apparently
       var response = prompt("this appears to be a subtitles url, copy this:", arr[i].name); // has a cancel prompt, but we don't care which button they use
-      return;
+      console.log(response);
     }
   }
   alert("didn't find a subtitles file, try turning subtitles on, then reload your browser, then try again");
@@ -1372,7 +1377,7 @@ function reloadForCurrentUrl(additional_string) {
     );
   }
   else {
-    alert("not reloading, possibly no edits loaded?"); // amazon already went to next episode??
+    alert("not reloading, possibly no edits loaded?"); // amazon already went to next episode?? server went down?
   }
 }
 
@@ -1380,7 +1385,7 @@ function reloadSucceeded(json_string, additional_string) {
   loadSucceeded(json_string);
   var reload_tags_link = document.getElementById('reloading_id');
   reload_tags_link.innerHTML = additional_string;
-  setTimeout(function() {reload_tags_link.innerHTML = "";}, 5000); // clear it
+  setTimeout(function() {reload_tags_link.innerHTML = "";}, 5000); // back to normal by clearing all text
 }
 
 function loadSucceeded(json_string) {

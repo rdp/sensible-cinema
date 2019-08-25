@@ -4,6 +4,9 @@
 
 console.log("PIMW content script entered... " + window.location); // try and see how fast it "can" load...
 
+performance.setResourceTimingBufferSize(1000); // catch subtitles more consistently :|
+
+
 function loadScript(url, callback)
 {
     // Adding the script tag to the head as suggested before
