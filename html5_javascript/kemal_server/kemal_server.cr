@@ -945,14 +945,7 @@ post "/upload_from_subtitles_post/:url_id" do |env|
   add_to_beginning = params["add_to_beginning"].to_f
   add_to_end = params["add_to_end"].to_f
  
-  upload_io = nil 
-  HTTP::FormData.parse(env.request) do |upload|
-    upload_io = upload.body
-  end
-  if upload_io
-    db_url.subtitles = upload_io.gets_to_end # saves contents, why not? :) XXX save euphemized? actually original might be more powerful somehow...
-    profs, all_euphemized = SubtitleProfanityFinder.mutes_from_srt_string(db_url.subtitles)
-  elsif params["amazon_subtitle_url"]?
+  if params["amazon_subtitle_url"]?
     db_url.subtitles = download(params["amazon_subtitle_url"])
     profs, all_euphemized = SubtitleProfanityFinder.mutes_from_amazon_string(db_url.subtitles)
   else
