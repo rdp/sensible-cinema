@@ -108,6 +108,7 @@ function addEditUiOnce() {
       <input type='button' onclick="seekToTime(getCurrentTime() + 2); return false;" value='+2s'/>
       <input type='button' onclick="seekToBeforeSkip(-5); return false;" value='-5s'/>
       <input type='button' onclick="seekToTime(getCurrentTime() - 1); return false;" value='1s-'/>
+      <input type='button' onclick="seekToTime(getCurrentTime() + 1); return false;" value='1s+'/>
       <input type='button' onclick="stepFrameBack(); return false;" value='.1s -'/>
       <input type='button' onclick="stepFrame(); return false;" value='.1s +'/>
 
@@ -451,12 +452,13 @@ age specifier (if violence):
 
 Lewdness level:
 <select name="lewdness_level" id="lewdness_level_id">
+  <!-- TODO fix ordering in DB :| -->
   <option value="0">please select</option>
   <option value="2">Cartoon (non sensual)</option>
   <option value="2">Art-based (non sensual)</option>
   <option value="10">Non sensual, hard to even see</option>
   <option value="3">Non sensual/barely revealing</option>
-  <option value="4">Mild sensual/medium revealing</option>
+  <option value="11">Non sensual/medium revealing</option>
   <option value="5">Art-based (moderate sensual)</option>
   <option value="6">Moderate sensual</option>
   <option value="7">Art-based (severe/extreme sensual)</option>

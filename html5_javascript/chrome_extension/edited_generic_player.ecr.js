@@ -107,6 +107,7 @@ function addEditUiOnce() {
       <input type='button' onclick="seekToTime(getCurrentTime() + 2); return false;" value='+2s'/>
       <input type='button' onclick="seekToBeforeSkip(-5); return false;" value='-5s'/>
       <input type='button' onclick="seekToTime(getCurrentTime() - 1); return false;" value='1s-'/>
+      <input type='button' onclick="seekToTime(getCurrentTime() + 1); return false;" value='1s+'/>
       <input type='button' onclick="stepFrameBack(); return false;" value='.1s -'/>
       <input type='button' onclick="stepFrame(); return false;" value='.1s +'/>
 
