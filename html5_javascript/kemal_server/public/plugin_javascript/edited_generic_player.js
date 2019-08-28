@@ -206,7 +206,7 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
         
           <option value="bodily part reference mild">profanity -- bodily part reference mild (butt, bumm, suck ...)</option>    
         
-          <option value="bodily part reference harsh">profanity -- bodily part reference harsh (ex: balls...)</option>    
+          <option value="bodily part reference harsh">profanity -- bodily part reference harsh (ex: balls, screwed)</option>    
         
         
           </optgroup>
