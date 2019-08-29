@@ -103,8 +103,6 @@ function addEditUiOnce() {
 
       <!-- no special method for seek forward since it'll at worst seek to a skip then skip -->
       <input type='button' onclick="seekToBeforeSkip(-30); return false;" value='-30s'/>
-      <input type='button' onclick="seekToTime(getCurrentTime() - 2); return false;" value='-2s'/>
-      <input type='button' onclick="seekToTime(getCurrentTime() + 2); return false;" value='+2s'/>
       <input type='button' onclick="seekToBeforeSkip(-5); return false;" value='-5s'/>
       <input type='button' onclick="seekToTime(getCurrentTime() - 1); return false;" value='1s-'/>
       <input type='button' onclick="seekToTime(getCurrentTime() + 1); return false;" value='1s+'/>

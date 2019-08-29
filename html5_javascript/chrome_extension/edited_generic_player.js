@@ -104,8 +104,6 @@ function addEditUiOnce() {
 
       <!-- no special method for seek forward since it'll at worst seek to a skip then skip -->
       <input type='button' onclick="seekToBeforeSkip(-30); return false;" value='-30s'/>
-      <input type='button' onclick="seekToTime(getCurrentTime() - 2); return false;" value='-2s'/>
-      <input type='button' onclick="seekToTime(getCurrentTime() + 2); return false;" value='+2s'/>
       <input type='button' onclick="seekToBeforeSkip(-5); return false;" value='-5s'/>
       <input type='button' onclick="seekToTime(getCurrentTime() - 1); return false;" value='1s-'/>
       <input type='button' onclick="seekToTime(getCurrentTime() + 1); return false;" value='1s+'/>
@@ -216,9 +214,13 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
           <optgroup label="profanity -- deity"> <!-- so it'll hide them when profanity not selected -->
         
         
-          <option value="deity religious context">profanity -- deity use in religious context like &quot;the l... is good&quot;</option>    
+          <option value="deity religious context">profanity -- deity use in religious christian context like &quot;the l... is good&quot;</option>    
+        
+          <option value="deity religious context other religion">profanity -- deity other religious context like &quot;Thank the gods of X&quot;</option>    
         
           <option value="deity reference">profanity -- deity use appropriate but non religious context like &quot;in this game you are G...&quot;</option>    
+        
+          <option value="deity greek">profanity -- deity greek (Zeus, etc.)</option>    
         
           <option value="deity exclamation mild">profanity -- deity exclamation mild like Good L...</option>    
         
@@ -227,8 +229,6 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
           <option value="deity exclamation">profanity -- deity exclamation harsh, name of the Lord (omg, etc.)</option>    
         
           <option value="deity expletive">profanity -- deity expletive (es: goll durn, the real words)</option>    
-        
-          <option value="deity greek">profanity -- deity greek (Zeus, etc.)</option>    
         
           <option value="deity foreign language">profanity -- deity different language, like Allah or French equivalents, etc</option>    
         
@@ -354,7 +354,7 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
         
           <option value="revealing clothing">physical -- revealing clothing (scantily clad, non cleavage)</option>    
         
-          <option value="tight clothing">physical -- tight clothing (revealing because tight)</option>    
+          <option value="tight clothing">physical -- tight clothing (revealing because tight, non cleavage)</option>    
         
           <option value="underwear">physical -- clad in underwear</option>    
         
@@ -461,6 +461,7 @@ Lewdness level:
   <option value="10">Non sensual, hard to even see</option>
   <option value="3">Non sensual/barely revealing</option>
   <option value="11">Non sensual/medium revealing</option>
+  <option value="4">Mild sensual/medium revealing</option>
   <option value="5">Art-based (moderate sensual)</option>
   <option value="6">Moderate sensual</option>
   <option value="7">Art-based (severe/extreme sensual)</option>
