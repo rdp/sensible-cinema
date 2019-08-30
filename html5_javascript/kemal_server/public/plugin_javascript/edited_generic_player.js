@@ -1402,19 +1402,21 @@ function setEditedControlsToMovieRight() {
     return; // we won't get the right coords to sync up with, which if we try makes our edit_tag area go off screen... [NB not enough if video "starts" right in a blank screen, but auto-corrects after once is visible... :| ]
   }
   var width = parseInt(all_pimw_stuff.style.width, 10);
-  var desired_left = getLocationOfElement(video_element).right - width - 10; // avoid amazon x-ray so go to right
-  var desired_top = getLocationOfElement(video_element).top;
+  var video_element_size = getLocationOfElement(video_element);
+  var desired_left = video_element_size.right - width - 10; // avoid amazon x-ray so go offset from right
+  var desired_top = video_element_size.top;
   if (isAmazon()) {
-    desired_top += 200; // make top amazon stuff visible, plus ability to see subs dropdown ...
+    if ((getLocationOfElement(all_pimw_stuff).height + 200) > video_element_size.height) {
+      // video is too small to fit all the edit stuff, so no useful top padding :|
+    } else {
+      desired_top += 200; // make top amazon stuff visible, plus ability to see subs dropdown ...      
+      // this is OK because it only blocks the icons in "editor" mode anyway...
+    }
   }
 
-  if ((getLocationOfElement(all_pimw_stuff).height + desired_top) > getLocationOfElement(video_element).height) {
-    // video is too small to fit all the edit stuff, so nuke the useful top padding :|
-    desired_top = getLocationOfElement(video_element).top;
-  }
   if (current_json == null) {
-    // put "unedited" at the very top :| hopefully less intrusive
-    desired_top = getLocationOfElement(video_element).top;
+    // put "unedited" at the very top :| hopefully less intrusive, doesn't interfere with the normal buttons there too
+    desired_top = video_element_size.top;
   }
   desired_left = desired_left + "px"; // has to be this way apparently
   desired_top = desired_top + "px";
@@ -1717,7 +1719,34 @@ function doneMoviePage() {
   window.open("https://" + request_host + "/edit_url/" + current_json.url.id + "?status=done");
 }
 
-performance.setResourceTimingBufferSize(1000); // catch subtitles more consistently, seems to help, still needs a browser restart tho, or we could capture oveflow... :|
+//performance.setResourceTimingBufferSize(1000); // catch subtitles more consistently, seems to help, still needs a browser restart tho, or we could capture oveflow... :|
+
+var old_subs = [];
+
+performance.addEventListener('resourcetimingbufferfull', function (event) {
+   console.log("got event " + event);
+   old_subs = old_subs.concat(getSubsFromCurrentPerformance());
+   performance.clearResourceTimings(); // let it fill again, hope nobody else uses these!?
+   // NB we miss one here oh well! :|
+   console.log("cleared performance list");
+});
+
+function getAllSubs() {
+  return old_subs.concat(getSubsFromCurrentPerformance());
+}
+
+function getSubsFromCurrentPerformance() {
+  var arr = window.performance.getEntries();
+  var out = [];
+  for (var i = arr.length - 1; i >= 0; --i) {
+    // console.log(arr[i].name); http://m.amazon.com/yo.png or something.mp4
+    if (arr[i].name.endsWith(".dfxp")) { // ex: https://dmqdd6hw24ucf.cloudfront.net/341f/e367/03b5/4dce-9c0e-511e3b71d331/15e8386e-0cb0-477f-b2e4-b21dfa06f1f7.dfxp apparently
+      out.push(arr[i]);
+    }
+  }
+  return out;
+}
+
 function getSubtitleLink() {
   if (isYoutube()) {
     window.open("http://www.yousubtitles.com/load/?url=" + currentUrlNotIframe()); // go git 'em
@@ -1727,16 +1756,12 @@ function getSubtitleLink() {
     alert("subtitles not supported except on amazon/youtube today");
     return;
   }
-  var arr = window.performance.getEntries();
-  for (var i = arr.length - 1; i >= 0; --i) {
-    console.log(arr[i].name);
-
-    if (arr[i].name.endsWith(".dfxp")) { // ex: https://dmqdd6hw24ucf.cloudfront.net/341f/e367/03b5/4dce-9c0e-511e3b71d331/15e8386e-0cb0-477f-b2e4-b21dfa06f1f7.dfxp apparently
-      var response = prompt("this appears to be a subtitles url, copy this:", arr[i].name); // has a cancel prompt, but we don't care which button they use
-      console.log(response);
-    }
+  var subs = getAllSubs();
+  if (subs.length > 0) {
+    var response = prompt("this appears to be a subtitles url, copy this:", subs[0].name); // has a cancel prompt, but we don't care which button they use, we just want to give them something they can copy more easily! :)
+  } else {
+    alert("didn't find a subtitles file, try turning subtitles on, then reload your browser, then try again");
   }
-  alert("didn't find a subtitles file, try turning subtitles on, then reload your browser, then try again");
 }
 
 function stepFrameBack() {
@@ -2183,6 +2208,7 @@ function check_if_done_seek(seeked_from_time, seek_to_ts, did_preseek_pause, cal
     var seconds_buffered = getSecondsBufferedAhead();
 
     if (seconds_buffered > 2 || !isPaused()) { // usually buffers 4 or 6...it auto plays if within buffered [amazon]
+      // success
       console.log("appears it just finished seeking successfully to " + timeStampToHuman(seek_to_ts) + " seek_to_ts=" + seek_to_ts + " length_was=" + twoDecimals(seek_to_ts - seeked_from_time) + " buffered_ahead=" 
           + twoDecimals(seconds_buffered) + " from=" + twoDecimals(seeked_from_time) + " cur_time_actually=" + twoDecimals(getCurrentTime()) + " state=" + video_element.readyState);
       if (did_preseek_pause) {
@@ -2199,7 +2225,7 @@ function check_if_done_seek(seeked_from_time, seek_to_ts, did_preseek_pause, cal
     } else {
       console.log("waiting for it to finish buffering after seek seconds_buffered=" + twoDecimals(seconds_buffered) + " seek_to_ts=" + seek_to_ts + " cur_time_actually=" + twoDecimals(getCurrentTime()));
       if (did_preseek_pause) {
-        doPlay(); // das boot 2:05'ish needed this...whaat? I think we were sending play too early...but why?
+        doPlay(); // das boot 2:05'ish needed this...whaat? I think we were sending play too early...but why? <sigh>
       }
     }
   } else {
