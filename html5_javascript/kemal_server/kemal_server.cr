@@ -49,14 +49,6 @@ static_headers do |response, filepath, filestat|
   end
 end
 
-# https://github.com/crystal-lang/crystal/issues/3997 crystal doesn't effectively call GC full whaat? 
-spawn do
-  loop do
-    sleep 0.5
-    GC.collect
-  end
-end
-
 def standardize_url(unescaped)
   original = unescaped
   # basically do it all here, except canonicalize, which we do in javascript...
