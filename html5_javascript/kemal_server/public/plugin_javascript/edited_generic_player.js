@@ -2803,10 +2803,13 @@ function selectHasOption(select_element, desired_value) {
 function timeStampToHuman(timestamp) {
   var hours = Math.floor(timestamp / 3600);
   timestamp -= hours * 3600;
+  timestamp = Number.parseFloat(timestamp.toFixed(2)); // 9936.71 - 2*3600 = 2736.709999999999 whaaat?
   var minutes  = Math.floor(timestamp / 60);
   timestamp -= minutes * 60;
+  timestamp = Number.parseFloat(timestamp.toFixed(2));
   var seconds = Math.floor(timestamp);
   timestamp -= seconds;
+  timestamp = Number.parseFloat(timestamp.toFixed(2));
   var hundredths = paddTo2(Math.floor(timestamp * 100)); // round to hundredth, pad the other way...
   var secondsString = paddTo2(seconds) + "." + hundredths + "s";
   if (hours > 0)
