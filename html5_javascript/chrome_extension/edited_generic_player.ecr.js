@@ -536,7 +536,7 @@ function blankScreenIfWithinHeartOfSkip(skipish_tag, cur_time) {
 function heartBlankScreenIfImpending(start_time) { // basically for pre-emptively knowing when skips will end :|
   var just_before_bad_stuff = areWeWithinNoShowVideoTag(start_time + 0.02); // if about to re-non-video, don't show blip of bad stuff if two such edits back to back
   if (just_before_bad_stuff) {
-    console.log("starting heartblank b/c just_before_bad_stuff");
+    console.log("starting heartblank b/c just_before_bad_stuff or just into it");
     startHeartBlank(just_before_bad_stuff, start_time);
   } else {
     // console.log("not heartblanking it, not in middle of anything");
