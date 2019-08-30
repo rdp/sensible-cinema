@@ -1760,7 +1760,7 @@ function getSubtitleLink() {
   if (subs.length > 0) {
     var response = prompt("this appears to be a subtitles url, copy this:", subs[0].name); // has a cancel prompt, but we don't care which button they use, we just want to give them something they can copy more easily! :)
   } else {
-    alert("didn't find a subtitles file, try turning subtitles on, then reload your browser, then try again");
+    alert("didn't find a subtitles file, try turning subtitles on, then try again");
   }
 }
 
