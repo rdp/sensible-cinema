@@ -159,9 +159,11 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
       
         
         
-          <option value="initial theme song">movie-content -- initial theme song</option>    
+          <option value="initial theme song">movie-content -- initial theme song/trailer</option>    
         
           <option value="initial credits">movie-content -- initial company credits before intro/before songs</option>    
+        
+          <option value="recap">movie-content -- recap of earlier episodes</option>    
         
           <option value="closing credits">movie-content -- closing credits/songs</option>    
         
@@ -932,7 +934,7 @@ function blankScreenIfWithinHeartOfSkip(skipish_tag, cur_time) {
 function heartBlankScreenIfImpending(start_time) { // basically for pre-emptively knowing when skips will end :|
   var just_before_bad_stuff = areWeWithinNoShowVideoTag(start_time + 0.02); // if about to re-non-video, don't show blip of bad stuff if two such edits back to back
   if (just_before_bad_stuff) {
-    console.log("starting heartblank b/c just_before_bad_stuff");
+    console.log("starting heartblank b/c just_before_bad_stuff or just into it");
     startHeartBlank(just_before_bad_stuff, start_time);
   } else {
     // console.log("not heartblanking it, not in middle of anything");
@@ -1629,7 +1631,7 @@ function saveTagButton() {
   var reload_tags_link = document.getElementById('reloading_id');
   reload_tags_link.innerHTML = "saving..."; // :|
   submitFormXhr(submit_form, function(xhr) {
-    clearForm();
+    clearForm(false);
     reloadForCurrentUrl("SAVED tag! "); // it's done saving so we can do this ja
   }, function(xhr) {
     alert("save didn't take? website down?");
@@ -1638,7 +1640,7 @@ function saveTagButton() {
 }
 
 function is_overlapping(x1,x2,y1,y2) {
-  return Math.max(x1,y1) <= Math.min(x2,y2);
+  return Math.max(x1,y1) < Math.min(x2,y2);
 }
 
 function allTagsExceptOneBeingEdited() {
@@ -1678,27 +1680,28 @@ function get_original_tag_of_ui() {
 }
 
 function clearButton() {
-  clearForm();
+  clearForm(true);
   reloadForCurrentUrl('cleared!');
 }
 
-function clearForm() {
+function clearForm(should_clear_everything) {
   document.getElementById('start').value = timeStampToHuman(0);
   document.getElementById('endy').value = timeStampToHuman(0);
-  document.getElementById('details_input_id').value = "";
   document.getElementById('popup_text_after_id').value = "";
-  // don't reset category since I'm not sure if the javascript handles its going back to ""
-  document.getElementById('subcategory_select_id').selectedIndex = 0; // use a present value so size doesn't go to *0*
-  showSubCatWithRightOptionsAvailable(); // resize it back to none, not sure how to auto-trigger this
+  if (should_clear_everything) {
+    document.getElementById('details_input_id').value = ""; // leave it in case we can want to reuse it
+    // don't reset category since I'm not sure if the javascript handles its going back to "" subcat tho...
+    document.getElementById('subcategory_select_id').selectedIndex = 0; // use a present value so size doesn't go to *0*  
+    showSubCatWithRightOptionsAvailable(); // resize it back to none, not sure how to auto-trigger this
+  }
   document.getElementById('age_maybe_ok_id').value = "0";
   document.getElementById('lewdness_level_id').value = "0";
   document.getElementById('lip_readable_id').value = "";
   document.getElementById('impact_to_movie_id').value = "0"; // force them to choose one
-  setImpactIfMute(); // reset if mute :|
   document.getElementById('tag_hidden_id').value = '0'; // reset
   document.getElementById('default_enabled_id').value = 'true';
 
-  document.getElementById('action_sel').dispatchEvent(new Event('change')); // so it'll set impact if mute
+  document.getElementById('action_sel').dispatchEvent(new Event('change')); // so it'll set impact if mute...wait again?
   faux_tag_being_tested = null; // give up testing anything if anything happened to be doing so...
 }
 
@@ -1710,7 +1713,7 @@ function destroyCurrentTagButton() {
   }
   if (confirm("sure you want to nuke/remove from entire system this currently loaded tag?")) {
     window.open("https://" + request_host + "/delete_tag/" + id); // assume it works, and ja :| used so rarely haven't made it inline
-    clearForm();
+    clearForm(true);
     setTimeout(function() { reloadForCurrentUrl('destroyed tag')}, 1000); // reload to get it "back" from the server after saved...longest I've seen like like 60ms
   }
 }
