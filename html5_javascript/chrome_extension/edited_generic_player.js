@@ -2586,7 +2586,8 @@ function editDropdownsCreated() {
     subcat_select.value = ''; // reset subcat to top, since cat just changed...
     showSubCatWithRightOptionsAvailable();
     showRightDropdownsForCategory();
-    document.getElementById('details_input_id').value = ""; // hardly want to reuse these for a new category...
+    //document.getElementById('details_input_id').value = ""; // hardly want to reuse these for a new category...
+    // can't yet it calls this after loading an existing tag into the UI for re-editing :|
    });
   
   document.getElementById('action_sel').addEventListener('change', setImpactIfMute, false);
