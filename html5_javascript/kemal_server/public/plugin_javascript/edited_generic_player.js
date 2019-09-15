@@ -335,13 +335,15 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
         
           <option value="sports violence">violence -- sports violence part of game</option>    
         
+          <option value="choking">violence -- choking</option>    
+        
           <option value="rape">violence -- rape</option>    
         
           <option value="almost dead body">violence -- nearly dead body visible</option>    
         
           <option value="dead body">violence -- dead body visible lifeless</option>    
         
-          <option value="suicidal actions">violence -- suicidal actions/references</option>    
+          <option value="suicidal actions">violence -- suicidal event/references</option>    
         
           <option value="violence (other)">violence -- other</option>    
         

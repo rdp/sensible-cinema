@@ -87,10 +87,11 @@ def subcategory_map
     {db_name: "circumstantial death", human_name: "death non-killing, ex: accidental falling", sub_sub_cat: ""},
     {db_name: "hand gesture", human_name: "hand gesture", sub_sub_cat: ""},
     {db_name: "sports violence", human_name: "sports violence part of game", sub_sub_cat: ""},
+    {db_name: "choking", human_name: "choking", sub_sub_cat: ""},
     {db_name: "rape", human_name: "rape", sub_sub_cat: ""},
     {db_name: "almost dead body", human_name: "nearly dead body visible", sub_sub_cat: ""},
     {db_name: "dead body", human_name: "dead body visible lifeless", sub_sub_cat: ""},
-    {db_name: "suicidal actions", human_name: "suicidal actions/references", sub_sub_cat: ""},
+    {db_name: "suicidal actions", human_name: "suicidal event/references", sub_sub_cat: ""},
     {db_name: "violence (other)", human_name: "other", sub_sub_cat: ""},
   ],
   "physical": [
