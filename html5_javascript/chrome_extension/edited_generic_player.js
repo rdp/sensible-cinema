@@ -2586,6 +2586,7 @@ function editDropdownsCreated() {
     subcat_select.value = ''; // reset subcat to top, since cat just changed...
     showSubCatWithRightOptionsAvailable();
     showRightDropdownsForCategory();
+    document.getElementById('details_input_id').value = ""; // hardly want to reuse these for a new category...
    });
   
   document.getElementById('action_sel').addEventListener('change', setImpactIfMute, false);
