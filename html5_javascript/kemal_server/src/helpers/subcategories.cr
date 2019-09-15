@@ -77,6 +77,7 @@ def subcategory_map
     {db_name: "collision death", human_name: "collision/crash (implied death)", sub_sub_cat: ""},
     {db_name: "explosion", human_name: "explosion (no implied death)", sub_sub_cat: ""},
     {db_name: "explosion death", human_name: "explosion (implied death)", sub_sub_cat: ""},
+    {db_name: "explosion death explicit", human_name: "explosion (on screen death)", sub_sub_cat: ""},
     {db_name: "comedic fight", human_name: "comedic/slapstick fighting", sub_sub_cat: ""},
     {db_name: "shooting miss", human_name: "shooting miss or ambiguous", sub_sub_cat: ""},
     {db_name: "shooting hit non death", human_name: "shooting hits person or thing but non fatal", sub_sub_cat: ""},

@@ -1,5 +1,5 @@
 function showRightDropdownsForCategory() {
-  var category = document.getElementById("category_select").value;
+  var category = document.getElementById("category_select_id").value;
   var age_select = document.getElementById('age_maybe_ok_id');
   var lewdness_select = document.getElementById('lewdness_level_id');
   var lip_readable = document.getElementById('lip_readable_id');
@@ -35,7 +35,7 @@ function showRightDropdownsForCategory() {
 
 function showSubCatWithRightOptionsAvailable() {
   // theoretically they can never select unknown...
-  var category = document.getElementById("category_select").value;
+  var category = document.getElementById("category_select_id").value;
   var subcategory_select = document.getElementById("subcategory_select_id");
   var width_needed = 0;
   var subcats_with_optgroups = Array.apply(null, subcategory_select.options); // convert to Array
@@ -182,7 +182,7 @@ function doubleCheckValues() {
     return false;
   }
 
-  var category_div = document.getElementById('category_select');
+  var category_div = document.getElementById('category_select_id');
   var category = category_div.value;
   if (category == "") {
     alert("please select category first");
@@ -244,7 +244,7 @@ function editDropdownsCreated() {
   // they call this when we're ready to setup variables in the dropdowns, since otherwise the right divs aren't in place yet in plugin
 
   var subcat_select = document.getElementById("subcategory_select_id");
-  document.getElementById('category_select').addEventListener('change', function() {
+  document.getElementById('category_select_id').addEventListener('change', function() {
     subcat_select.value = ''; // reset subcat to top, since cat just changed...
     showSubCatWithRightOptionsAvailable();
     showRightDropdownsForCategory();
