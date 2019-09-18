@@ -297,7 +297,9 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
         
           <option value="stabbing/shooting with blood">violence -- stabbing/shooting yes blood</option>    
         
-          <option value="visible blood">violence -- visible blood (ex: blood from wound)</option>    
+          <option value="visible blood">violence -- visible blood (ex: blood from earlier wound)</option>    
+        
+          <option value="visible dried blood">violence -- visible dried blood +- bandage (from earlier wound)</option>    
         
           <option value="visible wound">violence -- visible wound (no gore, light gore)</option>    
         
@@ -1626,7 +1628,7 @@ function saveTagButton() {
   var otherTags = allTagsExceptOneBeingEdited();
   for (var i = 0; i < otherTags.length; i++) {
      if (is_overlapping(start, endy, otherTags[i].start, otherTags[i].endy)) {
-       alert("warning: tag overlaps with other beginning at " + timeStampToHuman(otherTags[i].start) + " (this could be intentional, if not, double check)");
+       alert("warning: tag overlaps with other beginning at " + timeStampToHuman(otherTags[i].start) + " (this could be intentional, if not, double check), saving anyway...");
      }
    }
 

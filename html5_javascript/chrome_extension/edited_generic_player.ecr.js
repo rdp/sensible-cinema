@@ -1224,7 +1224,7 @@ function saveTagButton() {
   var otherTags = allTagsExceptOneBeingEdited();
   for (var i = 0; i < otherTags.length; i++) {
      if (is_overlapping(start, endy, otherTags[i].start, otherTags[i].endy)) {
-       alert("warning: tag overlaps with other beginning at " + timeStampToHuman(otherTags[i].start) + " (this could be intentional, if not, double check)");
+       alert("warning: tag overlaps with other beginning at " + timeStampToHuman(otherTags[i].start) + " (this could be intentional, if not, double check), saving anyway...");
      }
    }
 
