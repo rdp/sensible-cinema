@@ -1045,7 +1045,7 @@ function createFauxTagForCurrentUI() {
     default_enabled: document.getElementById('default_enabled_id').value == 'true',
     details: document.getElementById('details_input_id').value,
     id: parseInt(document.getElementById('tag_hidden_id').value), // not that we use it LOL
-    category: document.getElementById('category_select').value,
+    category: document.getElementById('category_select_id').value,
     subcategory: document.getElementById('subcategory_select_id').value,
     impact_to_movie: document.getElementById('impact_to_movie_id').value,
     age_maybe_ok: document.getElementById('age_maybe_ok_id').value,
@@ -1061,8 +1061,8 @@ function loadTagIntoUI(tag) {
   document.getElementById('endy').value = timeStampToHuman(tag.endy);
   document.getElementById('details_input_id').value = htmlDecode(tag.details);
   document.getElementById('popup_text_after_id').value = htmlDecode(tag.popup_text_after);
-  document.getElementById('category_select').value = tag.category; // XXX rename category_select_id
-  document.getElementById('category_select').dispatchEvent(new Event('change')); // so it'll prune the subcats
+  document.getElementById('category_select_id').value = tag.category;
+  document.getElementById('category_select_id').dispatchEvent(new Event('change')); // so it'll prune the subcats
 
   var subcat_select = document.getElementById('subcategory_select_id');
   var desired_value = htmlDecode(tag.subcategory);
@@ -1224,7 +1224,7 @@ function saveTagButton() {
   var otherTags = allTagsExceptOneBeingEdited();
   for (var i = 0; i < otherTags.length; i++) {
      if (is_overlapping(start, endy, otherTags[i].start, otherTags[i].endy)) {
-       alert("warning: tag overlaps with other beginning at " + timeStampToHuman(otherTags[i].start) + " (this could be intentional, if not, double check)");
+       alert("warning: tag overlaps with other beginning at " + timeStampToHuman(otherTags[i].start) + " (this could be intentional, if not, double check), saving anyway...");
      }
    }
 
@@ -1291,7 +1291,7 @@ function clearForm(should_clear_everything) {
   document.getElementById('endy').value = timeStampToHuman(0);
   document.getElementById('popup_text_after_id').value = "";
   if (should_clear_everything) {
-    document.getElementById('details_input_id').value = ""; // leave it in case we can want to reuse it
+    document.getElementById('details_input_id').value = "";
     // don't reset category since I'm not sure if the javascript handles its going back to "" subcat tho...
     document.getElementById('subcategory_select_id').selectedIndex = 0; // use a present value so size doesn't go to *0*  
     showSubCatWithRightOptionsAvailable(); // resize it back to none, not sure how to auto-trigger this

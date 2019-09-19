@@ -41,7 +41,7 @@ If there are any categories missing let us know!
 <% end %>
 
 <script>
-document.getElementById('category_select').value = '<%= tag.category %>';
+document.getElementById('category_select_id').value = '<%= tag.category %>';
 document.getElementById('age_maybe_ok_id').value = '<%= tag.age_maybe_ok %>';
 document.getElementById('lewdness_level_id').value = '<%= tag.lewdness_level %>';
 document.getElementById('lip_readable_id').value = '<%= tag.lip_readable %>';
@@ -60,7 +60,7 @@ select = document.getElementById('subcategory_select_id');
 select.value = htmlDecode('<%= escape_javascript tag.subcategory %>');
 
 $(document).ready(function() {
-  if (document.getElementById('category_select').value != 'unknown') {
+  if (document.getElementById('category_select_id').value != 'unknown') {
     showSubCatWithRightOptionsAvailable(); // show it, prune it :) XXX don't do this here :| the plugin 'does it' by firing change events after setting the vals :|
     showRightDropdownsForCategory();
   }

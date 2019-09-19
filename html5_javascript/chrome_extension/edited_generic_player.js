@@ -139,7 +139,7 @@ function addEditUiOnce() {
 
 
 <div id="category_div_id">
-<select name="category" id='category_select' onchange=""
+<select name="category" id='category_select_id' onchange=""
 style="background-color: rgba(255, 255, 255, 0.85);" >
   <option value="" disabled selected>category -- please select one</option>
   <option value="profanity">profanity/verbal attack</option>
@@ -297,7 +297,9 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
         
           <option value="stabbing/shooting with blood">violence -- stabbing/shooting yes blood</option>    
         
-          <option value="visible blood">violence -- visible blood (ex: blood from wound)</option>    
+          <option value="visible blood">violence -- visible blood (ex: blood from earlier wound)</option>    
+        
+          <option value="visible dried blood">violence -- visible dried blood +- bandage (from earlier wound)</option>    
         
           <option value="visible wound">violence -- visible wound (no gore, light gore)</option>    
         
@@ -314,6 +316,8 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
           <option value="explosion">violence -- explosion (no implied death)</option>    
         
           <option value="explosion death">violence -- explosion (implied death)</option>    
+        
+          <option value="explosion death explicit">violence -- explosion (on screen death)</option>    
         
           <option value="comedic fight">violence -- comedic/slapstick fighting</option>    
         
@@ -335,13 +339,15 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
         
           <option value="sports violence">violence -- sports violence part of game</option>    
         
+          <option value="choking">violence -- choking</option>    
+        
           <option value="rape">violence -- rape</option>    
         
           <option value="almost dead body">violence -- nearly dead body visible</option>    
         
           <option value="dead body">violence -- dead body visible lifeless</option>    
         
-          <option value="suicidal actions">violence -- suicidal actions/references</option>    
+          <option value="suicidal actions">violence -- suicidal event/references</option>    
         
           <option value="violence (other)">violence -- other</option>    
         
@@ -1443,7 +1449,7 @@ function createFauxTagForCurrentUI() {
     default_enabled: document.getElementById('default_enabled_id').value == 'true',
     details: document.getElementById('details_input_id').value,
     id: parseInt(document.getElementById('tag_hidden_id').value), // not that we use it LOL
-    category: document.getElementById('category_select').value,
+    category: document.getElementById('category_select_id').value,
     subcategory: document.getElementById('subcategory_select_id').value,
     impact_to_movie: document.getElementById('impact_to_movie_id').value,
     age_maybe_ok: document.getElementById('age_maybe_ok_id').value,
@@ -1459,8 +1465,8 @@ function loadTagIntoUI(tag) {
   document.getElementById('endy').value = timeStampToHuman(tag.endy);
   document.getElementById('details_input_id').value = htmlDecode(tag.details);
   document.getElementById('popup_text_after_id').value = htmlDecode(tag.popup_text_after);
-  document.getElementById('category_select').value = tag.category; // XXX rename category_select_id
-  document.getElementById('category_select').dispatchEvent(new Event('change')); // so it'll prune the subcats
+  document.getElementById('category_select_id').value = tag.category;
+  document.getElementById('category_select_id').dispatchEvent(new Event('change')); // so it'll prune the subcats
 
   var subcat_select = document.getElementById('subcategory_select_id');
   var desired_value = htmlDecode(tag.subcategory);
@@ -1622,7 +1628,7 @@ function saveTagButton() {
   var otherTags = allTagsExceptOneBeingEdited();
   for (var i = 0; i < otherTags.length; i++) {
      if (is_overlapping(start, endy, otherTags[i].start, otherTags[i].endy)) {
-       alert("warning: tag overlaps with other beginning at " + timeStampToHuman(otherTags[i].start) + " (this could be intentional, if not, double check)");
+       alert("warning: tag overlaps with other beginning at " + timeStampToHuman(otherTags[i].start) + " (this could be intentional, if not, double check), saving anyway...");
      }
    }
 
@@ -1689,7 +1695,7 @@ function clearForm(should_clear_everything) {
   document.getElementById('endy').value = timeStampToHuman(0);
   document.getElementById('popup_text_after_id').value = "";
   if (should_clear_everything) {
-    document.getElementById('details_input_id').value = ""; // leave it in case we can want to reuse it
+    document.getElementById('details_input_id').value = "";
     // don't reset category since I'm not sure if the javascript handles its going back to "" subcat tho...
     document.getElementById('subcategory_select_id').selectedIndex = 0; // use a present value so size doesn't go to *0*  
     showSubCatWithRightOptionsAvailable(); // resize it back to none, not sure how to auto-trigger this
@@ -2333,7 +2339,7 @@ function liveFullNameEpisode() {
 }
 
 function showRightDropdownsForCategory() {
-  var category = document.getElementById("category_select").value;
+  var category = document.getElementById("category_select_id").value;
   var age_select = document.getElementById('age_maybe_ok_id');
   var lewdness_select = document.getElementById('lewdness_level_id');
   var lip_readable = document.getElementById('lip_readable_id');
@@ -2369,7 +2375,7 @@ function showRightDropdownsForCategory() {
 
 function showSubCatWithRightOptionsAvailable() {
   // theoretically they can never select unknown...
-  var category = document.getElementById("category_select").value;
+  var category = document.getElementById("category_select_id").value;
   var subcategory_select = document.getElementById("subcategory_select_id");
   var width_needed = 0;
   var subcats_with_optgroups = Array.apply(null, subcategory_select.options); // convert to Array
@@ -2516,7 +2522,7 @@ function doubleCheckValues() {
     return false;
   }
 
-  var category_div = document.getElementById('category_select');
+  var category_div = document.getElementById('category_select_id');
   var category = category_div.value;
   if (category == "") {
     alert("please select category first");
@@ -2578,10 +2584,12 @@ function editDropdownsCreated() {
   // they call this when we're ready to setup variables in the dropdowns, since otherwise the right divs aren't in place yet in plugin
 
   var subcat_select = document.getElementById("subcategory_select_id");
-  document.getElementById('category_select').addEventListener('change', function() {
+  document.getElementById('category_select_id').addEventListener('change', function() {
     subcat_select.value = ''; // reset subcat to top, since cat just changed...
     showSubCatWithRightOptionsAvailable();
     showRightDropdownsForCategory();
+    //document.getElementById('details_input_id').value = ""; // hardly want to reuse these for a new category...
+    // can't yet it calls this after loading an existing tag into the UI for re-editing :|
    });
   
   document.getElementById('action_sel').addEventListener('change', setImpactIfMute, false);
