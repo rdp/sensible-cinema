@@ -1605,9 +1605,8 @@ var clean_stream_timer = null;
 
 function startWatcherTimerSingleton() {
   if (!clean_stream_timer) {
-    // could do 1000 times/sec it'll restrict itself to 100 fps though...
-    // 4 ms should be enough to "hit each 100th once" 1000 fps is hard to understand...until can spend more time on it
-    clean_stream_timer = setInterval(checkStatus, 4);
+    // 5 ms should be enough to "hit each 100th at least once"...until can spend more time on it? see TODO
+    clean_stream_timer = setInterval(checkStatus, 5);
     // guess we just never turn interval off, on purpose :)
   }
 }
