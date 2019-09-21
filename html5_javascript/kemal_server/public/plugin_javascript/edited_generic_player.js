@@ -1467,12 +1467,12 @@ function loadTagIntoUI(tag) {
   document.getElementById('details_input_id').value = htmlDecode(tag.details);
   document.getElementById('popup_text_after_id').value = htmlDecode(tag.popup_text_after);
   document.getElementById('category_select_id').value = tag.category;
-  document.getElementById('category_select_id').dispatchEvent(new Event('change')); // so it'll prune the subcats
+  categoryChanged(false);
 
   var subcat_select = document.getElementById('subcategory_select_id');
   var desired_value = htmlDecode(tag.subcategory);
   if (!selectHasOption(subcat_select, desired_value)) {
-    alert("old subcat was " + desired_value + " please select a more updated one"); // don't just show blank which is frustrating and loses info :| XXXX check all tags against known...
+    alert("old subcat was " + desired_value + " please select a more updated one"); // don't just show blank which is frustrating and loses info :|
   }
   subcat_select.value = desired_value;
   subcat_select.dispatchEvent(new Event('change')); // so it'll do the right size, needed apparently :|
@@ -1699,7 +1699,7 @@ function clearForm(should_clear_everything) {
     document.getElementById('details_input_id').value = "";
     // don't reset category since I'm not sure if the javascript handles its going back to "" subcat tho...
     document.getElementById('subcategory_select_id').selectedIndex = 0; // use a present value so size doesn't go to *0*  
-    showSubCatWithRightOptionsAvailable(); // resize it to match the size of newly selected, above, not sure how to auto-trigger this
+    categoryChanged(true);// resize it to match the size of newly selected subcat, above
   }
   document.getElementById('age_maybe_ok_id').value = "0";
   document.getElementById('lewdness_level_id').value = "0";
@@ -2585,17 +2585,22 @@ function editDropdownsCreated() {
 
   var subcat_select = document.getElementById("subcategory_select_id");
   document.getElementById('category_select_id').addEventListener('change', function(event) {
-    subcat_select.selectedIndex = 0;  // reset subcat to top, since cat just changed...
-    showSubCatWithRightOptionsAvailable();
-    showRightDropdownsForCategory();
-    //document.getElementById('details_input_id').value = ""; // hardly want to reuse these for a new category...
-    // can't yet it calls this after loading an existing tag into the UI for re-editing :|
+    categoryChanged(true);
    });
   
   document.getElementById('action_sel').addEventListener('change', setImpactIfMute, false);
   // setImpactIfMute(); // the default is mute so set up origin as we'd anticipate :| except can't because resets it immediately after from edit_tag.cr at least :|
   resizeToCurrentSize(subcat_select);
   subcat_select.addEventListener( 'change', function() { resizeToCurrentSize(this); }, false); 
+}
+
+function categoryChanged(full_change) {
+    subcat_select.selectedIndex = 0;  // reset subcat to top, since cat just changed...
+    showSubCatWithRightOptionsAvailable();
+    showRightDropdownsForCategory();
+    if (full_change) {
+      document.getElementById('details_input_id').value = ""; // hardly want to reuse these for a new category...    
+    } // else: can't yet it calls this after loading an existing tag into the UI for re-editing :|
 }
 
 function htmlDecode(input) // unescape I guess typically we inject "inline" which works fine <sigh> but not for value = nor alert ... I did DB wrong

@@ -1063,12 +1063,12 @@ function loadTagIntoUI(tag) {
   document.getElementById('details_input_id').value = htmlDecode(tag.details);
   document.getElementById('popup_text_after_id').value = htmlDecode(tag.popup_text_after);
   document.getElementById('category_select_id').value = tag.category;
-  document.getElementById('category_select_id').dispatchEvent(new Event('change')); // so it'll prune the subcats
+  categoryChanged(false);
 
   var subcat_select = document.getElementById('subcategory_select_id');
   var desired_value = htmlDecode(tag.subcategory);
   if (!selectHasOption(subcat_select, desired_value)) {
-    alert("old subcat was " + desired_value + " please select a more updated one"); // don't just show blank which is frustrating and loses info :| XXXX check all tags against known...
+    alert("old subcat was " + desired_value + " please select a more updated one"); // don't just show blank which is frustrating and loses info :|
   }
   subcat_select.value = desired_value;
   subcat_select.dispatchEvent(new Event('change')); // so it'll do the right size, needed apparently :|
@@ -1295,7 +1295,7 @@ function clearForm(should_clear_everything) {
     document.getElementById('details_input_id').value = "";
     // don't reset category since I'm not sure if the javascript handles its going back to "" subcat tho...
     document.getElementById('subcategory_select_id').selectedIndex = 0; // use a present value so size doesn't go to *0*  
-    showSubCatWithRightOptionsAvailable(); // resize it to match the size of newly selected, above, not sure how to auto-trigger this
+    categoryChanged(true);// resize it to match the size of newly selected subcat, above
   }
   document.getElementById('age_maybe_ok_id').value = "0";
   document.getElementById('lewdness_level_id').value = "0";
