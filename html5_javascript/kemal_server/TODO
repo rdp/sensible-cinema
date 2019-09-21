@@ -1,7 +1,6 @@
 == todo list (me ja, ordered) ==
 
-shawshank
-  fix from feedback from him?
+fix from feedback from him?
   add back in job add
      put on craigslist
 
@@ -9,9 +8,13 @@ fix GET APP button for iOS
   also firefox :|
   assume they're on chrome? LOL my test is!
 
+when change category it should nuke the text!
+
+plugin: make it waaaay more obvious that it's a new tag or not...somehow...
+
 can add arbitrary words to subtitle uploader...
 
-roger edits: spiderwick, spy next door, galactica old, new
+roger edits: spiderwick, shawshank
 
 fix on iPhone youtube :|
 
@@ -103,7 +106,7 @@ couldn't select subcat once downstairs?
 watch movie edited -> name
 
 clean seek??
-  move to bottom...
+  move to bottom...?
 
 "watch edited" it says on the drilldown pages, even if not yet edited at all!"
 
@@ -151,19 +154,19 @@ private edits...
 GoT failure!
   fix 10s :\
 
-== todo uncategories ==
+== todo uncategorized, assume most "not do" ==
 
 sometimes me sending emails through gmail gets turned off??? :|
 
-make all previously tagged credits not skip...
+facebook drawings
+
+make all previously tagged intro/credits not skip...
   I think done...
 
 "advertise" via reviews on amazon...uh guess...why not? "I watched it edited"?
 
-finish spiderwick
-
-just 2/100 
-  Or the amazing..."we are clear from here to here" :)
+Or the amazing..."we are clear from here until here next" :)
+  to replace the "last checked ms was..." necessary? useful? or maybe the whole check only takes 0.01ms already anyway since it doesn't affect GUI...
 
 if you seek with their seeker to the middle of a black screen, you can’t hit play ever again? [html5]
 
@@ -183,15 +186,17 @@ give *iphoners* a big buck bunny they can watch really edited...
   or youtube??  any difference?
   how's scrolling on iphone here???
 
+edit greg's one movie [sync? :| ]
+
 ================= todo all never LOL =======================
 
-split "blood" vs. dried blood for all tags LOL
-  more subcats that got split over time?  lewd?
+split "blood" vs. dried blood for all earlier tags LOL
+  more subcats that got split over time? male shirtless and other lewd? LOL
+  and recategorize all profanities "lip readable"
+  and all lewdness "level" LOL
 
-two seeks in a row das boot darn idiot weren't as pretty as possible...but functional seemed...
+two seeks in a row das boot darn idiot weren't as pretty as anticipated...but functional seemed... (left image of before skip briefly)
   we should double seek!? :)
-
-us passes: everything that hasn't a 3rd...
 
 figure out longer term backupz and for flds
 
@@ -202,15 +207,9 @@ add tags (possibly after multi-tags): "vidangel doesn't have it"
 personalize: defaults
   when requested?
 
-
 add "by genre"
 
 add "sort by..."??
-
-double check youtube license for plugging in...
-
-optimize cpu, the heck out of it! :)
-  can we save cpu? still keep high fps? save in general?
 
 combine/re-arrange in the db the subcats that were combined (art-based...)
   some assume their new level?
@@ -219,15 +218,10 @@ combine/re-arrange in the db the subcats that were combined (art-based...)
     split out more shirtless male front vs. back
     possibly some more into underwear tag
 
-uplifting "level" -> types/categories
-
-mention the "demo" movie on our site more? :|
-  finish "real" demo big buck :)
-  meh they can just watch youtubes...can they?
-
 edited facebook vids LOL
 
-heartblank if they seek it from their progress bar
+heartblank if they seek it from amazon progress bar
+  ja?
 
 heartblankif the thing is out of visibility too?? surely that's low though...
 
@@ -235,7 +229,7 @@ use binary search to make it use...almost no cpu
 
 It should load plugin enabled text waaaay faster.
 
-It can key off of the curTime "before it's ready" to avoid any awkward start time image...
+It can key off of the curTime "before it's ready" to avoid any awkward initial image amazon... :|
 
 doesn't recover seeks right still? spinner still possible, though recovers...
 
@@ -249,8 +243,6 @@ google search result looks awful text LOL
 
 try out on ipad :|
 
-go back and "re tag" all the levels of sexual with their severity
-
 tag edits as originated auto sub or not :|
 
 currently "xx" displays wrong in big buck :|
@@ -263,8 +255,6 @@ notifies on big buck mute seemed to go over and over...though they did disappear
 
 "disabled" edit still shows its popup? maybe does...
 
-plugin text on amazon comes in...too slow, and ugly! :|
-  
 1st passes us:
   everything we own that's not even edited yet [m. prof's?]
   prime's that we could handle?
@@ -272,8 +262,6 @@ plugin text on amazon comes in...too slow, and ugly! :|
 do "people" use firefox? edge? safari desktop?
 
 retrofit new "tight clothing" tag, "deity euphemized", lesser cleavage for that one movie harry potter
-
-edit greg's one movie [sync? :| ]
 
 sticky-er notifications os x :/
 
@@ -423,16 +411,10 @@ select by genre/original rating :|
 
 "sort by uplifting level" etc. ASK for more uplifting on facebook, do more
 
-figure out a way to do DB backups...though...actually..that other git is good, it would more be for freelds LOL
-
 prettier movie url LOL
   one they can "like" on facebook'ish more? easily? share?
 
 crystal:
-  double check, sockets should have some ping/timeout thing so I don't get stuck with old connections...at least that...
-  slam it with wrk, everything barfs all over the place :(
-  stack traces come out so often, ugly
-  various crystal bugs I could "help out with" (gzip, escape_javascript, server conns shuck...)
   figure out why query {"SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type asc, create_timestamp desc, name, episode_number"} took 00:00:00.0634933
     takes 0.06 in crystal and 0.01 in mysql console :|
 
@@ -447,7 +429,7 @@ private list of edits are shareable...or does that only make sense in the other 
 resurrect "fake" netflix playback :|
 can upload file for image
 
-an option "never show me r, or horror" in index
+an option "never show me r, or horror" in index...
 
 ask those one people to link to me (enjoymoviesyourway)
 
