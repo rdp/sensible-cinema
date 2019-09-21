@@ -1295,7 +1295,7 @@ function clearForm(should_clear_everything) {
     document.getElementById('details_input_id').value = "";
     // don't reset category since I'm not sure if the javascript handles its going back to "" subcat tho...
     document.getElementById('subcategory_select_id').selectedIndex = 0; // use a present value so size doesn't go to *0*  
-    showSubCatWithRightOptionsAvailable(); // resize it back to none, not sure how to auto-trigger this
+    showSubCatWithRightOptionsAvailable(); // resize it to match the size of newly selected, above, not sure how to auto-trigger this
   }
   document.getElementById('age_maybe_ok_id').value = "0";
   document.getElementById('lewdness_level_id').value = "0";

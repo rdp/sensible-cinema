@@ -1699,7 +1699,7 @@ function clearForm(should_clear_everything) {
     document.getElementById('details_input_id').value = "";
     // don't reset category since I'm not sure if the javascript handles its going back to "" subcat tho...
     document.getElementById('subcategory_select_id').selectedIndex = 0; // use a present value so size doesn't go to *0*  
-    showSubCatWithRightOptionsAvailable(); // resize it back to none, not sure how to auto-trigger this
+    showSubCatWithRightOptionsAvailable(); // resize it to match the size of newly selected, above, not sure how to auto-trigger this
   }
   document.getElementById('age_maybe_ok_id').value = "0";
   document.getElementById('lewdness_level_id').value = "0";
@@ -2009,9 +2009,8 @@ var clean_stream_timer = null;
 
 function startWatcherTimerSingleton() {
   if (!clean_stream_timer) {
-    // could do 1000 times/sec it'll restrict itself to 100 fps though...
-    // 4 ms should be enough to "hit each 100th once" 1000 fps is hard to understand...until can spend more time on it
-    clean_stream_timer = setInterval(checkStatus, 4);
+    // 5 ms should be enough to "hit each 100th at least once"...until can spend more time on it? see TODO
+    clean_stream_timer = setInterval(checkStatus, 5);
     // guess we just never turn interval off, on purpose :)
   }
 }
@@ -2582,11 +2581,11 @@ function addRedBorderTemporarily(to_this_div) {
 }
 
 function editDropdownsCreated() {
-  // they call this when we're ready to setup variables in the dropdowns, since otherwise the right divs aren't in place yet in plugin
+  // called when we're ready to setup variables in the dropdowns, since otherwise the right divs aren't in place yet in plugin
 
   var subcat_select = document.getElementById("subcategory_select_id");
-  document.getElementById('category_select_id').addEventListener('change', function() {
-    subcat_select.value = ''; // reset subcat to top, since cat just changed...
+  document.getElementById('category_select_id').addEventListener('change', function(event) {
+    subcat_select.selectedIndex = 0;  // reset subcat to top, since cat just changed...
     showSubCatWithRightOptionsAvailable();
     showRightDropdownsForCategory();
     //document.getElementById('details_input_id').value = ""; // hardly want to reuse these for a new category...

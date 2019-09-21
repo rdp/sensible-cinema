@@ -241,11 +241,11 @@ function addRedBorderTemporarily(to_this_div) {
 }
 
 function editDropdownsCreated() {
-  // they call this when we're ready to setup variables in the dropdowns, since otherwise the right divs aren't in place yet in plugin
+  // called when we're ready to setup variables in the dropdowns, since otherwise the right divs aren't in place yet in plugin
 
   var subcat_select = document.getElementById("subcategory_select_id");
-  document.getElementById('category_select_id').addEventListener('change', function() {
-    subcat_select.value = ''; // reset subcat to top, since cat just changed...
+  document.getElementById('category_select_id').addEventListener('change', function(event) {
+    subcat_select.selectedIndex = 0;  // reset subcat to top, since cat just changed...
     showSubCatWithRightOptionsAvailable();
     showRightDropdownsForCategory();
     //document.getElementById('details_input_id').value = ""; // hardly want to reuse these for a new category...
