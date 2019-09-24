@@ -2589,12 +2589,12 @@ function editDropdownsCreated() {
    });
   
   document.getElementById('action_sel').addEventListener('change', setImpactIfMute, false);
-  // setImpactIfMute(); // the default is mute so set up origin as we'd anticipate :| except can't because resets it immediately after from edit_tag.cr at least :|
   resizeToCurrentSize(subcat_select);
   subcat_select.addEventListener( 'change', function() { resizeToCurrentSize(this); }, false); 
 }
 
 function categoryChanged(full_change) {
+    var subcat_select = document.getElementById("subcategory_select_id");
     subcat_select.selectedIndex = 0;  // reset subcat to top, since cat just changed...
     showSubCatWithRightOptionsAvailable();
     showRightDropdownsForCategory();
