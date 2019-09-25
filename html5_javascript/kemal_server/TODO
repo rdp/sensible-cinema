@@ -1,6 +1,8 @@
 == todo list (me ja, ordered) ==
 
-fix from feedback from him?
+roger edits: spiderwick, shawshank, turtles, spiderverse
+
+fix from feedback from helper?
   add back in job add
      put on craigslist
 
@@ -10,13 +12,7 @@ fix GET APP button for iOS
 
 ask lawyer on portion of video
 
-when change category it should nuke the text!
-
 plugin: make it waaaay more obvious that it's a new tag or not...somehow...
-
-can add arbitrary words to subtitle uploader...
-
-roger edits: spiderwick, shawshank
 
 fix on iPhone youtube :|
 
@@ -24,18 +20,12 @@ uploading a file blows up kemal
 
 test mysql 8 fork crystal
 
-Report ubuntu bugs :|
-
-make editing system not SOOO ugly...
-
-one button youtube is all white?
-
 plugin after install should pop up the website again??
 
-demo movie "big buck" that works in every browser, including mobile, no plugin needed/included...
+demo movie "big buck" that works in every browser, including mobile, no plugin needed/included...iOS? :|
 
 something with the search, melissa when it couldnt find or something?
-   fix names for series so searchable etc...
+   fix names for series so searchable/listable?
 
 the "this is edited" added text is broken la la land
   whole thing is awkward
@@ -44,17 +34,16 @@ the "this is edited" added text is broken la la land
 
 ponder on blood money
   adv. "volunteers wanted" ?
-  personal edits?  jim's edits?
+  personal edits? "it could be jim's edits who wanted to watch it anyway"?
 
 "install app" -> "watch youtubes and previews now! and plugin your laptop when you get home!"
 
 add youtube preview ID's :|
   and inline youtube previews on our site :|
-  youtubes iOS
+
+youtube: some kind of popup if "oen is edited" also a dropdown "edit this!"
 
 allow subscriptions?
-
-fix permissions :|
 
 nik layout
   buttons in popout instead of links...
@@ -99,23 +88,21 @@ nik layout
 
 3rd pass shouldn't mark it as new again...?
 
+homepage show some "random" so that it doesn't look as lazy... :|
+
 youtubes them :|
   previews
   normals
-
-couldn't select subcat once downstairs?
 
 watch movie edited -> name
 
 clean seek??
   move to bottom...?
+  feedback?
 
 "watch edited" it says on the drilldown pages, even if not yet edited at all!"
 
 allow real email login just email
-
-make all opening credits stay...
-  double check, think I got it already...
 
 soft launch looks like: easy links...ycombinator...reddit [? more?] betterlogic why be afraid? :)
   profiles LOL title on main page as well...
@@ -132,7 +119,6 @@ get user feedback
   groom the directions first!
   personalized
 
-
 kickstarter
   decide on prizes
   movie
@@ -144,19 +130,21 @@ kickstarter
   fire!
   somehow try and get a following pre kickstarter?? meh...
 
-Try and go everywhere with ads/pub...blogs...
-  also ads for "vidangel" "clearplay" "pureflix" [?]
-
-iphone: control computer(s) with it :\
-  
 private edits...
-  donation edits?
-  groom editor for normal humans 
 
 GoT failure!
   fix 10s :\
 
 == todo uncategorized, assume most "not do" ==
+
+ubuntu feedbacks?
+
+one button youtube is all white?
+
+iphone: control computer(s) with it :\
+  
+can add arbitrary words to subtitle uploader...
+  reported it...
 
 XXXX check all tags in DB against current known...
 
@@ -178,10 +166,6 @@ sometimes some weird circle stays…html5
 
 main page: be explicit, you can do this...
 
-harp more on "fully free"?
-
-deletes should just be on the plugin...
-
 main page looks bad iphone 5s
 
 youtube should have...a popup if you go somewhere that could be edited...?
@@ -193,6 +177,8 @@ give *iphoners* a big buck bunny they can watch really edited...
 edit greg's one movie [sync? :| ]
 
 ================= todo all never LOL =======================
+
+downstairs computer auto collapses all dropdown selects? huh?
 
 split "blood" vs. dried blood for all earlier tags LOL
   more subcats that got split over time? male shirtless and other lewd? LOL
@@ -227,15 +213,9 @@ edited facebook vids LOL
 heartblank if they seek it from amazon progress bar
   ja?
 
-heartblankif the thing is out of visibility too?? surely that's low though...
-
-use binary search to make it use...almost no cpu
-
 It should load plugin enabled text waaaay faster.
 
 It can key off of the curTime "before it's ready" to avoid any awkward initial image amazon... :|
-
-doesn't recover seeks right still? spinner still possible, though recovers...
 
 figure out how to add something "for adults, you may want to exclude these edits..." (or for the plot)
 
@@ -263,13 +243,11 @@ notifies on big buck mute seemed to go over and over...though they did disappear
   everything we own that's not even edited yet [m. prof's?]
   prime's that we could handle?
 
-do "people" use firefox? edge? safari desktop?
+do "people" use firefox? edge? safari desktop?  more plugins? LOl
 
 retrofit new "tight clothing" tag, "deity euphemized", lesser cleavage for that one movie harry potter
 
 sticky-er notifications os x :/
-
-move "our own requests" to the uservoice :)
 
 get real permission to use movie poster images full :|
   rewrite legal at the bottom to be just a link
@@ -334,19 +312,14 @@ some subcats are non comprehensible by humans...and yet...hmm...some are though.
 
 better website search'ish :|
 
-add: "family friendly for all ages" review or tag
 auto detect when shtuff goes off prime somehow?
 link from personalized to watch edited? groom that flow more anyway...
 saner url's :| more human
-
-groom the "sell it to them edited" options :|
 
 watch edited on show_details doesn't warn if not installed yet :|
 
 add multiple tags "new releases" "enjoyable by whole family"
 add an "edited" moniker underneath each image?
-
-break questions out to their own thing, we want to be pro-family don't we?? :)
 
 "celebrate our grand opening like this post for a free subscription!"
 
@@ -375,17 +348,6 @@ only show the age dropdown if "required" for that tag type? or flash it red if t
 
 don't use access tokens as GET params, barely wonky...
 
-edge plugin (for underpowered HTPC boxes )
-  should be legal! 
-
-IP:
-  copy some vids (from youtube to the other place)
-
-impact to story finish rename
-  purchase_cost -> purchase_cost_hd
-  something on the personalized list :|
-  default_action => action
-
 https://twitch.amazon.com/prime?ref_=sm_w_tup_ntp_t_all&redirectRoute=aXNfdGhpc19teV9uYW1l broken :|
 
 did alerts not show up in windows?
@@ -395,15 +357,11 @@ There is a tiny blip of audio (between back to back skips).  And also right when
 
 show details -> hide details
 
-decide and/or do personalized edits but publically usable :| woot
-
 a real user profile adjust page LOL
 
 an app that says "start this movie playing" (on that desktop computer) so they don't have to remote control anything
 
 vimeo api??? :| legal? I've got like 3 movies on there only, man!
-
-allow tags to be tagged with multiples "it's an opening scene and it's x" [?]
 
 if you're on firefox, it should say "click here to be redirected to chrome" and it does but not clearly enough yet...
 
@@ -412,6 +370,8 @@ store facebook gender
 
 select by genre/original rating :|
   maybe just a search, flds style? :)
+
+show movies that are "similar" to others somehow LOL
 
 "sort by uplifting level" etc. ASK for more uplifting on facebook, do more
 
@@ -422,7 +382,6 @@ crystal:
   figure out why query {"SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type asc, create_timestamp desc, name, episode_number"} took 00:00:00.0634933
     takes 0.06 in crystal and 0.01 in mysql console :|
 
-do we need more things people can enter in, like what common sense media has 3 different things?
 test roku stream from desktop? LOL :|
 shut down server more gracefully for restarts than hard kill :|
 allow multiple genres per movie
@@ -430,10 +389,8 @@ series -> their own page [so you can just review that instead...]
 "auto get" amazon second url, prime type for series' 
 
 private list of edits are shareable...or does that only make sense in the other model?
-resurrect "fake" netflix playback :|
-can upload file for image
 
-an option "never show me r, or horror" in index...
+an option "never show me r, or horror" in index...ask Ron if needed? LOL
 
 ask those one people to link to me (enjoymoviesyourway)
 
@@ -444,3 +401,6 @@ they can "at least playback" movies from google play index
 ask netflix etc. 4 real (permission, or change ToS, or let's really partner LOL) :|
   "I would love to support you, 30000 users" etc. LOL have them spam him
   try to negotiate with various sites [vudu etc.] that have junky ToS ... maybe we can reason with them... :( (m/b don't have to wait)
+  resurrect "fake" netflix playback :|
+  disney plus? etc?
+
