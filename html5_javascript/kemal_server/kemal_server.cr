@@ -955,7 +955,7 @@ post "/upload_from_subtitles_post/:url_id" do |env|
     tag.save
   }
   clean_subs = all_euphemized.reject{|p| p[:category] != nil }
-  middle_sub = clean_subs[clean_subs.size / 2]
+  middle_sub = clean_subs[clean_subs.size // 2]
   puts "clean_subs = euphsize=#{all_euphemized.size} clean_size=#{clean_subs.size} idx=#{clean_subs.size / 2} middle_sub = #{middle_sub}"
   add_to_flash(env, "successfully uploaded subtitle file, created #{profs.size} mute tags from subtitle file. Please review them if you desire.")
   if !db_url.amazon?
