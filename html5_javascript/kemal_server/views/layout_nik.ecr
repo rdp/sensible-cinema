@@ -155,7 +155,7 @@
 
   <script>
   $( function() {
-    var availableTags = <%= all_urls.map{|url| {label: url.name, id: url.id}}.to_json %>;
+    var availableTags = <%= all_urls.map{|url| {label: url.name_with_episode, id: url.id}}.to_json %>;
 
     $( "#search_id" ).autocomplete({
       source: availableTags,
@@ -163,16 +163,6 @@
       select: function( event, ui ) { // they selected from a dropdown
         window.location.href = '/show_details/' + ui.item.id; // u.item.anything you add, label is shown...
       },
-      submit: function(event, ui) {
-       console.log("me");
-      },
-      change: function(event, ui) {
-         console.log("got change");
-          if (ui.item == null) {
-              $(this).val("");
-              $(this).focus();
-          }
-      }
     });
   } );
   </script>
