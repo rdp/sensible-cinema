@@ -165,6 +165,9 @@
       select: function( event, ui ) { // they selected from a dropdown
         window.location.href = '/show_details/' + ui.item.id; // u.item.anything you add, label is shown...
       },
+      submit: function(event, ui) {
+       console.log("me");
+      },
       change: function(event, ui) {
          console.log("got change");
           if (ui.item == null) {
