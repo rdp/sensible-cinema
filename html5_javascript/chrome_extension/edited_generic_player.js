@@ -1464,6 +1464,7 @@ function loadTagIntoUI(tag) {
   // a bit manual but...
   document.getElementById('start').value = timeStampToHuman(tag.start);
   document.getElementById('endy').value = timeStampToHuman(tag.endy);
+  document.getElementById('action_sel').value = tag.default_action;
   document.getElementById('details_input_id').value = htmlDecode(tag.details);
   document.getElementById('popup_text_after_id').value = htmlDecode(tag.popup_text_after);
   document.getElementById('category_select_id').value = tag.category;
@@ -1475,13 +1476,12 @@ function loadTagIntoUI(tag) {
     alert("old subcat was " + desired_value + " please select a more updated one"); // don't just show blank which is frustrating and loses info :|
   }
   subcat_select.value = desired_value;
-  subcat_select.dispatchEvent(new Event('change')); // so it'll do the right size, needed apparently :|
+  subcategoryChanged(false); // so it'll do the right size, needed apparently :|
   document.getElementById('age_maybe_ok_id').value = tag.age_maybe_ok;
   document.getElementById('lewdness_level_id').value = tag.lewdness_level;
   document.getElementById('lip_readable_id').value = tag.lip_readable; // will come in as false for non profs...ah well...
   document.getElementById('impact_to_movie_id').value = tag.impact_to_movie;
   document.getElementById('default_enabled_id').value = tag.default_enabled;
-  document.getElementById('action_sel').value = tag.default_action;
   document.getElementById('tag_hidden_id').value = tag.id;
   faux_tag_being_tested = null;
 }
@@ -2375,7 +2375,8 @@ function showRightDropdownsForCategory() {
 
 function showSubCatWithRightOptionsAvailable() {
   // theoretically they can never select unknown...
-  var category = document.getElementById("category_select_id").value;
+  var category_select = document.getElementById("category_select_id");
+  var category = category_select.value;
   var subcategory_select = document.getElementById("subcategory_select_id");
   var width_needed = 0;
   var subcats_with_optgroups = Array.apply(null, subcategory_select.options); // convert to Array
@@ -2406,7 +2407,7 @@ function reWidthSelectToSizeOfSelected(to_resize) {
        hidden_sel.style.display = "none";
 }
 
-function setImpactIfMute() {
+function setImpactIfActionMute() {
        var action_sel = document.getElementById("action_sel");
        var selected = action_sel.options[action_sel.selectedIndex].textContent;
        if (selected == "mute") {
@@ -2584,31 +2585,40 @@ function addRedBorderTemporarily(to_this_div) {
 function editDropdownsCreated() {
   // called when we're ready to setup variables in the dropdowns, since otherwise the right divs aren't in place yet in plugin
 
-  var subcat_select = document.getElementById("subcategory_select_id");
-  subcat_select.addEventListener('change', function(event) {
-    categoryChanged(true);
-   });
   document.getElementById('category_select_id').addEventListener('change', function(event) {
     categoryChanged(true);
    });
-  
-  document.getElementById('action_sel').addEventListener('change', setImpactIfMute, false);
-  reWidthSelectToSizeOfSelected(subcat_select);
-  subcat_select.addEventListener( 'change', function() { reWidthSelectToSizeOfSelected(this); }, false); 
+  document.getElementById("subcategory_select_id").addEventListener('change', function(event) {
+    subcategoryChanged(true);
+   });
+
+  document.getElementById('action_sel').addEventListener('change', setImpactIfActionMute);
 }
 
 function categoryChanged(full_change) {
     var subcat_select = document.getElementById("subcategory_select_id");
     subcat_select.selectedIndex = 0;  // reset subcat to top, since cat just changed...
+    reWidthSelectToSizeOfSelected(document.getElementById('category_select_id'));
     showSubCatWithRightOptionsAvailable();
     showRightDropdownsForCategory();
     if (full_change) {
-      document.getElementById('details_input_id').value = ""; // hardly want to reuse these for a new category...    
+      clearDetails(); // rarely want to reuse these for a newly selected category...    
     } // else: can't yet it calls this after loading an existing tag into the UI for re-editing :|
 }
 
-function htmlDecode(input) // unescape I guess typically we inject "inline" which works fine <sigh> but not for value = nor alert ... I did DB wrong
-{
+function subcategoryChanged(full_change) {
+    var subcat_select = document.getElementById("subcategory_select_id");
+    reWidthSelectToSizeOfSelected(subcat_select);
+    if (full_change) {
+      clearDetails();
+    } // else don't if we're loading a tag into UI
+}
+
+function clearDetails() {
+  document.getElementById('details_input_id').value = "";
+}
+
+function htmlDecode(input) { // unescape I guess typically we inject "inline" which works fine <sigh> but not for value = nor alert ... I did DB wrong
   var doc = new DOMParser().parseFromString(input, "text/html");
   return doc.documentElement.textContent;
 }

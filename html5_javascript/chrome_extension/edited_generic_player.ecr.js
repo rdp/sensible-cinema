@@ -1060,6 +1060,7 @@ function loadTagIntoUI(tag) {
   // a bit manual but...
   document.getElementById('start').value = timeStampToHuman(tag.start);
   document.getElementById('endy').value = timeStampToHuman(tag.endy);
+  document.getElementById('action_sel').value = tag.default_action;
   document.getElementById('details_input_id').value = htmlDecode(tag.details);
   document.getElementById('popup_text_after_id').value = htmlDecode(tag.popup_text_after);
   document.getElementById('category_select_id').value = tag.category;
@@ -1071,13 +1072,12 @@ function loadTagIntoUI(tag) {
     alert("old subcat was " + desired_value + " please select a more updated one"); // don't just show blank which is frustrating and loses info :|
   }
   subcat_select.value = desired_value;
-  subcat_select.dispatchEvent(new Event('change')); // so it'll do the right size, needed apparently :|
+  subcategoryChanged(false); // so it'll do the right size, needed apparently :|
   document.getElementById('age_maybe_ok_id').value = tag.age_maybe_ok;
   document.getElementById('lewdness_level_id').value = tag.lewdness_level;
   document.getElementById('lip_readable_id').value = tag.lip_readable; // will come in as false for non profs...ah well...
   document.getElementById('impact_to_movie_id').value = tag.impact_to_movie;
   document.getElementById('default_enabled_id').value = tag.default_enabled;
-  document.getElementById('action_sel').value = tag.default_action;
   document.getElementById('tag_hidden_id').value = tag.id;
   faux_tag_being_tested = null;
 }
