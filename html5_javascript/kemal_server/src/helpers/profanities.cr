@@ -139,7 +139,6 @@
        "se" => "sexual reference",
        "panties" => "bodily part reference mild",
        "dumb" => "personal insult mild",
-       "fart" => "bodily part reference mild"
 	  }.map{ |name, category|
     
     
@@ -180,13 +179,18 @@
       {bad_word: name, sanitized: name, type: :partial, category: category} # no sanitized deemed needed uh guess
     }
 	
-   {"butt" => "bodily part reference mild", "crap" => "euphemized profanities"}.each{|bad_word, category| # avoid scrap, butter
+  # semi bad full worders
+   {
+    "butt" => "bodily part reference mild", 
+     "crap" => "euphemized profanities",
+      "fart" => "bodily part reference mild"
+    }.each{|bad_word, category| # avoid scrap, butter
     Semi_bad_profanities << {bad_word: bad_word, type: :full_word_only, category: category, sanitized: bad_word}    
    }
 
   Bad_profanities = Bad_full_word_profanities_with_sanitized_and_category.map{|bad_word, sanitized_and_category|
     {bad_word: bad_word, type: :full_word_only, category: sanitized_and_category[1], sanitized: sanitized_and_category[0] }
-  }
+}
   Bad_partial_profanities_with_sanitized_and_category.each{ |bad_word, sanitized_and_category|
     Bad_profanities << {bad_word: bad_word, type: :partial, category: sanitized_and_category[1], sanitized: sanitized_and_category[0] }
   }

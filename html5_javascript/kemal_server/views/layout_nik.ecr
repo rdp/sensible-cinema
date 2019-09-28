@@ -88,13 +88,11 @@
                 <div class="top-bar-right">
                     <ul class="medium-horizontal menu align-left" data-responsive-menu="drilldown medium-dropdown">
                         <li class="show-for-small">
-                            <form action="/search" id="searchform" method="get" class="">
                                 <div id="search-wrapper">
                                     <input id="search_id" type="text" name="q" value="" placeholder="Search Collection" size="15" /></div>
                                 <div id="search-icon">
                                     <img src="/images/search-icon.png">
                                 </div>
-                            </form>
                         </li>
                         <li>
                           <% if logged_in?(env) %>
@@ -157,14 +155,14 @@
 
   <script>
   $( function() {
-    var availableTags = <%= all_urls.map{|url| {label: url.name, id: url.id}}.to_json %>;
+    var availableTags = <%= all_urls.map{|url| {label: url.name_with_episode, id: url.id}}.to_json %>;
 
     $( "#search_id" ).autocomplete({
       source: availableTags,
       minLength: 2,
-      select: function( event, ui ) {
+      select: function( event, ui ) { // they selected from a dropdown
         window.location.href = '/show_details/' + ui.item.id; // u.item.anything you add, label is shown...
-      }
+      },
     });
   } );
   </script>
