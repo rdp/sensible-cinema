@@ -2329,7 +2329,7 @@ function liveTitleNoEpisode() {
     // don't add episode name
   }
   if (isYoutube()) {
-    title = youtubeChannelName() + title;
+    title = youtubeChannelName() + title; // more info the better! :)
   }
   return title;
 }
