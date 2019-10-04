@@ -562,16 +562,14 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     title = HTML.unescape(title) # &amp => & and there are some :|
     title = title.gsub("&nbsp;", " ") # HTML.unescape doesn't :|
     title = title.gsub(" | Netflix", "");
-    title = title.gsub(/^Watch /, "") # Watch Minority Report | Prime Video
+    title = title.gsub(/^Watch /, "") # Watch Minority Report | Prime Video # also disneymoviesanyway
     title = title.gsub(/ | Prime Video$/, "")
     title = title.gsub(" - Movies & TV on Google Play", "")
     title = title.gsub(": Amazon   Digital Services LLC", "")
     title = title.gsub("Amazon.com: ", "") # Amazon.com: Star Trek: TNG Season 1: Patrick Stewart, XX: Amazon Digital Services
     title = title.gsub(" - YouTube", "")
-    if sanitized_url =~ /disneymoviesanywhere/
-      title = title.gsub(/^Watch /, "") # prefix :|
-      title = title.gsub(" | Disney Movies Anywhere", "")
-    end
+    title = title.gsub(" | Disney Movies Anywhere$", "")
+    puts "title ended #{title}"
     title = title.strip
     title = sanitize_html title
     if sanitized_url.includes?("amazon.com") && title.includes?(":")
