@@ -856,7 +856,7 @@ post "/save_url" do |env|
   params = env.params.body # POST params
   puts "got save_url params=#{params} env.params=#{env.params}"
   if params.has_key? "id"
-    # these day
+    # already in DB
     db_url = Url.get_only_by_id(params["id"])
   else
     db_url = Url.new
@@ -881,7 +881,7 @@ post "/save_url" do |env|
   db_url.details = resanitize_html(params["details"])
   old_passes = db_url.edit_passes_completed
   db_url.edit_passes_completed = get_int(params, "edit_passes_completed")
-  if old_passes != db_url.edit_passes_completed
+  if old_passes != db_url.edit_passes_completed && db_url.edit_passes_completed == 2 # :|
     puts "updating status_last_modified_timestamp as well..."
     db_url.status_last_modified_timestamp = Time.now
   end
