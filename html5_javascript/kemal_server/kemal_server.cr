@@ -550,7 +550,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     end
   end
 
-  puts "adding sanitized_url=#{sanitized_url} real_url=#{real_url}"
+  puts "adding sanitized_url=#{sanitized_url} real_url=#{real_url} title=#{title}"
   url_or_nil = Url.get_only_or_nil_by_urls_and_episode_number(sanitized_url, episode_number)
   if url_or_nil
     add_to_flash(env, "a movie with that url/episode already exists, editing that instead...") # not sure if we could ever get here anymore but shouldn't hurt...
@@ -560,8 +560,10 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     # cleanup various title crufts
     title = HTML.unescape(title) # &amp => & and there are some :|
     title = title.gsub("&nbsp;", " ") # HTML.unescape doesn't :|
-    title = title.gsub(" | Netflix", "");
-    title = title.gsub(/^Watch /, "") # Watch Minority Report | Prime Video # also disneymoviesanyway
+    title = title.gsub(" | Netflix", "")
+    puts "title1=#{title}"
+    title = title.gsub(/^Watch /, "") # Watch Minority Report | Prime Video # also disneymoviesanyway same
+    puts "title2=#{title}"
     title = title.gsub(/ \| Prime Video$/, "")
     title = title.gsub(" - Movies & TV on Google Play", "")
     title = title.gsub(": Amazon   Digital Services LLC", "")
