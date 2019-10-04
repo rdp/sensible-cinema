@@ -558,6 +558,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
   else
     # a brand new movie
     # cleanup various title crufts
+    puts "title started as [#{title}]"
     title = HTML.unescape(title) # &amp => & and there are some :|
     title = title.gsub("&nbsp;", " ") # HTML.unescape doesn't :|
     title = title.gsub(" | Netflix", "");
