@@ -10,7 +10,12 @@
 <h1>Our editing details for <br/>[<%= url.name_with_episode %>]</h1>
 
 <br/>
-<h2><a href="<%= url.url %>" target="_blank">click here to watch edited</a></h2>
+<h2><a href="<%= url.url %>" target="_blank">
+click here to watch edited
+<% if url.edit_passes_completed < 2 %>
+ (partially edited)
+<% end %>
+</a></h2>
 <br/>
 <a href="/">&lt;&lt; back to list of all movies</a>
 <br/>
