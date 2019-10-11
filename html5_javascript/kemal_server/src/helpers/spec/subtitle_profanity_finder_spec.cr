@@ -30,10 +30,9 @@ describe SubtitleProfanityFinder do
     end
 
     it "should find profanities in ttml amazon file" do
-      puts "start bad"
       mutes, euphes = SubtitleProfanityFinder.mutes_from_amazon_string File.read("spiderverse.6d5a1b.ttml2")
-      mutes.size.should eq 13
-      euphes.size.should eq 2406
+      mutes.size.should eq 8
+      euphes.size.should eq 2271
     end
   end
 end

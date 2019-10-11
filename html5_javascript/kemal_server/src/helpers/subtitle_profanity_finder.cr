@@ -9,7 +9,7 @@ module SubtitleProfanityFinder
    end
 
    # splits into NamedTuple, this is just .srt style
-   def self.split_to_entries(subtitles_raw_text)
+   def self.split_from_srt(subtitles_raw_text)
      subtitles_raw_text = subtitles_raw_text.gsub("\r\n", "\n")  # gsub line endings first so that it parses right when linux reads a windows file [maybe?]
      entries = subtitles_raw_text.scan(/^\d+\n\d\d:\d\d:\d\d.*?^$/m)
      all = entries.map{ |glop|
@@ -33,7 +33,6 @@ module SubtitleProfanityFinder
          text: text,
        }
        # add_single_line_minimized_text_from_multiline(text)
-       puts "got line #{out}"
        out
      }
      if all.size < @@required_min_num_subs_per_file
@@ -103,16 +102,17 @@ module SubtitleProfanityFinder
   end
 
   def self.split_from_amazon(raw_subs)
-    raw_subs.lines.map{|line|
+    out = raw_subs.lines.map{|line|
       translate_amazon_line_to_entry(line)
     }.compact
+    out
   end
 
   def self.translate_amazon_line_to_entry(line)
     # <tt:p begin="00:03:07.321" end="00:03:10.924">but I say wonder and magic<tt:br/>don't come easy, pal.</tt:p>
-    timestamp_regex = /begin="(\d\d:\d\d:\d\d.\d\d\d)" end="(\d\d:\d\d:\d\d.\d\d\d)">(.*)/
+    timestamp_regex = /begin="(\d\d:\d\d:\d\d.\d\d\d)" end="(\d\d:\d\d:\d\d.\d\d\d)".*?>(.*)/
     if line =~ timestamp_regex
-       text = $3.gsub(/<tt:[^>]+>/, " ").gsub(/<\/tt:[^>]+>/, " ")
+       text = $3.gsub(/<tt:[^>]+>/, " ").gsub(/<\/tt:[^>]+>/, " ") # strip out internal <tt:br> or <span> or anything like it :|
        { 
          beginning_time: translate_string_to_seconds($1),
          ending_time: translate_string_to_seconds($2),
@@ -125,7 +125,7 @@ module SubtitleProfanityFinder
 
   def self.mutes_from_srt_string(subtitles)
     subtitles = subtitles.scrub # invalid UTF-8 creeps in at times...
-    entries = split_to_entries(subtitles)
+    entries = split_from_srt(subtitles)
     detect_profanities(entries)
   end
 
