@@ -951,7 +951,6 @@ post "/upload_from_subtitles_post/:url_id" do |env|
     tag.category = "profanity"
     tag.subcategory = prof[:category]
     tag.details = prof[:details]
-    # no validation?!
     tag.save
   }
   clean_subs = all_euphemized.reject{|p| p[:category] != nil }
