@@ -3,16 +3,16 @@ require "./profanities.cr"
 require "./subcategories.cr"
 
 module SubtitleProfanityFinder
-   @@expected_min_size = 10 # so unit tests can change it
-   def self.expected_min_size=(new_min)
-     @@expected_min_size = new_min
+   @@required_min_num_subs_per_file = 10 # so unit tests can change it
+   def self.required_min_num_subs_per_file=(new_min)
+     @@required_min_num_subs_per_file = new_min
    end
 
-   # splits into NamedTuple
+   # splits into NamedTuple, this is just .srt style
    def self.split_to_entries(subtitles_raw_text)
-     # also crystal length => size hint plz
-     all = subtitles_raw_text.gsub("\r\n", "\n").scan(/^\d+\n\d\d:\d\d:\d\d.*?^$/m) # gsub line endings first so that it parses right when linux reads a windows file [maybe?]
-     all = all.map{ |glop|
+     subtitles_raw_text = subtitles_raw_text.gsub("\r\n", "\n")  # gsub line endings first so that it parses right when linux reads a windows file [maybe?]
+     entries = subtitles_raw_text.scan(/^\d+\n\d\d:\d\d:\d\d.*?^$/m)
+     all = entries.map{ |glop|
        lines = glop[0].lines.to_a
        index_line = lines[0]
        timing_line = lines[1].strip
@@ -33,9 +33,10 @@ module SubtitleProfanityFinder
          text: text,
        }
        # add_single_line_minimized_text_from_multiline(text)
+       puts "got line #{out}"
        out
      }
-     if all.size < @@expected_min_size
+     if all.size < @@required_min_num_subs_per_file
        raise "unable to parse subtitle file? size=#{all.size} from #{subtitles_raw_text}"
      end
 
@@ -47,7 +48,6 @@ module SubtitleProfanityFinder
      while all[-1][:text] =~ reg
       all.pop
      end
-     puts "parsed srt to entries=#{all.size}"
      all
    end
 
@@ -192,11 +192,3 @@ module SubtitleProfanityFinder
   
 end
 
-if false && ARGV[0] == "--create-edl" # then .srt name breaks specs?
-  incoming_filename = ARGV[1]
-  SubtitleProfanityFinder.expected_min_size = 1
-  mutes, euphes = SubtitleProfanityFinder.mutes_from_srt_string File.read(incoming_filename)
-  puts "got"
-  pp mutes
-  puts "size=#{euphes.size}"
-end
