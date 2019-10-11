@@ -152,6 +152,7 @@ class Url
 
   def self.get_only_or_nil_by_loose_amazon_search(url, episode_number)
     # url is like https:&#x2F;&#x2F;www.amazon.com&#x2F;Ex-Machina-Alicia-Vikander&#x2F;dp/B011KKCQH8
+    puts "name=#{url}"
     name = url.split("&#x2F;")[3]
     name = "%#{name}%"
     # TODO this is a tidge lame tho??/

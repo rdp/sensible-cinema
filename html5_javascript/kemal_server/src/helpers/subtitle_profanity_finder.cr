@@ -16,12 +16,8 @@ module SubtitleProfanityFinder
        lines = glop[0].lines.to_a
        index_line = lines[0]
        timing_line = lines[1].strip
-       text = lines.to_a[2..-1].join(" ")
-       # create english-ified version
-       text = text.gsub(/<(.|)(\/|)i>/i, "") # kill <i> type things, which are in there sometimes :|
-       text = text.gsub(/[^'a-zA-Z0-9\-!,.\?"\n\(\)]/, " ") # kill weird stuff like ellipseses, also quotes would hurt so kill them too
-       text = text.gsub(/  +/, " ") # remove duplicate "  " "s now since we may have inserted many
-       text = text.strip
+       text = lines.to_a[2..-1].join(" ") # collapse
+       text = strip_html_sanitize(text)
        # extract timing info
        # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
        timing_line =~ /((\d\d:\d\d:\d\d),(\d\d\d) --> (\d\d:\d\d:\d\d),(\d\d\d))/
@@ -48,6 +44,15 @@ module SubtitleProfanityFinder
       all.pop
      end
      all
+   end
+
+   def self.strip_html_sanitize(text)
+       # create english-ified version
+       text = text.gsub(/<[^>]+>/, " ").gsub(/<\/[^>]+>/, " ")  # kill <i> <br />, <span> type things, which are in there sometimes :|
+       text = text.gsub(/[^'a-zA-Z0-9\-!,.\?"\n\(\)]/, " ") # kill weird stuff like non-roman ellipseses, etc
+       text = text.gsub(/  +/, " ") # remove duplicate "  " "s now since we may have inserted many
+       text = text.strip
+       text
    end
 
    def self.convert_to_regexps(profanity_tuples)
@@ -113,6 +118,7 @@ module SubtitleProfanityFinder
     timestamp_regex = /begin="(\d\d:\d\d:\d\d.\d\d\d)" end="(\d\d:\d\d:\d\d.\d\d\d)".*?>(.*)/
     if line =~ timestamp_regex
        text = $3.gsub(/<tt:[^>]+>/, " ").gsub(/<\/tt:[^>]+>/, " ") # strip out internal <tt:br> or <span> or anything like it :|
+       text = strip_html_sanitize(text) # strip out normal <br /> <span> from ttml's etc :|
        { 
          beginning_time: translate_string_to_seconds($1),
          ending_time: translate_string_to_seconds($2),
