@@ -1,6 +1,6 @@
 require "./spec_helper"
 
-describe KemalServer do
+describe " kemal server"  do
   # TODO: Write tests
 
   it "works" do

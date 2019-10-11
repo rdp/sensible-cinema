@@ -1,2 +1,2 @@
 require "spec"
-require "../src/kemal_server"
+require "../kemal_server"
