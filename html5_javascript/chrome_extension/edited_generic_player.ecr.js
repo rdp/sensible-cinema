@@ -1346,7 +1346,8 @@ function getSubsFromCurrentPerformance() {
   var out = [];
   for (var i = arr.length - 1; i >= 0; --i) {
     // console.log(arr[i].name); http://m.amazon.com/yo.png or something.mp4
-    if (arr[i].name.endsWith(".dfxp")) { // ex: https://dmqdd6hw24ucf.cloudfront.net/341f/e367/03b5/4dce-9c0e-511e3b71d331/15e8386e-0cb0-477f-b2e4-b21dfa06f1f7.dfxp apparently
+    var name = arr[i].name;
+    if (name.endsWith(".dfxp") || name.endsWith(".ttml2")) { // ex: https://dmqdd6hw24ucf.cloudfront.net/341f/e367/03b5/4dce-9c0e-511e3b71d331/15e8386e-0cb0-477f-b2e4-b21dfa06f1f7.dfxp apparently
       out.push(arr[i]);
     }
   }
