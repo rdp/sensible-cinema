@@ -25,7 +25,7 @@ describe SubtitleProfanityFinder do
 
     it "should find profanities in amazon stuff" do
       mutes, euphes = SubtitleProfanityFinder.mutes_from_amazon_string File.read("sing.amazon.dfxp")
-      mutes.size.should eq 14
+      mutes.size.should eq 13
       euphes.size.should eq 2406
     end
   end
