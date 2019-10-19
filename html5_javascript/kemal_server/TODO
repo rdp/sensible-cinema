@@ -142,16 +142,20 @@ private edits...
 GoT failure!
   fix 10s :\
 
+fixup some bstar galactica names original :|
+
 == todo uncategorized, assume most "not do" ==
+
+main page takes 1.5s? sigh...
+
 test mysql 8 fork crystal OS X?
 
 hitting enter in the search field should say "unknown, please select from dropdown list" :|
 
-optimize crystal LOL
-
-main page loads slow even on desktop? LOL
-
-fixup some bstar galactica names
+optimize crystal itself LOL 
+  DB
+  web server
+  bottlenecks :)
 
 https://playitmyway.org/show_details/172 -> name plus "edited"? :)
 
