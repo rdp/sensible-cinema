@@ -573,7 +573,8 @@ default edit on?
 
   setupSafeSeekOnce();
 
-  setInterval(doPeriodicChecks, 250); // too cpu hungry :|
+  setInterval(doPeriodicChecks, 100); // XX figure out if we even need this v. often or not...
+  setInterval(doRarePeriodicChecks, 1000); // too cpu hungry :|
   // we don't start the "real" interval until after first safe load...apparently...odd...
 
 } // end addEditUiOnce
@@ -1840,6 +1841,10 @@ function loadSucceeded(json_string) {
 
 function doPeriodicChecks() {
   setEditedControlsToMovieRight();
+}
+
+function doRarePeriodicChecks() {
+  // these take a bit o' cpu, do them even less often...
   addPluginEnabledTextOnce();
   checkIfEpisodeChanged();
   refreshVideoElement();
@@ -1892,7 +1897,7 @@ function loadFailed(status) {
     displayDiv(document.getElementById("server_down_div_id"));
   }
   else {
-    // just let it stay saying unedited :|
+    // ?? just let it stay saying unedited :|
   }
 
   startWatcherTimerSingleton(); // so it can check if episode changes to one we like magically LOL [amazon...]
