@@ -371,7 +371,11 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
         
           <option value="pijamas">physical -- clad in pijamas</option>    
         
-          <option value="swimsuit">physical -- swimsuit</option>    
+          <option value="swimsuit male">physical -- swimsuit male</option>    
+        
+          <option value="swimsuit female">physical -- swimsuit female</option>    
+        
+          <option value="swimsuit mixed">physical -- swimsuit male and female</option>    
         
           <option value="revealing cleavage">physical -- revealing cleavage</option>    
         
