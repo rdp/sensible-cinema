@@ -326,13 +326,15 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
         
           <option value="shooting hit non death">violence -- shooting hits person or thing but non fatal</option>    
         
-          <option value="killing">violence -- killing on screen (ex: shooting death fatal)</option>    
-        
           <option value="attempted killing">violence -- attempted killing on screen (ex: laser zap)</option>    
         
-          <option value="non human killing">violence -- non human killing/death on screen (ex: animal, or robot)</option>    
+          <option value="killing">violence -- killing on screen (ex: shooting, fatal) victim visible</option>    
         
-          <option value="killing offscreen">violence -- killing off screen (ex: shooting death off screen)</option>    
+          <option value="killing no victim">violence -- killing on screen (ex: shooting, fatal) victim not visible</option>    
+        
+          <option value="killing offscreen">violence -- killing off screen (ex: shooting death off screen, just audio)</option>    
+        
+          <option value="non human killing">violence -- non human killing/death on screen (ex: animal, or robot)</option>    
         
           <option value="circumstantial death">violence -- death non-killing, ex: accidental falling</option>    
         
