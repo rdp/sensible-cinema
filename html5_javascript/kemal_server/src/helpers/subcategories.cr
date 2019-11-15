@@ -125,8 +125,8 @@ def subcategory_map
     {db_name: "sexually charged scene", human_name: "sexually charged scene", sub_sub_cat: ""},
     {db_name: "sex foreplay", human_name: "sex foreplay", sub_sub_cat: ""},
     {db_name: "implied sex", human_name: "implied sex", sub_sub_cat: ""},
-    {db_name: "explicit sex", human_name: "explicit sex [makeout]", sub_sub_cat: ""},
- # ??   {db_name: "explicit sex XXX", human_name: "explicit sex [sex act]]", sub_sub_cat: ""},
+    {db_name: "explicit sex", human_name: "explicit sex [makeout]", sub_sub_cat: ""}, # or makeout or XXX ?
+    {db_name: "explicit sex XXX", human_name: "explicit sex the act", sub_sub_cat: ""},
     {db_name: "homosexual behavior", human_name: "homosexual behavior", sub_sub_cat: ""},
     {db_name: "physical (other)", human_name: "other", sub_sub_cat: ""},
   ],

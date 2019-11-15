@@ -367,7 +367,9 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
         
           <option value="tight clothing">physical -- tight clothing (revealing because tight, non cleavage)</option>    
         
-          <option value="underwear">physical -- clad in underwear</option>    
+          <option value="kissing">physical -- kissing</option>    
+        
+          <option value="underwear">physical -- clad in underwear (not lingerie)</option>    
         
           <option value="pijamas">physical -- clad in pijamas (not lingerie)</option>    
         
@@ -389,11 +391,9 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
         
           <option value="nudity breast">physical -- nudity (breast)</option>    
         
-          <option value="shirtless male front">physical -- shirtless male front (+- sexual)</option>    
+          <option value="shirtless male front">physical -- shirtless male front (+- sexual) (not PJ&#39;s, not swimsuit)</option>    
         
           <option value="shirtless male back">physical -- shirtless male back (+- sexual)</option>    
-        
-          <option value="kissing">physical -- kissing</option>    
         
           <option value="sexually charged scene">physical -- sexually charged scene</option>    
         
@@ -401,7 +401,7 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
         
           <option value="implied sex">physical -- implied sex</option>    
         
-          <option value="explicit sex">physical -- explicit sex</option>    
+          <option value="explicit sex">physical -- explicit sex [makeout]</option>    
         
           <option value="homosexual behavior">physical -- homosexual behavior</option>    
         
