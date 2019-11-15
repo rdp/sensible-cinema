@@ -103,8 +103,9 @@ def subcategory_map
     {db_name: "revealing clothing", human_name: "revealing clothing (scantily clad, non cleavage)", sub_sub_cat: ""},
     {db_name: "tight clothing", human_name: "tight clothing (revealing because tight, non cleavage)", sub_sub_cat: ""},
     {db_name: "underwear", human_name: "clad in underwear", sub_sub_cat: ""},
-    {db_name: "pijamas", human_name: "clad in pijamas", sub_sub_cat: ""},
-    {db_name: "swimsuit male", human_name: "swimsuit male", sub_sub_cat: ""}, # TODO get old swimsuits
+    {db_name: "pijamas", human_name: "clad in pijamas (not lingerie)", sub_sub_cat: ""},
+    #{db_name: "swimsuit", human_name: "swimsuit", sub_sub_cat: ""},
+    {db_name: "swimsuit male", human_name: "swimsuit male", sub_sub_cat: ""},
     {db_name: "swimsuit female", human_name: "swimsuit female", sub_sub_cat: ""},
     {db_name: "swimsuit mixed", human_name: "swimsuit male and female", sub_sub_cat: ""},
   #  {db_name: "light cleavage", human_name: "light cleavage/barely revealing", sub_sub_cat: ""},
