@@ -369,7 +369,7 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
         
           <option value="underwear">physical -- clad in underwear</option>    
         
-          <option value="pijamas">physical -- clad in pijamas</option>    
+          <option value="pijamas">physical -- clad in pijamas (not lingerie)</option>    
         
           <option value="swimsuit male">physical -- swimsuit male</option>    
         
@@ -491,30 +491,13 @@ Lewdness level:
 </select>
 <br/>
 
-Impact to Story if edited:
+Impact to Story if edit used:
   <select name="impact_to_movie" id="impact_to_movie_id">
     <option value="0">please select impact</option>
-    
-      <option value="1">1/10</option>
-    
-      <option value="2">2/10</option>
-    
-      <option value="3">3/10</option>
-    
-      <option value="4">4/10</option>
-    
-      <option value="5">5/10</option>
-    
-      <option value="6">6/10</option>
-    
-      <option value="7">7/10</option>
-    
-      <option value="8">8/10</option>
-    
-      <option value="9">9/10</option>
-    
-      <option value="10">10/10</option>
-    
+    <option value="1">negligible/low</option>
+    <option value="2">medium</option>
+    <option value="3">high/causes confusion</option>
+    <option value="4">you'll miss climax of story</option>
   </select>
 
 <br/>
@@ -1487,7 +1470,7 @@ function loadTagIntoUI(tag) {
   document.getElementById('age_maybe_ok_id').value = tag.age_maybe_ok;
   document.getElementById('lewdness_level_id').value = tag.lewdness_level;
   document.getElementById('lip_readable_id').value = tag.lip_readable; // will come in as false for non profs...ah well...
-  document.getElementById('impact_to_movie_id').value = tag.impact_to_movie;
+  document.getElementById('impact_to_movie_id').value = tag.impact_to_movie; // sets it by number == index not the human readable
   document.getElementById('default_enabled_id').value = tag.default_enabled;
   document.getElementById('tag_hidden_id').value = tag.id;
   faux_tag_being_tested = null;
@@ -2423,7 +2406,7 @@ function setImpactIfActionMute() {
        var action_sel = document.getElementById("action_sel");
        var selected = action_sel.options[action_sel.selectedIndex].textContent;
        if (selected == "mute") {
-         document.getElementById("impact_to_movie_id").options.selectedIndex = 1; // == "1/10"
+         document.getElementById("impact_to_movie_id").options.selectedIndex = 1; // == low
        }
 }
 
