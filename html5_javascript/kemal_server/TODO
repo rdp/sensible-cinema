@@ -10,7 +10,6 @@ neglig -> medium -> high -> miss climax
 
 roger/melissa edits: minority
 
-crystal: spork, ssl :)
 
 change impact to story to like "low medium..."
   at least disable/rename for now?
@@ -28,6 +27,8 @@ allow real email login just email
 plugin sometimes the SVG "edited" doesn't disappear when mouse moves off screen...
 
 ask lawyer on portion of video
+
+crystal: spork, ssl simple, sort :)
 
 @plugin overlaps one say how long lasting ...
 
@@ -190,15 +191,19 @@ donate to kemal :)
 main page takes 1.5s? sigh...
   it's not *awful* on desktop...dunno on slow connection to mobile LOL
 
-test mysql 8 fork crystal OS X?
-
 hitting enter in the search field should say "unknown, please select from dropdown list" :|
 
 optimize crystal itself LOL 
+  SSL more...
+  better method missing message/backtraces
+  test mysql 8 fork crystal OS X?
+  better channel docs
   DB
   web server?
   any bottlenecks LOL :)
-  better sort
+  better sort! :)
+  figure out why query {"SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type asc, create_timestamp desc, name, episode_number"} took 00:00:00.0634933
+    takes 0.06 in crystal and 0.01 in mysql console :|
 
 https://playitmyway.org/show_details/172 -> name plus "edited"? :)
 
@@ -443,9 +448,6 @@ show movies that are "similar" to others somehow LOL
 prettier movie url LOL
   one they can "like" on facebook'ish more? easily? share?
 
-crystal:
-  figure out why query {"SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type asc, create_timestamp desc, name, episode_number"} took 00:00:00.0634933
-    takes 0.06 in crystal and 0.01 in mysql console :|
 
 test roku stream from desktop? LOL :|
 shut down server more gracefully for restarts than hard kill :|
