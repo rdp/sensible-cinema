@@ -136,7 +136,7 @@ function addEditUiOnce() {
         <br/>
         <input type='button' value='Test edit locally' onclick="testCurrentFromUi(); return false">
         <br/>
-        <input type='button' id='save_tag_button_id' value='Save Tag' onclick="saveTagButton(); return false;">
+        <input type='button' id='save_tag_button_id' value='Save Edit' onclick="saveTagButton(); return false;">
         <br/>
         <br/>
 
@@ -507,13 +507,13 @@ Impact to Story if edit used:
 <br/>
 tag details
 <input type="text" name="details" id="details_input_id" size="30" value="" style="background-color: rgba(255, 255, 255, 0.85);"/>
-
+<input type='button' value='Re-use Last Tag\'' onclick="reUseLastTagDetails(); return false;">
 <br/>
 popup text
 <input type="text" name="popup_text_after" id="popup_text_after_id" size="30" value="" style="background-color: rgba(255, 255, 255, 0.85);" placeholder="(use only on occasion optional)" />
 <br/>
 
-default edit activate?
+By default edit should be turned on?
 <select name="default_enabled" id="default_enabled_id"> <!-- check boxes have caveats avoid for now -->
   <option value="true">Y</option>
   <option value="false">N</option>
@@ -1524,14 +1524,30 @@ function openTagStartingBefore(search_time) {
     alert("none found ending before current playback position");
   }
 }
+ 
+function reUseLastTagDetails() {
+  var details_text_form = document.getElementById('details_input_id');
+  var tag = getTagRightBeforeNowOrAlert();
+  if (tag) {
+    details_text_form.value = tag.details;
+  }
+}
 
 function openTagPreviousToNowButton() {
+  var tag = getTagRightBeforeNowOrAlert();
+  if (tag) {
+    loadTagIntoUI(tag);
+  }
+}
+
+function getTagRightBeforeNowOrAlert() {
   var search_time = getCurrentTime();
   var tag = getFirstTagEndingBefore(search_time);
   if (tag){
-    loadTagIntoUI(tag);
+    return tag;
   } else {
     alert("none found ending before current playback position");
+    return nil;
   }
 }
 
@@ -1630,7 +1646,7 @@ function saveTagButton() {
   var reload_tags_link = document.getElementById('reloading_id');
   reload_tags_link.innerHTML = "saving..."; // :|
   submitFormXhr(submit_form, function(xhr) {
-    clearForm(false);
+    clearForm();
     reloadForCurrentUrl("SAVED tag! "); // it's done saving so we can do this ja
   }, function(xhr) {
     alert("save didn't take? website down?");
@@ -1679,20 +1695,15 @@ function get_original_tag_of_ui() {
 }
 
 function clearButton() {
-  clearForm(true);
+  clearForm();
   reloadForCurrentUrl('cleared!');
 }
 
-function clearForm(should_clear_everything) {
+function clearForm() {
   document.getElementById('start').value = timeStampToHuman(0);
   document.getElementById('endy').value = timeStampToHuman(0);
   document.getElementById('popup_text_after_id').value = "";
-  if (should_clear_everything) {
-    document.getElementById('details_input_id').value = "";
-    // don't reset category since I'm not sure if the javascript handles its going back to "" subcat tho...
-    document.getElementById('subcategory_select_id').selectedIndex = 0; // use a present value so size doesn't go to *0*  
-    categoryChanged(true);// resize it to match the size of newly selected subcat, above
-  }
+  document.getElementById('details_input_id').value = "";
   document.getElementById('age_maybe_ok_id').value = "0";
   document.getElementById('lewdness_level_id').value = "0";
   document.getElementById('lip_readable_id').value = "";
@@ -1726,11 +1737,11 @@ function doneMoviePage() {
 var old_subs = [];
 
 performance.addEventListener('resourcetimingbufferfull', function (event) {
-   console.log("got event " + event);
+   //console.log("got timing event " + event);
    old_subs = old_subs.concat(getSubsFromCurrentPerformance());
-   performance.clearResourceTimings(); // let it fill again, hope nobody else uses these!?
-   // NB we miss one here oh well! :|
-   console.log("cleared performance list");
+   performance.clearResourceTimings(); // let it fill again, hope nobody else uses these!?? :|
+   // NB we miss one here oh well! :| ?? :|
+   // console.log("cleared performance list");
 });
 
 function getAllSubs() {
@@ -2256,7 +2267,7 @@ function make_sure_does_not_get_stuck_after_play() {
   var start = new Date().getTime();
   var timer = setInterval(function() {
     var millisPassed = (new Date().getTime()) - start;
-    console.log("millisPassed waiting for it to play=" + millisPassed);
+    console.log("millisPassed waiting for it to play=" + millisPassed + " paused=" + isPaused() + " spinner_present=" + spinner_present());
     // it's either check for spinner or...uh...could we check for this earlier??????? and avoid this? but without introducing any possible latencies???
     if ((!isPaused() || pause_since_requested) && !spinner_present()) {
       console.log("detected it did not get stuck after play (or recovered)");
