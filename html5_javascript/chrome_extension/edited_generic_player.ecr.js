@@ -221,7 +221,7 @@ Impact to Story if edit used:
   </select>
 
 <br/>
-tag details
+details
 <input type="text" name="details" id="details_input_id" size="30" value="" style="background-color: rgba(255, 255, 255, 0.85);"/>
 <input type='button' value='Re-use Last Tag\'' onclick="reUseLastTagDetails(); return false;">
 <br/>
@@ -248,9 +248,9 @@ By default edit should be turned on?
 
       <a id=reloading_id href=# onclick="reloadForCurrentUrl(''); return false;" </a></a> <!-- filled in later while things are going -->
       &nbsp;&nbsp;&nbsp;
-      <a href=# onclick="getSubtitleLink(); return false;" </a>Get subtitles link</a>
+      <a href=# onclick="getSubtitleLink(); return false;" </a>Get subtitles</a>
       &nbsp;&nbsp;
-      <a href=# onclick="doneMoviePage(); return false;">Movie page</a>
+      <a href=# onclick="doneMoviePage(); return false;">PIMW Movie page</a>
       <input type="button" onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
     </div>
   </div>`;
