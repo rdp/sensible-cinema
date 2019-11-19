@@ -78,7 +78,7 @@ function addEditUiOnce() {
       <br/>
       Pimw is still in Beta, did we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
       <br/>
-      Picture-free seek: <span id='safe_seek_ts_id'>32m 10s</span> <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 180px;" />
+      Picture-free dragger: <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 180px;" /><span id='safe_seek_ts_id'>32m 10s</span> 
       <div style=""> 
         <span id="currently_xxx_span_id"> <!-- "currently: muting" --></span>
         <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable this later if flagged as editor -->
@@ -857,17 +857,17 @@ function checkIfShouldDoActionAndUpdateUI() {
 
   if (isAddtagStuffVisible()) { // uses a bit o' cpu, is editor only...so don't calc typically...
     updateHTML(document.getElementById("current_timestamp_span_id"), "now: " + timeStampToHuman(cur_time));
-    var nextline = "";
+    var nextLine = "";
     var nextsecondline = "";
     var next_future_tag = getFirstTagEndingAfter(cur_time, getAllTagsIncludingReplacedFromUISorted(current_json.tags)); // so we can see stuff if "unedited" dropdown selected, "endingAfter" so we can show the "currently playing" edit
     if (next_future_tag) {
-      nextline += "next: " + timeStampToHuman(next_future_tag.start);
+      nextLine += "next: ";
       var time_until = next_future_tag.start - cur_time;
       if (time_until < 0) {
         time_until =  next_future_tag.endy - cur_time; // we're in the heart of one, don't show a negative :|
       }
       time_until = Math.round(time_until);
-      nextline +=  " in " + timeStampToHuman(time_until).replace(new RegExp('.00s$'), 's'); // humanish friendly numbers
+      nextLine +=  " in " + timeStampToHuman(time_until).replace(new RegExp('.00s$'), 's'); // humanish friendly numbers
 
       if (faux_tag_being_tested && uiTagDiffersFromOriginalOrNoOriginal()) { // faux_tag_being_tested means they hit "test"
         nextsecondline += "(using your new values)";
@@ -879,6 +879,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       document.getElementById("open_next_tag_id").style.visibility = "visible";
     }
     else {
+      nextLine += "(no upcoming tags)";
       document.getElementById("open_next_tag_id").style.visibility = "hidden";
     }
     var next_earlier_tag = getFirstTagEndingBefore(cur_time);
@@ -905,7 +906,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       reload_tag_button.style.visibility = "visible";
       nextsecondline = "RE-EDITING existing tag..." + nextsecondline;
     }
-    updateHTML(document.getElementById('next_will_be_at_x_span_id'), nextline);
+    updateHTML(document.getElementById('next_will_be_at_x_span_id'), nextLine);
     updateHTML(document.getElementById('next_will_be_at_x_second_line_span_id'), nextsecondline);
 
     updateHTML(document.getElementById("playback_rate"), twoDecimals(getPlaybackRate()) + "x");
@@ -1918,7 +1919,7 @@ function refreshPersonalizedDropdownOptions() {
   var old_selected = dropdown.value;
   removeAllOptions(dropdown); // out with any old...
   var option = document.createElement("option");
-  option.text = "Default (all tags) (" + countDoSomethingTags(current_json.tags) + ")";
+  option.text = "All tags (default) (" + countDoSomethingTags(current_json.tags) + ")";
   option.value = "-1"; // special case :|
   // I think this will start as selected...
   list_length = current_json.tag_edit_lists.length;
