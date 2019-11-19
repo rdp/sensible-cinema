@@ -104,10 +104,10 @@ function addEditUiOnce() {
 
       <!-- no special method for seek forward since it'll at worst seek to a skip then skip -->
       <input type='button' onclick="seekToBeforeSkip(-30); return false;" value='-30s'/>
-      <input type='button' onclick="seekToBeforeSkip(-5); return false;" value='-5s'/>
       <input type='button' onclick="seekToTime(getCurrentTime() + 5); return false;" value='+5s'/>
-      <input type='button' onclick="seekToTime(getCurrentTime() - 1); return false;" value='1s-'/>
+      <input type='button' onclick="seekToBeforeSkip(-5); return false;" value='-5s'/>
       <input type='button' onclick="seekToTime(getCurrentTime() + 1); return false;" value='1s+'/>
+      <input type='button' onclick="seekToTime(getCurrentTime() - 1); return false;" value='1s-'/>
       <input type='button' onclick="stepFrameBack(); return false;" value='.1s -'/>
       <input type='button' onclick="stepFrame(); return false;" value='.1s +'/>
 
@@ -140,7 +140,7 @@ function addEditUiOnce() {
 
 
 <div id="category_div_id">
-<select name="category" id='category_select_id' onchange=""
+category:<select name="category" id='category_select_id' onchange=""
 style="background-color: rgba(255, 255, 255, 0.85);" >
   <option value="" disabled selected>category -- please select one</option>
   <option value="profanity">profanity/verbal attack</option>
@@ -154,7 +154,7 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
 
 <div id="subcategory_div_id">
 <select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);" onchange="">
-    <option value="">unknown -- please select subcategory</option> <!-- this one sticks around no matter which category you select -->
+    <option value="">please select subcategory</option> <!-- this one sticks around no matter which category you select -->
     
       
       
@@ -221,7 +221,7 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
         
           <option value="deity religious context other religion">profanity -- deity other religious context like &quot;Thank the gods of X&quot;</option>    
         
-          <option value="deity reference">profanity -- deity use appropriate but non religious context like &quot;in this game you are G...&quot;</option>    
+          <option value="deity reference">profanity -- deity use appropriate but non religious context  &quot;in this game you are g...&quot;</option>    
         
           <option value="deity greek">profanity -- deity greek (Zeus, etc.)</option>    
         
@@ -1612,7 +1612,6 @@ function saveTagButton() {
   }
 
   var endy = humanToTimeStamp(document.getElementById('endy').value);
-
   if (endy > videoDuration()) {s
     alert("tag goes past end of movie? aborting...");
     return;
@@ -1621,8 +1620,11 @@ function saveTagButton() {
   var start = humanToTimeStamp(document.getElementById('start').value);
   var otherTags = allTagsExceptOneBeingEdited();
   for (var i = 0; i < otherTags.length; i++) {
-     if (is_overlapping(start, endy, otherTags[i].start, otherTags[i].endy)) {
-       alert("warning: tag overlaps with other beginning at " + timeStampToHuman(otherTags[i].start) + " (this could be intentional, if not, double check), saving anyway...");
+     var otherTag = otherTags[i];
+     if (is_overlapping(start, endy, otherTag.start, otherTag.endy)) {
+       alert("warning: tag overlaps with other tag beginning at " + timeStampToHuman(otherTag.start) + 
+         "that lasts " + timeStampToHuman(otherTag.endy - otherTag.start) + 
+         " (this might be anticipated, if not, double check), saving...");
      }
    }
 

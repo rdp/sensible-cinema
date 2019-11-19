@@ -38,7 +38,7 @@ def subcategory_map
     {db_name: "bodily part reference harsh", human_name: "bodily part reference harsh (ex: balls, screwed)", sub_sub_cat: "crude"},
     {db_name: "deity religious context", human_name: "deity use in religious christian context like \"the l... is good\"", sub_sub_cat: "deity"},
     {db_name: "deity religious context other religion", human_name: "deity other religious context like \"Thank the gods of X\"", sub_sub_cat: "deity"},
-    {db_name: "deity reference", human_name: "deity use appropriate but non religious context like \"in this game you are G...\"", sub_sub_cat: "deity"},
+    {db_name: "deity reference", human_name: "deity use appropriate but non religious context  \"in this game you are g...\"", sub_sub_cat: "deity"},
     {db_name: "deity greek", human_name: "deity greek (Zeus, etc.)", sub_sub_cat: "deity"},
     {db_name: "deity exclamation mild", human_name: "deity exclamation mild like Good L...", sub_sub_cat: "deity"},
     {db_name: "deity exclamation euphemized", human_name: "deity euphemized like 'oh my gosh'", sub_sub_cat: "deity"},
