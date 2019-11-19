@@ -1,8 +1,5 @@
 == todo list (me ja, ordered) ==
 
-plugin: stop the insanity...just 4 me tho :|
-  test buttons
-
 roger/melissa edits: minority
 
 fix from feedback from helper?
@@ -19,7 +16,7 @@ plugin sometimes the SVG "edited" doesn't disappear when mouse moves off screen.
 
 ask lawyer on portion of video :)
 
-crystal: ssl simple, sort :)
+crystal: ssl simples, sort :)
 
 @plugin: test begin, test end? 1s?
 
@@ -148,9 +145,12 @@ fixup some bstar galactica names original :|
 
 == todo uncategorized, assume most "not do" ==
 
+plugin: cleanup so stuff just disappears
+  make it so everything turns red that is required...maybe even before they have to hit save? :)
+
 finish change impact
 
-spinner sometimes remains again :|
+spinner sometimes remains again :| ??
 
 update category in db: swimsuits, and some others :| see code source comments
 
