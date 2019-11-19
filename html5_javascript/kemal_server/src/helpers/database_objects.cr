@@ -19,9 +19,9 @@ def with_db
 end
 
 def query(*args)
-  start = Time.now
+  start = Time.local
   out = yield MyDb.create.query *args # this auto closes I think
-  puts "query #{args} took #{Time.now - start}"
+  puts "query #{args} took #{Time.local - start}"
   out
 end
 
@@ -203,8 +203,8 @@ class Url
     @rental_cost = 0.0
     @purchase_cost = 0.0
     @total_time = 0.0
-    @create_timestamp = Time.now
-    @status_last_modified_timestamp = Time.now
+    @create_timestamp = Time.local
+    @status_last_modified_timestamp = Time.local
     @subtitles = ""
     @genre = ""
     @original_rating = ""

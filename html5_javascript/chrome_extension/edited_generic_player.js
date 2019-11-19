@@ -72,11 +72,11 @@ function addEditUiOnce() {
         <text style="fill: none; stroke: rgb(188, 188, 188); stroke-width: 0.5px; stroke-linejoin: round;" y="40" x="55" id="big_edited_text_id">Edited</text>
       </svg>
        <br/>
-      Currently Editing out: <select id='tag_edit_list_dropdown_id' onChange='personalizedDropdownChanged();'></select> <!-- javascript will set up this select -->
+      PIMW editing out: <select id='tag_edit_list_dropdown_id' onChange='personalizedDropdownChanged();'></select> <!-- javascript will set up this select -->
       <br/>
       <a href=# onclick="openPersonalizedEditList(); return false">Personalize which parts you edit out</a>
       <br/>
-      Pimw is still in Beta, did we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
+      Pimw is still in Beta, we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
       <br/>
       Picture-free dragger: <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 180px;" /><span id='safe_seek_ts_id'>32m 10s</span> 
       <div style=""> 
@@ -112,21 +112,17 @@ function addEditUiOnce() {
       <input type='button' onclick="stepFrame(); return false;" value='.1s +'/>
 
       <br/>
+      Speed:
       <input type='button' onclick="playButtonClicked(); setPlaybackRate(0.5); return false;" value='0.5x'>
       <input type='button' onclick="decreasePlaybackRate();; return false;" value='&lt;&lt;'/>
       <span ><a id='playback_rate' href=# onclick="setPlaybackRate(1.0); return false">1.00x</a></span> <!--XX remove link -->
       <input type='button' onclick="increasePlaybackRate(); return false;" value='&gt;&gt;'/>
       <input type='button' onclick="doPause(); return false;" value='&#9612;&#9612;'/>
       <input type='button' onclick="playButtonClicked(); return false;" value='&#9654;'>
-
        <br/>
-
-        <input type='button' value='Test edit locally' onclick="testCurrentFromUi(); return false">
-        <br/>
        action:
+
         <input type="hidden" id="tag_hidden_id" name="id" value="0"> <!-- 0 means new...I think... -->
-
-
         <select name="default_action" id='action_sel' onchange="">
           <option value="mute">mute</option>
           <option value="skip">skip</option>
@@ -137,7 +133,12 @@ function addEditUiOnce() {
           <option value="set_audio_volume">set_audio_volume</option>
           <option value="do_nothing">do_nothing</option>
         </select>
-
+        <br/>
+        <input type='button' value='Test edit locally' onclick="testCurrentFromUi(); return false">
+        <br/>
+        <input type='button' id='save_tag_button_id' value='Save Tag' onclick="saveTagButton(); return false;">
+        <br/>
+        <br/>
 
 <div id="category_div_id">
 category:<select name="category" id='category_select_id' onchange=""
@@ -512,17 +513,12 @@ popup text
 <input type="text" name="popup_text_after" id="popup_text_after_id" size="30" value="" style="background-color: rgba(255, 255, 255, 0.85);" placeholder="(use only on occasion optional)" />
 <br/>
 
-default edit on?
+default edit activate?
 <select name="default_enabled" id="default_enabled_id"> <!-- check boxes have caveats avoid for now -->
   <option value="true">Y</option>
   <option value="false">N</option>
 </select>
-
-<!-- can't put javascript since don't know how to inject it quite right in plugin, though I could use a separate render... -->
- <!-- render full filename cuz macro -->
-        <input type='button' id='save_tag_button_id' value='Save Tag' onclick="saveTagButton(); return false;">
-        <br/>
-        <br/>
+<br/>
         <input type='button' value='&lt;&lt;' id='open_tag_before_current_id' onclick="openTagBeforeOneInUi(); return false;">
         <input type='button' value='Re-Edit Just Passed Tag' id='open_prev_tag_id' onclick="openTagPreviousToNowButton(); return false;">
         <input type='button' value='Re-Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
@@ -2623,9 +2619,6 @@ function htmlDecode(input) { // unescape I guess typically we inject "inline" wh
   var doc = new DOMParser().parseFromString(input, "text/html");
   return doc.documentElement.textContent;
 }
- <!-- render inline cuz uses macro, putting this at the end isn't enough to not mess up line numbers because dropdowns are injected :| -->
-
-// also some in _tag_shared_js.ecr
 
 function updateHTML(div, new_value) {
   if (div.innerHTML != new_value) {

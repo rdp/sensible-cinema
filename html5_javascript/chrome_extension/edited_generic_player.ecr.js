@@ -71,11 +71,11 @@ function addEditUiOnce() {
         <text style="fill: none; stroke: rgb(188, 188, 188); stroke-width: 0.5px; stroke-linejoin: round;" y="40" x="55" id="big_edited_text_id">Edited</text>
       </svg>
        <br/>
-      Currently Editing out: <select id='tag_edit_list_dropdown_id' onChange='personalizedDropdownChanged();'></select> <!-- javascript will set up this select -->
+      PIMW editing out: <select id='tag_edit_list_dropdown_id' onChange='personalizedDropdownChanged();'></select> <!-- javascript will set up this select -->
       <br/>
       <a href=# onclick="openPersonalizedEditList(); return false">Personalize which parts you edit out</a>
       <br/>
-      Pimw is still in Beta, did we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
+      Pimw is still in Beta, we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
       <br/>
       Picture-free dragger: <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 180px;" /><span id='safe_seek_ts_id'>32m 10s</span> 
       <div style=""> 
@@ -111,22 +111,130 @@ function addEditUiOnce() {
       <input type='button' onclick="stepFrame(); return false;" value='.1s +'/>
 
       <br/>
+      Speed:
       <input type='button' onclick="playButtonClicked(); setPlaybackRate(0.5); return false;" value='0.5x'>
       <input type='button' onclick="decreasePlaybackRate();; return false;" value='&lt;&lt;'/>
       <span ><a id='playback_rate' href=# onclick="setPlaybackRate(1.0); return false">1.00x</a></span> <!--XX remove link -->
       <input type='button' onclick="increasePlaybackRate(); return false;" value='&gt;&gt;'/>
       <input type='button' onclick="doPause(); return false;" value='&#9612;&#9612;'/>
       <input type='button' onclick="playButtonClicked(); return false;" value='&#9654;'>
-
        <br/>
+       action:
 
+        <input type="hidden" id="tag_hidden_id" name="id" value="0"> <!-- 0 means new...I think... -->
+        <select name="default_action" id='action_sel' onchange="">
+          <option value="mute">mute</option>
+          <option value="skip">skip</option>
+          <option value="yes_audio_no_video">yes_audio_no_video</option>
+          <option value="mute_audio_no_video">mute_audio_no_video</option>
+          <option value="make_video_smaller">make_video_smaller</option>
+          <option value="change_speed">change_speed</option>
+          <option value="set_audio_volume">set_audio_volume</option>
+          <option value="do_nothing">do_nothing</option>
+        </select>
+        <br/>
         <input type='button' value='Test edit locally' onclick="testCurrentFromUi(); return false">
         <br/>
-       action:
-        <%= pre_details = "tag details"; pre_popup = "popup text"; io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared.ecr", io2; io2.to_s %> <!-- render full filename cuz macro -->
         <input type='button' id='save_tag_button_id' value='Save Tag' onclick="saveTagButton(); return false;">
         <br/>
         <br/>
+
+<div id="category_div_id">
+category:<select name="category" id='category_select_id' onchange=""
+style="background-color: rgba(255, 255, 255, 0.85);" >
+  <option value="" disabled selected>category -- please select one</option>
+  <option value="profanity">profanity/verbal attack</option>
+  <option value="violence">violence/blood/crude action etc.</option>
+  <option value="physical">sex/nudity/lewd etc.</option>
+  <option value="suspense">suspense (frightening, scary fighting, surprise)</option>
+  <option value="substance-abuse">substance use</option>
+  <option value="movie-content">movie content (credits, etc.)</option>
+</select>
+</div>
+
+<div id="subcategory_div_id">
+<select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);" onchange="">
+    <option value="">please select subcategory</option> <!-- this one sticks around no matter which category you select -->
+    <% subcategory_map().each{|subcat_name, entries| %>
+      <% old_sub_sub = "" %>
+      <% entries.group_by{|entry| entry[:sub_sub_cat] }.each{|sub_sub_cat, entries| %>
+        <% if sub_sub_cat != "" %>
+          <optgroup label="<%= subcat_name.to_s + " -- " + sub_sub_cat %>"> <!-- so it'll hide them when profanity not selected -->
+        <% end %>
+        <% entries.each{|entry| %>
+          <option value="<%= HTML.escape(entry[:db_name]) %>"><%= HTML.escape(subcat_name.to_s + " -- " + entry[:human_name]) %></option>    
+        <% } %>
+        <% if sub_sub_cat != "" %>
+          </optgroup>
+        <% end %>
+      <% } %>
+    <% } %>
+</select>
+</div>
+
+<select id="hidden_select_id" style="display : none;"> <!-- needed/re-used for resizing subcats :| -->
+ <option id="hidden_select_option_id"></option>
+</select>
+
+age specifier (if violence):
+<select name="age_maybe_ok" id="age_maybe_ok_id">
+  <option value="0">please select</option>
+  <% [3,6,9,12,15].each{|n| %>
+    <option value="<%= n %>">not OK age <%= n %> and under</option>
+  <% } %>
+  <option value="-1">no age OK</option>
+</select>
+<br/>
+
+Lewdness level:
+<select name="lewdness_level" id="lewdness_level_id">
+  <!-- TODO fix ordering in DB :|  two 2's? -->
+  <option value="0">please select</option>
+  <option value="2">Cartoon (non sensual)</option> 
+  <option value="2">Art-based (non sensual)</option>
+  <option value="10">Non sensual, hard to even see</option>
+  <option value="3">Non sensual or barely revealing</option>
+  <option value="11">Non sensual or medium revealing</option>
+  <option value="4">Mild sensual or medium revealing</option>
+  <option value="5">Art-based and moderate sensual</option>
+  <option value="6">Moderate sensual</option>
+  <option value="7">Art-based and severe/extreme sensual</option>
+  <option value="8">Severe sensual  </option>
+  <option value="9">Extreme sensual "rated X"</option>
+</select>
+
+<select name="lip_readable" id="lip_readable_id"> <!-- check boxes have caveats avoid for now -->
+  <option value="">lip readable?</option>
+  <option value="true">Yes lip-readable</option>
+  <option value="false">Not lip-readable</option>
+</select>
+<br/>
+
+Impact to Story if edit used:
+  <select name="impact_to_movie" id="impact_to_movie_id">
+    <option value="0">please select impact</option>
+    <option value="1">negligible</option>
+    <option value="2">low</option>
+    <option value="4">medium or some confusion</option>
+    <option value="5">high or confusing</option>
+    <option value="7">extreme or serious plot holes</option>
+  </select>
+
+<br/>
+tag details
+<input type="text" name="details" id="details_input_id" size="30" value="" style="background-color: rgba(255, 255, 255, 0.85);"/>
+
+<br/>
+popup text
+<input type="text" name="popup_text_after" id="popup_text_after_id" size="30" value="" style="background-color: rgba(255, 255, 255, 0.85);" placeholder="(use only on occasion optional)" />
+<br/>
+
+default edit activate?
+<select name="default_enabled" id="default_enabled_id"> <!-- check boxes have caveats avoid for now -->
+  <option value="true">Y</option>
+  <option value="false">N</option>
+</select>
+<br/>
         <input type='button' value='&lt;&lt;' id='open_tag_before_current_id' onclick="openTagBeforeOneInUi(); return false;">
         <input type='button' value='Re-Edit Just Passed Tag' id='open_prev_tag_id' onclick="openTagPreviousToNowButton(); return false;">
         <input type='button' value='Re-Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
@@ -1942,8 +2050,6 @@ function liveTitleNoEpisode() {
 function liveFullNameEpisode() {
   return liveTitleNoEpisode() + liveEpisodeString();
 }
-
-<%= io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared_js.ecr", io2; io2.to_s %> <!-- render inline cuz uses macro, putting this at the end isn't enough to not mess up line numbers because dropdowns are injected :| -->
 
 <%= File.read("generic_javascript_helpers.js") %>
 

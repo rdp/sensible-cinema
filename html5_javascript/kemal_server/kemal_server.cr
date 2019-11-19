@@ -16,7 +16,7 @@ end
 
 class CustomHandler < Kemal::Handler # don't know how to interrupt it from a before_all :|
   def call(env)
-    puts "start #{env.request.path} #{Time.now}"
+    puts "start #{env.request.path} #{Time.local}"
     query = env.request.query
     path = env.request.path
     if (path =~ /delete|nuke|personalized|edit/ || env.request.method == "POST") && !logged_in?(env) && !path.starts_with?("/edited_youtube/") && !path.starts_with?("/subscribe")
@@ -273,20 +273,6 @@ get "/view_tag/:tag_id" do |env|
   "<h1>Details: #{tag.details} #{tag.popup_text_after}</h1>"
 end
 
-get "/edit_tag/:tag_id" do |env|
-  tag = Tag.get_only_by_id(env.params.url["tag_id"])
-  url = tag.url
-  previous_tags = url.tags.reject{|t| t.start >= tag.start}
-  if previous_tags.size > 0
-    previous_tag = previous_tags[-1] # :\
-  end
-  next_tags = url.tags.select{|t| t.start > tag.start}
-  if next_tags.size > 0
-    next_tag = next_tags[0]
-  end
-  render "views/edit_tag.ecr", "views/layout_yes_nav.ecr"
-end
-
 class HTTP::Server::Response
   # be careful, these seem to be pooled and reused :|
   @title = ""
@@ -298,17 +284,6 @@ def get_url_from_url_id(env)
   out = Url.get_only_by_id(env.params.url["url_id"])
   env.response.title = out.name_with_episode
   out
-end
-
-get "/new_empty_tag/:url_id" do |env|
-  url = get_url_from_url_id(env)
-  tag = Tag.new url
-  # non zero anyway :|
-  tag.start = 1.0
-  tag.endy = url.total_time
-  add_to_flash env, "this tag is not yet saved, hit the save button when you are done"
-  previous_tag = next_tag = nil # :\
-  render "views/edit_tag.ecr", "views/layout_yes_nav.ecr"
 end
 
 post "/save_tag/:url_id" do |env|
@@ -634,9 +609,9 @@ get "/old_home" do |env| # old home index...
   all_urls_done = all_urls.select{|url| url.edit_passes_completed >= 2 }
   all_urls_half_way = all_urls.select{|url| url.edit_passes_completed == 1 }
   all_urls_just_started = all_urls.select{|url| url.edit_passes_completed == 0 }
-  start = Time.now
+  start = Time.local
   out = render "views/old_main.ecr", "views/layout_yes_nav.ecr"
-  puts "view took #{Time.now - start}"  # pre view takes as long as first query :|
+  puts "view took #{Time.local - start}"  # pre view takes as long as first query :|
   out
 end
 
@@ -883,7 +858,7 @@ post "/save_url" do |env|
   db_url.edit_passes_completed = get_int(params, "edit_passes_completed")
   if old_passes != db_url.edit_passes_completed && db_url.edit_passes_completed == 2 # :|
     puts "updating status_last_modified_timestamp as well..."
-    db_url.status_last_modified_timestamp = Time.now
+    db_url.status_last_modified_timestamp = Time.local
   end
   db_url.most_recent_pass_discovery_level = get_int(params, "most_recent_pass_discovery_level")
   db_url.age_recommendation_after_edited = get_int(params, "age_recommendation_after_edited")

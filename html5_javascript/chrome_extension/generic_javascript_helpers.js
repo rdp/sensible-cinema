@@ -1,4 +1,287 @@
-// also some in _tag_shared_js.ecr
+function showRightDropdownsForCategory() {
+  var category = document.getElementById("category_select_id").value;
+  var age_select = document.getElementById('age_maybe_ok_id');
+  var lewdness_select = document.getElementById('lewdness_level_id');
+  var lip_readable = document.getElementById('lip_readable_id');
+  // this is basically called when they change category so only reset values "when should" I guess...
+  if (category == "physical") {
+    age_select.style.visibility = "hidden";
+    age_select.value = "0";
+    lewdness_select.style.visibility = "visible";
+    lip_readable.style.visibility = "hidden";
+    lip_readable.value = "";
+  } else if (category == "violence" || category == "suspense" || category == "substance-abuse") {
+    // sustance abuse optional for like hard core drugs...?
+    age_select.style.visibility = "visible";
+    lewdness_select.style.visibility = "hidden";
+    lewdness_select.value = "0";
+    lip_readable.style.visibility = "hidden";
+    lip_readable.value = "";
+  } else if (category == "profanity") {
+    lewdness_select.style.visibility = "hidden";
+    lewdness_select.value = "0";
+    age_select.style.visibility = "hidden";
+    age_select.value = "0";
+    lip_readable.style.visibility = "visible";
+  } else { // creditz -> show hardly anything
+    lewdness_select.style.visibility = "hidden";
+    lewdness_select.value = "0";
+    age_select.style.visibility = "hidden";
+    age_select.value = "0";
+    lip_readable.style.visibility = "hidden";
+    lip_readable.value = "";
+  }
+}
+
+function showSubCatWithRightOptionsAvailable() {
+  // theoretically they can never select unknown...
+  var category_select = document.getElementById("category_select_id");
+  var category = category_select.value;
+  var subcategory_select = document.getElementById("subcategory_select_id");
+  var width_needed = 0;
+  var subcats_with_optgroups = Array.apply(null, subcategory_select.options); // convert to Array
+  subcats_with_optgroups = subcats_with_optgroups.concat(Array.apply(null, subcategory_select.getElementsByTagName('optgroup')));
+  for (var i=0; i < subcats_with_optgroups.length; i++){
+    var option = subcats_with_optgroups[i];
+    var text = option.text || option.label; // for optgroup
+    var cat_from_subcat = text.split(" ")[0]; // profanity of profanity -- XXX
+    if (cat_from_subcat != category && text.includes(" -- ")) {
+      option.style.display = "none";
+    }
+    else {
+      option.style.display = "block";
+      width_needed = Math.max(width_needed, option.offsetWidth);
+    }
+  }
+    
+  reWidthSelectToSizeOfSelected(subcategory_select); // it probably reset to the top option of a new category [so new size]  
+}
+
+function reWidthSelectToSizeOfSelected(to_resize) { 
+       // requires hidden select also in doc for now, to calculate size in [can't remember why...]
+       var hidden_opt = document.getElementById("hidden_select_option_id");
+       hidden_opt.innerHTML = to_resize.options[to_resize.selectedIndex].textContent;
+       var hidden_sel = document.getElementById("hidden_select_id");
+       hidden_sel.style.display = ""; // show it
+       to_resize.style.width = hidden_sel.clientWidth + "px";
+       hidden_sel.style.display = "none";
+}
+
+function setImpactIfActionMute() {
+       var action_sel = document.getElementById("action_sel");
+       var selected = action_sel.options[action_sel.selectedIndex].textContent;
+       if (selected == "mute") {
+         document.getElementById("impact_to_movie_id").options.selectedIndex = 1; // == low
+       }
+}
+
+function isYoutubePimw() {
+  return (typeof youtube_pimw_player !== 'undefined');
+}
+
+function getEndSpeedOrAlert(value) {
+  var re = /(\d\.\d+)x$/;
+  var match = re.exec(value);
+  if (match) {
+    if (!isYoutubePimw() || youtube_pimw_player.getAvailablePlaybackRates().includes(parseFloat(match[1]))) {    
+      return parseFloat(match[1]);
+    }
+  }
+  // failure of some kind er other...
+  if (isYoutubePimw()) {
+      var out = "you need to enter the speed you want in the details like 'my_details 2.0x' or 'my_details 0.5x' (options:";
+      var rates = youtube_pimw_player.getAvailablePlaybackRates();
+      for (var i = 0; i < rates.length; i++) {
+        out += rates[i].toFixed(2) + "x,";
+      }
+      alert(out + ") [0.25 has no audio]");
+  } else {
+      alert("you need to enter the speed you want in the details like 'my_details 2.0x' or 'my_details 0.5x' (goes up to 4.0x, down to 0.5x with audio)");
+  }
+  return null;
+}
+
+function getAudioPercentOrAlert(value) {
+  var re = /(\d+)%$/;
+  var match = re.exec(value);
+  if (match) {
+    return parseFloat(match[1]);
+  }
+  alert("you need to enter the audio percent you want, like 'my_details 5%' [at least 5% if youtube]");
+  return null;
+}
+
+function weakDoubleCheckTimestampsAndAlert(action, details, start, endy) {
+
+  if ((action == "make_video_smaller" || action == "change_speed") && !isYoutubePimw()) {
+    alert("we only do that for youtube today, ping us if you want it added elsewhere");
+    return;
+  }
+  
+  if (action == "change_speed" && !getEndSpeedOrAlert(details)) {
+    return false;
+  }
+  if (action == "set_audio_volume" && !getAudioPercentOrAlert(details)) {
+    return false;
+  }
+ 
+  if (isYoutubePimw() && (action == "mute_audio_no_video")) {
+    alert("we seemingly aren't allowed to do mute_audio_no_video non-video for youtube, you could make it smaller and mute, two separate overlapping edits, instead");
+    return false;
+  }
+  if (isYoutubePimw() && action == "yes_audio_no_video") {
+    alert("we seemingly aren't allowed to do yes_audio_no_video (black screen) for youtube, just skip instead...");
+    return false;
+  }
+  if (start == 0) {
+    alert("Can't start at zero, please select 0.01s if you want one that starts near the beginning");
+    return false;
+  }
+  if (start >= endy) {
+    alert("appears your end is before or equal to your start, please adjust timestamps, then try again!");
+    return false;
+  }
+  if (endy - start > 60*15) {
+    alert("tag is more than 15 minutes long? This should not typically be expected? check timestamps, if you do need it this long, let us know...");
+    return false;
+  }
+
+  return true;
+}
+
+function humanToTimeStamp(timestamp) {
+  // 0h 17m 34.54s
+  sum = 0.0
+  split = timestamp.split(/[hms ]/)
+  removeElementFromArray(split, "");
+  split.reverse();
+  for (var i = 0; i < split.length; i++) {
+    sum += parseFloat(split[i]) * Math.pow(60, i);
+  }
+  return sum;
+}
+
+function removeElementFromArray(arr) {
+    var what, a = arguments, L = a.length, ax;
+    while (L > 1 && arr.length) {
+        what = a[--L];
+        while ((ax= arr.indexOf(what)) !== -1) {
+            arr.splice(ax, 1);
+        }
+    }
+    return arr;
+}
+
+function doubleCheckValues() {
+
+  var action = document.getElementById('action_sel').value;
+  var details = document.getElementById('details_input_id');
+  var start = humanToTimeStamp(document.getElementById('start').value);
+  var endy = humanToTimeStamp(document.getElementById('endy').value);
+  if (!weakDoubleCheckTimestampsAndAlert(action, details.value, start, endy)) {
+    addRedBorderTemporarily(document.getElementById('endy'));
+    addRedBorderTemporarily(document.getElementById('start'));
+    return false;
+  }
+
+  var category_div = document.getElementById('category_select_id');
+  var category = category_div.value;
+  if (category == "") {
+    alert("please select category first");
+    addRedBorderTemporarily(category_div);
+    return false;
+  }  
+ 
+  var subcat_select = document.getElementById('subcategory_select_id');
+  if (subcat_select.value == "") {
+    alert("please select subcategory first");
+    addRedBorderTemporarily(subcat_select);
+    return false;
+  }
+  var impact = document.getElementById('impact_to_movie_id');
+  if (impact.value == "0") {
+    alert("please select impact to story");
+    addRedBorderTemporarily(impact);
+    return false;
+  }
+  if (details.value == "") {
+    alert("please enter tag details");
+    addRedBorderTemporarily(details);
+    return false;
+  }
+  
+  var age = document.getElementById('age_maybe_ok_id');
+  if ((category == "violence" || category == "suspense") && age.value == "0") {
+    alert("for violence or suspense tags, please also select a value in the age specifier dropdown");
+    addRedBorderTemporarily(age);
+    return false;
+  }
+  var lewdness_level = document.getElementById('lewdness_level_id');
+  if ((category == "physical") && lewdness_level.value == "0") {
+    alert("for sex/nudity/lewdness, please also select a value in the lewdness_level dropdown");
+    addRedBorderTemporarily(lewdness_level);
+    return false;
+  }
+  var lip_readable = document.getElementById('lip_readable_id');
+  if ((category == "profanity") && lip_readable.value == "") {
+    alert("for profanity please also select 'lip_readable?' dropdown");
+    addRedBorderTemporarily(lip_readable);
+    return false;
+  }
+  if (subcat_select.options[subcat_select.selectedIndex].value == "joke edit" && document.getElementById('default_enabled_id').value == 'true') {
+    alert("for joking edits please remember to save them with default_enabled as N!");
+  }
+  return true;
+}
+
+function addRedBorderTemporarily(to_this_div) {
+  to_this_div.classList.add("error");  // not ie 9 compat oh well!
+  setTimeout(function(){ 
+       to_this_div.classList.remove("error");
+     }, 
+    3000);
+}
+
+function editDropdownsCreated() {
+  // called when we're ready to setup variables in the dropdowns, since otherwise the right divs aren't in place yet in plugin
+
+  document.getElementById('category_select_id').addEventListener('change', function(event) {
+    categoryChanged(true);
+   });
+  document.getElementById("subcategory_select_id").addEventListener('change', function(event) {
+    subcategoryChanged(true);
+   });
+
+  document.getElementById('action_sel').addEventListener('change', setImpactIfActionMute);
+}
+
+function categoryChanged(full_change) {
+    var subcat_select = document.getElementById("subcategory_select_id");
+    subcat_select.selectedIndex = 0;  // reset subcat to top, since cat just changed...
+    reWidthSelectToSizeOfSelected(document.getElementById('category_select_id'));
+    showSubCatWithRightOptionsAvailable();
+    showRightDropdownsForCategory();
+    if (full_change) {
+      clearDetails(); // rarely want to reuse these for a newly selected category...    
+    } // else: can't yet it calls this after loading an existing tag into the UI for re-editing :|
+}
+
+function subcategoryChanged(full_change) {
+    var subcat_select = document.getElementById("subcategory_select_id");
+    reWidthSelectToSizeOfSelected(subcat_select);
+    if (full_change) {
+      clearDetails();
+    } // else don't if we're loading a tag into UI
+}
+
+function clearDetails() {
+  document.getElementById('details_input_id').value = "";
+}
+
+function htmlDecode(input) { // unescape I guess typically we inject "inline" which works fine <sigh> but not for value = nor alert ... I did DB wrong
+  var doc = new DOMParser().parseFromString(input, "text/html");
+  return doc.documentElement.textContent;
+}
 
 function updateHTML(div, new_value) {
   if (div.innerHTML != new_value) {
