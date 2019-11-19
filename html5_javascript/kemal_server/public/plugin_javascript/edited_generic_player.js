@@ -399,13 +399,13 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
         
           <option value="sex foreplay">physical -- sex foreplay</option>    
         
-          <option value="implied sex">physical -- implied sex</option>    
+          <option value="implied sex">physical -- implied sex offscreen</option>    
         
-          <option value="explicit sex">physical -- explicit sex [makeout]</option>    
+          <option value="explicit sex">physical -- explicit sex or makeout [onscreen]</option>    
         
-          <option value="explicit sex XXX">physical -- explicit sex the act</option>    
+          <option value="">physical -- for violent sex choose rape in violence cat</option>    
         
-          <option value="homosexual behavior">physical -- homosexual behavior</option>    
+          <option value="homosexual behavior">physical -- homosexual behavior any kind</option>    
         
           <option value="physical (other)">physical -- other</option>    
         
@@ -471,19 +471,19 @@ age specifier (if violence):
 
 Lewdness level:
 <select name="lewdness_level" id="lewdness_level_id">
-  <!-- TODO fix ordering in DB :| -->
+  <!-- TODO fix ordering in DB :|  two 2's? -->
   <option value="0">please select</option>
-  <option value="2">Cartoon (non sensual)</option>
+  <option value="2">Cartoon (non sensual)</option> 
   <option value="2">Art-based (non sensual)</option>
   <option value="10">Non sensual, hard to even see</option>
-  <option value="3">Non sensual/barely revealing</option>
-  <option value="11">Non sensual/medium revealing</option>
-  <option value="4">Mild sensual/medium revealing</option>
-  <option value="5">Art-based (moderate sensual)</option>
+  <option value="3">Non sensual or barely revealing</option>
+  <option value="11">Non sensual or medium revealing</option>
+  <option value="4">Mild sensual or medium revealing</option>
+  <option value="5">Art-based and moderate sensual</option>
   <option value="6">Moderate sensual</option>
-  <option value="7">Art-based (severe/extreme sensual)</option>
-  <option value="8">Severe sensual</option>
-  <option value="9">Extreme sensual</option>
+  <option value="7">Art-based and severe/extreme sensual</option>
+  <option value="8">Severe sensual  </option>
+  <option value="9">Extreme sensual "rated X"</option>
 </select>
 
 <select name="lip_readable" id="lip_readable_id"> <!-- check boxes have caveats avoid for now -->
