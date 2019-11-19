@@ -73,7 +73,7 @@ function addEditUiOnce() {
        <br/>
       PIMW editing out: <select id='tag_edit_list_dropdown_id' onChange='personalizedDropdownChanged();'></select> <!-- javascript will set up this select -->
       <br/>
-      <a href=# onclick="openPersonalizedEditList(); return false">Personalize which parts you edit out</a>
+      <a href=# onclick="openPersonalizedEditList(); return false">Or personalize which parts you edit out</a>
       <br/>
       Pimw is still in Beta, we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
       <br/>
@@ -95,9 +95,11 @@ function addEditUiOnce() {
       <form target="_blank" action="filled_in_later_if_you_see_this_it_may_mean_an_onclick_method_threw" method="POST" id="create_new_tag_form_id">
         from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
         <input id='' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
+        <input type='button' value='<-- Test' onclick="testCurrentFromUiStart(); return false">
         <br/>
         &nbsp;&nbsp;&nbsp;&nbsp;to:<input type='text' name='endy' style='width: 150px; font-size: 12pt; height: 20px;' id='endy' value='0m 0.00s'/>
         <input id='' type='button' value='<--set to current time' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
+        <input type='button' value='<-- Test' onclick="testCurrentFromUiEnd(); return false">
         <br/>
 
 
@@ -132,8 +134,6 @@ function addEditUiOnce() {
           <option value="set_audio_volume">set_audio_volume</option>
           <option value="do_nothing">do_nothing</option>
         </select>
-        <br/>
-        <input type='button' value='Test edit locally' onclick="testCurrentFromUi(); return false">
         <br/>
         <input type='button' id='save_tag_button_id' value='Save Edit' onclick="saveTagButton(); return false;">
         <br/>
@@ -202,8 +202,8 @@ Lewdness level:
   <option value="8">Severe sensual  </option>
   <option value="9">Extreme sensual "rated X"</option>
 </select>
-
-<select name="lip_readable" id="lip_readable_id"> <!-- check boxes have caveats avoid for now -->
+lip readable? <!-- XXX make totally disappear in favor of lewdness, etc. -->
+<select name="lip_readable" id="lip_readable_id"> <!-- check boxes have some gotchas avoid for now -->
   <option value="">lip readable?</option>
   <option value="true">Yes lip-readable</option>
   <option value="false">Not lip-readable</option>
@@ -581,7 +581,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       time_until = Math.round(time_until);
       nextLine +=  " in " + timeStampToHuman(time_until).replace(new RegExp('.00s$'), 's'); // humanish friendly numbers
 
-      if (faux_tag_being_tested && uiTagDiffersFromOriginalOrNoOriginal()) { // faux_tag_being_tested means they hit "test"
+      if (faux_tag_being_tested && uiTagDiffersFromOriginalAndThereIsOriginal()) { // faux_tag_being_tested means they hit "test"
         nextsecondline += "(using your new values)";
       }
       nextsecondline += "(" + next_future_tag.default_action + " for " + twoDecimals((next_future_tag.endy - next_future_tag.start)) + "s)";
@@ -928,11 +928,16 @@ function compareTagStarts(tag1, tag2) {
   return 0;
 }
 
+function getAllTagsNotIncludingReplacedFromUI() {
+  return current_json.tags;
+}
+
 function getAllTagsIncludingReplacedFromUISorted(tags_wanting_replacement_inserted) {
   if (!faux_tag_being_tested) {
     return tags_wanting_replacement_inserted; // should be sorted, good to go
   }
   if (uiTagIsNotInDb()) {
+    // we got a fresh tag being edited
     return [faux_tag_being_tested].concat(tags_wanting_replacement_inserted).sort(compareTagStarts); // add in new tag chronologically
   } else {
     // UI tag is in DB, so in the current list, we need to search out and replace it with what's in the UI
@@ -1166,6 +1171,8 @@ function createFauxTagForCurrentUI() {
   return faux_tag;
 }
 
+var faux_tag_being_tested = null;
+
 function loadTagIntoUI(tag) {
   // a bit manual but...
   document.getElementById('start').value = timeStampToHuman(tag.start);
@@ -1192,9 +1199,15 @@ function loadTagIntoUI(tag) {
   faux_tag_being_tested = null;
 }
 
-var faux_tag_being_tested = null;
+function testCurrentFromUiStart() {
+  testCurrentFromUi(document.getElementById('start').value);
+}
 
-function testCurrentFromUi() {
+function testCurrentFromUiEnd() {
+  testCurrentFromUi(document.getElementById('endy').value);
+}
+
+function testCurrentFromUi(timeToTestString) {
   if (humanToTimeStamp(document.getElementById('endy').value) == 0) {
     document.getElementById('endy').value = getCurrentVideoTimestampHuman(); // assume they wanted to test till "right now" I did sometimes :)
   }
@@ -1209,16 +1222,16 @@ function testCurrentFromUi() {
     return;
   }
 
-  var rewindSeconds = 2;
-  var start = faux_tag.start - rewindSeconds;
+  var rewindSeconds = 1;
+  var start = humanToTimeStamp(timeToTestString) - rewindSeconds;
   faux_tag_being_tested = faux_tag; // just concretize for now...i.e. if they hit "test" then save/keep saved one...seems to work OK :)
-  doPlay(); // seems like we want it this way...
+  doPlay(); // seems like I like it this way...
   seekToTime(start);
 }
 
-function uiTagDiffersFromOriginalOrNoOriginal() {
+function uiTagDiffersFromOriginalAndThereIsOriginal() {
   if (uiTagIsNotInDb()) {
-    return true;
+    return false; // no original
   }
   var original_tag = get_original_tag_of_ui();
   if (withinDelta(original_tag.start, faux_tag_being_tested.start, 0.01) && withinDelta(original_tag.endy, faux_tag_being_tested.endy, 0.01) && original_tag.default_action == faux_tag_being_tested.default_action) {
@@ -1262,13 +1275,13 @@ function getTagRightBeforeNowOrAlert() {
   if (tag){
     return tag;
   } else {
-    alert("none found ending before current playback position");
-    return nil;
+    alert("none found starting before current playback position");
+    return null;
   }
 }
 
 function getFirstTagEndingBefore(search_time) { // somewhat duplicate but seemed distinct enough :|
-  var all = getAllTagsIncludingReplacedFromUISorted(current_json.tags);
+  var all = getAllTagsNotIncludingReplacedFromUI();
   for (var i = all.length - 1; i >= 0; i--) {
     var tag = all[i];
     var start_time = tag.start;
@@ -1281,7 +1294,7 @@ function getFirstTagEndingBefore(search_time) { // somewhat duplicate but seemed
 }
 
 function getFirstTagStartingBefore(search_time) { // somewhat duplicate but seemed distinct enough :|
-  var all = getAllTagsIncludingReplacedFromUISorted(current_json.tags);
+  var all = getAllTagsNotIncludingReplacedFromUI();
   for (var i = all.length - 1; i >= 0; i--) {
     var tag = all[i];
     var start_time = tag.start;
@@ -1316,7 +1329,7 @@ function openNextTagButton() {
 }
 
 function openFirstTagEndingAfter(search_time) {
-  var next_tag = getFirstTagEndingAfter(search_time, getAllTagsIncludingReplacedFromUISorted(current_json.tags));
+  var next_tag = getFirstTagEndingAfter(search_time, getAllTagsNotIncludingReplacedFromUI());
   if (next_tag) {
     loadTagIntoUI(next_tag);
   }
@@ -1326,7 +1339,7 @@ function openFirstTagEndingAfter(search_time) {
 }
 
 function openFirstTagStartingAfter(search_time) {
-  var next_tag = getFirstTagStartingAfter(search_time, getAllTagsIncludingReplacedFromUISorted(current_json.tags));
+  var next_tag = getFirstTagStartingAfter(search_time, getAllTagsNotIncludingReplacedFromUI());
   if (next_tag) {
     loadTagIntoUI(next_tag);
   }

@@ -126,7 +126,7 @@ def subcategory_map
     {db_name: "sex foreplay", human_name: "sex foreplay", sub_sub_cat: ""},
     {db_name: "implied sex", human_name: "implied sex offscreen", sub_sub_cat: ""},
     {db_name: "explicit sex", human_name: "explicit sex or makeout [onscreen]", sub_sub_cat: ""},
-    {db_name: "", human_name: "for violent sex choose rape in violence cat", sub_sub_cat: ""}, # todo ...
+    {db_name: "", human_name: "for violent sex choose rape in violence category", sub_sub_cat: ""}, # it disallows saving with empty
     {db_name: "homosexual behavior", human_name: "homosexual behavior any kind", sub_sub_cat: ""},
     {db_name: "physical (other)", human_name: "other", sub_sub_cat: ""},
   ],
