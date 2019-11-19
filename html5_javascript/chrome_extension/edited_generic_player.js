@@ -403,6 +403,8 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
         
           <option value="explicit sex">physical -- explicit sex [makeout]</option>    
         
+          <option value="explicit sex XXX">physical -- explicit sex the act</option>    
+        
           <option value="homosexual behavior">physical -- homosexual behavior</option>    
         
           <option value="physical (other)">physical -- other</option>    
@@ -494,10 +496,11 @@ Lewdness level:
 Impact to Story if edit used:
   <select name="impact_to_movie" id="impact_to_movie_id">
     <option value="0">please select impact</option>
-    <option value="1">negligible/low</option>
-    <option value="2">medium</option>
-    <option value="3">high/causes confusion</option>
-    <option value="4">you'll miss climax of story</option>
+    <option value="1">negligible</option>
+    <option value="2">low</option>
+    <option value="4">medium or some confusion</option>
+    <option value="5">high or confusing</option>
+    <option value="7">extreme or serious plot holes</option>
   </select>
 
 <br/>
