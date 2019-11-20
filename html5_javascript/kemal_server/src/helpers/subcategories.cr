@@ -135,7 +135,8 @@ def subcategory_map
     {db_name: "smoking", human_name: "smoking legal stuff (cigar, cigarette)", sub_sub_cat: ""},
     {db_name: "smoking illegal", human_name: "smoking illegal drugs", sub_sub_cat: ""},
     {db_name: "drugs", human_name: "illegal drug use", sub_sub_cat: ""},
-    {db_name: "drug injection", human_name: "drug use injection", sub_sub_cat: ""},
+    {db_name: "drug injection", human_name: "illegal drug use injection", sub_sub_cat: ""},
+    {db_name: "medicinal injection", human_name: "medicinal drug use injection", sub_sub_cat: ""},
     {db_name: "substance-abuse other", human_name: "other", sub_sub_cat: ""},
   ],
   "suspense": [

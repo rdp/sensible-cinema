@@ -93,13 +93,15 @@ function addEditUiOnce() {
         <br/>
       </div>
       <form target="_blank" action="filled_in_later_if_you_see_this_it_may_mean_an_onclick_method_threw" method="POST" id="create_new_tag_form_id">
+      <button type="" value="" onclick="clearButton(); return false;">discard changes/new tag</button>
+        <br/>
         from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
-        <input id='' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
         <input type='button' value='<-- Test' onclick="testCurrentFromUiStart(); return false">
+        <input id='' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
         <br/>
         &nbsp;&nbsp;&nbsp;&nbsp;to:<input type='text' name='endy' style='width: 150px; font-size: 12pt; height: 20px;' id='endy' value='0m 0.00s'/>
-        <input id='' type='button' value='<--set to current time' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
         <input type='button' value='<-- Test' onclick="testCurrentFromUiEnd(); return false">
+        <input id='' type='button' value='<--set to current time' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
         <br/>
 
 
@@ -223,7 +225,7 @@ Impact to Story if edit used:
 <br/>
 details
 <input type="text" name="details" id="details_input_id" size="30" value="" style="background-color: rgba(255, 255, 255, 0.85);"/>
-<input type='button' value='Re-use Last Tag\'' onclick="reUseLastTagDetails(); return false;">
+<input type='button' value='Re-use Last\'' onclick="reUseLastTagDetails(); return false;">
 <br/>
 popup text
 <input type="text" name="popup_text_after" id="popup_text_after_id" size="30" value="" style="background-color: rgba(255, 255, 255, 0.85);" placeholder="(use only on occasion optional)" />
@@ -241,7 +243,6 @@ By default edit should be turned on?
         <input type='button' value='&gt;&gt;' id='open_tag_after_current_id' onclick="openTagAfterOneInUi(); return false;">
         <br/>
         <input type='button' id='destroy_button_id' onclick="destroyCurrentTagButton(); return false;" value='Destroy tag &#10006;'/>
-        <button type="" value="" onclick="clearButton(); return false;">discard changes/new tag</button>
         <button type="" id='reload_tag_button_id' value="" onclick="reloadTagButton(); return false;">Reload This Tag</button>
 
       </form>
@@ -1438,7 +1439,7 @@ function clearForm() {
   document.getElementById('endy').value = timeStampToHuman(0);
   document.getElementById('popup_text_after_id').value = "";
   document.getElementById('details_input_id').value = "";
-  document.getElementById('age_maybe_ok_id').value = "0";
+  //document.getElementById('age_maybe_ok_id').value = "0"; // tends to stay same
   document.getElementById('lewdness_level_id').value = "0";
   document.getElementById('lip_readable_id').value = "";
   document.getElementById('impact_to_movie_id').value = "0"; // force them to choose one
