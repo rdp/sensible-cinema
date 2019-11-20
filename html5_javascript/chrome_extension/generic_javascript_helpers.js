@@ -111,7 +111,7 @@ function getAudioPercentOrAlert(value) {
   return null;
 }
 
-function weakDoubleCheckTimestampsAndAlert(action, details, start, endy) {
+function doubleCheckTimestampsOnlyAndAlert(action, details, start, endy) {
 
   if ((action == "make_video_smaller" || action == "change_speed") && !isYoutubePimw()) {
     alert("we only do that for youtube today, ping us if you want it added elsewhere");
@@ -172,16 +172,17 @@ function removeElementFromArray(arr) {
     return arr;
 }
 
-function doubleCheckValues() {
+function doubleCheckFullFormAddRed() {
 
   var action = document.getElementById('action_sel').value;
   var details = document.getElementById('details_input_id');
   var start = humanToTimeStamp(document.getElementById('start').value);
   var endy = humanToTimeStamp(document.getElementById('endy').value);
-  if (!weakDoubleCheckTimestampsAndAlert(action, details.value, start, endy)) {
+  var returny = true;
+  if (!doubleCheckTimestampsOnlyAndAlert(action, details.value, start, endy)) {
     addRedBorderTemporarily(document.getElementById('endy'));
     addRedBorderTemporarily(document.getElementById('start'));
-    return false;
+    returny = false;
   }
 
   var category_div = document.getElementById('category_select_id');
@@ -189,49 +190,50 @@ function doubleCheckValues() {
   if (category == "") {
     alert("please select category first");
     addRedBorderTemporarily(category_div);
-    return false;
-  }  
+    returny = false;
+  }
  
   var subcat_select = document.getElementById('subcategory_select_id');
   if (subcat_select.value == "") {
     alert("please select subcategory first");
     addRedBorderTemporarily(subcat_select);
-    return false;
+    returny = false;
   }
   var impact = document.getElementById('impact_to_movie_id');
   if (impact.value == "0") {
     alert("please select impact to story");
     addRedBorderTemporarily(impact);
-    return false;
+    returny = false;
   }
   if (details.value == "") {
     alert("please enter tag details");
     addRedBorderTemporarily(details);
-    return false;
+    returny = false;
   }
   
   var age = document.getElementById('age_maybe_ok_id');
   if ((category == "violence" || category == "suspense") && age.value == "0") {
     alert("for violence or suspense tags, please also select a value in the age specifier dropdown");
     addRedBorderTemporarily(age);
-    return false;
+    returny = false;
   }
   var lewdness_level = document.getElementById('lewdness_level_id');
   if ((category == "physical") && lewdness_level.value == "0") {
     alert("for sex/nudity/lewdness, please also select a value in the lewdness_level dropdown");
     addRedBorderTemporarily(lewdness_level);
-    return false;
+    returny = false;
   }
   var lip_readable = document.getElementById('lip_readable_id');
   if ((category == "profanity") && lip_readable.value == "") {
     alert("for profanity please also select 'lip_readable?' dropdown");
     addRedBorderTemporarily(lip_readable);
-    return false;
+    returny = false;
   }
+  // ancient joke stuff LOL
   if (subcat_select.options[subcat_select.selectedIndex].value == "joke edit" && document.getElementById('default_enabled_id').value == 'true') {
     alert("for joking edits please remember to save them with default_enabled as N!");
   }
-  return true;
+  return returny;
 }
 
 function addRedBorderTemporarily(to_this_div) {

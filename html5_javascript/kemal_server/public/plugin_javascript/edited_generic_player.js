@@ -486,7 +486,7 @@ Lewdness level:
   <option value="8">Severe sensual  </option>
   <option value="9">Extreme sensual "rated X"</option>
 </select>
-lip readable? <!-- XXX make totally disappear in favor of lewdness, etc. -->
+lip readable? <!-- XXX make totally disappear replaced by lewdness box, etc. -->
 <select name="lip_readable" id="lip_readable_id"> <!-- check boxes have some gotchas avoid for now -->
   <option value="">lip readable?</option>
   <option value="true">Yes lip-readable</option>
@@ -1488,6 +1488,11 @@ function testCurrentFromUiStart() {
 }
 
 function testCurrentFromUiEnd() {
+  if (currentTestAction() == 'skip') {
+    // gotta test it from the beginning, not middle, else it rewinds too far, etc.
+    testCurrentFromUiStart();
+    return;
+  }
   testCurrentFromUi(document.getElementById('endy').value);
 }
 
@@ -1497,7 +1502,7 @@ function testCurrentFromUi(timeToTestString) {
   }
   var faux_tag = createFauxTagForCurrentUI();
 
-  if (!weakDoubleCheckTimestampsAndAlert(currentTestAction(), faux_tag.details, faux_tag.start, faux_tag.endy)) {
+  if (!doubleCheckTimestampsOnlyAndAlert(currentTestAction(), faux_tag.details, faux_tag.start, faux_tag.endy)) {
     return;
   }
 
@@ -1506,7 +1511,7 @@ function testCurrentFromUi(timeToTestString) {
     return;
   }
 
-  var rewindSeconds = 1;
+  var rewindSeconds = 1.5;
   var start = humanToTimeStamp(timeToTestString) - rewindSeconds;
   faux_tag_being_tested = faux_tag; // just concretize for now...i.e. if they hit "test" then save/keep saved one...seems to work OK :)
   doPlay(); // seems like I like it this way...
@@ -1633,7 +1638,7 @@ function openFirstTagStartingAfter(search_time) {
 }
 
 function saveTagButton() {
-  if (!doubleCheckValues()) { // generic double check, just on form values, not relative to everything else :|
+  if (!doubleCheckFullFormAddRed()) { // generic double check, just on form values, not relative to everything else :|
     return;
   }
 
@@ -2472,7 +2477,7 @@ function getAudioPercentOrAlert(value) {
   return null;
 }
 
-function weakDoubleCheckTimestampsAndAlert(action, details, start, endy) {
+function doubleCheckTimestampsOnlyAndAlert(action, details, start, endy) {
 
   if ((action == "make_video_smaller" || action == "change_speed") && !isYoutubePimw()) {
     alert("we only do that for youtube today, ping us if you want it added elsewhere");
@@ -2533,16 +2538,17 @@ function removeElementFromArray(arr) {
     return arr;
 }
 
-function doubleCheckValues() {
+function doubleCheckFullFormAddRed() {
 
   var action = document.getElementById('action_sel').value;
   var details = document.getElementById('details_input_id');
   var start = humanToTimeStamp(document.getElementById('start').value);
   var endy = humanToTimeStamp(document.getElementById('endy').value);
-  if (!weakDoubleCheckTimestampsAndAlert(action, details.value, start, endy)) {
+  var returny = true;
+  if (!doubleCheckTimestampsOnlyAndAlert(action, details.value, start, endy)) {
     addRedBorderTemporarily(document.getElementById('endy'));
     addRedBorderTemporarily(document.getElementById('start'));
-    return false;
+    returny = false;
   }
 
   var category_div = document.getElementById('category_select_id');
@@ -2550,49 +2556,50 @@ function doubleCheckValues() {
   if (category == "") {
     alert("please select category first");
     addRedBorderTemporarily(category_div);
-    return false;
-  }  
+    returny = false;
+  }
  
   var subcat_select = document.getElementById('subcategory_select_id');
   if (subcat_select.value == "") {
     alert("please select subcategory first");
     addRedBorderTemporarily(subcat_select);
-    return false;
+    returny = false;
   }
   var impact = document.getElementById('impact_to_movie_id');
   if (impact.value == "0") {
     alert("please select impact to story");
     addRedBorderTemporarily(impact);
-    return false;
+    returny = false;
   }
   if (details.value == "") {
     alert("please enter tag details");
     addRedBorderTemporarily(details);
-    return false;
+    returny = false;
   }
   
   var age = document.getElementById('age_maybe_ok_id');
   if ((category == "violence" || category == "suspense") && age.value == "0") {
     alert("for violence or suspense tags, please also select a value in the age specifier dropdown");
     addRedBorderTemporarily(age);
-    return false;
+    returny = false;
   }
   var lewdness_level = document.getElementById('lewdness_level_id');
   if ((category == "physical") && lewdness_level.value == "0") {
     alert("for sex/nudity/lewdness, please also select a value in the lewdness_level dropdown");
     addRedBorderTemporarily(lewdness_level);
-    return false;
+    returny = false;
   }
   var lip_readable = document.getElementById('lip_readable_id');
   if ((category == "profanity") && lip_readable.value == "") {
     alert("for profanity please also select 'lip_readable?' dropdown");
     addRedBorderTemporarily(lip_readable);
-    return false;
+    returny = false;
   }
+  // ancient joke stuff LOL
   if (subcat_select.options[subcat_select.selectedIndex].value == "joke edit" && document.getElementById('default_enabled_id').value == 'true') {
     alert("for joking edits please remember to save them with default_enabled as N!");
   }
-  return true;
+  return returny;
 }
 
 function addRedBorderTemporarily(to_this_div) {

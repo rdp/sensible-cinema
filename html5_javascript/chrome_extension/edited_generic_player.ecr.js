@@ -202,7 +202,7 @@ Lewdness level:
   <option value="8">Severe sensual  </option>
   <option value="9">Extreme sensual "rated X"</option>
 </select>
-lip readable? <!-- XXX make totally disappear in favor of lewdness, etc. -->
+lip readable? <!-- XXX make totally disappear replaced by lewdness box, etc. -->
 <select name="lip_readable" id="lip_readable_id"> <!-- check boxes have some gotchas avoid for now -->
   <option value="">lip readable?</option>
   <option value="true">Yes lip-readable</option>
@@ -1204,6 +1204,11 @@ function testCurrentFromUiStart() {
 }
 
 function testCurrentFromUiEnd() {
+  if (currentTestAction() == 'skip') {
+    // gotta test it from the beginning, not middle, else it rewinds too far, etc.
+    testCurrentFromUiStart();
+    return;
+  }
   testCurrentFromUi(document.getElementById('endy').value);
 }
 
@@ -1213,7 +1218,7 @@ function testCurrentFromUi(timeToTestString) {
   }
   var faux_tag = createFauxTagForCurrentUI();
 
-  if (!weakDoubleCheckTimestampsAndAlert(currentTestAction(), faux_tag.details, faux_tag.start, faux_tag.endy)) {
+  if (!doubleCheckTimestampsOnlyAndAlert(currentTestAction(), faux_tag.details, faux_tag.start, faux_tag.endy)) {
     return;
   }
 
@@ -1222,7 +1227,7 @@ function testCurrentFromUi(timeToTestString) {
     return;
   }
 
-  var rewindSeconds = 1;
+  var rewindSeconds = 1.5;
   var start = humanToTimeStamp(timeToTestString) - rewindSeconds;
   faux_tag_being_tested = faux_tag; // just concretize for now...i.e. if they hit "test" then save/keep saved one...seems to work OK :)
   doPlay(); // seems like I like it this way...
@@ -1349,7 +1354,7 @@ function openFirstTagStartingAfter(search_time) {
 }
 
 function saveTagButton() {
-  if (!doubleCheckValues()) { // generic double check, just on form values, not relative to everything else :|
+  if (!doubleCheckFullFormAddRed()) { // generic double check, just on form values, not relative to everything else :|
     return;
   }
 
