@@ -180,8 +180,9 @@ hitting enter in the search field should say "unknown, please select from dropdo
 optimize crystal itself LOL 
   push PR's :|
   SSL more simples serial...
-  better sorts! :)?
-  fix 127.0.0.1 doc so unambiguous?
+  better sorts! :)? after PR's :)
+  fix 127.0.0.1 doc, unambiguous?
+  mention golang doesn't have to copy stacks?
 
   web server bottlenecks? LOL :)
   figure out why query {"SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type asc, create_timestamp desc, name, episode_number"} took 00:00:00.0634933
