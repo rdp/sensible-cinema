@@ -178,15 +178,15 @@ main page takes 1.5s? sigh...
 hitting enter in the search field should say "unknown, please select from dropdown list" :|
 
 optimize crystal itself LOL 
+  push PR's
   SSL more simples etc...
     they have known fixes! :)
-  better sort! :)
+  better sort! :)?
   fix 127.0.0.1 doc so unambiguous
+
   test mysql 8 fork crystal OS X?
-  better channel docs
-  DB
   web server?
-    any bottlenecks LOL :)
+  bottlenecks LOL :)
   figure out why query {"SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type asc, create_timestamp desc, name, episode_number"} took 00:00:00.0634933
     takes 0.06 in crystal and 0.01 in mysql console :|
 
