@@ -16,8 +16,6 @@ plugin sometimes the SVG "edited" doesn't disappear when mouse moves off screen.
 
 ask lawyer on portion of video :)
 
-crystal: ssl simples, sort :)
-
 @plugin: test begin, test end? 1s?
 
 fix GET APP button for iOS
@@ -180,7 +178,8 @@ main page takes 1.5s? sigh...
 hitting enter in the search field should say "unknown, please select from dropdown list" :|
 
 optimize crystal itself LOL 
-  SSL more...
+  SSL more simples etc...
+  sort
   better method missing message/backtraces
   test mysql 8 fork crystal OS X?
   better channel docs
