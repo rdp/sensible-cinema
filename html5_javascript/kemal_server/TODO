@@ -183,11 +183,9 @@ optimize crystal itself LOL
     finish issue "should reset get_err"
   better sorts! :)? after PR's :)
   fix 127.0.0.1 doc, unambiguous?
-  mention golang doesn't have to copy stacks?
 
-  file new issue "no filename for 3rd party?" also kill/get rid of init stuff, or at least get filename for ?? at end?:|
-  mention on forum for "skip binary executables"
-  web server bottlenecks? LOL :)
+  file new issue "no filename for 3rd party backtraces?" also kill/get rid of init stuff, or at least get filename for ?? at end?:|
+    after my other PR gets in
   figure out why query {"SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type asc, create_timestamp desc, name, episode_number"} took 00:00:00.0634933
     takes 0.06 in crystal and 0.01 in mysql console :|
     almost certainly not my bottleneck!
@@ -195,8 +193,6 @@ optimize crystal itself LOL
 
 
 https://playitmyway.org/show_details/172 -> name plus "edited"? :)
-
-ubuntu feedbacks?
 
 one button youtube is all white?
 
