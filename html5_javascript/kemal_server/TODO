@@ -180,9 +180,10 @@ hitting enter in the search field should say "unknown, please select from dropdo
 optimize crystal itself LOL 
   push PR's :|
   SSL more simples serial...
-    finish issue "should reset get_err"
+    do issue "should reset get_err"
   better sorts! :)? after PR's :)
   fix 127.0.0.1 doc, unambiguous?
+  starvation?
 
   file new issue "no filename for 3rd party backtraces?" also kill/get rid of init stuff, or at least get filename for ?? at end?:|
     after my other PR gets in
