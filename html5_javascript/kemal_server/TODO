@@ -178,20 +178,21 @@ main page takes 1.5s? sigh...
 hitting enter in the search field should say "unknown, please select from dropdown list" :|
 
 optimize crystal itself LOL 
-  push PR's :|
-  SSL more simples serial...
-    do issue "should reset get_err"
-  better sorts! :)? after PR's :)
-  fix 127.0.0.1 doc, unambiguous?
+  benchmark remote_peer
+  SSL another 7383
+  better sorts! :)?
+  push PR's :| 8498  [others mine not committed yet] 8499 8500
+  do issue "should reset get_err" just the easy portion? :) 8456
+  fix 127.0.0.1 just doc :|
   starvation?
 
-  file new issue "no filename for 3rd party backtraces?" also kill/get rid of init stuff, or at least get filename for ?? at end?:|
-    after my other PR gets in
+  fix 127.0.0.1 prefer ipv4 if ruby does
+  multi thread its google doc LOL urandom one more on mac? :) GC? json? yield? LOL
+  multi thread tripwires? :|
+  fix openssl to not shuck like corn...
   figure out why query {"SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type asc, create_timestamp desc, name, episode_number"} took 00:00:00.0634933
     takes 0.06 in crystal and 0.01 in mysql console :|
-    almost certainly not my bottleneck!
-
-
+    almost certainly not my actual bottleneck!?
 
 https://playitmyway.org/show_details/172 -> name plus "edited"? :)
 
