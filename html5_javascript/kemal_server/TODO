@@ -181,10 +181,14 @@ optimize crystal itself LOL
   benchmark remote_peer
   SSL another 7383
   better sorts! :)?
+  complain no feedback
   push PR's :| 8498  [others mine not committed yet] 8499 8500
   do issue "should reset get_err" just the easy portion? :) 8456
+  commit b1abae7b7386f58761ac83e3af70620c15e0cb74
+    the when .syscall?  part also broken?  plus spec broken? after 7383
   fix 127.0.0.1 just doc :|
   starvation?
+  5375
 
   fix 127.0.0.1 prefer ipv4 if ruby does
   multi thread its google doc LOL urandom one more on mac? :) GC? json? yield? LOL
