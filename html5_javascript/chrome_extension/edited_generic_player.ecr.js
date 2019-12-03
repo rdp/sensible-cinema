@@ -93,15 +93,14 @@ function addEditUiOnce() {
         <br/>
       </div>
       <form target="_blank" action="filled_in_later_if_you_see_this_it_may_mean_an_onclick_method_threw" method="POST" id="create_new_tag_form_id">
-      <button type="" value="" onclick="clearButton(); return false;">discard changes/new tag</button>
         <br/>
         from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
-        <input type='button' value='<-- Test' onclick="testCurrentFromUiStart(); return false">
         <input id='' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
+        <input type='button' value='<-- Test' onclick="testCurrentFromUiStart(); return false">
         <br/>
         &nbsp;&nbsp;&nbsp;&nbsp;to:<input type='text' name='endy' style='width: 150px; font-size: 12pt; height: 20px;' id='endy' value='0m 0.00s'/>
-        <input type='button' value='<-- Test' onclick="testCurrentFromUiEnd(); return false">
         <input id='' type='button' value='<--set to current time' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
+        <input type='button' value='<-- Test' onclick="testCurrentFromUiEnd(); return false">
         <br/>
 
 
@@ -137,9 +136,11 @@ function addEditUiOnce() {
           <option value="do_nothing">do_nothing</option>
         </select>
         <br/>
+      <button type="" value="" onclick="clearButton(); return false;">discard changes/new tag</button>
         <input type='button' id='save_tag_button_id' value='Save Edit' onclick="saveTagButton(); return false;">
         <br/>
         <br/>
+		Describe the content:
 
 <div id="category_div_id">
 category:<select name="category" id='category_select_id' onchange=""
@@ -204,6 +205,7 @@ Lewdness level:
   <option value="8">Severe sensual  </option>
   <option value="9">Extreme sensual "rated X"</option>
 </select>
+		<br/>
 lip readable? <!-- XXX make totally disappear replaced by lewdness box, etc. -->
 <select name="lip_readable" id="lip_readable_id"> <!-- check boxes have some gotchas avoid for now -->
   <option value="">lip readable?</option>
@@ -225,9 +227,9 @@ Impact to Story if edit used:
 <br/>
 details
 <input type="text" name="details" id="details_input_id" size="30" value="" style="background-color: rgba(255, 255, 255, 0.85);"/>
-<input type='button' value='Re-use Last\'' onclick="reUseLastTagDetails(); return false;">
+<input type='button' value='Copy from prev\'' onclick="reUseLastTagDetails(); return false;">
 <br/>
-popup text
+popup overlay
 <input type="text" name="popup_text_after" id="popup_text_after_id" size="30" value="" style="background-color: rgba(255, 255, 255, 0.85);" placeholder="(use only on occasion optional)" />
 <br/>
 
