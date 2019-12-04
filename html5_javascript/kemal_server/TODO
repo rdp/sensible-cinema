@@ -1,5 +1,7 @@
 == todo list (me ja, ordered) ==
 
+browse our collection -> edited collection!
+
 roger/melissa edits: minority
 
 fix from feedback from helper?
@@ -16,15 +18,11 @@ plugin sometimes the SVG "edited" doesn't disappear when mouse moves off screen.
 
 ask lawyer on portion of video :)
 
-@plugin: test begin, test end? 1s?
-
 fix GET APP button for iOS
   also firefox :|
   assume they're on chrome? LOL my test is!
 
 main page lacks a "sell it" :)
-
-plugin: make it waaaay more obvious that it's a new tag or not...somehow...
 
 fix on iPhone youtube :|
 
@@ -48,7 +46,7 @@ ponder on blood money
 add youtube preview ID's :|
   and inline youtube previews on our site :|
 
-youtube: some kind of popup if "oen is edited" also a dropdown "edit this!"
+youtube: some kind of popup if "this one is edited" also a dropdown "edit this!"
 
 allow subscriptions?
 
@@ -103,16 +101,12 @@ youtubes them :|
 watch movie edited -> name
 
 clean seek??
-  move to bottom...?
-  feedback?
+  move to bottom...? feedback?
 
 "watch edited" it says on the drilldown pages, even if not yet edited at all!"
 
-
 soft launch looks like: easy links...ycombinator...reddit [? more?] betterlogic why be afraid? :)
   profiles LOL title on main page as well...
-
-faster load for mobile sake main page
 
 get user feedback
   installation
@@ -135,28 +129,23 @@ kickstarter
   fire!
   somehow try and get a following pre kickstarter?? meh...
 
-private edits...
+private edits...?
 
 GoT failure!
 
 fixup some bstar galactica names original :|
 
-== todo uncategorized, assume most "not do" ==
-
-plugin: cleanup so stuff just disappears
-  make it so everything turns red that is required...maybe even before they have to hit save? :)
+make all emails forward to me
 
 finish change impact
+
+== todo uncategorized, assume most "not do" ==
 
 spinner sometimes remains again :| ??
 
 update category in db: swimsuits, and some others :| see code source comments
 
 allow login from that weird gmail dropdown thing...? :|
-
-front page: list some at random on there too, so it looks better LOL
-
-make all emails forward to me
 
 smile.amazon.com with TNF says "server down" LOL
 
@@ -165,15 +154,7 @@ edit turtles (nobody else wants it? LOL)
 stack-overflowize it!
   ask people: do you want to customize it more, or stack overflowize it?  Kind of liking the latter
 
-plugin sometimes goes awol in the middle of a blank or something?
-  then there's a cpu tweak periodic... :)
-
-friends of kemal
-
 donate to kemal :)
-
-main page takes 1.5s? sigh...
-  it's not *awful* on desktop...dunno on slow connection to mobile LOL
 
 hitting enter in the search field should say "unknown, please select from dropdown list" :|
 
@@ -196,8 +177,6 @@ optimize crystal itself LOL
     takes 0.06 in crystal and 0.01 in mysql console :|
     almost certainly not my actual bottleneck!?
 
-https://playitmyway.org/show_details/172 -> name plus "edited"? :)
-
 one button youtube is all white?
 
 iphone: control computer(s) with it :\
@@ -207,7 +186,6 @@ can add arbitrary words to subtitle uploader...
 
 XXXX check all tags in DB against current known...
 
-sometimes me sending emails through gmail gets turned off??? :|
 
 facebook drawings
 

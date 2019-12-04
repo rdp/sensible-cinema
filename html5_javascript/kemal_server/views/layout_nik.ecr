@@ -21,8 +21,7 @@
     <link rel="stylesheet" href="/css/foundation.css">
     <link rel="stylesheet" href="/css/app.css">
 
-     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
+     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
 
     <link rel="icon" type="image/png" href="/images/camera.128.png"  sizes="128x128" />
     <link rel="icon" type="image/png" href="/images/camera.32.png"  sizes="32x32" />
@@ -135,20 +134,21 @@
         </div>
     </footer>
 
-    <script src="/js/vendor/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/js/vendor/what-input.js"></script>
-    <script src="/js/vendor/foundation.js"></script>
+    <script src="/js/vendor/foundation.min.js"></script>
     <script src="/js/app.js"></script>
 
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 <% if !editor?(env) %>
-  <script>
-  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-  ga('create', 'UA-4531218-7', 'auto');
-  ga('send', 'pageview');
-  </script>
-  <script async src='https://www.google-analytics.com/analytics.js'></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-4531218-7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-4531218-7');
+</script>
 <% end %>
 
 <% all_urls = get_all_urls %>
