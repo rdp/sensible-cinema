@@ -154,11 +154,13 @@ stack-overflowize it!
   ask people: do you want to customize it more, or stack overflowize it?  Kind of liking the latter
 
 donate to kemal :)
+  request link?
 
 hitting enter in the search field should say "unknown, please select from dropdown list" :|
 
 optimize crystal itself LOL 
   better sorts! :)?
+  better example backtrace ECR
   complain no feedback
   push PR's :| 8498  [others mine not committed yet] 8499 8500 8540
   do issue "should reset get_err" just the easy portion? :) 8456
@@ -168,6 +170,8 @@ optimize crystal itself LOL
   starvation?
   5375 :|
 
+  move rest to google doc:
+  more GC speedups multi thread?  was I using right compile mode?
   fix 127.0.0.1 prefer ipv4 if ruby does
   multi thread its google doc LOL urandom one more on mac? :) GC? json? yield? LOL
   multi thread tripwires that died once evented_write? :|
