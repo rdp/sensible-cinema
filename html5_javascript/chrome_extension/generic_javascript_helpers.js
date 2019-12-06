@@ -59,6 +59,10 @@ function showSubCatWithRightOptionsAvailable() {
 
 function reWidthSelectToSizeOfSelected(to_resize) { 
        // requires hidden select also in doc for now, to calculate size in [can't remember why...]
+       if (!to_resize.options[to_resize.selectedIndex]) {
+        // this is the case when it says "unknown sub cat, please select new" so it's left blank, don't blow up on next line...
+        return;
+       }
        var hidden_opt = document.getElementById("hidden_select_option_id");
        hidden_opt.innerHTML = to_resize.options[to_resize.selectedIndex].textContent;
        var hidden_sel = document.getElementById("hidden_select_id");
