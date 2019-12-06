@@ -255,7 +255,7 @@ function editDropdownsCreated() {
     categoryChanged(true);
    });
   document.getElementById("subcategory_select_id").addEventListener('change', function(event) {
-    subcategoryChanged(true);
+    subcategoryChanged();
    });
 
   document.getElementById('action_sel').addEventListener('change', setImpactIfActionMute);
@@ -272,12 +272,9 @@ function categoryChanged(full_change) {
     } // else: can't yet it calls this after loading an existing tag into the UI for re-editing :|
 }
 
-function subcategoryChanged(full_change) {
+function subcategoryChanged() {
     var subcat_select = document.getElementById("subcategory_select_id");
     reWidthSelectToSizeOfSelected(subcat_select);
-    if (full_change) {
-      clearDetails();
-    } // else don't if we're loading a tag into UI
 }
 
 function clearDetails() {

@@ -1478,7 +1478,7 @@ function loadTagIntoUI(tag) {
     alert("old subcat was " + desired_value + " please select a more updated one"); // don't just show blank which is frustrating and loses info :|
   }
   subcat_select.value = desired_value;
-  subcategoryChanged(false); // so it'll do the right size, needed apparently :|
+  subcategoryChanged(); // so it'll go to the right size, needed apparently, or send event?... :|
   document.getElementById('age_maybe_ok_id').value = tag.age_maybe_ok;
   document.getElementById('lewdness_level_id').value = tag.lewdness_level;
   document.getElementById('lip_readable_id').value = tag.lip_readable; // will come in as false for non profs...ah well...
@@ -2626,7 +2626,7 @@ function editDropdownsCreated() {
     categoryChanged(true);
    });
   document.getElementById("subcategory_select_id").addEventListener('change', function(event) {
-    subcategoryChanged(true);
+    subcategoryChanged();
    });
 
   document.getElementById('action_sel').addEventListener('change', setImpactIfActionMute);
@@ -2643,12 +2643,9 @@ function categoryChanged(full_change) {
     } // else: can't yet it calls this after loading an existing tag into the UI for re-editing :|
 }
 
-function subcategoryChanged(full_change) {
+function subcategoryChanged() {
     var subcat_select = document.getElementById("subcategory_select_id");
     reWidthSelectToSizeOfSelected(subcat_select);
-    if (full_change) {
-      clearDetails();
-    } // else don't if we're loading a tag into UI
 }
 
 function clearDetails() {
