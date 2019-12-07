@@ -175,13 +175,14 @@ optimize crystal itself LOL
   starvation?
   5375? :|
   push the peer_address
+  one unit test fails tcpserver?
 
   move rest to google doc:
   more GC speedups multi thread?  was I using right compile mode? figure out something then push? :)
   fix 127.0.0.1 prefer ipv4 if ruby does
   multi thread its google doc LOL urandom one more on mac? :) GC? json? yield? LOL
   multi thread tripwires that died once evented_write? :|
-  fix openssl to not shuck like corn...
+  fix openssl server to not shuck like corn...
   figure out why query {"SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type asc, create_timestamp desc, name, episode_number"} took 00:00:00.0634933
     takes 0.06 in crystal and 0.01 in mysql console :|
     almost certainly not my actual bottleneck!?
