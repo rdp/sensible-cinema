@@ -10,6 +10,10 @@ get "/jobs" do |env|
   render "views/jobs.ecr", "views/layout_nik.ecr"
 end
 
+get "/blow_up" do |env|
+  render "views/blow_up.ecr"
+end
+
 get "/search" do |env|
   render "views/search.ecr", "views/layout_nik.ecr"
 end
