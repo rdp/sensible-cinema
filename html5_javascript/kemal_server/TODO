@@ -140,6 +140,8 @@ finish change impact
 
 == todo uncategorized, assume most "not do" ==
 
+it should warn if you try and update without "impact to story" selected instead of "website down"
+
 update copyrights here and flds :) gpp
 
 spinner sometimes remains again :| ??
