@@ -14,6 +14,10 @@ Kemal::Session.config do |config|
   config.secure = true # send "secure only" cookies
 end
 
+def currently_hiring?
+  true
+end
+
 class CustomHandler < Kemal::Handler # don't know how to interrupt it from a before_all :|
   def call(env)
     puts "start #{env.request.path} #{Time.local}"
@@ -66,7 +70,6 @@ def db_style_from_query_url(env)
   sanitize_html standardize_url(real_url)
 end
 
-we_hiring = true
 require "./src/straight_forward.cr"
 
 get "/edited_youtube/:youtube_id" do |env|
