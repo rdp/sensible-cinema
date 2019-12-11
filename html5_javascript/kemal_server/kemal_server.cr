@@ -66,6 +66,7 @@ def db_style_from_query_url(env)
   sanitize_html standardize_url(real_url)
 end
 
+we_hiring = true
 require "./src/straight_forward.cr"
 
 get "/edited_youtube/:youtube_id" do |env|

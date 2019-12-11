@@ -504,9 +504,9 @@ Impact to Story if edit used:
   <select name="impact_to_movie" id="impact_to_movie_id">
     <option value="0">please select impact</option>
     <option value="1">negligible</option>
-    <option value="2">low</option>
-    <option value="4">medium or some confusion</option>
-    <option value="5">high or confusing</option>
+    <option value="2">low'ish</option>
+    <option value="4">medium or bit confusing</option>
+    <option value="5">high/confusing</option>
     <option value="7">extreme or serious plot holes</option>
   </select>
 
