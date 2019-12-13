@@ -412,6 +412,7 @@ function addMouseAnythingListener(func) {
   addListener(document, 'mousemove', func);
   addListener(document, 'mouseup', func);
   addListener(document, 'mousedown', func);
+  addListener(document, 'mouseout', func);
 }
 
 function onReady(yourMethod) { // polling one, from SO :)

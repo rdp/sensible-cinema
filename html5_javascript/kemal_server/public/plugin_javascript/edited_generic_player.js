@@ -1418,19 +1418,20 @@ function setEditedControlsToMovieRight() {
   }
   var width = parseInt(all_pimw_stuff.style.width, 10);
   var video_element_size = getLocationOfElement(video_element);
-  var desired_left = video_element_size.right - width - 10; // avoid amazon x-ray so go offset from right
+  var desired_left = video_element_size.right - width;
   var desired_top = video_element_size.top;
   if (isAmazon()) {
     if ((getLocationOfElement(all_pimw_stuff).height + 200) > video_element_size.height) {
-      // video is too small to fit all the edit stuff, so no useful top padding :|
+      // video is too small to fit all the edit stuff, so no do top padding :|
     } else {
       desired_top += 200; // make top amazon stuff visible, plus ability to see subs dropdown ...      
       // this is OK because it only blocks the icons in "editor" mode anyway...
     }
+    desired_left -= 10; // avoid amazon x-ray so go offset from right
   }
 
   if (current_json == null) {
-    // put "unedited" at the very top :| hopefully less intrusive, doesn't interfere with the normal buttons there too
+    // put "unedited" at the very very top :| hopefully less intrusive, doesn't interfere with the normal buttons there too
     desired_top = video_element_size.top;
   }
   desired_left = desired_left + "px"; // has to be this way apparently
@@ -2789,6 +2790,7 @@ function addMouseAnythingListener(func) {
   addListener(document, 'mousemove', func);
   addListener(document, 'mouseup', func);
   addListener(document, 'mousedown', func);
+  addListener(document, 'mouseout', func);
 }
 
 function onReady(yourMethod) { // polling one, from SO :)
