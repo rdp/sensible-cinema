@@ -14,6 +14,10 @@ Kemal::Session.config do |config|
   config.secure = true # send "secure only" cookies
 end
 
+def currently_hiring?
+  true
+end
+
 class CustomHandler < Kemal::Handler # don't know how to interrupt it from a before_all :|
   def call(env)
     puts "start #{env.request.path} #{Time.local}"
