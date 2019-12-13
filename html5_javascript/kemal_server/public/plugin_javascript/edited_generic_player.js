@@ -923,8 +923,11 @@ function uiTagIsNotInDb() {
 var i_heart_blanked_it = false;
 
 function blankScreenIfWithinHeartOfSkip(skipish_tag, cur_time) {
-  // if it's trying to seek out of something baaad then don't show a still frame of the bad stuff in the meanwhile
-  var within_heart_of_skipish = !withinDelta(skipish_tag.start, cur_time, 0.05); // but don't show black blips on normal seek from playing continuous...
+  // if it's trying to seek out of something baaad then don't show a still frame of the bad stuff in the meanwhile while seek is going...
+  // but don't show black blips on normal seek from playing continuous...only black screen if we're in the "heart" of the bad stuff...
+  // if they overlap from black screen to skip we don't need to do a heart blank, it'll stay dark
+  // if it seeks into a black screen, we have heartBlankScreenIfImpending for that [does matter]
+  var within_heart_of_skipish = !withinDelta(skipish_tag.start, cur_time, 0.05);
   if (within_heart_of_skipish) {
     console.log("within_heart_of_skipish doing startHeartBlank");
     startHeartBlank(skipish_tag, cur_time);
@@ -933,11 +936,11 @@ function blankScreenIfWithinHeartOfSkip(skipish_tag, cur_time) {
   }
 }
 
-function heartBlankScreenIfImpending(start_time) { // basically for pre-emptively knowing when skips will end :|
-  var just_before_bad_stuff = areWeWithinNoShowVideoTag(start_time + 0.02); // if about to re-non-video, don't show blip of bad stuff if two such edits back to back
+function heartBlankScreenIfImpending(skip_time) { // basically for pre-emptively detecting if there'll be bad stuff when skips end...
+  var just_before_bad_stuff = areWeWithinNoShowVideoTag(skip_time + 0.02); // if about to re-non-video, don't show blip of bad stuff if two such edits back to back
   if (just_before_bad_stuff) {
     console.log("starting heartblank b/c just_before_bad_stuff or just into it");
-    startHeartBlank(just_before_bad_stuff, start_time);
+    startHeartBlank(just_before_bad_stuff, skip_time);
   } else {
     // console.log("not heartblanking it, not in middle of anything");
   }
@@ -950,10 +953,12 @@ function areWeWithinNoShowVideoTag(cur_time) {
 function startHeartBlank(skipish_tag, cur_time) {
   if (video_element.style.display != "none") {
     console.log("heartblanking it start=" + skipish_tag.start + " cur_time=" + cur_time);
-    video_element.style.display = "none"; // have to use or it hoses us and auto-shows [?]
+    video_element.style.display = "none"; // have to use style.display or it hoses us and still shows it or something.
+    // NB we are using style.display here when a "black screen" uses style.visibility, so no ambiguity!
+    // style.display is more violent/painful/jarring so we try and use as least as possible...
     i_heart_blanked_it = true;
   } else {
-    console.log("already video_element.style.display=" + video_element.style.display + " so not changing that even though we're in the heart of a skip");
+    console.log("should never get here anymore already video_element.style.display=" + video_element.style.display + " so not changing that even though we're in the heart of a skip");
   }
 }
 
@@ -964,10 +969,10 @@ function doneWithPossibleHeartBlankUnlessImpending(start_heart_blank_if_close) {
   if (!just_before_bad_stuff) {
     if (i_heart_blanked_it) {
       console.log("unheart blanking it");
-      video_element.style.display="block"; // non none :)
+      video_element.style.display="block"; // non none :) 
       i_heart_blanked_it = false;
     } else {
-      // console.log("doneWithPossibleHeartBlankUnlessImpending nothing to do (i.e. didn't run into a heart when performed last seekish");
+      // console.log("doneWithPossibleHeartBlankUnlessImpending nothing to do (i.e. didn't run into a heart-of-bad-stuff when performed last seekish"); // too chatty
     }
   }
   else {
@@ -975,7 +980,8 @@ function doneWithPossibleHeartBlankUnlessImpending(start_heart_blank_if_close) {
       console.log("start_heart_blank_if_close'ing");
       startHeartBlank(just_before_bad_stuff, cur_time);
     } else {
-      console.log("not unheart blanking it, we're about to enter another bad stuff section...start=" + timeStampToHuman(just_before_bad_stuff.start) + " cur_time=" + timeStampToHuman(cur_time));
+      console.log("not unheart blanking it, we're already heart_blanked and about to enter another bad stuff section...start=" + 
+        timeStampToHuman(just_before_bad_stuff.start) + " cur_time=" + timeStampToHuman(cur_time)); // XX is this accurate?
     }
   }
 }
