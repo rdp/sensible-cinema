@@ -16,7 +16,7 @@
   "content_scripts": [{
       "all_frames": true,
       "js": ["contentscript.js"],
-      "matches": ["<all_urls>"]
+      "matches": ["https://*.amazon.com/*"]
   }],
   "web_accessible_resources": ["edited_generic_player.js", "helpers.js"],
   "icons": { "128": "camera.128.png" },
