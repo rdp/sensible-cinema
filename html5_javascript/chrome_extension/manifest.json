@@ -11,12 +11,14 @@
     "default_title": "Play it my way" 
   },
   "permissions": [
-    "<all_urls>", "tabs", "notifications"
+    ["https://*.amazon.com/*", "https://playitmyway.org/*", 
+      "https://youtube.com/*", "https://www.facebook.com/*", "tabs", "notifications"
   ],
   "content_scripts": [{
       "all_frames": true,
       "js": ["contentscript.js"],
-      "matches": ["https://*.amazon.com/*", "https://playitmyway.org/*", "https://youtube.com/*"]
+      "matches": ["https://*.amazon.com/*", "https://playitmyway.org/*", 
+        "https://youtube.com/*", "https://www.facebook.com/*"]
   }],
   "web_accessible_resources": ["edited_generic_player.js", "helpers.js"],
   "icons": { "128": "camera.128.png" },
