@@ -12,13 +12,13 @@
   },
   "permissions": [
     ["https://smile.amazon.com/*", "https://www.amazon.com/*", "https://playitmyway.org/*", 
-      "https://youtube.com/*", "https://www.facebook.com/*", "tabs", "notifications"
+      "https://youtube.com/*", "https://www.facebook.com/*", "https://*.google.com", "tabs", "notifications"
   ],
   "content_scripts": [{
       "all_frames": true,
       "js": ["contentscript.js"],
       "matches": ["https://smile.amazon.com/*", "https://www.amazon.com/*", "https://playitmyway.org/*", 
-        "https://youtube.com/*", "https://www.facebook.com/*"]
+        "https://youtube.com/*", "https://www.facebook.com/*", "https://*.google.com"]
   }],
   "web_accessible_resources": ["edited_generic_player.js", "helpers.js"],
   "icons": { "128": "camera.128.png" },

@@ -1780,7 +1780,7 @@ function startOnce() {
   if (isGoogleIframe()) {
     if (!window.parent.location.pathname.startsWith("/store/movies/details") && !window.parent.location.pathname.startsWith("/store/tv/show")) {
       // iframe started from a non "details" page with full url
-      alert('play it my way: failure: for google play movies, you need to right click on them and choosen "open link in new tab" for it to work edited in google play...');
+      alert('play it my way: failure: for google play movies, you need to right click on the title, choose "open link in new tab" for it to work edited in google play...');
       return; // avoid future prompts which don't matter anyway for now :|
     }
   }

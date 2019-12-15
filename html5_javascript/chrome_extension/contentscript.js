@@ -144,7 +144,7 @@ function autoStartIfShould() {
   }
   else {
     console.log("doing nothing non known OK :|"); // youtube is *out* now...
-    chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "non google play/amazon disabled :("});
+    chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "non google play/amazon therefore disabled :("});
   }
 }
 
@@ -206,5 +206,5 @@ function getRequest (url, success, error) {
   xhr.send(); 
 }
 
-// onReady(autoStartIfShould); // takes like 5s for onReady whoa!
+// onReady(autoStartIfShould); // takes like 5s for onReady whoa! too slow...
 autoStartIfShould(); 
