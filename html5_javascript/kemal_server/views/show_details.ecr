@@ -80,7 +80,7 @@ If you'd like to see the internal details of <b>all</b> tags, click <a href=/sho
   <td>
       <%= tag.subcategory %>
       <%= "(lip readable)" if tag.lip_readable %>
-      <%= "lewdness level: #{tag.lewdness_level} (higher is worse, max 9)" if tag.lewdness_level > 0 %> <!-- TODO names here! -->
+      <%= "lewdness level: #{tag.lewdness_level} (out of ??)" if tag.lewdness_level > 0 %> <!-- TODO names here! -->
   </td>
   <td>
     <% if tag.age_maybe_ok > 0 %>
