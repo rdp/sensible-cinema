@@ -167,22 +167,21 @@ hitting enter in the search field should say "unknown, please select from dropdo
 optimize crystal itself LOL 
   just PR's and sort :)
 
-  better sorts! :)?
+  better sort! [real difference] :)?
   book PR's?
-  finish complain no feedback
   push PR's :| 8498  [others mine not committed yet] 8499 8540 8565 8582
-    one unit test is broken? tcp_socket bind?
+  7471 [real difference]
+
+  one unit test is broken? tcp_socket bind? tcp_server
   do issue "should reset get_err" just the easy portion? :) 8456
   commit b1abae7b7386f58761ac83e3af70620c15e0cb74
     the when .syscall?  part also broken?  plus spec broken? after others...
-  close some?
+  recommend close some issues after openssl all fixed up and released :)
   fix 127.0.0.1 just doc :|
   starvation?
   5375? :|
-  push the peer_address
-  one unit test fails tcpserver?
-
-PR protocol: In the ideal world generating a PR could  have a "template" (like issues do) to tell people what to expect, how to act as things happen, etc...if github even allows that [?]
+  push the peer_address, only useful fix I found anyway? LOL
+  8534
 
   move rest to google doc: https://docs.google.com/document/d/1ZUAUBP5z7GDlIy0qROV_C8nxF1OjI0-AYwXQIIKn8fs/edit
 
@@ -219,6 +218,8 @@ give *iphoners* a big buck bunny they can watch really edited...
 edit greg's one movie [sync? :| ]
 
 ================= todo all never LOL =======================
+
+establish twitter/instagram et al, add back to homepage
 
 figure out if/why it's using a whopping 100MB RAM.  When it starts with less? LOL...
 
