@@ -11,9 +11,11 @@
 
 <br/>
 <h2><a href="<%= url.url %>" target="_blank">
-click here to watch edited
+click here to watch <%= url.name_with_episode %> 
 <% if url.edit_passes_completed < 2 %>
  (partially edited)
+<% else %>
+ edited
 <% end %>
 </a></h2>
 <br/>
