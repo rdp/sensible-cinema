@@ -160,6 +160,12 @@
     $( "#search_id" ).autocomplete({
       source: availableTags,
       minLength: 2,
+      change: function(event, ui) {
+        if (ui.item == null) {
+         event.currentTarget.value = 'Unknown, please select from list';  // it'll say this when they click the search button, which is still crup...
+         setTimeout(function(){ event.currentTarget.value =''; event.currentTarget.focus(); }, 2000);
+      }
+      },
       select: function( event, ui ) { // they selected from a dropdown
         window.location.href = '/show_details/' + ui.item.id; // u.item.anything you add, label is shown...
       },
