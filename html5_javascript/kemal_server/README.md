@@ -12,6 +12,7 @@ though there was a lot of pre-existing art (including edited youtube API/google,
  \# add swap, need 1.5G anyway...  
  sudo apt install mysql-server -y 
  sudo /etc/init.d/mysql start  # ubuntu 18.04 don't seem to need...
+ follow instructions below to reset root password (may need to set password?sudo mysql_secure_installation)
 
 # OS X
 
@@ -26,5 +27,4 @@ login to mysql, SET PASSWORD FOR root@localhost=PASSWORD('');
 $ cp db/connection_string_local_box_no_commit.txt.template db/connection_string_local_box_no_commit.txt
 $ touch this_is_development 
 ./db/nuke* 
-shards install # may need shards 0.9.0
-./goXX
+shards install # may need shards 0.9.0?

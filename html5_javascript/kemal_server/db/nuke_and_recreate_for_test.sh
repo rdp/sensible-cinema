@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-mysql -uroot mysql < ./db/init.sql # read your creds from ./db/XXX if required
-mysql -uroot mysql -e "update users set is_admin=1;" # dev only thing :|
-mysql -uroot mysql -e "update users set editor=1;" # dev only thing :|
+# some might be mysql no sudo?
+
+sudo mysql -uroot mysql < ./db/init.sql # read your creds from ./db/XXX if required
+sudo mysql -uroot mysql -e "update users set is_admin=1;" # dev only thing :|
+sudo mysql -uroot mysql -e "update users set editor=1;" # dev only thing :|
 
 rm -f sessions/* # in case they were logged in as a "now nuked" user
 
