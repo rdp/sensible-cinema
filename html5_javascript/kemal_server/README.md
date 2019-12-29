@@ -12,7 +12,7 @@ though there was a lot of pre-existing art (including edited youtube API/google,
  \# add swap, need 1.5G anyway...  
  sudo apt install mysql-server -y 
  sudo /etc/init.d/mysql start  # ubuntu 18.04 don't seem to need...
- follow instructions below to reset root password (may need to set password?sudo mysql_secure_installation)
+ follow instructions below to reset root password (first do sudo mysql_secure_installation)
 
 # OS X
 
@@ -21,9 +21,11 @@ brew services start mysql@5.7
 
 # for both, after, also do this:
 
-login to mysql, SET PASSWORD FOR root@localhost=PASSWORD('');
-# or possibly ALTER USER 'root'@'localhost' IDENTIFIED BY ''; 
-# or possibly ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';
+login to mysql (sudo mysql -uroot on ubuntu)
+SET PASSWORD FOR root@localhost=PASSWORD('');
+# or if that doesn't work 
+# ALTER USER 'root'@'localhost' IDENTIFIED BY ''; 
+# or possibly ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY ''; 
 $ cp db/connection_string_local_box_no_commit.txt.template db/connection_string_local_box_no_commit.txt
 $ touch this_is_development 
 ./db/nuke* 

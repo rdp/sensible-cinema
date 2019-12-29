@@ -2,7 +2,7 @@ version: 1.0
 shards:
   db:
     github: crystal-lang/crystal-db
-    version: 0.7.0
+    version: 0.8.0
 
   exception_page:
     github: crystal-loot/exception_page
@@ -10,7 +10,7 @@ shards:
 
   kemal:
     github: sdogruyol/kemal
-    commit: a4bdecdc7d17a3fa705db4e1c3360590f836cb5d
+    commit: 4d6fb0614f29aa02254913dc6ed69b0cb148fa81
 
   kemal-session:
     github: kemalcr/kemal-session
@@ -22,7 +22,7 @@ shards:
 
   mysql:
     github: crystal-lang/crystal-mysql
-    commit: dbb300f9b3ff86aff2c20d5dd2a4b024c5bd5176
+    commit: 9ac4e58d700e25b3e3075f4a7ded7d79278a6da6
 
   radix:
     github: luislavena/radix
