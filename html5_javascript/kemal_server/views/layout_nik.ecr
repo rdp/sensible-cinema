@@ -157,18 +157,23 @@
   <script>
   $( function() {
     var availableTags = <%= all_urls.map{|url| {label: url.name_with_episode, id: url.id}}.to_json %>;
-
+    var genres = <%= all_urls.select{|u| u.genre.presence}.group_by{|url| url.genre}.keys.map{|genre| {label: genre + " genre", genre: genre}}.to_json %>;
+    console.log(genres);
     $( "#search_id" ).autocomplete({
-      source: availableTags,
+      source: availableTags.concat(genres),
       minLength: 2,
-      change: function(event, ui) {
+      change: function(event, ui) { // blur I think...
         if (ui.item == null) {
          event.currentTarget.value = 'Unknown, please select from list';  // it'll say this when they click the search button, which is still crup...
          setTimeout(function(){ event.currentTarget.value =''; event.currentTarget.focus(); }, 2000);
-      }
+        }
       },
-      select: function( event, ui ) { // they selected from a dropdown
-        window.location.href = '/show_details/' + ui.item.id; // u.item.anything you add, label is shown...
+      select: function( event, ui ) { // they selected item from a dropdown
+        if (ui.item.genre) {
+          window.location.href = '/browse/genre/' + ui.item.genre;
+        } else {
+          window.location.href = '/show_details/' + ui.item.id; // u.item.anything you add, label is shown...
+        }
       },
     });
   } );
