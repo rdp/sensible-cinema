@@ -1875,18 +1875,34 @@ function doPause() {
   pause_since_requested = true;
 }
 
-function rawRequestSeekToTime(ts) {
+function rawRequestSeekToTime(ts, already_cached, current_time) {
   console.log("about to do rawRequestSeekToTime=" + twoDecimals(ts));
   console.log("rawRequestSeekToTime paused=" + video_element.paused + " state=" + video_element.readyState + " buffered_was=" + twoDecimals(getSecondsBufferedAhead()));
 
   if (isYoutubePimw()) {
     var allowSeekAhead = true; // "allow to seek past buffered" but doesn't quite work well iOS?
-    youtube_pimw_player.seekTo(ts, allowSeekAhead); // no callback option seemingly...can take floats...
+    var ios = on_ios();
+    if (already_cached || !ios) {
+      youtube_pimw_player.seekTo(ts, allowSeekAhead); // no callback option seemingly...can take floats...
+    } else {
+      console.log("iOS and not cached skipping waaay forward"); // TODO test
+      // attempt avoid infinite loop, and also skipping to bad scenes :|
+       // 5.3 seemed max key frame length :|
+      // if they seek 2 in future -> 2 + 5.3
+      // if they seek 7 in the future -> 7 + 5.3 TODO what if that's also a bad part?! At least we'll skip past it quickly'ish...
+      var desired = ts + 5.3;
+      if (ts < current_time) {
+        desired = ts; // seek backwards, hope for the best!
+        // TODO check if the 5s surrounding it is clean?!
+      }
+      // TODO seek to precise, hide it, wait for it to buffer then... :|
+      youtube_pimw_player.seekTo(desired, allowSeekAhead);
+    }
   } else {
     if (isAmazon()) {
       video_element.currentTime = ts + 10;
     } else {
-      // really raw HTML5 :)
+      // really raw HTML5 :) XXX iOS ? :|
       video_element.currentTime = ts;
     }
   }
@@ -1929,9 +1945,9 @@ function seekToTime(seek_to_ts, callback) {
     seek_to_ts = 0;
   }
   // try and avoid freezes after seeking...if it was playing first...
-  var start_time = getCurrentTime();
+  var current_time = getCurrentTime();
   var seeked_from_time = getCurrentTime();
-  console.log("seeking to " + timeStampToHuman(seek_to_ts) + " from=" + timeStampToHuman(start_time) + " state=" + video_element.readyState + " to_ts=" + twoDecimals(seek_to_ts));
+  console.log("seeking to " + timeStampToHuman(seek_to_ts) + " from=" + timeStampToHuman(current_time) + " state=" + video_element.readyState + " to_ts=" + twoDecimals(seek_to_ts));
   // [amazon] if this is far enough away from current, it also implies a "play" call...oddly. I mean seriously that is bizarre.
   // however if it close enough, then we need to call play
   // some shenanigans to pretend to work around this...
@@ -1942,7 +1958,7 @@ function seekToTime(seek_to_ts, callback) {
     console.log("doing preseek pause seek_to_ts=" + seek_to_ts);
     did_preseek_pause = true;
   }
-  rawRequestSeekToTime(seek_to_ts);
+  rawRequestSeekToTime(seek_to_ts, already_cached, current_time);
 
   if (already_cached && !isYoutubePimw()) { // youtube a "raw request" doesn't actually change the time instantaneously...always use polling with callback so we can have the logic work out more eaisly...
     if (callback) {
