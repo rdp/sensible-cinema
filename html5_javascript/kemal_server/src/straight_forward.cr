@@ -6,6 +6,10 @@ get "/supporter" do |env|
   render "views/supporter.ecr", "views/layout_nik.ecr"
 end
 
+get "/watchlist" do |env|
+  render "views/watchlist.ecr", "views/layout_nik.ecr"
+end
+
 get "/jobs" do |env|
   render "views/jobs.ecr", "views/layout_nik.ecr"
 end
