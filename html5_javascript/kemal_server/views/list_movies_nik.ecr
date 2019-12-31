@@ -14,8 +14,8 @@
       <% if episodes.size == 1 %> <!-- ex a movie -->
         <%= movie = episodes.first; render "views/_box_movie_nik.ecr" %>
       <% else %>
-        <% episodes.sort_by!{|u| u.episode_number} %> <!-- ??? -->
         <!-- a series -->
+        <% episodes.sort_by!{|u| u.episode_number} %> <!-- ??? -->
         <div style="margin: 2px; float:left;"> 
           <a href=# onclick="$('.series_div_<%= idx %>').toggle(); $('.series_image_<%= idx %>').toggle(); return false;">
            <%= episodes[0].image_tag "alt='#{series_or_movie}' class='series_image_#{idx}' style='display: block; margin-left: auto; margin-right: auto;'", ImageSize::VerySmall %>

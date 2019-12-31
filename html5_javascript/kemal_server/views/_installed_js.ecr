@@ -1,12 +1,17 @@
 <script>
 
 var isInstalled = false;
-var editorExtensionIdDev = "koofeahhgdkgngohljdakjnajnghchkb";
+var editorExtensionIdDev = "lkllhememiofnblgblnjmliohfpnlnnm"; // local unpackaged plugin? :|
 var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; // prod
-var timer; // ping timer
+var installedPinger; 
 
-function markAsGoodChromeExtension() { // I guess override if you need it :|
+function markAsGoodChromeExtension() {
   isInstalled = true;
+  runOnceWhenDetectChromeExtension();
+}
+
+function runOnceWhenDetectChromeExtension() { // override this on your page to do something...
+  console.log("no op runOnceWhenDetectChromeExtension");
 }
 
 function isChrome() {
@@ -34,22 +39,13 @@ function checkIfChromeExtensionInstalled() {
   var allIds = [editorExtensionId, editorExtensionIdDev];
 
   for (var i = 0; i < allIds.length; i++) {
-    chrome.runtime.sendMessage(allIds[i], { version_request: "please" },
+    chrome.runtime.sendMessage(allIds[i], { version_request: "are you installed?" },
       function (reply) {
           if (reply) {
-              if (reply.version != null) { // can't do if (reply.version) here in case it comes in as 0.0 :|
-                  var requiredVersion = 0.00;
-                  console.log("got back chrome plugin installed " + reply.version);
-                  if (reply.version /* >= requiredVersion it's a string so compare is wonky... */) {
-                      markAsGoodChromeExtension();
-                      clearInterval(timer);
-                  }
-                  else { 
-                    alert_once = alert_once || (alert("warning, your chrome extension is out of date at version " + reply.version + ", please update it to " + requiredVersion) || true);
-                 }
-             } else { 
-               console.log("no reply.version???"); 
-             }
+              if (reply.version /* >= requiredVersion it's a string so compare is wonky... */) {
+                  markAsGoodChromeExtension();
+                  clearInterval(installedPinger);
+              }
          } else {  
            console.log("no reply, probably means extension not installed");  
          }
@@ -62,7 +58,7 @@ function checkIfChromeExtensionInstalled() {
 <% else %>
   if (isChrome()) {
     checkIfChromeExtensionInstalled();
-    timer = setInterval(checkIfChromeExtensionInstalled, 1000); // catch when they do install it, and elsewise, really no loss :}
+    installedPinger = setInterval(checkIfChromeExtensionInstalled, 1000); // catch when they do install it, and elsewise, really no loss :}
   } // else don't call those and get an undefined blow up
 <% end %>
 
@@ -70,7 +66,7 @@ function pluginFullyInstalled() {
   return isInstalled;
 }
 
-function alertIfNoExtension() { // for the movie_box
+function alertIfNoExtension() { // for the movie_box...
   <% if my_android?(env) %>
     return true; // :\ XXXX
   <% end %>

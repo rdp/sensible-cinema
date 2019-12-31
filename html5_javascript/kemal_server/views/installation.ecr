@@ -8,13 +8,15 @@
       <br/>
       You can also browse our collection and see which movies/TV you'd like to watch when you come back later.
       <br/>
-      The actual app works on desktop, laptop, and chromebook, so grab one of those and come on back when you're ready to watch movies or TV edited!  Just remember "play it my way" to find us!
+      The actual editor works on desktop, laptop, or chromebook, so grab one of those and come on back when you're ready to watch movies or TV edited!  
+      Just remember "play it my way" to find us!  You can plug your computer into your TV as well!
     <% if android_mobile?(env) %>
+      <!-- android used to have an app... :| -->
     <% else %>
-      Looks like you're on iOS, nice!
+      <!--Looks like you're on iOS, nice! -->
     <% end %>
     <br/>
-    Feel free to browse our collection in the meantime!
+    Feel free to browse our collection and see what you want to watch!
     <br/>
     <br/>
     Enter your email address here, we'll send you a link to the website, as well as periodic updates:
@@ -23,12 +25,12 @@
       <input type="submit" value="Send me an email!">
     </form>
 <% else %>
-  <!-- desktop somehow -->   
+    <!-- desktop of some kind... -->   
         <% if chrome_desktop?(env) %>
           <span style="font-size: larger;">Install Play It My Way by <a href="https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml">clicking here</a>, then clicking "add to chrome" on the next page.  Play it my way is free!</span>
         <% else %>
-          <!-- some other kind of desktop... -->
-          <h2>In order for our chrome app to work, you'll need to first switch to the <a href=https://www.google.com/chrome/>Chrome web browser</a>, then come back to this site (playitmyway.org -- just remember "play it my way!")!</h2>
+          <!-- some other kind of desktop browser... -->
+          <h2>In order for our chrome app to work, you'll need to first switch to the <a href=https://www.google.com/chrome/>Chrome web browser</a>, then come back to this site (playitmyway.org -- remember "play it my way!") to continue!</h2>
         <% end %>
         <br/>
 <% end %>

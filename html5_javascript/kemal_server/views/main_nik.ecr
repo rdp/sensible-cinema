@@ -39,7 +39,7 @@
 <!-- XXX for chrome desktop just go straight there?? -->
             <form action="/installation">
                 <div class="center">
-                    <input class="button get-app" type="submit" value="GET APP" > </div>
+                    <input id="get_app_button_id" class="button get-app" type="submit" value="GET APP" > </div>
             </form>
         </div>
     </div>
@@ -72,11 +72,11 @@
 <br/>
 <% all = get_movies_sorted 
   all.each{|category|  %>
-<a href="/browse/<%= category[:type] %>" class="button get-app"><%= category[:title] %> (<%= category[:urls].size %>)</a>
-<br/>
+    <a href="/browse/<%= category[:type] %>" class="button get-app"><%= category[:title] %> (<%= category[:urls].size %>)</a>
+    <br/>
 <% } %>
 <br/>
-Play it my way is a new way of watching the movies you love without...the stuff you don't love.  We aim to make our service a free, high quality way to watch edited streaming movies online!  Install the app, and watch some movies!  You can watch edited youtubes on your mobile device and plug your computer into your TV to relax and watch some movies with a family tonight, checkout our collection, above!
+Play it my way is a way of watching the movies you love without...the stuff you prefer to skip.  We aim to make our service a free, high quality way to watch edited streaming movies online!  Install the app, and watch some movies!  You can watch edited youtubes on your mobile device and plug your computer into your TV to relax and watch some movies with a family tonight, checkout our collection, above!
 <br/>
 Like our facebook!<br/>
 <div style="max-width: 80%"> <!-- don't let it get too big, confusing on how to scroll past it... -->
@@ -84,3 +84,9 @@ Like our facebook!<br/>
 </div>
 <br/>
 Got questions, visit our <a href=/faq>FAQ</a>.  Enjoy your movies!
+
+<script>
+function runOnceWhenDetectChromeExtension() {
+  document.getElementById('get_app_button_id').value = "App installed, get watching!";
+}
+</script>
