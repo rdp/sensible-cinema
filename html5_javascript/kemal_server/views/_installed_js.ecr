@@ -7,6 +7,7 @@ var installedPinger;
 
 function markAsGoodChromeExtension() {
   isInstalled = true;
+  console.log("detected chrome extension installed");
   runOnceWhenDetectChromeExtension();
 }
 
@@ -47,7 +48,7 @@ function checkIfChromeExtensionInstalled() {
                   clearInterval(installedPinger);
               }
          } else {  
-           console.log("no reply, probably means extension not installed");  
+           console.log("no reply, probably means extension not installed " + allIds.toString());  
          }
     });
   }
