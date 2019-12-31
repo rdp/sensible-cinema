@@ -35,8 +35,6 @@ function isChrome() {
 var alert_once;
 
 function checkIfChromeExtensionInstalled() {
-  // console.log("sending liveness request..."); too chatty
-
   var allIds = [editorExtensionId, editorExtensionIdDev];
 
   for (var i = 0; i < allIds.length; i++) {
@@ -54,14 +52,16 @@ function checkIfChromeExtensionInstalled() {
   }
 }
 
+document.addEventListener("DOMContentLoaded", function(){ // do it later so that overrides can occur!
 <% if my_android?(env) %>
-  markAsGoodChromeExtension(); // I think this loads late enough...
+  markAsGoodChromeExtension();
 <% else %>
   if (isChrome()) {
     checkIfChromeExtensionInstalled();
     installedPinger = setInterval(checkIfChromeExtensionInstalled, 1000); // catch when they do install it, and elsewise, really no loss :}
   } // else don't call those and get an undefined blow up
 <% end %>
+});
 
 function pluginFullyInstalled() {
   return isInstalled;

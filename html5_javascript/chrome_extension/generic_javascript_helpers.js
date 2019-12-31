@@ -415,7 +415,7 @@ function addMouseAnythingListener(func) {
   addListener(document, 'mouseout', func);
 }
 
-function onReady(yourMethod) { // polling one, from SO :)
+function onReady(yourMethod) { // polling version, so univ. compat. from SO :) onready
   if (document.readyState === 'complete') {
     setTimeout(yourMethod, 1); // schedule to run immediately
   }

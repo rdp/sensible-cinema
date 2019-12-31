@@ -1203,7 +1203,7 @@ function loadTagIntoUI(tag) {
   document.getElementById('age_maybe_ok_id').value = tag.age_maybe_ok;
   document.getElementById('lewdness_level_id').value = tag.lewdness_level;
   document.getElementById('lip_readable_id').value = tag.lip_readable; // will come in as false for non profs...ah well...
-  document.getElementById('impact_to_movie_id').value = tag.impact_to_movie; // sets it by number == index not the human readable
+  document.getElementById('impact_to_movie_id').value = tag.impact_to_movie; // sets it by number == index not the human readable [should all line up now...]
   document.getElementById('default_enabled_id').value = tag.default_enabled;
   document.getElementById('tag_hidden_id').value = tag.id;
   faux_tag_being_tested = null;
