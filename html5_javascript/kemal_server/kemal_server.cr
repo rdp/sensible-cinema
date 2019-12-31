@@ -734,7 +734,7 @@ post "/subscribe" do |env|
   username = File.read("email_full_user").strip
   out = system("sendemail -xu #{username} -f #{username} -t #{email} -u 'Link to the edited movie site' -m 'Here is the link! https://playitmyway.org welcome aboard!  We hope you enjoy some awesome edited movies from our site!' -s smtp.gmail.com -o tls=yes -xp #{password} -s smtp.gmail.com:587")
   if out
-    add_to_flash env, "Success, send an invitation email to #{email}, you should see an email in your inbox now!"
+    add_to_flash env, "Success, sent an invitation email to #{email}, you should see an email in your inbox now!"
   else
     add_to_flash env, "Unable to send email, please mention this to us playitmywaymovies@gmail.com"
   end
