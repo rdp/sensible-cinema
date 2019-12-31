@@ -46,5 +46,13 @@ chrome.runtime.onMessageExternal.addListener(update_icon); // from real page [th
 chrome.runtime.onUpdateAvailable.addListener(function(status, details) {
   console.log(status);
   console.log(details);
-  chrome.runtime.reload(); // hope this wurks...otherwise no update-ydatey
+  chrome.runtime.reload(); // if you want it to be installed sooner you can explicitly call chrome.runtime.reload(). else it waits for background page refresh...when does that happen?
+});
+
+
+chrome.runtime.onInstalled.addListener(function(details){
+  if (details.reason === 'install'){ // or 'update'
+    chrome.tabs.create({active: true, url: "https://playitmyway.org"}); // they just intalled it, avoid confusion by sending them back to main
+    // TODO just activate the one they already have open that sent them here?
+  }
 });

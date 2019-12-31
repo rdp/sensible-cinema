@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
    y.addEventListener("click", openIndex);
 });
 
-function loadEditedPlayback() {
+function loadEditedPlayback() { // we don't use this anymore [?]
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         chrome.tabs.sendMessage(tabs[0].id, {action: 'please_start'}, function(response) {
             console.log("send start message from popup");

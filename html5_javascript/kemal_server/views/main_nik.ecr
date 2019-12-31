@@ -56,11 +56,11 @@
      <% } %>
     </div>
     <div class="mid-bar">
-        <h4>Some more editeds from our library</h4>
+        <h4>Some more example edited movies from our library</h4>
     </div>
 
     <div class="grid-x grid-padding-x small-up-3 medium-up-5 large-up-8">
-      <% all_urls_done.shuffle.last(8).each_with_index { |movie, idx| %>
+      <% all_urls_done.shuffle.last(4).each_with_index { |movie, idx| %>
         <div class="cell <%= idx > 4 ? "show-for-large" : idx > 2 ? "show-for-medium" : "" %>">
           <% box_style = "" %>
           <%= render "views/_box_movie_nik.ecr" %> 
@@ -68,7 +68,7 @@
      <% } %>
     </div>
 
-<h4>Browse our collection of edited movies and TV shows!</h4>
+<h4>Browse our full collection of edited movies and TV shows!</h4>
 <br/>
 <% all = get_movies_sorted 
   all.each{|category|  %>
