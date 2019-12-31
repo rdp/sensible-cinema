@@ -24,6 +24,6 @@
   "icons": { "128": "camera.128.png" },
   "background": { "scripts": ["background.js"] },
    "externally_connectable": {
-    "matches": ["https://playitmyway.org/*"]
+    "matches": ["https://playitmyway.org/*", "https://localhost:3000/*"]
    }
 }
