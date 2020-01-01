@@ -111,7 +111,7 @@ get "/sync_web_server" do |env|
     Kemal.stop # should allow this process to die as well...
     "kemal has been stopped/should be exiting..." # have to let it die so the bash script can set permissions :| this should be fast enough, right? I mean seriously...
   else
-    "not restarting, it didn't build, batman!" 
+    "FAILURE FAILURE not restarting, it didn't build, batman!" 
   end
 end
 
