@@ -124,7 +124,7 @@ function autoStartIfShould() {
       console.log("not setting plugin text to look from an iframe");
     }
     else {
-      chrome.runtime.sendMessage({text: "look", color: "#808080", 
+      chrome.runtime.sendMessage({text: "wait", color: "#808080", 
             details: "edited playback and waiting for a video to appear present, then will try to see if edits exist for it so can playback edited"}); 
     }
     // iframe wants to load the extension though, for google play to work...

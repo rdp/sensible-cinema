@@ -70,7 +70,7 @@ function pluginFullyInstalled() {
   return isInstalled;
 }
 
-function alertIfNoExtension() { // for the movie_box...
+function alertIfNoExtension() { // for the old movie_box...
   if (!pluginFullyInstalled()) {
     <% if mobile?(env) %>
       var out = confirm("You can watch edited youtubes on your current device, but not edited movies (like this one), which require app installation.  " +
