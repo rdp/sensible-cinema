@@ -124,7 +124,9 @@ Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!
         seek_dragger.value = youtube_pimw_player.getCurrentTime() / youtube_pimw_player.getDuration() * 100;
         document.getElementById('current_time_id').innerHTML = timeStampToHumanHere(youtube_pimw_player.getCurrentTime(), 0) + "/" + timeStampToHumanHere(youtube_pimw_player.getDuration(), 0);
       }
+      <% if editor?(env) %>
       document.getElementById('quality_div_id').innerHTML = youtube_pimw_player.getPlaybackQuality();
+      <% end %>
     }
 
     addListenerMultiHere(seek_dragger, "mousedown touchstart", function() {
