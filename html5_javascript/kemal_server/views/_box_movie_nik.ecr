@@ -69,6 +69,10 @@
            Or <a href=/personalized_edit_list/<%=movie.id%>>personalize edits</a> your way!
           </div>
 
+       <!-- we load the entire database with each request, whoa -->
+       <% if movie.prime? %>
+         (free with prime or rent/buy)
+       <% end %>
        <%= render "views/single_movie_lower.ecr"  %>
 
       <button class="close-button" data-close aria-label="Close reveal" type="button"> <!-- top right x -->

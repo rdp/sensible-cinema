@@ -275,8 +275,12 @@ class Url
     end
   end
 
+  def prime?
+    return amazon_prime_free_type == "Prime"
+  end
+
   def human_readable_company
-    # get from url...
+    # get "company" (from main website) from url...
     check =  /\/\/([^\/]+\.[^\/]+).*/ #  //(.*)/ with a dot in it so splittable
     real_url = HTML.unescape(url) # want the slashes present :|
     if real_url =~ check
