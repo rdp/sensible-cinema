@@ -95,9 +95,9 @@
                         </li>
                         <li>
                           <% if logged_in?(env) %>
-                            <a id="log-out" href="https://playitmyway.org/logout">Log Out <%= logged_in_user(env).name.split.first %> </a>
+                            <a id="log-out" href="/logout">Log Out <%= logged_in_user(env).name.split.first %> </a>
                           <% else %>
-                            <a id="log-in" href="https://playitmyway.org/login">Log In</a>
+                            <a id="log-in" href="/login">Log In</a>
                           <% end %>
                         </li>
                     </ul>
@@ -115,10 +115,10 @@
     <footer>
         <div class="grid-x">
             <div class="cell auto">
-                <a href="https://playitmyway.org/">Home/Browse</a>
+                <a href="/">Home/Browse</a>
             </div>
             <div class="cell auto">
-                <a href="https://playitmyway.org/support">Contact</a>
+                <a href="/support">Contact</a>
             </div>
             <div class="cell auto">
                 <a href="">Privacy</a>
