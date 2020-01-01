@@ -72,13 +72,13 @@ function addEditUiOnce() {
         <text style="fill: none; stroke: rgb(188, 188, 188); stroke-width: 0.5px; stroke-linejoin: round;" y="40" x="55" id="big_edited_text_id">Edited</text>
       </svg>
        <br/>
-      PIMW editing out: <select id='tag_edit_list_dropdown_id' onChange='personalizedDropdownChanged();'></select> <!-- javascript will set up this select -->
+      Editing out: <select id='tag_edit_list_dropdown_id' onChange='personalizedDropdownChanged();'></select> <!-- javascript will set up this select -->
       <br/>
       <a href=# onclick="openPersonalizedEditList(); return false">Or personalize which parts you edit out</a>
       <br/>
-      Pimw is still in Beta, we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
+      Pimw is in Beta, we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
       <br/>
-      Picture-free dragger: use this to avoid seeing preview thumbnails of the bad stuff. <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 180px;" /><span id='safe_seek_ts_id'>32m 10s</span> 
+      Picture-free dragger: use this to seek in the movie, avoid any bad preview pictures! <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 180px;" /><span id='safe_seek_ts_id'>32m 10s</span> 
       <div style=""> 
         <span id="currently_xxx_span_id"> <!-- "currently: muting" --></span>
         <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable this later if flagged as editor -->
