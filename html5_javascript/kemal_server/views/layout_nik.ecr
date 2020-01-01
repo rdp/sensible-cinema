@@ -156,13 +156,12 @@
 
   <script>
   $( function() {
-    var availableTags = <%= all_urls.map{|url| {label: url.name_with_episode, id: url.id}}.to_json %>;
-    var genres = <%= all_urls.select{|u| u.genre.presence}.group_by{|url| url.genre}.keys.map{|genre| {label: genre + " genre", genre: genre}}.to_json %>;
-    console.log(genres);
+    var allMovies = <%= all_urls.map{|url| {label: url.name_with_episode, id: url.id}}.to_json %>;
+    var allGenres = <%= all_urls.select{|u| u.genre.presence}.group_by{|url| url.genre}.keys.map{|genre| {label: genre + " genre", genre: genre}}.to_json %>;
     $( "#search_id" ).autocomplete({
-      source: availableTags.concat(genres),
+      source: allMovies.concat(allGenres),
       minLength: 2,
-      change: function(event, ui) { // blur I think...
+      change: function(event, ui) { // runs on blur I think...
         if (ui.item == null) {
          event.currentTarget.value = 'Unknown, please select from list';  // it'll say this when they click the search button, which is still crup...
          setTimeout(function(){ event.currentTarget.value =''; event.currentTarget.focus(); }, 2000);
