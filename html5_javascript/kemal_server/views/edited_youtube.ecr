@@ -240,7 +240,9 @@ function onPlayerReady(event) {
 function onPlayerStateChange(event) {
     if(event.data === 0) {
         console.log('video just ended');
-        exitFullScreen();
+        exitFullScreen(); // just in case
+        youtube_pimw_player.playVideo(); // loop forever so it won't show icons for "go and watch these unedited youtubes now!"
+
     }
 }
 
