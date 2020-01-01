@@ -259,7 +259,7 @@ class Url
   end
 
   def url_lookup_params
-    "url=#{url}&episode_number=#{episode_number}" # URI.escape?
+    "url=#{url}&episode_number=#{episode_number}" # URI.encode?
   end
 
   def human_duration
