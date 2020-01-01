@@ -788,7 +788,7 @@ end
 
 def write_internal_javascript_no_git_commit(db_url, env)
   as_json = json_for(db_url, env)
-  escaped_url_no_slashes = URI.encode db_url.url
+  escaped_url_no_slashes = URI.encode_www_form db_url.url
   File.write("edit_descriptors/#{escaped_url_no_slashes}.ep#{db_url.episode_number}" + ".html5_edited.just_
 settings.json.rendered.js", "" + as_json) 
 end
