@@ -31,11 +31,9 @@
           <div style="clear: both;"></div>
           <div style="text-align: center;">
             
-<form action="<%= movie.url %>">
-    <input type="submit" value="Click to watch" />
-</form>
+          <input type="submit" value="Click to watch" />
 
-<%= movie.name_with_episode %> <!-- XXX say something else if can't actually watch edited? -->
+           <%= movie.name_with_episode %> 
 
             </a>
             <% if movie.edit_passes_completed >= 2 %>
