@@ -39,7 +39,7 @@
   </div>
 
   <% movies.each_with_index{ |url, idx|  %>
-    <%= render "views/_box_movie.ecr" %>
+    <%= render "views/_old_box_movie.ecr" %>
   <% } %>
 
   <br/> 
@@ -58,7 +58,7 @@
          </a>
          <div class=series_div_<%= idx %> style="display: none;" >
            <% episodes.each{ |url| %>
-             <%= render "views/_box_movie.ecr" %>
+             <%= render "views/_old_box_movie.ecr" %>
            <% } %>
          </div>
     <% } %>
