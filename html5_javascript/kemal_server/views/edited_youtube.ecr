@@ -16,39 +16,44 @@
     <a href='' onclick="youtube_pimw_player.playVideo(); return false">&#9654;</a>&nbsp;&nbsp;<a href='' onclick="youtube_pimw_player.pauseVideo(); return false">&#9612;&#9612;</a>
     </big>
     <!-- fullscreen -->
-    Go <a href='' onclick="toggleFullScreen(); return false">Fullscreen <i class="material-icons">&#xe5d0;</i></a>
+    <a href='' onclick="toggleFullScreen(); return false">Fullscreen <i class="material-icons">&#xe5d0;</i></a>
     Seek:
     <input id="seek-control-id" type="range" min="0" max="100" step="1" style="width: 70%; display:inline; margin-top: 10px;"></input> <!-- mobile with layout "tall" you want it big as possible...-->
     <br>
     <br>
-    <a href='' onclick="seekToDelta(-10); return false">-10s</a>
-    <a href='' onclick="seekToDelta(10); return false">+10s</a>
+
     <!-- time -->
     <div id="current_time_id" style="display: inline;"></div>
 
     <br/>
     Volume:<input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)" style="max-width: 100px; display:inline;"></input>
-    Resolution: <div id="quality_div_id" style="display: inline;"></div>
-    <input id="hd_checkbox_id" type="checkbox" onchange="hd_checkbox_changed(this.checked);">
-    <a href=# onclick="hd_checkbox_changed(true); return false;">use max</a>.
   </h3>
   <input type="text" name="" style="width: 150px; height: 20px; font-size: 12pt;" id="seek_ts" value="0m 0.00s">
-  <input type="button" onclick="var a = timeStampToHuman(document.getElementById('seek_ts'); var b = timeStampToHuman(a); youtube_pimw_player.seekTo(b); return false;" value="go"/>
-  <!-- TODO add cur_ts here...and buffered -->
   <br/>
-  <h4> <a href="/browse/youtubes"><<< Back to list of all edited youtubes.</a></h4>
+  <h3> <a href="/browse/youtubes"><<< Back to list of all edited youtubes.</a></h3>
+  <h3> <a href="/"><<< Back to home.</a></h3>
 </div>
 
 <div id="below_vid_stuff">
   <h2 id="youtube_name_header_id"><%= url ? url.name + " (Edited)" : "youtube not in our edited system yet, please click 'unedited' in the black box below the movie to add it!" %></h2>
-  Seeing closed captions? To toggle them off (we recommend off) go <a href="https://youtu.be/<%= youtube_id %>">here</a> and turn them off.
+  <a href="" onclick="$('closed_captions_div_id').toggle(); return false">Turn off Captions</a>.
+  <div style="display: none;" id="closed_captions_div_id">
+    Seeing closed captions? To toggle them off (we recommend off) go <a href="https://youtu.be/<%= youtube_id %>">here</a> and turn them off, then come back to watch edited.
+  </div>
   <br/>
   Legal disclaimer: Performance of the picture is altered from the performance intended by the director or copyright holder of the motion picture. (we're required by law to say that).
   <br/>
 
-  Edited controls:
   <% if editor?(env) %>
+  Edited controls:
+      <a href='' onclick="seekToDelta(-10); return false">-10s</a>
+    <a href='' onclick="seekToDelta(10); return false">+10s</a>
+  <input type="button" onclick="var a = timeStampToHuman(document.getElementById('seek_ts'); var b = timeStampToHuman(a); youtube_pimw_player.seekTo(b); return false;" value="go"/>
+  <!-- TODO add cur_ts here...and buffered -->
     Editor: <a href="" onclick='document.getElementById("player_with_controls").style.height = "60%"; document.getElementById("below_vid_stuff").style.display="none"; return false;'>Click here to make video smaller for easier editing!</a>
+    Resolution: <div id="quality_div_id" style="display: inline;"></div>
+    <input id="hd_checkbox_id" type="checkbox" onchange="hd_checkbox_changed(this.checked);">
+    <a href=# onclick="hd_checkbox_changed(true); return false;">use max</a>.
   <% end %>
 
   <!-- match amazon coloring for my stuff :| -->
@@ -59,7 +64,9 @@
   </style>
 
 </div>
-<div style="height: 760px; max-width: 620px; background: black;" id="show_your_instructions_here_id"> <!-- plugin binds here --></div>
+
+<!-- XXXX non editors might eventually want to edit their own so still show??? -->
+<div style="height: <%= editor?(env) : "760px;" : "10px;" %>>; max-width: 620px; background: black;" id="show_your_instructions_here_id"> <!-- plugin binds here --></div>
 
 
 <% if editor?(env) %>
