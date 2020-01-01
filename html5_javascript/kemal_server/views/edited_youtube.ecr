@@ -28,7 +28,6 @@
     <br/>
     Volume:<input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)" style="max-width: 100px; display:inline;"></input>
   </h3>
-  <input type="text" name="" style="width: 150px; height: 20px; font-size: 12pt;" id="seek_ts" value="0m 0.00s">
   <br/>
   <h3> <a href="/browse/youtubes"><<< Back to list of all edited youtubes.</a></h3>
   <h3> <a href="/"><<< Back to home.</a></h3>
@@ -46,6 +45,7 @@
 
   <% if editor?(env) %>
   Edited controls:
+  <input type="text" name="" style="width: 150px; height: 20px; font-size: 12pt;" id="seek_ts" value="0m 0.00s">
       <a href='' onclick="seekToDelta(-10); return false">-10s</a>
     <a href='' onclick="seekToDelta(10); return false">+10s</a>
   <input type="button" onclick="var a = timeStampToHuman(document.getElementById('seek_ts'); var b = timeStampToHuman(a); youtube_pimw_player.seekTo(b); return false;" value="go"/>
