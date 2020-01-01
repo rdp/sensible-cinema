@@ -17,12 +17,12 @@
     </big>
     <!-- fullscreen -->
     <a href='' onclick="toggleFullScreen(); return false">Fullscreen <i class="material-icons">&#xe5d0;</i></a>
+    Volume:<input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)" style="max-width: 100px; display:inline;"></input>
     Seek:
     <input id="seek-control-id" type="range" min="0" max="100" step="1" style="width: 70%; display:inline; margin-top: 10px;"></input> <!-- mobile with layout "tall" you want it big as possible...-->
     <br>
     <br>
     <div id="current_time_id" style="display: inline;">0m 0s/0m 0s</div> <!-- a bit ugly? -->
-    Volume:<input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)" style="max-width: 100px; display:inline;"></input>
   </h3>
   <br/>
   <h3> <a href="/browse/youtubes"><<< Back to list of all edited youtubes.</a></h3>
