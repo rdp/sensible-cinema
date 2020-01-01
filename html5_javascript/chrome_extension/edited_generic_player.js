@@ -78,7 +78,7 @@ function addEditUiOnce() {
       <br/>
       Pimw is still in Beta, we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
       <br/>
-      Picture-free seeker: <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 180px;" /><span id='safe_seek_ts_id'>32m 10s</span> 
+      Picture-free dragger: use this to avoid seeing preview thumbnails of the bad stuff. <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 180px;" /><span id='safe_seek_ts_id'>32m 10s</span> 
       <div style=""> 
         <span id="currently_xxx_span_id"> <!-- "currently: muting" --></span>
         <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable this later if flagged as editor -->
