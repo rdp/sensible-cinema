@@ -37,15 +37,19 @@
             <h4>Our FREE app lets you skip the bad parts of movies you stream*!</h4>
             <p class="italic">Your movies. Play them your way.</p>
 
-<!-- XXX for chrome desktop just go straight there?? -->
             <form action="/installation">
                 <div class="center">
-                    <input id="get_app_button_id" class="button get-app" type="submit" value="GET OUR FREE APP" > </div>
+                    <% if chrome_desktop?(env) %>
+                      <input id="get_app_button_id" onclick="window.location = 'https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml';"  class="button get-app" type="submit" value="GET OUR FREE APP" > 
+                    <% else %>
+                      <input id="get_app_button_id" class="button get-app" type="submit" value="SEE OUR FREE APP" style="white-space: normal;"> 
+                    <% end %>
+                </div>
             </form>
         </div>
     </div>
 
-    <p>*Compatible with Amazon and Youtube.  Hopefully more to come!</p>
+    <p>*Compatible with Amazon and Youtube on google Chrome.  Hopefully more to come!</p>
 
     <div class="mid-bar">
         <h4>Our latest additions you can watch filtered!</h4>
