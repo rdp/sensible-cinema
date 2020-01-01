@@ -629,6 +629,7 @@ get "/browse/genre/:genre" do |env|
   genre = env.params.url["genre"]
   by_genre = Url.all_by_genre(genre).select{|url| url.edit_passes_completed >= 2 }
   movies = {title: "By Genre: " + genre, urls: by_genre, message: ""}
+  env.response.title = movies[:title]
   render "views/list_movies_nik.ecr", "views/layout_nik.ecr"
 end
 
