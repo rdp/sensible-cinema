@@ -12,9 +12,9 @@ def table_row_or_nothing(first_cell, second_cell)
 end
 
 def google_search_string(url)
-   google_search = URI.escape(url.name + " poster", true)
+   google_search = URI.encode(url.name + " poster", space_to_plus: true)
    if url.episode_number != 0
-     google_search += URI.escape(" " + url.episode_number.to_s + " " + url.episode_name, true)
+     google_search += URI.encode(" " + url.episode_number.to_s + " " + url.episode_name, space_to_plus: true)
    end
    google_search
 end
