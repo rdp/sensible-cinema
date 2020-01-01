@@ -1,0 +1,3 @@
+sudo -E -u rdp crystal build ./kemal_server.cr 
+killall kemal_server
+echo 'should be new now'

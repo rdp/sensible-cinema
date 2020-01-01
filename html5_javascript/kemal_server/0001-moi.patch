@@ -1,18 +1,26 @@
 diff --git a/src/openssl/ssl/server.cr b/src/openssl/ssl/server.cr
-index b31e53090..ba38d6735 100644
+index b31e53090..1280bc786 100644
 --- a/src/openssl/ssl/server.cr
 +++ b/src/openssl/ssl/server.cr
-@@ -60,8 +60,10 @@ class OpenSSL::SSL::Server
+@@ -60,7 +60,10 @@ class OpenSSL::SSL::Server
    #
    # This method calls `@wrapped.accept` and wraps the resulting IO in a SSL socket (`OpenSSL::SSL::Socket::Server`) with `context` configuration.
    def accept : OpenSSL::SSL::Socket::Server
 -    OpenSSL::SSL::Socket::Server.new(@wrapped.accept, @context, sync_close: @sync_close)
--  end
-+     socket = @wrapped.accept
++    socket = @wrapped.accept
 +    socket.as(TCPSocket).read_timeout = 60.seconds
 +    socket.as(TCPSocket).write_timeout = 60.seconds
-+    OpenSSL::SSL::Socket::Server.new(socket, @context, sync_close: @sync_close)end
++    OpenSSL::SSL::Socket::Server.new(socket, @context, sync_close: @sync_close)
+   end
  
    # Implements `::Socket::Server#accept?`.
-   #
-
+@@ -68,6 +71,9 @@ class OpenSSL::SSL::Server
+   # This method calls `@wrapped.accept?` and wraps the resulting IO in a SSL socket (`OpenSSL::SSL::Socket::Server`) with `context` configuration.
+   def accept? : OpenSSL::SSL::Socket::Server?
+     if socket = @wrapped.accept?
++      socket.as(TCPSocket).read_timeout = 60.seconds
++      socket.as(TCPSocket).write_timeout = 60.seconds
++
+       OpenSSL::SSL::Socket::Server.new(socket, @context, sync_close: @sync_close)
+     end
+   end
