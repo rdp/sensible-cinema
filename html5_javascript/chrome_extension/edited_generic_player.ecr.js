@@ -1886,6 +1886,8 @@ function rawRequestSeekToTime(ts, already_cached, current_time) {
       youtube_pimw_player.seekTo(ts, allowSeekAhead); // no callback option seemingly...can take floats...
     } else {
       console.log("iOS and not cached skipping waaay forward"); // TODO test
+      // TODO if it's within 5s just "wait" to see if it'll buffer itself???
+      // make tiny then seek? :|
       // attempt avoid infinite loop, and also skipping to bad scenes :|
        // 5.3 seemed max key frame length :|
       // if they seek 2 in future -> 2 + 5.3
