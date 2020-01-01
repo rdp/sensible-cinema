@@ -78,6 +78,12 @@
     <br/>
 <% } %>
 <br/>
+<h3>Genres:</h3>
+<%  genres = all_urls.select{|u| u.genre.presence}.group_by{|url| url.genre}
+  genres.each{|genre, urls|  %>
+    <a href="/browse/genre/<%= genre %>" class="button get-app"><%= genre %> (<%= urls.size %>)</a>
+<% } %>
+<br/>
 Play it my way is a way of watching the movies you love without...the stuff you prefer to skip.  We aim to make our service a free, high quality way to watch edited streaming movies online!  Install the app, and watch some movies!  You can watch edited youtubes on your mobile device and plug your computer into your TV to relax and watch some movies with a family tonight, checkout our collection, above!
 <br/>
 Our latest news, like our facebook page!<br/>
