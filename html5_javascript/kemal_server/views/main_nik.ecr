@@ -79,7 +79,7 @@
 <% } %>
 <br/>
 <h3>Genres:</h3>
-<%  genres = all_urls.select{|u| u.genre.presence}.group_by{|url| url.genre}
+<%  genres = all_urls.select{|u| u.genre.presence}.group_by{|url| url.genre}.sort
   genres.each{|genre, urls|  %>
     <a href="/browse/genre/<%= genre %>" class="button get-app"><%= genre %> (<%= urls.size %>)</a>
 <% } %>
