@@ -15,12 +15,12 @@
       </a>
     </p>
 
-
    <div class="small reveal" id="decisionModal<%= movie.id %>" data-reveal style="background-color:black; color:white;">
-    <%= movie.name_with_episode %> <br/>
+    <%= movie.name_with_episode %> <br/><br/>
     <% if mobile?(env) %>
       You can watch edited youtubes and movie previews on your current device, but not edited movies (like this one), which require app <a href=/installation>installation</a>.  Would you like to go to the movie page even though its unedited? Click 
-        <a href="<%= movie.url %>" <%= "target='_blank'" unless movie.is_youtube? %>> here</a> to see unedited.  In the meantime youc an watch previews and free youtubes and add movies to your watch list for later!
+        <a href="<%= movie.url %>" <%= "target='_blank'" unless movie.is_youtube? %>> here</a> to see unedited. 
+        <br/> In the meantime you can watch previews and free youtubes and add movies to your watch list for later!
     <% else %>
       You need to install the chrome extension to watch the video edited, which appears you have not installed yet, please do that first.  Click <a href=/installation>here to install</a> the editing app or <a href="<%= movie.url %>" <%= "target='_blank'" unless movie.is_youtube? %>> here to see it unedited</a> since you don't have the app.
     <% end %>
