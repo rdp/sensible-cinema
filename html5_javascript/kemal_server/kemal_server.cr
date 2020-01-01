@@ -639,10 +639,9 @@ def get_movies_sorted
   non_youtubes = all_urls_done.reject{|u| u.url =~ /edited_youtube/}
   new_releases = non_youtubes.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number == 0}
 
-# XXX better named here?
 settings = [
-  {type: :all_movies, title: "All Movies", urls: non_youtubes.select{|u| u.episode_number == 0}, message: "All movies we have edited"},
-  {type: :all_series, title: "All TV Series", urls: non_youtubes.select{|u| u.episode_number > 0}, message: "All TV series we have edited"},
+  {type: :all_movies, title: "All Movies", urls: non_youtubes.select{|u| u.episode_number == 0}, message: "All movies we have edited (rent/buy/free prime)"},
+  {type: :all_series, title: "All TV Series", urls: non_youtubes.select{|u| u.episode_number > 0}, message: "All TV series we have edited (rent/buy/free prime)"},
   {type: :prime_movies, title: "Free With Prime Movies", urls: non_youtubes.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number == 0}, message: "Got prime? These are free."},
   {type: :prime_tv_series, title: "Free With Prime TV Series", urls: non_youtubes.select{|u| u.amazon_prime_free_type == "Prime" && u.episode_number > 0}, message: "Got prime? These are free."},
   {type: :youtubes, title: "Youtubes Edited (Free)", urls: all_urls_done.select{|u| u.url =~ /edited_youtube/}, message: "You can watch these youtubes edited right now, on your current device, free!"},
