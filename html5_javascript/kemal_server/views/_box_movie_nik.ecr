@@ -1,6 +1,6 @@
 <div style="margin: 5px; float: left; <%= box_style %>">
   <p>
-      <a data-toggle="exampleModal<%= movie.id %>" aria-controls="exampleModal<%= movie.id %>">
+      <a data-toggle="movieModal<%= movie.id %>" aria-controls="movieModal<%= movie.id %>">
       <% if movie.image_local_filename.present? %>
        <%= movie.image_tag "alt=\"#{movie.name_with_episode}\" title=\"#{movie.name_with_episode}\" style='display: block; margin-left: auto; margin-right: auto;'", ImageSize::VerySmall %> <!-- get size from cell -->
        <% if movie.episode_number > 0 || movie.is_youtube? %> <!-- assume it doesn't have text, and has a cruddy image, so show text too. -->
@@ -31,9 +31,10 @@
       <button class="close-button" data-close aria-label="Close reveal" type="button"> <!-- top right x -->
         <span aria-hidden="true">&times;</span>
       </button>
+      <input type="button" value="Back" onclick="$('#movieModal<%= movie.id %>').foundation('close');" style="height: 40px; width: 60px;"/> 
    </div>
 
-   <div class="small reveal" id="exampleModal<%= movie.id %>" data-reveal style="background-color:black; color:white;">
+   <div class="small reveal" id="movieModal<%= movie.id %>" data-reveal style="background-color:black; color:white;">
             <a href="<%= movie.url %>" <%= "target='_blank'" unless movie.is_youtube? %>
               onclick="
                <% if movie.is_youtube? %>
@@ -78,7 +79,7 @@
       <button class="close-button" data-close aria-label="Close reveal" type="button"> <!-- top right x -->
         <span aria-hidden="true">&times;</span>
       </button>
-      <input type="button" value="Back" onclick="$('#exampleModal<%= movie.id %>').foundation('close');" style="height: 60px; width: 60px;"/> 
+      <input type="button" value="Back" onclick="$('#movieModal<%= movie.id %>').foundation('close');" style="height: 40px; width: 60px;"/> 
     </div> <!-- end modal -->
 
 </div>
