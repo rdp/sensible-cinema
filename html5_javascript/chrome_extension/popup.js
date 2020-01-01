@@ -1,9 +1,10 @@
-document.addEventListener('DOMContentLoaded', function() {
+ndocument.addEventListener('DOMContentLoaded', function() {
   // only enters here after they click on the icon
-  // no access *at all* to the current tab DOM apparently :|
+  // no access *at all* to the current tab [real HTML] DOM apparently??
 
-   var h = document.getElementById("edited_requested");
-   h.addEventListener("click", loadEditedPlayback);
+//   var h = document.getElementById("edited_requested"); // disabled
+//   h.addEventListener("click", loadEditedPlayback);
+
    var y = document.getElementById("index_link");
    y.addEventListener("click", openIndex);
 });

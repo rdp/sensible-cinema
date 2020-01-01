@@ -15,16 +15,36 @@
       </a>
     </p>
 
-    <div class="small reveal" id="exampleModal<%= movie.id %>" data-reveal style="background-color:black; color:white;">
+
+   <div class="small reveal" id="decisionModal<%= movie.id %>" data-reveal style="background-color:black; color:white;">
+    <%= movie.name_with_episode %> <br/>
+    <% if mobile?(env) %>
+      You can watch edited youtubes and movie previews on your current device, but not edited movies (like this one), which require app <a href=/installation>installation</a>.  Would you like to go to the movie page even though its unedited? Click 
+        <a href="<%= movie.url %>" <%= "target='_blank'" unless movie.is_youtube? %> here</a> to see unedited.
+    <% else %>
+      You need to install the chrome extension to watch the video edited, which appears you have not installed yet, please do that first.  Click <a href=/installation>here to install</a> the editing app or <a href="<%= movie.url %>" <%= "target='_blank'" unless movie.is_youtube? %>> here to see it unedited</a> since you don't have the app.
+    <% end %>
+      
+      <button class="close-button" data-close aria-label="Close reveal" type="button"> <!-- top right x -->
+        <span aria-hidden="true">&times;</span>
+      </button>
+   </div>
+
+   <div class="small reveal" id="exampleModal<%= movie.id %>" data-reveal style="background-color:black; color:white;">
             <a href="<%= movie.url %>" <%= "target='_blank'" unless movie.is_youtube? %>
               onclick="
-               <% if movie.url !~ /edited_youtube/ %>
-                 if (!alertIfNoExtension()) return false;
+               <% if movie.is_youtube? %>
+                 return true; // never an episode anyway :)
               <% else %>
-                <!-- let mobile/firefox through -->
-              <% end %>
-              <% if movie.episode_number != 0 && movie.amazon? %>
-                 alert('after opening the series, click play button for episode <%= movie.episode_number %> (<%= movie.episode_name %>)');
+                 if (pluginFullyInstalled()) {
+                   <% if movie.episode_number > 0 && movie.amazon? %>
+                     alert('after opening the series, click play button for episode <%= movie.episode_number %> (<%= movie.episode_name %>)');
+                   <% end %>
+                   return true;
+                } else {
+                   $('#decisionModal<%= movie.id %>').foundation('open'); // closes this modal
+                   return false;
+                }
               <% end %>
             ">
               <%= movie.image_tag "alt=\"#{movie.name_with_episode}\" style='display: block; margin: 0 auto;'", ImageSize::VerySmall %>

@@ -64,13 +64,13 @@ document.addEventListener("DOMContentLoaded", function(){ // do it later so that
 });
 
 function pluginFullyInstalled() {
+  <% if my_android?(env) %>
+    return true; // :\ XXXX doesn't have the plugin
+  <% end %>
   return isInstalled;
 }
 
 function alertIfNoExtension() { // for the movie_box...
-  <% if my_android?(env) %>
-    return true; // :\ XXXX
-  <% end %>
   if (!pluginFullyInstalled()) {
     <% if mobile?(env) %>
       var out = confirm("You can watch edited youtubes on your current device, but not edited movies (like this one), which require app installation.  " +
