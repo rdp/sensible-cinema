@@ -109,7 +109,7 @@ get "/sync_web_server" do |env|
   puts "doing rebuild..."
   if system("crystal build ./kemal_server.cr")
     Kemal.stop # should allow this process to die as well...
-    "kemal has been stopped/should be exiting..." # have to let it die so the bash script can set permissions :| this should be fast enough, right? I mean seriously...
+    "SUCCESS kemal has rebuilt and should be bouncing..." # have to let it die so the bash script can set permissions :| this should be fast enough, right? I mean seriously...
   else
     "FAILURE FAILURE not restarting, it didn't build, batman!" 
   end
@@ -627,7 +627,7 @@ end
 
 get "/browse/genre/:genre" do |env|
   genre = env.params.url["genre"]
-  by_genre = Url.all_by_genre(genre)
+  by_genre = Url.all_by_genre(genre).select{|url| url.edit_passes_completed >= 2 }
   movies = {title: "By Genre: " + genre, urls: by_genre, message: ""}
   render "views/list_movies_nik.ecr", "views/layout_nik.ecr"
 end
