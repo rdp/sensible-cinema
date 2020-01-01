@@ -50,7 +50,7 @@
     <a href='' onclick="seekToDelta(10); return false">+10s</a>
   <input type="button" onclick="var a = timeStampToHuman(document.getElementById('seek_ts'); var b = timeStampToHuman(a); youtube_pimw_player.seekTo(b); return false;" value="go"/>
   <!-- TODO add cur_ts here...and buffered -->
-    Editor: <a href="" onclick='document.getElementById("player_with_controls").style.height = "60%"; document.getElementById("below_vid_stuff").style.display="none"; return false;'>Click here to make video smaller for easier editing!</a>
+    You're an editor: <a href="" onclick='document.getElementById("player_with_controls").style.height = "60%"; document.getElementById("below_vid_stuff").style.display="none"; return false;'>Click here to make video smaller for easier editing!</a>
     Resolution: <div id="quality_div_id" style="display: inline;"></div>
     <input id="hd_checkbox_id" type="checkbox" onchange="hd_checkbox_changed(this.checked);">
     <a href=# onclick="hd_checkbox_changed(true); return false;">use max</a>.
@@ -66,7 +66,7 @@
 </div>
 
 <!-- XXXX non editors might eventually want to edit their own so still show??? -->
-<div style="height: <%= editor?(env) : "760px;" : "10px;" %>>; max-width: 620px; background: black;" id="show_your_instructions_here_id"> <!-- plugin binds here --></div>
+<div style="height: <%= editor?(env) ? "760px;" : "10px;" %>>; max-width: 620px; background: black;" id="show_your_instructions_here_id"> plugin binds here</div>
 
 
 <% if editor?(env) %>
