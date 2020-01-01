@@ -10,7 +10,7 @@
 
     <% by_series = movies[:urls].group_by{|u| u.name} %>
     <% if mobile?(env) %>
-       <% box_style = "max-width: 45%; min-height: 278px;" %> <!-- not 300 because gets smashed by width iphone -->
+       <% box_style = "max-width: 45%; min-height: 280px;" %> <!-- not 300 because gets smashed by width iphone soo extra space on bottom... -->
     <% else %>
       <% box_style = "max-width: 45%; min-height: 315px;" %> <!-- :| -->
     <% end %>
