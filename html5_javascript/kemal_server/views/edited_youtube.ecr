@@ -29,7 +29,7 @@
 </div>
 
 <div id="below_vid_stuff">
-  <h2 id="youtube_name_header_id"><%= url ? url.name + " (Edited)" : "youtube not in our edited system yet, please click 'unedited' in the black box below the movie to add it!" %></h2>
+  <h4 id="youtube_name_header_id"><%= url ? url.name + " (Edited)" : "youtube not in our edited system yet, please click 'unedited' in the black box below the movie to add it!" %></h4>
   <a href="" onclick="$('closed_captions_div_id').toggle(); return false">Turn off Captions</a>.
   <div style="display: none;" id="closed_captions_div_id">
     Seeing closed captions? To toggle them off (we recommend off) go <a href="https://youtu.be/<%= youtube_id %>">here</a> and turn them off, then come back to watch edited.
