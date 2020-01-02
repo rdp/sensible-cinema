@@ -36,9 +36,8 @@
 <% end %>
 
 <% tags_by_category = tag_edit_list.tags_with_personalized_enabled.group_by{|tag, enabled| tag.category} %>
-<% categories = tags_by_category.keys.sort.reverse %>
 
-<% categories.each_with_index{ |category, index| tags_and_enableds = tags_by_category[category] %>
+<% category_map.each_with_index{ |category, index| tags_and_enableds = tags_by_category[category] %>
   <% human_category = humanize_category(category) %>
   <img src=/images/<%= category %>.png style="max-width: 100px; max-height: 100px;"/>
   <h2 style="display: inline;"><%= human_category.capitalize %></h2>

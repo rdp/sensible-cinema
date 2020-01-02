@@ -62,7 +62,7 @@ def humanize_category(category)
     category = "substance use" if category == "substance-abuse"
     category = "credits/other" if category == "movie-content"
     # else [violence, suspense] stay XXXX constantize :\
-    category
+    category.to_s # if it's a symbol
 end
 
 struct Bool

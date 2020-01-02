@@ -13,6 +13,10 @@ def most_recent_pass_levels # attempt to use int's so I can tweak verbiage but..
  }
 end
 
+def category_map
+   {"movie-content": true, "profanity": true, "violence": true, "physical": true, "suspense": true, "substance-abuse": true}
+end
+
 # if you change ANYTHING here do a sub auto rescan "test" after! (or convert it all to named everywhere!)
 def subcategory_map
   {
