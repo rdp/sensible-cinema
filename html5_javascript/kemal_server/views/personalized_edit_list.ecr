@@ -44,18 +44,23 @@ category_map.each_with_index{ |category, always_true, category_index|
 
   <img src=/images/<%= category %>.png style="max-width: 100px; max-height: 100px;"/>
   <h2 style="display: inline;"><%= human_category.capitalize %></h2>
-<br/>
+  <br/>
+  <% subcat_to_tags = tags_and_enableds_for_category.sort_by{|tag, personal_action| tag.subcategory}.group_by{ |tag, personal_action | tag.subcategory } 
+     ids_of_subcat_checkboxes = subcat_to_tags.map_with_index{|_, index_subcat| "subcat_#{category_index}_#{index_subcat}"}
+     all_checkbox_ids_cascade_category = tags_and_enableds_for_category.map{|tag, enabled| tag.id } + ids_of_subcat_checkboxes
+%>
+
   <% all_category_enabled = tags_and_enableds_for_category.all?{|tag, enabled| enabled} %>
-  <input id="category_checkbox_<%= category_index %>" type="checkbox" <%= "checked" if all_category_enabled %> onchange='updateSelectAll(<%= tags_and_enableds_for_category.map{|tag, enabled| tag.id }.pretty_inspect %>, this.checked);'
-  > Edit out all <%= human_category %> (<%= tags_and_enableds_for_category.size %>)
+  <input id="category_checkbox_<%= category_index %>" type="checkbox" <%= "checked" if all_category_enabled %> onchange='updateSelectAll(<%= all_checkbox_ids_cascade_category.pretty_inspect %>, this.checked);'
+  > Edit out all category <%= human_category %> (<%= tags_and_enableds_for_category.size %>)
   <br/>
   <br/>
   <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#category_div_<%= category_index %>" aria-expanded="false" aria-controls="collapseExample">Choose individual <%= human_category %> tags</button>
   <div id=category_div_<%= category_index %>  class="collapse">
-  <% tags_and_enableds_for_category.sort_by{|tag, personal_action| tag.subcategory}.group_by{ |tag, personal_action | tag.subcategory}.each_with_index{ |subcategory_and_subcategory_tags_with_enabled, index_subcat| subcategory, subcategory_tags_and_enableds = subcategory_and_subcategory_tags_with_enabled %>
+  <% subcat_to_tags.each_with_index{ |subcategory_and_subcategory_tags_with_enabled, index_subcat| subcategory, subcategory_tags_and_enableds = subcategory_and_subcategory_tags_with_enabled %>
   <h3><%= subcategory %></h3>
   <% all_subcategory_enabled = subcategory_tags_and_enableds.all?{|tag, enabled| enabled} %>
-  <input id="checkbox_id_<%= index_subcat %>" type="checkbox" <%= "checked" if all_subcategory_enabled %> 
+  <input id="checkbox_subcat_<%= category_index %>_<%= index_subcat %>" type="checkbox" <%= "checked" if all_subcategory_enabled %> 
     onchange='updateSelectAll(<%= subcategory_tags_and_enableds.map{|tag, action| tag.id}.pretty_inspect %>, this.checked);'
   > Edit out all "<%= subcategory %>"
   <br/>
@@ -64,7 +69,7 @@ category_map.each_with_index{ |category, always_true, category_index|
   <tr>
     <td>
       <input id="checkbox_<%= tag.id %>" name="checkbox_<%= tag.id %>" type="checkbox" <%= "checked" if enabled %>
-        onchange='unCheck("checkbox_id_<%= index_subcat %>"); unCheck("category_checkbox_<%= category_index %>");'
+        onchange='unCheck("checkbox_subcat_<%= category_index %>_<%= index_subcat %>"); unCheck("category_checkbox_<%= category_index %>");'
       >
     <%= seconds_to_human tag.start %> 
     </td>
@@ -136,7 +141,7 @@ function updateSelectAll(list, checked) {
   for(var i=0, len=list.length; i < len; i++){
     var checkbox = document.getElementById("checkbox_" + list[i]);
     checkbox.checked = checked;
-//    $(checkbox).triggerHandler('change'); // recursion :|
+//    $(checkbox).triggerHandler('change'); // avoid recursion :|
   }
 }
 </script>
