@@ -40,7 +40,7 @@
             <form action="/installation">
                 <div class="center">
                     <% if chrome_desktop?(env) %>
-                      <input id="get_app_button_id" onclick="window.location = 'https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml';"  class="button get-app" type="submit" value="GET OUR FREE APP" > 
+                      <input id="get_app_button_id" onclick="window.location = 'https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml'; return false;"  class="button get-app" type="submit" value="GET OUR FREE APP" > 
                     <% else %>
                       <input id="get_app_button_id" class="button get-app" type="submit" value="CHECK OUT OUR FREE APP" style="white-space: normal;"> 
                     <% end %>
