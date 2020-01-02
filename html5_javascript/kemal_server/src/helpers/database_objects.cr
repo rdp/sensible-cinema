@@ -803,7 +803,7 @@ def first_or_nil(list)
   elsif list.size == 0
     nil
   else
-    raise "too many? size#{list.size}"
+    raise "too many? size#{list.size} #{list}"
   end
 end
 
