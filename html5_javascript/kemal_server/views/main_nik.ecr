@@ -59,7 +59,7 @@
       <% most_recent.each_with_index { |movie, idx| %>
         <div class="cell <%= idx > 4 ? "show-for-large" : idx > 2 ? "show-for-medium" : "" %>">
           <% box_style = "" %>
-          <%= render "views/_box_movie_nik.ecr" %> 
+          <%= want_name = false; render "views/_box_movie_nik.ecr" %> 
         </div>
      <% } %>
     </div>
@@ -71,7 +71,7 @@
       <% all_urls_done.shuffle.last(4).each_with_index { |movie, idx| %>
         <div class="cell <%= idx > 4 ? "show-for-large" : idx > 2 ? "show-for-medium" : "" %>">
           <% box_style = "" %>
-          <%= render "views/_box_movie_nik.ecr" %> 
+          <%= want_name = false; render "views/_box_movie_nik.ecr" %> 
         </div>
      <% } %>
     </div>

@@ -16,7 +16,7 @@
     <% end %>
     <% by_series.each_with_index{ |series_episodes, idx| series_or_movie, episodes = series_episodes; %>
       <% if episodes.size == 1 %> <!-- ex a movie -->
-        <%= movie = episodes.first; render "views/_box_movie_nik.ecr" %>
+        <%= movie = episodes.first; want_name = true; render "views/_box_movie_nik.ecr" %>
       <% else %>
         <!-- a series -->
         <% episodes.sort_by!{|u| u.episode_number} %> <!-- ??? -->
@@ -30,7 +30,7 @@
          </a>
          <div class=series_div_<%= idx %> style="display: none;" >
            <% episodes.each{ |movie| %>
-             <%= render "views/_box_movie_nik.ecr" %>
+             <%= want_name = true; render "views/_box_movie_nik.ecr" %>
            <% } %>
          </div>
         </div>

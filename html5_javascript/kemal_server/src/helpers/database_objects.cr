@@ -363,6 +363,10 @@ class Url
       name
     end
   end
+
+  def episode_without_name
+    name_with_episode.split(":")[0..-2].join(":")
+  end
  
   def delete_local_image_if_present_no_save
     if image_local_filename.present?
