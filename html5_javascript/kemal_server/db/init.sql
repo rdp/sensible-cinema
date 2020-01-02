@@ -44,7 +44,7 @@ insert into urls (url, name, editing_notes, amazon_episode_number, amazon_episod
    values ("https://playitmyway.org/test_movie_for_practicing_edits.html", 'big buck bunny pimw', "not done yet", 0, "", 10, 8, 4, "review");
 
 insert into edits (start, endy, category, subcategory, details, default_action, url_id, more_details) values
-      (2.0, 7.0, "profanity", "a subcat", "details", "skip", (select id from urls where url='https:&#x2F;&#x2F;www.amazon.com&#x2F;Avatar-Last-Airbender-Season-3&#x2F;dp&#x2F;B001J6GZXK'), "");
+      (2.0, 7.0, "profanity", "personal insult mild", "details", "skip", (select id from urls where url='https:&#x2F;&#x2F;www.amazon.com&#x2F;Avatar-Last-Airbender-Season-3&#x2F;dp&#x2F;B001J6GZXK'), "");
 insert into edits (start, endy, category, subcategory, details, default_action, url_id, more_details) values
       (10.0, 20.0, "profanity", "a subcat", "details", "mute", (select id from urls where url='https:&#x2F;&#x2F;www.amazon.com&#x2F;Avatar-Last-Airbender-Season-3&#x2F;dp&#x2F;B001J6GZXK'), "");
 

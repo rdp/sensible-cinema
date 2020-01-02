@@ -63,6 +63,16 @@ category_map.each_with_index{ |category, always_true, category_index|
   <input id="checkbox_subcat_<%= category_index %>_<%= index_subcat %>" type="checkbox" <%= "checked" if all_subcategory_enabled %> 
     onchange='updateSelectAll(<%= subcategory_tags_and_enableds.map{|tag, action| tag.id}.pretty_inspect %>, this.checked);'
   > Edit out all "<%= subcategory %>"
+
+ <% subcat_db_to_human = subcategory_map.map{ |category, entries| entries}.flatten.map{|entry| [entry[:db_name], entry[:human_name]]}.to_h # hash db_name -> human_name
+ %>
+  <% if subcat_db_to_human.has_key?(subcategory) %>
+         <a href="#" onclick="$('#subcat_reveal_<%= category_index %>_<%= index_subcat %>_id').toggle(); return false;">describe category</a>
+      <span id=subcat_reveal_<%= category_index %>_<%= index_subcat %>_id style="display: none;">
+        <%= subcat_db_to_human[subcategory] %>
+      </span>
+  <% end %>
+
   <br/>
   <table class="table table-striped">
   <% subcategory_tags_and_enableds.each{|tag, enabled| %>
@@ -92,7 +102,7 @@ category_map.each_with_index{ |category, always_true, category_index|
     </td>
     <td>lasts <%= "%.1f" % tag.duration %>s</td>
     <td>
-      <a href="#" onclick="$('#details_span_id_<%= tag.id %>').toggle(); return false;">Reveal (possibly explicit) details:</a>
+      <a href="#" onclick="$('#details_span_id_<%= tag.id %>').toggle(); return false;">Reveal (possibly explicit/spoiler) details:</a>
       <span id=details_span_id_<%= tag.id %> style="display: <%= show_tag_details ? "block" : "none" %>;">
         <%= tag.details %> <%= tag.popup_text_after %>
       </span>
