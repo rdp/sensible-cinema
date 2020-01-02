@@ -96,7 +96,7 @@ class Url
   })
 
   def is_youtube?
-    self.url =~ /edited_youtube/
+    self.url =~ /edited_youtube/ # can't use human_readable... since they're embed now
   end
 
   def self.count
@@ -344,7 +344,7 @@ class Url
        if purchase_cost_sd > 0 || purchase_cost > 0
          out += "Buy: " + [purchase_cost_sd, purchase_cost].select{|cost| cost > 0}.map{|c| "$#{c}"}.join("/") + " "
        end
-    elsif human_readable_company == "youtube" # 0 is OK here :)
+    elsif is_youtube?
        out = "free (youtube)"
     else 
       # leave empty
@@ -356,11 +356,11 @@ class Url
     local_name = name
     if episode_number != 0
       if local_name.size > 150
-        local_name = local_name[0..150] + "..."
+        local_name = local_name[0..150] + "..." # don't like it tooo long...
       end
       "#{local_name}, Episode #{episode_number} : #{episode_name}"
     else
-      if human_readable_company == "youtube"
+      if is_youtube?
         local_name = "Youtube: #{local_name}"
       end
       local_name
