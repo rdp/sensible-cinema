@@ -650,7 +650,7 @@ settings = [
   {type: :pay_movies, title: "Movies (Rent/Purchase)", urls: new_releases, message: "Movies new releases and older titles, for rent/purchase"},
   {type: :pay_tv_series, title: "TV Series (Rent/Purchase)", urls: non_youtubes.select{|u| u.amazon_prime_free_type != "Prime" && u.episode_number > 0}, message: "TV Series for rent/buy"},
   {type: :recently_added, title: "Recently Editeds", urls: all_urls_done.sort_by{|u| u.status_last_modified_timestamp}.reverse.first(45), message: "Our most recently edited movies/TV shows."},
-  {type: :in_the_works, title: "Videos we are working on (please support us!)", urls: get_in_works(all_urls), message: "Things we want to get to, with your support!"},
+  {type: :in_the_works, title: "Videos in the works", urls: get_in_works(all_urls), message: "Things we want to get to, with your support!"},
 ]
 end
 
