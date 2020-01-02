@@ -57,12 +57,13 @@ def admin?(env)
 end
 
 def humanize_category(category)
+    category = category.to_s # if it's a symbol, which it can be...
     category = "clothing/kissing etc" if category == "physical"
     category = "verbal" if category == "profanity"
     category = "substance use" if category == "substance-abuse"
     category = "credits/other" if category == "movie-content"
     # else [violence, suspense] stay XXXX constantize :\
-    category.to_s # if it's a symbol
+    category
 end
 
 struct Bool
