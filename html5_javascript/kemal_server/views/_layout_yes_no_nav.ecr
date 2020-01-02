@@ -40,7 +40,7 @@
 <div class="container-fluid">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> <!-- have to put this at the top else can't use jQuery for methods called straight at load time :| -->
   <% if env.session.string?("flash") %>
-    <p class="bg-info" style="padding: 10px;">
+    <p class="bg-info" style="padding: 10px; background-color: rgb(0, 9, 56); color: white;">
 		  <span style="font-size: 30px;"><%= out = env.session.string("flash"); env.session.delete_string("flash"); out %> </span>
 		</p>
   <% end %>
