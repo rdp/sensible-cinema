@@ -37,20 +37,23 @@
 
 <% tags_by_category = tag_edit_list.tags_with_personalized_enabled.group_by{|tag, enabled| tag.category} %>
 
-<% category_map.each_with_index{ |category, index| tags_and_enableds = tags_by_category[category] %>
-  <% human_category = humanize_category(category) %>
+<% 
+category_map.each_with_index{ |category, index| 
+   tags_and_enableds = tags_by_category.fetch(category.to_s, [] of Tuple(Tag, Bool)) 
+   human_category = humanize_category(category) %>
+
   <img src=/images/<%= category %>.png style="max-width: 100px; max-height: 100px;"/>
   <h2 style="display: inline;"><%= human_category.capitalize %></h2>
 <br/>
-  <input id="unused" type="checkbox" checked onchange='updateSelectAll(<%= tags_by_category[category].map{|tag, enabled| tag.id }.pretty_inspect %>, this.checked);'
+  <input id="<%= category %><%= index %>" type="checkbox" checked onchange='updateSelectAll(<%= tags_and_enableds.map{|tag, enabled| tag.id }.pretty_inspect %>, this.checked);'
   > Edit out all <%= human_category %> (<%= tags_and_enableds.size %>)
   <br/>
   <br/>
   <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#category_div_<%= index %>" aria-expanded="false" aria-controls="collapseExample">Choose individual <%= human_category %> tags</button>
   <div id=category_div_<%= index %>  class="collapse">
-  <% tags_and_enableds.sort_by{|tag, personal_action| tag.subcategory}.group_by{ |tag, personal_action| tag.subcategory}.each{ |subcategory, subcategory_tags_and_enableds| %>
+  <% tags_and_enableds.sort_by{|tag, personal_action| tag.subcategory}.group_by{ |tag, personal_action | tag.subcategory}.each_with_index{ |subcategory_and_subcategory_tags_with_enabled, index2| subcategory, subcategory_tags_and_enableds = subcategory_and_subcategory_tags_with_enabled %>
   <h3><%= subcategory %></h3>
-  <input id="unused" type="checkbox" checked 
+  <input id="checkbox_id_<%= index2 %>" type="checkbox" checked 
     onchange='updateSelectAll(<%= subcategory_tags_and_enableds.map{|tag, action| tag.id}.pretty_inspect %>, this.checked);'
   > Edit out all "<%= subcategory %>"
   <br/>
