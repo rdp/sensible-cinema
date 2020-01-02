@@ -395,7 +395,7 @@ get "/login_from_facebook" do |env|
   app_token = app_login["access_token"]
   token_info = JSON.parse download("https://graph.facebook.com/v2.8/debug_token?input_token=#{access_token}&access_token=#{app_token}")
   raise "token not for this app?" unless token_info["data"]["app_id"] == "187254001787158" # shouldn't be necessary since the download should have failed with a 400 already, but just in case...
-  # we can trust it...
+  # we can now trust it...
   details = JSON.parse download("https://graph.facebook.com/v2.8/me?fields=email,name&access_token=#{access_token}") # public_profile, user_friends also available, though not through /me [?]
   # {"email" => "rogerpack2005@gmail.com", "name" => "Roger Pack", "id" => "10155234916333140"}
   user = setup_user_and_session("", details["id"].as_s, details["name"].as_s, details["email"].as_s, "facebook", env.params.query["email_subscribe"] == "true", env)
@@ -412,8 +412,11 @@ get "/login_from_amazon" do |env| # amazon changes the url to this with some GET
 end
 
 def setup_user_and_session(amazon_id, facebook_id, name, email, type, email_subscribe, env)
-  user = User.from_update_or_new_db(amazon_id, facebook_id, name, email, type, email_subscribe)
+  user, is_new = User.from_update_and_if_new(amazon_id, facebook_id, name, email, type, email_subscribe)
   env.session.int("user_id", user.id) # if save whole session, we can *never* get user updates from admin session back to theirs :|
+  if (is_new)
+    send_welcome_email(email, env)
+  end
   if env.session.string?("redirect_to_after_login") 
     env.redirect env.session.string("redirect_to_after_login")
     env.session.delete_string("redirect_to_after_login")
@@ -730,22 +733,26 @@ get "/personalized_edit_list/:url_id" do |env|
   render "views/personalized_edit_list.ecr", "views/layout_yes_nav.ecr"
 end
 
-post "/subscribe" do |env|
+post "/subscribe" do |env| # this is the "send me a link to the site" thing... :|
   email = env.params.body["email_to_send_to"]
   setup_user_and_session("", "", "", email, "email", true, env)
 
+  send_welcome_email(email, env)
+  logout_session(env) # don't log them in, that's pretty unexpected...
+  env.redirect "/"
+end
+
+def send_welcome_email(email, env)
   # https://askubuntu.com/a/13118/20972
   # TODO use a better email addy once it works/can work??
   password = File.read("email_pass").strip
   username = File.read("email_full_user").strip
-  out = system("sendemail -xu #{username} -f #{username} -t #{email} -u 'Link to the edited movie site' -m 'Here is the link! https://playitmyway.org welcome aboard!  We hope you enjoy some awesome edited movies from our site!' -s smtp.gmail.com -o tls=yes -xp #{password} -s smtp.gmail.com:587")
+  out = system("sendemail -xu #{username} -f #{username} -t #{email} -u 'Welcome to Play it My Way!' -m 'We love having you with us.  Here's a link to the site: https://playitmyway.org. We hope you enjoy some awesome edited movies from our site!' -s smtp.gmail.com -o tls=yes -xp #{password} -s smtp.gmail.com:587")
   if out
-    add_to_flash env, "Success, sent an invitation email to #{email}, you should see an email in your inbox now!"
+    add_to_flash env, "Success, sent a welcome email to #{email}, you should see an email in your inbox now!"
   else
     add_to_flash env, "Unable to send email, please mention this to us playitmywaymovies@gmail.com"
   end
-  logout_session(env) # don't log them in, that's pretty unexpected...
-  env.redirect "/"
 end
 
 post "/save_tag_edit_list" do |env|

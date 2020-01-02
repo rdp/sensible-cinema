@@ -765,31 +765,31 @@ class User
     end
   end
 
-  def self.from_update_or_new_db(amazon_id, facebook_id, name, email : String, type, email_subscribe)
+  def self.from_update_and_if_new(amazon_id, facebook_id, name, email : String, type, email_subscribe)
     existing = query("SELECT * from users where email = ?", email) do |rs| 
       User.from_rs(rs);
     end
     raise "huh" if existing.size > 1
     if existing.size == 1
-      out = existing[0]
-      out.name = name # update it in case they were email only
-      out.type = type
-      out.email_subscribe = email_subscribe # update profile :)
+      user = existing[0]
+      user.name = name # update it in case they were email only
+      user.type = type
+      user.email_subscribe = email_subscribe # update profile :)
       if amazon_id.size > 0
-        out.amazon_id = amazon_id # why do we even save these anymore?
+        user.amazon_id = amazon_id # why do we even save these anymore?
       elsif facebook_id.size > 0
-        out.facebook_id = facebook_id
+        user.facebook_id = facebook_id
       else
         # email only == OK
       end
-      out.create_or_update # update in our case
-      out
+      user.create_or_update # update in our case
+      return user, false
     else
       editor = false # must manually promote them these days
       is_admin = false
-      out = User.new(amazon_id, facebook_id, name, email, type, email_subscribe, editor, is_admin)
-      out.create_or_update # create
-      out
+      user = User.new(amazon_id, facebook_id, name, email, type, email_subscribe, editor, is_admin)
+      user.create_or_update # create
+      return user, true
     end
   end
 
