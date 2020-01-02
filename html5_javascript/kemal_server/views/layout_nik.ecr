@@ -158,7 +158,7 @@
 
   <script>
   $( function() {
-    var allMovies = <%= all_urls.map{|url| {label: url.name_with_episode, id: url.id}}.to_json %>;
+    var allMovies = <%= all_urls.map{|url| {label: url.name_with_episode, link_name: url.name.gsub(" ", "_"), id: url.id}}.to_json %>;
     var allGenres = <%= all_urls.select{|u| u.genre.presence}.group_by{|url| url.genre}.keys.map{|genre| {label: genre + " genre", genre: genre}}.to_json %>;
     $( "#search_id" ).autocomplete({
       source: allMovies.concat(allGenres),
@@ -173,7 +173,7 @@
         if (ui.item.genre) {
           window.location.href = '/browse/genre/' + ui.item.genre;
         } else {
-          window.location.href = '/show_details_small/' + ui.item.id + "/" + ui.item.label; // u.item is anything you add, label is also what is displayed for dropdown...
+          window.location.href = '/show_details_small/' + ui.item.id + "/" + ui.item.link_name; // u.item is anything you add, label is also what is displayed for dropdown...
         }
       },
     });
