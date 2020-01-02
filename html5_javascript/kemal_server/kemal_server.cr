@@ -382,10 +382,10 @@ get "/show_details/:url_id" do |env|
   render "views/show_details.ecr", "views/layout_nik.ecr"
 end
 
-get "/show_details_small/:url_id/:name_ignored" do |env|
+get "/movie/:url_id/:name_ignored" do |env|
   movie = get_url_from_url_id(env)
   env.response.title = movie.name_with_episode + " Edited"
-  render "views/show_details_small.ecr", "views/layout_nik.ecr"
+  render "views/movie.ecr", "views/layout_nik.ecr"
 end
 
 get "/login_from_facebook" do |env|
