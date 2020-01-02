@@ -76,13 +76,20 @@
        <%= if_present_with_break movie.details %>
        <div style="text-align: center;">
          Or <a href=/personalized_edit_list/<%=movie.id%>> <input type="submit" value="personalize edits"> </a> your way!
+         <% if movie.tag_edit_lists(env).size > 0 %>
+            Looks like you already personalized your edits for this movie!
+         <% end %>
        </div>
+       <br/>
        <%= render "views/single_movie_lower_nik.ecr"  %>
-       Add this movie to your <a href=/watchlist>watchlist click here</a>.
-      <button class="close-button" data-close aria-label="Close reveal" type="button"> <!-- top right x -->
+       Add this movie to your future <a href=/watchlist>watchlist</a>.
+       <br/>
+       <button class="close-button" data-close aria-label="Close reveal" type="button"> <!-- top right x -->
         <span aria-hidden="true" style="font-size: 60px;">&times;</span>
-      </button>
-      <input type="button" value="Close" onclick="$('#movieModal<%= movie.id %>').foundation('close');" style="height: 40px; width: 60px;"/> 
+       </button>
+       <div style="text-align: center;">
+        <input type="button" value="Close" onclick="$('#movieModal<%= movie.id %>').foundation('close');" style="height: 40px; width: 60px;"/> 
+       </div>
     </div> <!-- end modal -->
 
 </div>
