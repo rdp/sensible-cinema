@@ -353,15 +353,15 @@ class Url
   end
 
   def name_with_episode
+    local_name = name
     if episode_number != 0
-      local_name = name
       if local_name.size > 150
         local_name = local_name[0..150] + "..."
       end
       "#{local_name}, Episode #{episode_number} : #{episode_name}"
     else
       if human_readable_company == "youtube"
-        local_name = "Youtube: #{name}"
+        local_name = "Youtube: #{local_name}"
       end
       local_name
     end
