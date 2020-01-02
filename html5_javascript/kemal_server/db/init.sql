@@ -196,6 +196,7 @@ update urls set stuff_not_edited_out = ''; -- default
 
 update urls set genre = 'genre1'; -- test data
 update urls set amazon_prime_free_type = 'Prime' limit 1;
+update urls set details = 'an awesome movie description' limit 1;
 
 alter table urls add column age_recommendation_after_edited INT NOT NULL DEFAULT 0;
 alter table tags add column lip_readable BOOL DEFAULT false;

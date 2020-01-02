@@ -1,7 +1,7 @@
 <script>
 
 var isInstalled = false;
-var editorExtensionIdDev = "ccihaoeknkbldmebgknlannlpggnlogp"; // local unpackaged plugin?  changed based on path? :|
+var editorExtensionIdDev = "ccihaoeknkbldmebgknlannlpggnlogp"; // local unpackaged plugin?  changes based on path? :|
 var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; // prod
 var installedPinger; 
 
@@ -9,6 +9,8 @@ function markAsGoodChromeExtension() {
   isInstalled = true;
   console.log("detected chrome extension installed");
   runOnceWhenDetectChromeExtension();
+  $(".plugin_installed_class").show(); // avoid doing this on a few different pages :)
+  $(".plugin_not_installed_class").hide(); // probably unneeded :)
 }
 
 function runOnceWhenDetectChromeExtension() { // override this on your page to do something...

@@ -25,7 +25,7 @@
         <a href="<%= movie.url %>" <%= "target='_blank'" unless movie.is_youtube? %>> here</a> to see unedited. 
         <br/> In the meantime you can watch previews and free youtubes and add movies to your watch list for later!
     <% else %>
-      You need to install the app to watch this video edited.  Click <a href=/installation>here to install</a> the editing app <br/>or <a href="<%= movie.url %>" <%= "target='_blank'" unless movie.is_youtube? %>> here to watch it unedited</a> without the app.  Note that previews also won't be edited there.
+      You need to install the app to watch this video edited.  Click <a href=/installation>here for installation instructions</a> for the free editing app <br/>or <a href="<%= movie.url %>" <%= "target='_blank'" unless movie.is_youtube? %>> here to watch it unedited</a> without the app.  Note that previews also won't be edited there.
     <% end %>
       
       <button class="close-button" data-close aria-label="Close reveal" type="button"> <!-- top right x -->
@@ -54,27 +54,30 @@
               <%= movie.image_tag "alt=\"#{movie.name_with_episode}\" style='display: block; margin: 0 auto;'", ImageSize::VerySmall %>
           <div style="clear: both;"></div>
           <div style="text-align: center;">
-            
-          <input type="submit" value="Click to watch" />
-
            <%= movie.name_with_episode %> 
-
-            </a>
-            <% if movie.edit_passes_completed >= 2 %>
-               edited now!
-            <% elsif movie.tag_count == 0 %>
-              (not started, click here to watch unedited anyway)
-            <% else # first or second pass
-             %>
-              (edits incomplete, work in progress, click here to watch anyway)
-            <% end %>
+           <br/>
+           <div class="plugin_installed_class" style="display: none;">
+             <% if movie.edit_passes_completed >=2 %>
+               <input type="submit" value="Click to watch edited" />
+             <% elsif movie.tag_count == 0 %>
+               <input type="submit" value="Click to watch unedited" />
+               (not started)
+             <% else %>
+               <input type="submit" value="Click to watch partially edited" />
+               (edits incomplete, work in progress, click to watch anyway)
+             <% end %>
+           </div> 
+           <div class="plugin_not_installed_class">
+             <input type="submit" value="Click for edited app instructions" />
+           </div> 
           </div>
-          <div style="text-align: center;">
-           Or <a href=/personalized_edit_list/<%=movie.id%>>personalize edits</a> your way!
-          </div>
-
+         </a>
        <!-- we load the entire database with each request, whoa -->
-       <%= render "views/single_movie_lower.ecr"  %>
+       <%= if_present_with_break movie.details %>
+       <div style="text-align: center;">
+         Or <a href=/personalized_edit_list/<%=movie.id%>> <input type="submit" value="personalize edits"> </a> your way!
+       </div>
+       <%= render "views/single_movie_lower_nik.ecr"  %>
 
       <button class="close-button" data-close aria-label="Close reveal" type="button"> <!-- top right x -->
         <span aria-hidden="true" style="font-size: 60px;">&times;</span>

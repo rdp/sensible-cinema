@@ -30,7 +30,9 @@
 <% else %>
     <!-- desktop of some kind... -->   
         <% if chrome_desktop?(env) %>
-          <span style="font-size: larger;">Install Play It My Way by <a href="https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml">clicking here</a>, then click "Add to chrome" top right button on the next page.  Play it my way is free, enjoy!</span>
+          <script> <!-- pull the trigger! -->
+window.location.href = 'https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml';
+          </script>
         <% else %>
           <!-- some other kind of desktop browser... -->
           <h2>In order for our free chrome app to work, you'll need to first switch to the <a href=https://www.google.com/chrome/>Chrome web browser</a>, then come back to this site (playitmyway.org -- remember "play it my way!"), click <a href=https://www.google.com/chrome/>here to continue</a>!</h2>

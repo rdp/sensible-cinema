@@ -1,0 +1,28 @@
+            <% if movie.most_recent_pass_discovery_level == 1 %>
+              This movie has not yet been edited. 
+            <% elsif movie.most_recent_pass_discovery_level == 5 %>
+              This movie is fully edited, ready to go for you and your family!
+            <% else %>
+              This movie has been edited but we're still working on getting everything, please report anything you notice!
+              <!-- TODO the "can't edit" status more here... -->
+            <% end %>
+            <br/>
+            <br/>
+            <%= if_present_with_break movie.sell_it_edited, "Why watch edited?" %>
+            <%= if_present_with_break movie.stuff_not_edited_out, "Stuff not edited out:" %>
+            <%= if_present_with_break movie.age_recommendation_after_edited, "Minimum age recommended, to watch edited:" %>
+            <!-- internal editing notes not show -->
+            <% if movie.tag_count > 0 %>
+              What you can edit out: 
+              <%= tags_by_category_with_size(movie) %> <!-- if this blows up its a tag with unknown category -->
+            <% end %>
+            <br/>
+            <%= if_present_with_break movie.wholesome_uplifting_level, "Wholesome level:" %>
+            <%= if_present_with_break movie.wholesome_review, "Wholesome review:" %>
+            <%= if_present_with_break movie.good_movie_rating, "Good movie level:" %>
+            <%= if_present_with_break movie.review, "Good movie review:" %>
+            <%= if_present_with_break movie.original_rating, "Original rating:" %>
+            <%= if_present_with_break "#{movie.genre} (#{movie.human_duration})", "Genre:" %>
+            <%= if_present_with_break movie.cost_string, "Price:" %>
+            <a href="/show_details/<%= movie.id %>">See individual tag details</a>
+            <br/>
