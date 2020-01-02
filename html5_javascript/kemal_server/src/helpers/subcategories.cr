@@ -13,8 +13,8 @@ def most_recent_pass_levels # attempt to use int's so I can tweak verbiage but..
  }
 end
 
-def category_map
-   {"movie-content": true, "profanity": true, "violence": true, "physical": true, "suspense": true, "substance-abuse": true}
+def category_map # DB seems to line up with these...
+   {"profanity": true, "violence": true, "physical": true, "suspense": true, "substance-abuse": true, "movie-content": true}
 end
 
 # if you change ANYTHING here do a sub auto rescan "test" after! (or convert it all to named everywhere!)

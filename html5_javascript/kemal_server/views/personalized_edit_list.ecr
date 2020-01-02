@@ -38,22 +38,24 @@
 <% tags_by_category = tag_edit_list.tags_with_personalized_enabled.group_by{|tag, enabled| tag.category} %>
 
 <% 
-category_map.each_with_index{ |category, index| 
-   tags_and_enableds = tags_by_category.fetch(category.to_s, [] of Tuple(Tag, Bool)) 
+category_map.each_with_index{ |category, always_true, category_index| 
+   tags_and_enableds_for_category = tags_by_category.fetch(category.to_s, [] of Tuple(Tag, Bool)) 
    human_category = humanize_category(category) %>
 
   <img src=/images/<%= category %>.png style="max-width: 100px; max-height: 100px;"/>
   <h2 style="display: inline;"><%= human_category.capitalize %></h2>
 <br/>
-  <input id="<%= category %><%= index %>" type="checkbox" checked onchange='updateSelectAll(<%= tags_and_enableds.map{|tag, enabled| tag.id }.pretty_inspect %>, this.checked);'
-  > Edit out all <%= human_category %> (<%= tags_and_enableds.size %>)
+  <% all_category_enabled = tags_and_enableds_for_category.all?{|tag, enabled| enabled} %>
+  <input id="category_checkbox_<%= category_index %>" type="checkbox" <%= "checked" if all_category_enabled %> onchange='updateSelectAll(<%= tags_and_enableds_for_category.map{|tag, enabled| tag.id }.pretty_inspect %>, this.checked);'
+  > Edit out all <%= human_category %> (<%= tags_and_enableds_for_category.size %>)
   <br/>
   <br/>
-  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#category_div_<%= index %>" aria-expanded="false" aria-controls="collapseExample">Choose individual <%= human_category %> tags</button>
-  <div id=category_div_<%= index %>  class="collapse">
-  <% tags_and_enableds.sort_by{|tag, personal_action| tag.subcategory}.group_by{ |tag, personal_action | tag.subcategory}.each_with_index{ |subcategory_and_subcategory_tags_with_enabled, index2| subcategory, subcategory_tags_and_enableds = subcategory_and_subcategory_tags_with_enabled %>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#category_div_<%= category_index %>" aria-expanded="false" aria-controls="collapseExample">Choose individual <%= human_category %> tags</button>
+  <div id=category_div_<%= category_index %>  class="collapse">
+  <% tags_and_enableds_for_category.sort_by{|tag, personal_action| tag.subcategory}.group_by{ |tag, personal_action | tag.subcategory}.each_with_index{ |subcategory_and_subcategory_tags_with_enabled, index_subcat| subcategory, subcategory_tags_and_enableds = subcategory_and_subcategory_tags_with_enabled %>
   <h3><%= subcategory %></h3>
-  <input id="checkbox_id_<%= index2 %>" type="checkbox" checked 
+  <% all_subcategory_enabled = subcategory_tags_and_enableds.all?{|tag, enabled| enabled} %>
+  <input id="checkbox_id_<%= index_subcat %>" type="checkbox" <%= "checked" if all_subcategory_enabled %> 
     onchange='updateSelectAll(<%= subcategory_tags_and_enableds.map{|tag, action| tag.id}.pretty_inspect %>, this.checked);'
   > Edit out all "<%= subcategory %>"
   <br/>
@@ -62,7 +64,8 @@ category_map.each_with_index{ |category, index|
   <tr>
     <td>
       <input id="checkbox_<%= tag.id %>" name="checkbox_<%= tag.id %>" type="checkbox" <%= "checked" if enabled %>
-        onchange='' >
+        onchange='unCheck("checkbox_id_<%= index_subcat %>"); unCheck("category_checkbox_<%= category_index %>");'
+      >
     <%= seconds_to_human tag.start %> 
     </td>
     <td>
@@ -123,20 +126,17 @@ age_recommendation_after_edited (for this personalized list) (ex: 10, or 0 for n
 
 <script>
 
-function updateCheck(id, value) {
-  var checkbox = document.getElementById("checkbox_" + id);
-  if (value == "do_nothing") {
-    checkbox.checked = false;
-  } else {
-    checkbox.checked = true;
-  }
+function unCheck(full_id_name) {
+  var checkbox = document.getElementById(full_id_name);
+  checkbox.checked = false;
+//  $(checkbox).triggerHandler('change'); // avoid recursion of it calling down to us :|
 }
 
 function updateSelectAll(list, checked) {
   for(var i=0, len=list.length; i < len; i++){
     var checkbox = document.getElementById("checkbox_" + list[i]);
     checkbox.checked = checked;
-    $(checkbox).triggerHandler('change');
+//    $(checkbox).triggerHandler('change'); // recursion :|
   }
 }
 </script>
