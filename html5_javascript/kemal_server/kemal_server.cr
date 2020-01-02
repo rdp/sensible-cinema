@@ -382,7 +382,7 @@ get "/show_details/:url_id" do |env|
   render "views/show_details.ecr", "views/layout_nik.ecr"
 end
 
-get "/show_details_small/:url_id" do |env|
+get "/show_details_small/:url_id/:name_ignored" do |env|
   movie = get_url_from_url_id(env)
   env.response.title = movie.name_with_episode + " Edited"
   render "views/show_details_small.ecr", "views/layout_nik.ecr"
@@ -788,7 +788,7 @@ post "/save_tag_edit_list" do |env|
   tag_edit_list.create_or_refresh(tag_ids)
   add_to_flash(env, "Success! saved personalized edits #{tag_edit_list.description}.  You may now watch edited with your edits applied.  If you are watching the movie in another  tab please refresh that browser tab")
   save_local_javascript tag_edit_list.url, "serialize user's tag edit list", env # will save it with a user's id noted but hopefully that's opaque enough...though will also cause some churn but then again...will save it... :|
-  env.redirect "/show_details_small/#{tag_edit_list.url_id}" # back to a movie page...
+  env.redirect "/show_details_small/#{tag_edit_list.url_id}/#{URI.encode url.name, space_to_plus: true} " # back to movie page...
 end
 
 def save_local_javascript(db_url, log_message, env) # actually just json these days...

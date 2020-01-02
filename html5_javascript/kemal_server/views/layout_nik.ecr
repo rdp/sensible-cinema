@@ -76,9 +76,6 @@
                         <li>
                             <a href="/questions">About</a>
                         </li>
-                        <li>
-                            <a href="/faq">FAQ</a>
-                        </li>
                         <li class="show-for-large">
                             <a href="/supporter"><img id="donate" src="/images/donate-button.gif"></a>
                         </li>
@@ -111,7 +108,12 @@
 
     <div style="clear: both;"></div> <!-- some do, some don't need this? -->
     <br/>
-    Support a cause you believe in, become a Play it my way supporter <a href=/supporter>click here!</a>
+    Support a cause you believe in, become a Play it my way supporter <a href=/supporter>click here!</a>  <a href="/supporter"><img id="donate" src="/images/donate-button.gif"></a>
+    <br/>
+    <% unless logged_in?(env) %>
+    Create a <a href=/login>login</a> and get updates of our newest movie filters!
+    <% end %>
+
     <footer>
         <div class="grid-x">
             <div class="cell auto">
@@ -171,7 +173,7 @@
         if (ui.item.genre) {
           window.location.href = '/browse/genre/' + ui.item.genre;
         } else {
-          window.location.href = '/show_details_small/' + ui.item.id; // u.item.anything you add, label is shown...
+          window.location.href = '/show_details_small/' + ui.item.id + "/" + ui.item.label; // u.item is anything you add, label is also what is displayed for dropdown...
         }
       },
     });
