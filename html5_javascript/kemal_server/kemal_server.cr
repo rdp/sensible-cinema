@@ -786,9 +786,9 @@ post "/save_tag_edit_list" do |env|
   url.tags.each{|tag| tag_ids[tag.id] = false unless tag_ids.has_key?(tag.id) }
   
   tag_edit_list.create_or_refresh(tag_ids)
-  add_to_flash(env, "Success! saved personalized edits #{tag_edit_list.description}.  You may now watch edited with your edits applied.  If you are watching the movie in another  tab please refresh that browser tab")
+  add_to_flash(env, "Success! saved personalized edits #{tag_edit_list.description}.  You may now watch edited personalized.  If you are watching the movie in another  tab please refresh that browser tab.")
   save_local_javascript tag_edit_list.url, "serialize user's tag edit list", env # will save it with a user's id noted but hopefully that's opaque enough...though will also cause some churn but then again...will save it... :|
-  env.redirect "/show_details_small/#{tag_edit_list.url_id}/#{URI.encode url.name.gsub(" ", "_")} " # back to movie page...
+  env.redirect "/show_details_small/#{tag_edit_list.url_id}/#{URI.encode url.name_with_episode.gsub(" ", "_")} " # back to movie page...
 end
 
 def save_local_javascript(db_url, log_message, env) # actually just json these days...
