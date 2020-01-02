@@ -1,3 +1,14 @@
+<% content_for "header" do %>
+  <% specs = movie.image_specs(ImageSize::Medium) %>
+  <% if specs %> 
+    <!-- make it show up for facebook first time...barely worth it? :) -->
+    <meta property="og:image" content="https://playitmyway.org<%= movie.sized_relative_url(ImageSize::Medium) %>" />
+    <meta property="og:image:width" content="<%= specs[:width] %>"/>
+    <meta property="og:image:height" content="<%= specs[:height] %>"/>
+  <% end %>
+<% end %>
+<h1>Our editing details for <br/>[<%= movie.name_with_episode %>]</h1>
+
 <%= box_style = ""; want_name = true; render "views/_box_movie_nik.ecr" %> 
 <div style="clear: both;"></div>
 <h3> <a href="/"><<< Back to home/browse.</a></h3>
