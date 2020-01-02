@@ -701,7 +701,7 @@ get "/login" do |env|
     add_to_flash env, "already logged in!"
     env.redirect "/"
   else
-    render "views/login.ecr", "views/layout_yes_nav.ecr"
+    render "views/login.ecr", "views/layout_nik.ecr"
   end
 end
 
