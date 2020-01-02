@@ -361,9 +361,9 @@ class Url
       "#{local_name}, Episode #{episode_number} : #{episode_name}"
     else
       if human_readable_company == "youtube"
-        name = "Youtube: #{name}"
+        local_name = "Youtube: #{name}"
       end
-      name
+      local_name
     end
   end
 
