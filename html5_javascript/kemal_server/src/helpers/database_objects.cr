@@ -807,10 +807,13 @@ def first_or_nil(list)
   end
 end
 
+class DbException < Exception
+end
+
 def only_one!(list)
   if list.size == 1
     list[0]
   else
-    raise "did not find one, size=#{list.size}"
+    raise DbException.new("did not find one, size=#{list.size}")
   end
 end

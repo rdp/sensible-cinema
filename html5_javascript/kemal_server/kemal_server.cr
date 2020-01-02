@@ -763,6 +763,11 @@ post "/save_tag_edit_list" do |env|
     tag_edit_list = TagEditList.get_existing_by_url_id url_id, our_user_id(env)
     raise "wrong id? you gave #{params["id"]} expected #{tag_edit_list.id}" unless params["id"].to_i == tag_edit_list.id
   else
+    begin
+      TagEditList.get_existing_by_url_id url_id, our_user_id(env)
+      raise "should not have had one already there, please try again" # once had 3 in prod? huh?
+    rescue expected : DbException
+    end
     tag_edit_list = TagEditList.new url_id, our_user_id(env)
   end
 
