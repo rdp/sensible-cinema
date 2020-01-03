@@ -1,22 +1,27 @@
 == todo list (ordered) ==
 
 chick flick genre broken
-https://smile.amazon.com/Lost-City-Amazon-Original-Movie/dp/B06XY77N5N?sa-no-redirect=1 failed?
 
 roger/melissa edits: 
 youtube M that I groomed for her :)
 some edits google keep R
-re-watch dead poets' so I can update uservoice
+watch dead poets' so I can update uservoice
 
 add youtube preview ID's :|
   and inline youtube previews on our site :|
 
+test fix on iPhone youtube :|
+  just skip waaaay forward for now? test...
 
+some prime aren't any longer...
+
+
+
+https://smile.amazon.com/Lost-City-Amazon-Original-Movie/dp/B06XY77N5N?sa-no-redirect=1 failed?
 
 the "edited by pimw"
   doesn't show up if haven't bought yet? :|
-
-some prime aren't any longer...
+  it bugs *me* anyway :|
 
 @plugin: new save button at bottom?
   when add private edits :)
@@ -24,8 +29,11 @@ some prime aren't any longer...
 add "everything I ever wanted" to the bottom text on the main page.  And clean it up.an it up.
   doesn't even sell that the thing is free!  Prime it's totally free!
 
+SEO: add some H3's somewhere...
+
 why you want us in the vidangel scene? Does it matter?
- add to FAQ?
+  add to FAQ?
+  Do humans care?
 
 allow "wishlist" our mobile excuse
   I already updated text so... :)
@@ -40,22 +48,14 @@ seems like stackoverflow avoids blood money and...makes it a presentable product
 
 allow real email login just email
 
-test fix on iPhone youtube :|
-  just skip waaaay forward for now? test...
-
 demo movie "big buck" that works in every browser, including mobile, no plugin needed/included...iOS? :|
   sales are important :)  would this sell it?  Maybe! youtubes enough?  A nice demo youtube??
 
 mark some as "not really done"  until I can double check them...it's the only way...
   before "real release"? :|
 
-ponder on blood money
-
-
 allow subscriptions?
   rename premium sub -> supporter sub or something?
-
-genres links broken
 
 nik layout
   browse menu add genres? LOL
@@ -64,8 +64,6 @@ nik layout
   glance at old layout
   layout ugly in certain screen sizes/mobile :|
     iphone has ugly white space main page? :|
-  buttons in popout instead of links...
-  the x is too small
   personalize black background layout...
     everything -> nik layout :)
   answer questions: TV, vidangel, netflix? already addressed? better for TV? FAQ?
@@ -76,9 +74,8 @@ nik layout
     address blood money?
   search has some funky chars in it :)
   youtube embed page to right newer layout
-  youtube don't show related...hmm...how does bing handle this? LOL
   Honesty why....maybe? FAQ?
-  make "all pages" black muhaha
+  make "all pages" black layout muhaha
   search magnifying glass wrong color background
   add back in twitter etc.
 
@@ -95,37 +92,37 @@ get user feedback
   business model
   youtube
   personalized
+  keep?
 
 kickstarter
-  decide on prizes
+  decide on prizes??
   movie
-  get people to review fauxstarter before launch...
+  get people to review fauxstarter before launch...??
   Add some persuasive text for "non primers" as it were :|
     more market research non primers :|
   double check everything has "amazon second urls" and fully groomed as well... :| still on prime right prices (post sync with their API?)
-  movie, tweak,
   fire!
   somehow try and get a following pre kickstarter?? meh...
 
-fixup some bstar galactica names original :|
-
-make all various emails forward to me...
-
-crystal not blocked:  
+crystal not blocked yes do:
   better sort!
   book PR
 
-crystal blocked:
-  push PR's :| 8498 8499 slated to merge
-  issues fixed once those merged
+== todo uncategorized, assume most "not do", blocked ==
 
-== todo uncategorized, assume most "not do" ==
+make all various emails forward to me...
+
+allow login from that weird gmail dropdown thing...? :|
+  at least a "login via google account" option?
+
+search: allow search I can't just search for battlestar?
+  also does enter work? update stackoverflow comment LOL
+
+some titles say "Watch xxx" remove Watch
 
 main page still not...there...
 
 youtube: some kind of popup if "this one is edited" also a dropdown "edit this!"
-
-/show_details/350 is a terrible url
 
 login and "subscribe" stuff at the bottom of everywhere...if not logged in...
 
@@ -180,8 +177,6 @@ spinner sometimes remains again :| ??
 
 update category in db: swimsuits, and some others :| see code source comments
 
-allow login from that weird gmail dropdown thing...? :|
-
 @plugin smile.amazon.com with TNF says "server down" LOL
 
 donate to kemal :)
@@ -235,9 +230,6 @@ split "blood" vs. dried blood for all earlier tags LOL
   more subcats that got split over time? male shirtless and other lewd? LOL
   and recategorize all profanities "lip readable"
   and all lewdness "level" LOL
-
-two seeks in a row das boot darn idiot weren't as pretty as anticipated...but functional seemed... (left image of before skip briefly)
-  we should double seek!? :)
 
 figure out longer term backupz and for flds
 
@@ -362,8 +354,6 @@ some subcats are non comprehensible by humans...and yet...hmm...some are though.
 auto detect when shtuff goes off prime somehow?
 link from personalized to watch edited? groom that flow more anyway...
 saner url's :| more human
-
-watch edited on show_details doesn't warn if not installed yet :|
 
 add multiple genre tags "new releases" "enjoyable by whole family"
 
