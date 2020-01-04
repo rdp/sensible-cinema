@@ -11,17 +11,17 @@
       You can also browse our collection and see which movies/TV you'd like to watch edited later, and add them to your <a href=/watchlist>watchlist</a>.
       <br/>
       <br/>
-      Just remember "play it my way" to find us!  You can plug your computer into your TV as well!
+      Just remember "play it my way" to find us!
     <% if android_mobile?(env) %>
       <!-- android used to have an app... :| -->
     <% else %>
       <!--Looks like you're on iOS, nice! -->
     <% end %>
     <br/>
-    Feel free to browse our collection and see what you want to watch!
+    Feel free to browse our collection and see what you want to watch edited later!
     <br/>
     <br/>
-    Enter your email address here, we'll send you a link to the website, as well as periodic updates:
+    Or enter your email address here to subscribe, we'll send you a link to the website, as well as periodic updates:
     <form action=/subscribe method=POST >
       <input type="text" name="email_to_send_to" placeholder="yourname@site.com" />
       <input type="submit" value="Send me an email!">
