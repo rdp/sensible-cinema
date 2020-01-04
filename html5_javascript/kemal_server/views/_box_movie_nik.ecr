@@ -56,7 +56,7 @@
           <div style="text-align: center;">
            <%= movie.name_with_episode %> 
            <br/>
-           <div class="plugin_installed_class" style="display: none;">
+           <div class="plugin_installed_class" style="<%= "display: none;" unless movie.is_youtube? %>">
              <% if movie.edit_passes_completed >=2 %>
                <input type="submit" value="Click to watch edited" />
              <% elsif movie.tag_count == 0 %>
