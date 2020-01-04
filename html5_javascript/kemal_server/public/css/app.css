@@ -388,7 +388,7 @@ ul {
     top:10%;
     border-radius: 15px;
     position: absolute;
-    width: 60vw; # not height...
+    width: 60vw; # not height...iOS 5s needed this...
     min-width: 200px; # mobile hack LOL
 }
 
