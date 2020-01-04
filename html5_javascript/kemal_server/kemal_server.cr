@@ -27,7 +27,7 @@ class CustomHandler < Kemal::Handler # don't know how to interrupt it from a bef
       if env.request.method == "GET"
         env.session.string("redirect_to_after_login", "#{path}?#{env.request.query}") 
       end # else too hard
-      add_to_flash env, "Please login to unleash the Play it My Way's full awesomeness (#{path}), first, here:"
+      add_to_flash env, "Please login to unleash the full awesomeness (#{path}), first, below:"
       env.redirect "/login" 
     elsif env.request.host !~ /localhost|127.0.0.1|playitmyway/
       # sometimes some crawlers were calling https://freeldssheetmusic.org as if it were this, weird, attempt redirect for SEO
