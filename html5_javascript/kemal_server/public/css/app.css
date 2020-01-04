@@ -511,6 +511,8 @@ screen and (min-width: 40em) {}
 }
 
 html [type="button"], [type="reset"], [type="submit"] {
+ // iOS would do empty/black buttons without this? yikes...
  color: white;
+ background-color:grey;
 }
 
