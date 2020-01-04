@@ -75,7 +75,7 @@
        <!-- we load the entire database with each request, whoa -->
        <%= if_present_with_break movie.details %>
        <div style="text-align: center;">
-         Or <a href=/personalized_edit_list/<%=movie.id%>> <input type="submit" value="personalize edits"> </a> your way!
+         Or <a href=/personalized_edit_list/<%=movie.id%>> <input type="submit" value="personalize edits" style="-webkit-appearance: none;"> </a> your way!
          <% if movie.tag_edit_lists(env).size > 0 %>
             Looks like you already personalized your edits for this movie!
          <% end %>
