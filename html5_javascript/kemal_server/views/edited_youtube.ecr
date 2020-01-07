@@ -32,7 +32,7 @@
   <h4 id="youtube_name_header_id"><%= url ? url.name + " (Edited)" : "youtube not in our edited system yet, please click 'unedited' in the black box below the movie to add it!" %></h4>
   <a href="" onclick="$('#closed_captions_div_id').show(); return false">Turn off Captions</a>.
   <div style="display: none;" id="closed_captions_div_id">
-    Seeing closed captions? To toggle them off (we recommend off) go <a href="https://youtu.be/<%= youtube_id %>">here</a> and turn them off, then come back to watch edited.
+    Seeing closed captions? To toggle them off (we recommend off in case there's some profanities, so mutes can work) go <a href="https://youtu.be/<%= youtube_id %>">here</a> and turn them off, then come back to watch edited.
   </div>
   <br/>
   Legal disclaimer: Performance of the picture is altered from the performance intended by the director or copyright holder of the motion picture. (we're required by law to say that).
@@ -73,11 +73,11 @@ Enter url of movie here:
 <br/>
 <% end %>
 
-Watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited</a>. <!-- in case it matches youtube's terms of use more -->
+Want to watch this youtube <a href="https://youtu.be/<%= youtube_id %>">unedited click here</a>. <!-- in case it matches youtube's terms of use more -->
 <br/>
 <a href=/terms_of_service_youtube>Terms of use (including Youtube's)</a>.
 <br/>
-<a href=/privacy>Privacy policy (including Youtube's)</a>.
+<a href=/privacy>Privacy policy</a>.
 
 <script>
     function SetVolume(val)
