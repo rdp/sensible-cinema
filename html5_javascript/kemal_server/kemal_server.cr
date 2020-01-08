@@ -720,7 +720,7 @@ get "/delete_tag_edit_list/:url_id" do |env|
   tag_edit_list.destroy_tag_edit_list_to_tags
   tag_edit_list.destroy_no_cascade
   add_to_flash env, "deleted one tag edit list"
-  env.redirect "/show_details/#{url_id}"
+  env.redirect "/movie/#{url_id}"
 end
 
 get "/personalized_edit_list/:url_id" do |env|
