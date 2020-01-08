@@ -4,21 +4,20 @@
 <h2>Installation:</h2>
 <br>
 <% if mobile?(env) %>
-      Our <b>Play it My Way</b> app works on desktop/laptop/chromebook computers.  You can even plug your computer into your TV!
+      The <b>Play it My Way</b> app works on desktop/laptop/chromebook computers.  You can even plug your computer into your TV!
       <br/>
-      But you can watch some free <a href="/browse/youtubes">edited youtubes</a> right now on your mobile device!
+      You can't install the app on your current device, but you can watch our free <a href="/browse/youtubes">edited youtubes</a> right now on your mobile device!
       <br/>
       You can also browse our collection and see which movies/TV you'd like to watch edited later, and add them to your <a href=/watchlist>watchlist</a>.
       <br/>
+      Browse <a href="/browse/youtubes">edited youtubes</a> or <a href=/>edited movies/TV</a>.
       <br/>
-      Just remember "play it my way" to find us!
+      Just google "play it my way" when you come back tonight on your computer, to install the app and watch movies!
     <% if android_mobile?(env) %>
       <!-- android used to have an app... :| -->
     <% else %>
       <!--Looks like you're on iOS, nice! -->
     <% end %>
-    <br/>
-    Feel free to browse our collection and see what you want to watch edited later!
     <br/>
     <br/>
     Or enter your email address here to subscribe, we'll send you a link to the website, as well as periodic updates:
@@ -27,7 +26,6 @@
       <input type="submit" value="Send me an email!">
     </form>
     <br/>
-    Browse <a href="/browse/youtubes">edited youtubes</a> or <a href=/>edited movies/TV</a>.
 <% else %>
     <!-- desktop of some kind... -->   
         <% if chrome_desktop?(env) %>

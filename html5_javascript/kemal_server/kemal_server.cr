@@ -79,7 +79,7 @@ get "/edited_youtube/:youtube_id" do |env|
   if url
     env.response.title = "Edited: " + url.name + " Youtube"
   end
-  render "views/edited_youtube.ecr", "views/layout_no_nav.ecr" # TODO want nik non sticky? might not need top div anymore...
+  render "views/edited_youtube.ecr", "views/old_layout_no_nav.ecr" # TODO want nik layout no nav? might not need top div anymore...
 end
 
 get "/redo_all_thumbnails" do |env|
@@ -362,17 +362,17 @@ get "/edit_url/:url_id" do |env|
     add_to_flash(env, "Thanks, you rock! Please fill in the rest of details and your review about the movie, set everything...then email us, and feel free to move on to the next!")
   end
   url = get_url_from_url_id(env)
-  render "views/edit_url.ecr", "views/layout_yes_nav.ecr"
+  render "views/edit_url.ecr", "views/layout_nik.ecr"
 end
 
 get "/mass_upload_from_subtitle_file/:url_id" do |env|
   url = get_url_from_url_id(env)
-  render "views/mass_upload_from_subtitle_file.ecr", "views/layout_yes_nav.ecr"
+  render "views/mass_upload_from_subtitle_file.ecr", "views/layout_nik.ecr"
 end
 
 get "/add_new_tag/:url_id" do |env|
   url = get_url_from_url_id(env)
-  render "views/add_new_tag.ecr", "views/layout_yes_nav.ecr"
+  render "views/add_new_tag.ecr", "views/layout_nik.ecr"
 end
 
 get "/show_details/:url_id" do |env|
@@ -438,7 +438,7 @@ get "/logout" do |env|
     add_to_flash(env, "already logged out")
     env.redirect "/"
   else
-    render "views/logout.ecr", "views/layout_yes_nav.ecr"
+    render "views/logout.ecr", "views/layout_nik.ecr"
   end
 end
 
@@ -623,7 +623,7 @@ get "/old_home" do |env| # old home index...
   all_urls_half_way = all_urls.select{|url| url.edit_passes_completed == 1 }
   all_urls_just_started = all_urls.select{|url| url.edit_passes_completed == 0 }
   start = Time.local
-  out = render "views/old_main.ecr", "views/layout_yes_nav.ecr"
+  out = render "views/old_main.ecr", "views/layout_nik.ecr"
   puts "view took #{Time.local - start}"  # pre view takes as long as first query :|
   out
 end
@@ -680,7 +680,7 @@ get "/movies_in_works" do |env| # old way...
   if env.params.query["by_self"]? # the default uh think these days?
     render "views/_list_movies.ecr"
   else
-    render "views/_list_movies.ecr", "views/layout_yes_nav.ecr"
+    render "views/_list_movies.ecr", "views/layout_nik.ecr"
   end
 end
 
@@ -730,7 +730,7 @@ get "/personalized_edit_list/:url_id" do |env|
   # and not save yet :|
   show_tag_details =  env.params.query["show_tag_details"]?
     
-  render "views/personalized_edit_list.ecr", "views/layout_yes_nav.ecr"
+  render "views/personalized_edit_list.ecr", "views/layout_nik.ecr"
 end
 
 post "/subscribe" do |env| # this is the "send me a link to the site" thing... :|
