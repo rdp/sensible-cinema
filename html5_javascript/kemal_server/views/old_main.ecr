@@ -143,7 +143,7 @@ function expandBoxOrOpen(id) {
   x.toggle();
   var actual_id =  id.split(/_/).pop();
     $.ajax({        
-        url : '/single_movie_lower/' + actual_id,
+        url : '/old_single_movie_lower/' + actual_id,
         type: 'GET',
         success: function(data){
             x.html(data);

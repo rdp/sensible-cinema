@@ -684,9 +684,9 @@ get "/movies_in_works" do |env| # old way...
   end
 end
 
-get "/single_movie_lower/:url_id" do |env| # old pre nik stuff :|
+get "/old_single_movie_lower/:url_id" do |env|
   movie = get_url_from_url_id(env)
-  render "views/single_movie_lower.ecr" # no layout
+  render "views/old_single_movie_lower.ecr" # no layout on purpose
 end
 
 get "/go_admin" do |env|
