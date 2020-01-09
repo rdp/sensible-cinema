@@ -140,7 +140,7 @@ function addEditUiOnce() {
         </select>
         <br/>
       <button type="" value="" onclick="clearButton(); return false;">discard changes/new tag</button>
-        <input type='button' id='save_tag_button_id' value='Save Edit' onclick="saveTagButton(); return false;">
+        <input type='button' id='save_tag_button_id' value='Save Edit' onclick="saveTagButton(); return false;" style="color: blue;">
         <br/>
         <br/>
 		Describe the content:
@@ -2283,7 +2283,8 @@ function check_if_done_seek(seeked_from_time, seek_to_ts, did_preseek_pause, cal
         doPlay();
         make_sure_does_not_get_stuck_after_play(); // doPlay isn't always enough sadly...and then it gets stuck in this weird half paused state :| hopefully rare!
       } else {
-        console.log("not doing doPlay or make sure does not get stuck after seek because !did_preseek_pause");
+        console.log("not doing doPlay or make sure does not get stuck after seek because !did_preseek_pause just kidding actually doing it");
+        make_sure_does_not_get_stuck_after_play();
       }
       clearInterval(seek_timer);
       if (callback) {
