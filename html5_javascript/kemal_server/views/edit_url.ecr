@@ -1,5 +1,11 @@
 <h1>Editing details for <%= url.name_with_episode %></h1>
 
+<style>
+select {
+  width: auto;
+}
+</style>
+
 <form action="/save_url" enctype="multipart/form-data" method="POST">
 
 <% if url.id != 0 %>
