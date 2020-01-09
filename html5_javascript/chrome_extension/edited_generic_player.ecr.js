@@ -77,7 +77,7 @@ function addEditUiOnce() {
       <br/>
       Pimw is in Beta, we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
       <br/>
-      Picture-free dragger: use this to seek in the movie, to avoid any bad preview pictures! <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 180px;" /> <span id='safe_seek_ts_id'>32m 10s</span> 
+      Picture-free dragger: use this to seek in the movie, to avoid potential bad preview pictures! <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 180px;" /> <span id='safe_seek_ts_id'>32m 10s</span> 
       <div style=""> 
         <span id="currently_xxx_span_id"> <!-- "currently: muting" --></span>
         <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable this later if flagged as editor -->
@@ -1008,7 +1008,7 @@ function isPaused() {
 }
 
 function doPlay() {
-  console.log("doing doPlay() paused=" + video_element.paused + " state=" + video_element.readyState + " buffered=" + twoDecimals(getSecondsBufferedAhead()));
+  console.log("doing doPlay() paused=" + video_element.paused + " readyState=" + video_element.readyState + " buffered=" + twoDecimals(getSecondsBufferedAhead()));
   if (isYoutubePimw()) {
     youtube_pimw_player.playVideo();
   } else {
@@ -1877,7 +1877,7 @@ function doPause() {
 
 function rawRequestSeekToTime(ts, already_cached, current_time) {
   console.log("about to do rawRequestSeekToTime=" + twoDecimals(ts));
-  console.log("rawRequestSeekToTime paused=" + video_element.paused + " state=" + video_element.readyState + " buffered_was=" + twoDecimals(getSecondsBufferedAhead()));
+  console.log("rawRequestSeekToTime paused=" + video_element.paused + " readyState=" + video_element.readyState + " buffered_was=" + twoDecimals(getSecondsBufferedAhead()));
 
   if (isYoutubePimw()) {
     var allowSeekAhead = true; // "allow to seek past buffered" but doesn't quite work well iOS?
@@ -1927,7 +1927,7 @@ function getSecondsBufferedAhead() {
       seconds_buffered =- 1;
     }
   } else {
-    console.log("uninitialized html5 perhaps? for buffered");
+    console.log("uninitialized html5 perhaps? nothing buffered?" + video_element.buffered);
     seconds_buffered = -1;
   }
   return seconds_buffered;
@@ -1949,7 +1949,7 @@ function seekToTime(seek_to_ts, callback) {
   // try and avoid freezes after seeking...if it was playing first...
   var current_time = getCurrentTime();
   var seeked_from_time = getCurrentTime();
-  console.log("seeking to " + timeStampToHuman(seek_to_ts) + " from=" + timeStampToHuman(current_time) + " state=" + video_element.readyState + " to_ts=" + twoDecimals(seek_to_ts));
+  console.log("seeking to " + timeStampToHuman(seek_to_ts) + " from=" + timeStampToHuman(current_time) + " readyState=" + video_element.readyState + " to_ts=" + twoDecimals(seek_to_ts) + " from_ts=" + twoDecimals(current_time));
   // [amazon] if this is far enough away from current, it also implies a "play" call...oddly. I mean seriously that is bizarre.
   // however if it close enough, then we need to call play
   // some shenanigans to pretend to work around this...
@@ -1989,12 +1989,12 @@ function check_if_done_seek(seeked_from_time, seek_to_ts, did_preseek_pause, cal
     if (seconds_buffered > 2 || !isPaused()) { // usually buffers 4 or 6...it auto plays if within buffered [amazon]
       // success
       console.log("appears it just finished seeking successfully to " + timeStampToHuman(seek_to_ts) + " seek_to_ts=" + seek_to_ts + " length_was=" + twoDecimals(seek_to_ts - seeked_from_time) + " buffered_ahead=" 
-          + twoDecimals(seconds_buffered) + " from=" + twoDecimals(seeked_from_time) + " cur_time_actually=" + twoDecimals(getCurrentTime()) + " state=" + video_element.readyState);
+          + twoDecimals(seconds_buffered) + " from=" + twoDecimals(seeked_from_time) + " cur_time_actually=" + twoDecimals(getCurrentTime()) + " readyState=" + video_element.readyState);
       if (did_preseek_pause) {
         doPlay();
         make_sure_does_not_get_stuck_after_play(); // doPlay isn't always enough sadly...and then it gets stuck in this weird half paused state :| hopefully rare!
       } else {
-        console.log("not doing doPlay after seek because !did_preseek_pause");
+        console.log("not doing doPlay or make sure does not get stuck after seek because !did_preseek_pause");
       }
       clearInterval(seek_timer);
       if (callback) {
@@ -2008,7 +2008,7 @@ function check_if_done_seek(seeked_from_time, seek_to_ts, did_preseek_pause, cal
       }
     }
   } else {
-    console.log("seek_timer interval [i.e. still seeking...] paused=" + isPaused() + " seek_to_ts=" + seek_to_ts + " state=" + video_element.readyState + " cur_time=" + getCurrentTime());
+    console.log("seek_timer interval [i.e. still seeking...] paused=" + isPaused() + " seek_to_ts=" + seek_to_ts + " readyState=" + video_element.readyState + " cur_time=" + getCurrentTime());
   }
 }
 
