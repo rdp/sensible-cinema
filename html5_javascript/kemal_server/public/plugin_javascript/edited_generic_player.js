@@ -68,17 +68,19 @@ function addEditUiOnce() {
 
   <div id="load_succeeded_div_id" style='display: none;'>
     <div id="currently_playing_it_your_way_id" style="color: rgb(148, 148, 148);">
+     <div id="top_human_stuff_id" style='display: block;'>
       <svg id="big_edited_text_svg_id" style="font: 50px 'Arial'; height: 50px;" viewBox="0 0 350 50"> <!-- svg shenanigans seem only way to get outlined text -->
         <text style="fill: none; stroke: rgb(188, 188, 188); stroke-width: 0.5px; stroke-linejoin: round;" y="40" x="55" id="big_edited_text_id">Edited</text>
       </svg>
-       <br/>
+      <br/>
       Editing out: <select id='tag_edit_list_dropdown_id' onChange='personalizedDropdownChanged();'></select> <!-- javascript will set up this select -->
       <br/>
       <a href=# onclick="openPersonalizedEditList(); return false">Or personalize which parts you edit out</a>
       <br/>
       Pimw is in Beta, we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
       <br/>
-      Picture-free dragger: use this to seek in the movie, to avoid potential bad preview pictures! <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 180px;" /> <span id='safe_seek_ts_id'>32m 10s</span> 
+     </div>
+      Picture-free dragger: use this to seek in the movie, to avoid any bad preview pictures! <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 180px;" /> <span id='safe_seek_ts_id'>2h 32m 10s</span> <!-- be careful modifying the text to test it on one past an hour to make sure it still fits -->
       <div style=""> 
         <span id="currently_xxx_span_id"> <!-- "currently: muting" --></span>
         <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable this later if flagged as editor -->
@@ -96,11 +98,11 @@ function addEditUiOnce() {
       <form target="_blank" action="filled_in_later_if_you_see_this_it_may_mean_an_onclick_method_threw" method="POST" id="create_new_tag_form_id">
         <br/>
         from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
-        <input id='' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
+        <input id='set_start_to_current_id' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
         <input type='button' value='<-- Test' onclick="testCurrentFromUiStart(); return false">
         <br/>
         &nbsp;&nbsp;&nbsp;&nbsp;to:<input type='text' name='endy' style='width: 150px; font-size: 12pt; height: 20px;' id='endy' value='0m 0.00s'/>
-        <input id='' type='button' value='<--set to current time' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
+        <input id='set_end_to_current_id' type='button' value='<--set to current time' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
         <input type='button' value='<-- Test' onclick="testCurrentFromUiEnd(); return false">
         <br/>
 
@@ -1400,7 +1402,7 @@ function addForNewVideo() {
 }
 
 function toggleAddNewTagStuff() {
-  big_edited_text_svg_id.style.display = "none"; // make more space for small screens...
+  toggleDiv(document.getElementById("top_human_stuff_id")); // make more space screen real estate is expensive!
   toggleDiv(document.getElementById("tag_details_div_id"));
 }
 
@@ -2210,6 +2212,7 @@ function getSecondsBufferedAhead() {
     }
     if (!seconds_buffered) {
       // happens when it seeks way ahead and the buffering hasn't even caught up at all yet, amazon...
+      console.log("html5 says it has buffered but not around current timestamp?");
       seconds_buffered =- 1;
     }
   } else {
@@ -2335,7 +2338,7 @@ function displayDiv(div) { // who needs jQuery :)
 }
 
 function toggleDiv(div) {
-  if (div.style.display == "block") {
+  if (div.style.display == "block" ) { // only works if specified initially with style: block to avoid some formatting cdonfusion...
     hideDiv(div);
   }
   else {
