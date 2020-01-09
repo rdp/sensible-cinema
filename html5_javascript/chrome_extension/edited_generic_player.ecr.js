@@ -77,7 +77,7 @@ function addEditUiOnce() {
       <br/>
       Pimw is in Beta, we miss anything? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
       <br/>
-      Picture-free dragger: use this to seek in the movie, avoid any bad preview pictures! <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 180px;" /><span id='safe_seek_ts_id'>32m 10s</span> 
+      Picture-free dragger: use this to seek in the movie, to avoid any bad preview pictures! <input type="range" min="0" max="100" value="0" step="1" id="safe_seek_id" style="width: 180px;" /> <span id='safe_seek_ts_id'>32m 10s</span> 
       <div style=""> 
         <span id="currently_xxx_span_id"> <!-- "currently: muting" --></span>
         <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable this later if flagged as editor -->
@@ -254,7 +254,7 @@ By default edit should be turned on?
       <a href=# onclick="getSubtitleLink(); return false;" </a>Get subtitles</a>
       &nbsp;&nbsp;
       <a href=# onclick="doneMoviePage(); return false;">PIMW Movie page</a>
-      <input type="button" onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
+      <input type="button" onclick="collapseAddTagStuff(); return false;" value='✕ Hide this editor'/>
     </div>
   </div>`;
 
@@ -292,7 +292,7 @@ function updateSafeSeekTime() {
   if (!seek_dragger_being_dragged) {
     var seek_dragger =  document.getElementById('safe_seek_id');
     seek_dragger.value = getCurrentTime() / videoDuration() * 100;
-    document.getElementById('safe_seek_ts_id').innerHTML = timeStampToHumanRoundSecond(getCurrentTime());
+    updateHTML(document.getElementById('safe_seek_ts_id'), timeStampToHumanRoundSecond(getCurrentTime()));
   } // else let the mouse movement change it only...it's about to seek soon'ish...
 }
 
@@ -325,7 +325,7 @@ function setupSafeSeekOnce() {
       }
   });
 
-  setInterval(updateSafeSeekTime, 250); // only 4/sec because if they happen to do their "own" seek this could interfere and "seek to no where" (well, still could but more rare? :\  XXX
+  setInterval(updateSafeSeekTime, 250); // only 4/sec because ... uh...
 }
 
 function playButtonClicked() {
@@ -1322,7 +1322,7 @@ function getFirstTagStartingBefore(search_time) { // somewhat duplicate but seem
 
 function openTagBeforeOneInUi() {
   if (!uiTagIsNotInDb()) {
-    var search_time = createFauxTagForCurrentUI().start - 0.01; // get the next down...
+    var search_time = createFauxTagForCurrentUI().start - 0.02; // get the next down... 0.01 wasn't enough once
     openTagStartingBefore(search_time);
   } else {
     openTagPreviousToNowButton();
@@ -1331,7 +1331,7 @@ function openTagBeforeOneInUi() {
 
 function openTagAfterOneInUi() {
   if (!uiTagIsNotInDb()) {
-    var search_time = createFauxTagForCurrentUI().start + 0.01;
+    var search_time = createFauxTagForCurrentUI().start + 0.02; // 0.01 wasn't enough once
     openFirstTagStartingAfter(search_time);
   } else {
     openNextTagButton();
