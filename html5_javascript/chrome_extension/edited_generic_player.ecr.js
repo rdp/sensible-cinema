@@ -102,7 +102,7 @@ function addEditUiOnce() {
         <br/>
         &nbsp;&nbsp;&nbsp;&nbsp;to:<input type='text' name='endy' style='width: 150px; font-size: 12pt; height: 20px;' id='endy' value='0m 0.00s'/>
         <input id='set_end_to_current_id' type='button' value='<--set to current time' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
-        <input type='button' value='<-- Test' onclick="testCurrentFromUiEnd(); return false">
+        <input type='button' id='test_current_from_ui_end_id' value='<-- Test' onclick="testCurrentFromUiEnd(); return false">
         <br/>
 
 
@@ -610,6 +610,12 @@ function checkIfShouldDoActionAndUpdateUI() {
     var destroy_button = document.getElementById("destroy_button_id");
     var before_test_edit_span = document.getElementById("before_test_edit_span_id");
     var reload_tag_button = document.getElementById("reload_tag_button_id");
+    var test_end_button = document.getElementById('test_current_from_ui_end_id');
+    if (currentTestAction() == 'skip') {
+      test_end_button.style.visibility = "hidden";
+    } else {
+      test_end_button.style.visibility = "visible";
+    }
     if (uiTagIsNotInDb()) {
       save_button.value = "Save New Tag";
       destroy_button.style.visibility = "hidden"; // couldn't figure out how to grey it
