@@ -542,7 +542,7 @@ By default edit should be turned on?
       <a href=# onclick="getSubtitleLink(); return false;" </a>Get subtitles</a>
       &nbsp;&nbsp;
       <a href=# onclick="doneMoviePage(); return false;">PIMW Movie page</a>
-      <input type="button" onclick="collapseAddTagStuff(); return false;" value='✕ Hide this editor'/>
+      <input type="button" onclick="toggleAddNewTagStuff(); return false;" value='✕ Hide this editor'/>
     </div>
   </div>`;
 
@@ -1410,10 +1410,6 @@ function addForNewVideo() {
 function toggleAddNewTagStuff() {
   toggleDiv(document.getElementById("top_human_stuff_id")); // make more space screen real estate is expensive!
   toggleDiv(document.getElementById("tag_details_div_id"));
-}
-
-function collapseAddTagStuff() {
-  hideDiv(document.getElementById("tag_details_div_id"));
 }
 
 function isAddtagStuffVisible() {
