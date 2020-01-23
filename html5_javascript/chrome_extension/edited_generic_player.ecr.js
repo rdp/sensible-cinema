@@ -631,10 +631,10 @@ function checkIfShouldDoActionAndUpdateUI() {
     }
     var endy = humanToTimeStamp(document.getElementById('endy').value);
     var start = humanToTimeStamp(document.getElementById('start').value);  
-    if (sanityCheckTimestamps(start, endy, false)) {
+    if (doubleCheckFullFormAddRedAndAlert(false)) {
       save_button.style.color = "blue";
     } else {
-      save_button.value += " ?"; // "broken" XXXX only don't show if the whole thing is filled in?
+      save_button.value += " ?"; // "kind of saveable" LOL
     }
     updateHTML(document.getElementById('next_will_be_at_x_span_id'), nextLine);
     updateHTML(document.getElementById('next_will_be_at_x_second_line_span_id'), nextsecondline);
@@ -1239,7 +1239,7 @@ function testCurrentFromUi(timeToTestString) {
   }
   var faux_tag = createFauxTagForCurrentUI();
 
-  if (!doubleCheckActionTimestampSanityAndAlert(currentTestAction(), faux_tag.details, faux_tag.start, faux_tag.endy)) {
+  if (!doubleCheckActionTimestampSanityAndAlert(currentTestAction(), faux_tag.details, faux_tag.start, faux_tag.endy, true)) {
     return;
   }
 
@@ -1378,7 +1378,7 @@ function saveTagButton() {
 
   var endy = humanToTimeStamp(document.getElementById('endy').value);
   var start = humanToTimeStamp(document.getElementById('start').value);
-  if (!doubleCheckFullFormAddRedAndAlert()) { // this used to be more of a "generic value" check...
+  if (!doubleCheckFullFormAddRedAndAlert(true)) { // this used to be more of a "generic value" check...
     return;
   }
   if (endy > videoDuration()) {
