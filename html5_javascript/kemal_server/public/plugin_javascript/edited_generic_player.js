@@ -885,6 +885,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       nextLine += "(no upcoming tags)";
       document.getElementById("open_next_tag_id").style.visibility = "hidden";
     }
+
     var next_earlier_tag = getFirstTagEndingBefore(cur_time);
     if (next_earlier_tag) {
       document.getElementById("open_prev_tag_id").style.visibility = "visible";
@@ -894,7 +895,6 @@ function checkIfShouldDoActionAndUpdateUI() {
 
     var save_button = document.getElementById("save_tag_button_id");
     var destroy_button = document.getElementById("destroy_button_id");
-    var before_test_edit_span = document.getElementById("before_test_edit_span_id");
     var reload_tag_button = document.getElementById("reload_tag_button_id");
     var test_end_button = document.getElementById('test_current_from_ui_end_id');
     if (currentTestAction() == 'skip') {
@@ -915,12 +915,19 @@ function checkIfShouldDoActionAndUpdateUI() {
       reload_tag_button.style.visibility = "visible";
       nextsecondline = "RE-EDITING existing tag..." + nextsecondline;
     }
+    var endy = humanToTimeStamp(document.getElementById('endy').value);
+    var start = humanToTimeStamp(document.getElementById('start').value);  
+    if (sanityCheckTimestamps(start, endy, false)) {
+      save_button.style.color = "blue";
+    } else {
+      save_button.value += " ?"; // "broken"
+    }
     updateHTML(document.getElementById('next_will_be_at_x_span_id'), nextLine);
     updateHTML(document.getElementById('next_will_be_at_x_second_line_span_id'), nextsecondline);
 
     updateHTML(document.getElementById("playback_rate"), twoDecimals(getPlaybackRate()) + "x");
   }
-  // XXXX cleanup the below needed huh?
+  // XXXX cleanup the below needed still? huh?
   removeIfNotifyEditsHaveEnded(cur_time); // gotta clean this up sometime, and also support "rewind and renotify" so just notify once on first tag...
 }
 
@@ -1518,7 +1525,7 @@ function testCurrentFromUi(timeToTestString) {
   }
   var faux_tag = createFauxTagForCurrentUI();
 
-  if (!doubleCheckTimestampsOnlyAndAlert(currentTestAction(), faux_tag.details, faux_tag.start, faux_tag.endy)) {
+  if (!doubleCheckActionTimestampSanityAndAlert(currentTestAction(), faux_tag.details, faux_tag.start, faux_tag.endy)) {
     return;
   }
 
@@ -1654,17 +1661,17 @@ function openFirstTagStartingAfter(search_time) {
 }
 
 function saveTagButton() {
-  if (!doubleCheckFullFormAddRed()) { // generic double check, just on form values, not relative to everything else :|
-    return;
-  }
 
   var endy = humanToTimeStamp(document.getElementById('endy').value);
-  if (endy > videoDuration()) {s
+  var start = humanToTimeStamp(document.getElementById('start').value);
+  if (!doubleCheckFullFormAddRedAndAlert()) { // this used to be more of a "generic value" check...
+    return;
+  }
+  if (endy > videoDuration()) {
     alert("tag goes past end of movie? aborting...");
     return;
   }
 
-  var start = humanToTimeStamp(document.getElementById('start').value);
   var otherTags = allTagsExceptOneBeingEdited();
   for (var i = 0; i < otherTags.length; i++) {
      var otherTag = otherTags[i];
@@ -2517,11 +2524,10 @@ function getAudioPercentOrAlert(value) {
   return null;
 }
 
-function doubleCheckTimestampsOnlyAndAlert(action, details, start, endy) {
-
+function doubleCheckActionTimestampSanityAndAlert(action, details, start, endy) {
   if ((action == "make_video_smaller" || action == "change_speed") && !isYoutubePimw()) {
     alert("we only do that for youtube today, ping us if you want it added elsewhere");
-    return;
+    return false;
   }
   
   if (action == "change_speed" && !getEndSpeedOrAlert(details)) {
@@ -2539,20 +2545,32 @@ function doubleCheckTimestampsOnlyAndAlert(action, details, start, endy) {
     alert("we seemingly aren't allowed to do yes_audio_no_video (black screen) for youtube, just skip instead...");
     return false;
   }
+  if (!sanityCheckTimestamps(start, endy, true)) {
+    return false;
+  }
+  return true;
+}
+
+function sanityCheckTimestamps(start, endy, should_alert) {
   if (start == 0) {
-    alert("Can't start at zero, please select 0.01s if you want one that starts near the beginning");
+    optionally_alert("Can't start at zero, please select 0.01s if you want one that starts near the beginning", should_alert);
     return false;
   }
   if (start >= endy) {
-    alert("appears your end is before or equal to your start, please adjust timestamps, then try again!");
+    optionally_alert("appears your end is before or equal to your start, please adjust timestamps, then try again!", should_alert);
     return false;
   }
   if (endy - start > 60*15) {
-    alert("tag is more than 15 minutes long? This should not typically be expected? check timestamps, if you do need it this long, let us know...");
+    optionally_alert("tag is more than 15 minutes long? This should not typically be expected? check timestamps, if you do need it this long, let us know...", should_alert);
     return false;
   }
-
   return true;
+}
+
+function optionally_alert(message, should_alert) {
+  if (should_alert) {
+    alert(message);
+  }
 }
 
 function humanToTimeStamp(timestamp) {
@@ -2578,14 +2596,14 @@ function removeElementFromArray(arr) {
     return arr;
 }
 
-function doubleCheckFullFormAddRed() {
+function doubleCheckFullFormAddRedAndAlert() {
 
   var action = document.getElementById('action_sel').value;
   var details = document.getElementById('details_input_id');
   var start = humanToTimeStamp(document.getElementById('start').value);
   var endy = humanToTimeStamp(document.getElementById('endy').value);
   var returny = true;
-  if (!doubleCheckTimestampsOnlyAndAlert(action, details.value, start, endy)) {
+  if (!doubleCheckActionTimestampSanityAndAlert(action, details.value, start, endy)) {
     addRedBorderTemporarily(document.getElementById('endy'));
     addRedBorderTemporarily(document.getElementById('start'));
     returny = false;

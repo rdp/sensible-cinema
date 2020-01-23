@@ -115,11 +115,10 @@ function getAudioPercentOrAlert(value) {
   return null;
 }
 
-function doubleCheckTimestampsOnlyAndAlert(action, details, start, endy) {
-
+function doubleCheckActionTimestampSanityAndAlert(action, details, start, endy) {
   if ((action == "make_video_smaller" || action == "change_speed") && !isYoutubePimw()) {
     alert("we only do that for youtube today, ping us if you want it added elsewhere");
-    return;
+    return false;
   }
   
   if (action == "change_speed" && !getEndSpeedOrAlert(details)) {
@@ -137,20 +136,32 @@ function doubleCheckTimestampsOnlyAndAlert(action, details, start, endy) {
     alert("we seemingly aren't allowed to do yes_audio_no_video (black screen) for youtube, just skip instead...");
     return false;
   }
+  if (!sanityCheckTimestamps(start, endy, true)) {
+    return false;
+  }
+  return true;
+}
+
+function sanityCheckTimestamps(start, endy, should_alert) {
   if (start == 0) {
-    alert("Can't start at zero, please select 0.01s if you want one that starts near the beginning");
+    optionally_alert("Can't start at zero, please select 0.01s if you want one that starts near the beginning", should_alert);
     return false;
   }
   if (start >= endy) {
-    alert("appears your end is before or equal to your start, please adjust timestamps, then try again!");
+    optionally_alert("appears your end is before or equal to your start, please adjust timestamps, then try again!", should_alert);
     return false;
   }
   if (endy - start > 60*15) {
-    alert("tag is more than 15 minutes long? This should not typically be expected? check timestamps, if you do need it this long, let us know...");
+    optionally_alert("tag is more than 15 minutes long? This should not typically be expected? check timestamps, if you do need it this long, let us know...", should_alert);
     return false;
   }
-
   return true;
+}
+
+function optionally_alert(message, should_alert) {
+  if (should_alert) {
+    alert(message);
+  }
 }
 
 function humanToTimeStamp(timestamp) {
@@ -176,14 +187,14 @@ function removeElementFromArray(arr) {
     return arr;
 }
 
-function doubleCheckFullFormAddRed() {
+function doubleCheckFullFormAddRedAndAlert() {
 
   var action = document.getElementById('action_sel').value;
   var details = document.getElementById('details_input_id');
   var start = humanToTimeStamp(document.getElementById('start').value);
   var endy = humanToTimeStamp(document.getElementById('endy').value);
   var returny = true;
-  if (!doubleCheckTimestampsOnlyAndAlert(action, details.value, start, endy)) {
+  if (!doubleCheckActionTimestampSanityAndAlert(action, details.value, start, endy)) {
     addRedBorderTemporarily(document.getElementById('endy'));
     addRedBorderTemporarily(document.getElementById('start'));
     returny = false;
