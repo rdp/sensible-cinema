@@ -3,7 +3,7 @@
 
   "name": "Play it my way [edited movies/TV]",
   "description": "Watch movies TV, and youtube online without the profanity and lewdity, free!",
-  "version": "0.0.1600",
+  "version": "0.0.160",
 
   "browser_action": {
     "default_icon": "camera.128.png",
