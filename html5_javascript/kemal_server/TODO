@@ -102,10 +102,13 @@ kickstarter
   somehow try and get a following pre kickstarter?? meh...
 
 crystal not blocked yes do:
-  better sort!
+  ask is_stmt
+  better sort
   book PR
 
 == todo uncategorized, assume most "not do", blocked ==
+
+add in the "justification" from stream...
 
 allow personal playlist...
   disallow personalizing them...
