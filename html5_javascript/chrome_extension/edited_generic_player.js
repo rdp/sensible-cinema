@@ -542,7 +542,7 @@ By default edit should be turned on?
       <a href=# onclick="getSubtitleLink(); return false;" </a>Get subtitles</a>
       &nbsp;&nbsp;
       <a href=# onclick="doneMoviePage(); return false;">PIMW Movie page</a>
-      <input type="button" onclick="collapseAddTagStuff(); return false;" value='✕ Hide this editor'/>
+      <input type="button" onclick="toggleAddNewTagStuff(); return false;" value='✕ Hide this editor'/>
     </div>
   </div>`;
 
@@ -885,6 +885,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       nextLine += "(no upcoming tags)";
       document.getElementById("open_next_tag_id").style.visibility = "hidden";
     }
+
     var next_earlier_tag = getFirstTagEndingBefore(cur_time);
     if (next_earlier_tag) {
       document.getElementById("open_prev_tag_id").style.visibility = "visible";
@@ -894,7 +895,6 @@ function checkIfShouldDoActionAndUpdateUI() {
 
     var save_button = document.getElementById("save_tag_button_id");
     var destroy_button = document.getElementById("destroy_button_id");
-    var before_test_edit_span = document.getElementById("before_test_edit_span_id");
     var reload_tag_button = document.getElementById("reload_tag_button_id");
     var test_end_button = document.getElementById('test_current_from_ui_end_id');
     if (currentTestAction() == 'skip') {
@@ -915,12 +915,19 @@ function checkIfShouldDoActionAndUpdateUI() {
       reload_tag_button.style.visibility = "visible";
       nextsecondline = "RE-EDITING existing tag..." + nextsecondline;
     }
+    var endy = humanToTimeStamp(document.getElementById('endy').value);
+    var start = humanToTimeStamp(document.getElementById('start').value);  
+    if (doubleCheckFullFormAddRedAndAlert(false)) {
+      save_button.style.color = "blue";
+    } else {
+      save_button.value += " ?"; // "kind of saveable" LOL
+    }
     updateHTML(document.getElementById('next_will_be_at_x_span_id'), nextLine);
     updateHTML(document.getElementById('next_will_be_at_x_second_line_span_id'), nextsecondline);
 
     updateHTML(document.getElementById("playback_rate"), twoDecimals(getPlaybackRate()) + "x");
   }
-  // XXXX cleanup the below needed huh?
+  // XXXX cleanup the below needed still? huh?
   removeIfNotifyEditsHaveEnded(cur_time); // gotta clean this up sometime, and also support "rewind and renotify" so just notify once on first tag...
 }
 
@@ -1412,10 +1419,6 @@ function toggleAddNewTagStuff() {
   toggleDiv(document.getElementById("tag_details_div_id"));
 }
 
-function collapseAddTagStuff() {
-  hideDiv(document.getElementById("tag_details_div_id"));
-}
-
 function isAddtagStuffVisible() {
   return document.getElementById("tag_details_div_id").style.display != "none";
 }
@@ -1522,7 +1525,7 @@ function testCurrentFromUi(timeToTestString) {
   }
   var faux_tag = createFauxTagForCurrentUI();
 
-  if (!doubleCheckTimestampsOnlyAndAlert(currentTestAction(), faux_tag.details, faux_tag.start, faux_tag.endy)) {
+  if (!doubleCheckActionTimestampSanityAndAlert(currentTestAction(), faux_tag.details, faux_tag.start, faux_tag.endy, true)) {
     return;
   }
 
@@ -1658,17 +1661,17 @@ function openFirstTagStartingAfter(search_time) {
 }
 
 function saveTagButton() {
-  if (!doubleCheckFullFormAddRed()) { // generic double check, just on form values, not relative to everything else :|
-    return;
-  }
 
   var endy = humanToTimeStamp(document.getElementById('endy').value);
-  if (endy > videoDuration()) {s
+  var start = humanToTimeStamp(document.getElementById('start').value);
+  if (!doubleCheckFullFormAddRedAndAlert(true)) { // this used to be more of a "generic value" check...
+    return;
+  }
+  if (endy > videoDuration()) {
     alert("tag goes past end of movie? aborting...");
     return;
   }
 
-  var start = humanToTimeStamp(document.getElementById('start').value);
   var otherTags = allTagsExceptOneBeingEdited();
   for (var i = 0; i < otherTags.length; i++) {
      var otherTag = otherTags[i];
@@ -2489,7 +2492,7 @@ function isYoutubePimw() {
   return (typeof youtube_pimw_player !== 'undefined');
 }
 
-function getEndSpeedOrAlert(value) {
+function getEndSpeedOrAlert(value, should_alert) {
   var re = /(\d\.\d+)x$/;
   var match = re.exec(value);
   if (match) {
@@ -2504,59 +2507,70 @@ function getEndSpeedOrAlert(value) {
       for (var i = 0; i < rates.length; i++) {
         out += rates[i].toFixed(2) + "x,";
       }
-      alert(out + ") [0.25 has no audio]");
+      optionally_alert  (out + ") [0.25 has no audio]", should_alert);
   } else {
-      alert("you need to enter the speed you want in the details like 'my_details 2.0x' or 'my_details 0.5x' (goes up to 4.0x, down to 0.5x with audio)");
+      optionally_alert("you need to enter the speed you want in the details like 'my_details 2.0x' or 'my_details 0.5x' (goes up to 4.0x, down to 0.5x with audio)", should_alert);
   }
   return null;
 }
 
-function getAudioPercentOrAlert(value) {
+function getAudioPercentOrAlert(value, should_alert) {
   var re = /(\d+)%$/;
   var match = re.exec(value);
   if (match) {
     return parseFloat(match[1]);
   }
-  alert("you need to enter the audio percent you want, like 'my_details 5%' [at least 5% if youtube]");
+  optionally_alert  ("you need to enter the audio percent you want, like 'my_details 5%' [at least 5% if youtube]", should_alert);
   return null;
 }
 
-function doubleCheckTimestampsOnlyAndAlert(action, details, start, endy) {
-
+function doubleCheckActionTimestampSanityAndAlert(action, details, start, endy, should_alert) {
   if ((action == "make_video_smaller" || action == "change_speed") && !isYoutubePimw()) {
-    alert("we only do that for youtube today, ping us if you want it added elsewhere");
-    return;
-  }
-  
-  if (action == "change_speed" && !getEndSpeedOrAlert(details)) {
+    optionally_alert("we only do that for youtube today, ping us if you want it added elsewhere", should_alert);
     return false;
   }
-  if (action == "set_audio_volume" && !getAudioPercentOrAlert(details)) {
+  
+  if (action == "change_speed" && !getEndSpeedOrAlert(details, should_alert)) {
+    return false;
+  }
+  if (action == "set_audio_volume" && !getAudioPercentOrAlert(details, should_alert)) {
     return false;
   }
  
   if (isYoutubePimw() && (action == "mute_audio_no_video")) {
-    alert("we seemingly aren't allowed to do mute_audio_no_video non-video for youtube, you could make it smaller and mute, two separate overlapping edits, instead");
+    optionally_alert("we seemingly aren't allowed to do mute_audio_no_video non-video for youtube, you could make it smaller and mute, two separate overlapping edits, instead", should_alert);
     return false;
   }
   if (isYoutubePimw() && action == "yes_audio_no_video") {
-    alert("we seemingly aren't allowed to do yes_audio_no_video (black screen) for youtube, just skip instead...");
+    optionally_alert("we seemingly aren't allowed to do yes_audio_no_video (black screen) for youtube, just skip instead...", should_alert);
     return false;
   }
+  if (!sanityCheckTimestamps(start, endy, should_alert)) {
+    return false;
+  }
+  return true;
+}
+
+function sanityCheckTimestamps(start, endy, should_alert) {
   if (start == 0) {
-    alert("Can't start at zero, please select 0.01s if you want one that starts near the beginning");
+    optionally_alert("Can't start at zero, please select 0.01s if you want one that starts near the beginning", should_alert);
     return false;
   }
   if (start >= endy) {
-    alert("appears your end is before or equal to your start, please adjust timestamps, then try again!");
+    optionally_alert("appears your end is before or equal to your start, please adjust timestamps, then try again!", should_alert);
     return false;
   }
   if (endy - start > 60*15) {
-    alert("tag is more than 15 minutes long? This should not typically be expected? check timestamps, if you do need it this long, let us know...");
+    optionally_alert("tag is more than 15 minutes long? This should not typically be expected? check timestamps, if you do need it this long, let us know...", should_alert);
     return false;
   }
-
   return true;
+}
+
+function optionally_alert(message, should_alert) {
+  if (should_alert) {
+    alert(message);
+  }
 }
 
 function humanToTimeStamp(timestamp) {
@@ -2582,76 +2596,79 @@ function removeElementFromArray(arr) {
     return arr;
 }
 
-function doubleCheckFullFormAddRed() {
+function doubleCheckFullFormAddRedAndAlert(should_alert) {
 
   var action = document.getElementById('action_sel').value;
   var details = document.getElementById('details_input_id');
   var start = humanToTimeStamp(document.getElementById('start').value);
   var endy = humanToTimeStamp(document.getElementById('endy').value);
   var returny = true;
-  if (!doubleCheckTimestampsOnlyAndAlert(action, details.value, start, endy)) {
-    addRedBorderTemporarily(document.getElementById('endy'));
-    addRedBorderTemporarily(document.getElementById('start'));
+  if (!doubleCheckActionTimestampSanityAndAlert(action, details.value, start, endy, should_alert)) {
+    addRedBorderTemporarily(document.getElementById('endy'), should_alert);
+    addRedBorderTemporarily(document.getElementById('start'), should_alert);
     returny = false;
   }
 
   var category_div = document.getElementById('category_select_id');
   var category = category_div.value;
   if (category == "") {
-    alert("please select category first");
-    addRedBorderTemporarily(category_div);
+    optionally_alert("please select category first", should_alert);
+    addRedBorderTemporarily(category_div, should_alert);
     returny = false;
   }
  
   var subcat_select = document.getElementById('subcategory_select_id');
   if (subcat_select.value == "") {
-    alert("please select subcategory first");
-    addRedBorderTemporarily(subcat_select);
+    optionally_alert("please select subcategory first", should_alert);
+    addRedBorderTemporarily(subcat_select, should_alert);
     returny = false;
   }
   var impact = document.getElementById('impact_to_movie_id');
   if (impact.value == "0") {
-    alert("please select impact to story");
-    addRedBorderTemporarily(impact);
+    optionally_alert("please select impact to story", should_alert);
+    addRedBorderTemporarily(impact, should_alert);
     returny = false;
   }
   if (details.value == "") {
-    alert("please enter tag details");
-    addRedBorderTemporarily(details);
+    optionally_alert("please enter tag details", should_alert);
+    addRedBorderTemporarily(details, should_alert);
     returny = false;
   }
   
   var age = document.getElementById('age_maybe_ok_id');
   if ((category == "violence" || category == "suspense") && age.value == "0") {
-    alert("for violence or suspense tags, please also select a value in the age specifier dropdown");
-    addRedBorderTemporarily(age);
+    optionally_alert("for violence or suspense tags, please also select a value in the age specifier dropdown", should_alert);
+    addRedBorderTemporarily(age, should_alert);
     returny = false;
   }
   var lewdness_level = document.getElementById('lewdness_level_id');
   if ((category == "physical") && lewdness_level.value == "0") {
-    alert("for sex/nudity/lewdness, please also select a value in the lewdness_level dropdown");
-    addRedBorderTemporarily(lewdness_level);
+    optionally_alert("for sex/nudity/lewdness, please also select a value in the lewdness_level dropdown", should_alert);
+    addRedBorderTemporarily(lewdness_level, should_alert);
     returny = false;
   }
   var lip_readable = document.getElementById('lip_readable_id');
   if ((category == "profanity") && lip_readable.value == "") {
-    alert("for profanity please also select 'lip_readable?' dropdown");
-    addRedBorderTemporarily(lip_readable);
+    optionally_alert("for profanity please also select 'lip_readable?' dropdown", should_alert);
+    addRedBorderTemporarily(lip_readable, should_alert);
     returny = false;
   }
   // ancient joke stuff LOL
   if (subcat_select.options[subcat_select.selectedIndex].value == "joke edit" && document.getElementById('default_enabled_id').value == 'true') {
-    alert("for joking edits please remember to save them with default_enabled as N!");
+    optionally_alert("for joking edits please remember to save them with default_enabled as N!", should_alert);
   }
   return returny;
+  
 }
 
-function addRedBorderTemporarily(to_this_div) {
+function addRedBorderTemporarily(to_this_div, should_alert) {
+  if (should_alert) {
   to_this_div.classList.add("error");  // not ie 9 compat oh well!
   setTimeout(function(){ 
        to_this_div.classList.remove("error");
      }, 
     3000);
+  }
 }
 
 function editDropdownsCreated() {

@@ -19,6 +19,7 @@ function loadScript(url, callback)
 
     // Fire the loading
     head.appendChild(script);
+    // how to detect failure? not sure...
 }
 
 already_loaded = false;
