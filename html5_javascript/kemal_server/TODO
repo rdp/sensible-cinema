@@ -101,10 +101,11 @@ kickstarter
   fire!
   somehow try and get a following pre kickstarter?? meh...
 
-crystal not blocked yes do:
-  better sort
+crystal
+  better sort *
   is_stmt :|
   fixed openssl issues after release
+  more openssl lowball
 
 == todo uncategorized, assume most "not do", blocked ==
 
@@ -186,7 +187,7 @@ update category in db: swimsuits, and some others :| see code source comments
 
 @plugin smile.amazon.com with TNF says "server down" LOL
 
-crystal rest google doc: https://docs.google.com/document/d/1ZUAUBP5z7GDlIy0qROV_C8nxF1OjI0-AYwXQIIKn8fs/edit LOL
+crystal rest google doc: https://docs.google.com/document/d/1ZUAUBP5z7GDlIy0qROV_C8nxF1OjI0-AYwXQIIKn8fs/edit 
 
 one button youtube is all white?
 
