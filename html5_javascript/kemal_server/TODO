@@ -102,9 +102,9 @@ kickstarter
   somehow try and get a following pre kickstarter?? meh...
 
 crystal not blocked yes do:
-  ask is_stmt
   better sort
-  book PR
+  is_stmt :|
+  fixed openssl issues after release
 
 == todo uncategorized, assume most "not do", blocked ==
 
@@ -186,14 +186,7 @@ update category in db: swimsuits, and some others :| see code source comments
 
 @plugin smile.amazon.com with TNF says "server down" LOL
 
-donate to kemal :)
-  request link?
-
-crystal blocked but yes do:
-  push PR's :| 8498 8499 slated to merge
-  issues fixed once those merged
-
-crystal rest google doc: https://docs.google.com/document/d/1ZUAUBP5z7GDlIy0qROV_C8nxF1OjI0-AYwXQIIKn8fs/edit
+crystal rest google doc: https://docs.google.com/document/d/1ZUAUBP5z7GDlIy0qROV_C8nxF1OjI0-AYwXQIIKn8fs/edit LOL
 
 one button youtube is all white?
 
@@ -223,7 +216,7 @@ edit greg's one movie [sync? :| ]
 
 ================= todo all never LOL =======================
 
-does kemal use too much RAM?
+does kemal use too much RAM? [crystal LOL]
 
 get second url's for "everything" :|
 
