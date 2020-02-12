@@ -71,6 +71,7 @@ def db_style_from_query_url(env)
 end
 
 require "./src/straight_forward.cr"
+require "./src/redirects.cr"
 
 get "/edited_youtube/:youtube_id" do |env|
   youtube_id = env.params.url["youtube_id"]
@@ -720,7 +721,7 @@ get "/delete_tag_edit_list/:url_id" do |env|
   tag_edit_list.destroy_tag_edit_list_to_tags
   tag_edit_list.destroy_no_cascade
   add_to_flash env, "deleted one tag edit list"
-  env.redirect "/movie/#{url_id}"
+  env.redirect relative_movie_url(tag_edit_list.url)
 end
 
 get "/personalized_edit_list/:url_id" do |env|
@@ -788,7 +789,11 @@ post "/save_tag_edit_list" do |env|
   tag_edit_list.create_or_refresh(tag_ids)
   add_to_flash(env, "Success! saved personalized edits #{tag_edit_list.description}.  You may now watch edited personalized.  If you are watching the movie in another  tab please refresh that browser tab.")
   save_local_javascript tag_edit_list.url, "serialize user's tag edit list", env # will save it with a user's id noted but hopefully that's opaque enough...though will also cause some churn but then again...will save it... :|
-  env.redirect "/movie/#{tag_edit_list.url_id}/#{URI.encode url.name_with_episode.gsub(" ", "_")} " # back to movie page...
+  env.redirect relative_movie_url(url) # back to movie page...
+end
+
+def relative_movie_url(url)
+  "/movie/#{url.url}/#{URI.encode url.name_with_episode.gsub(" ", "_")}"
 end
 
 def save_local_javascript(db_url, log_message, env) # actually just json these days...
