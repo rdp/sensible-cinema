@@ -18,6 +18,14 @@ def currently_hiring?
   true
 end
 
+#  until I figure out why after 3 months it takes 150MB...LOL
+spawn do
+  loop do
+    sleep 1.0
+    GC.collect
+  end
+end
+
 class CustomHandler < Kemal::Handler # don't know how to interrupt it from a before_all :|
   def call(env)
     puts "start #{env.request.path} #{Time.local}"
