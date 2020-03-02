@@ -18,7 +18,7 @@ def currently_hiring?
   true
 end
 
-#  until I figure out why after 3 months it takes 150MB...LOL
+# until I figure out why after 3 months it takes 150MB...XXX TODO fun, but this works real well for now too... :)
 spawn do
   loop do
     sleep 1.0
