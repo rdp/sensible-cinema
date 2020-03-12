@@ -14,7 +14,7 @@ shards:
 
   kemal-session:
     github: kemalcr/kemal-session
-    commit: 4ea84ee766d01b1d1937354e12cb79a227ac6563
+    commit: 29f65f0b360640ae36ea617d38d2d81bb2c0fa83
 
   kilt:
     github: jeromegn/kilt
