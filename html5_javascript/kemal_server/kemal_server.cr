@@ -619,7 +619,7 @@ def put_test_last(urls)
   urls
 end
 
-get "/" do |env|
+get "/" do |env| # home
   all_urls = get_all_urls
   all_urls_done = all_urls.select{|url| url.edit_passes_completed >= 2 }
   most_recent = all_urls_done.sort_by{|u| u.status_last_modified_timestamp}.last(8).reverse # XXX some series, some movies on purpose, here?

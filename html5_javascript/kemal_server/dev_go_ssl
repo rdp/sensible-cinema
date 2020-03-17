@@ -15,7 +15,7 @@ if [[ ! -f _key.pem ]]; then
 fi
 if [[ $1 != "nobuild" ]]; then
   echo "building"
-  crystal build ./kemal_server.cr -o bin.kemal_server $1 || exit 1
+  crystal build ./kemal_server.cr -o bin.kemal_server --debug $1 || exit 1
 fi
 echo "running"
 ./bin.kemal_server --ssl --ssl-key-file _key.pem --ssl-cert-file cert.pem -p 3000 || exit 1
