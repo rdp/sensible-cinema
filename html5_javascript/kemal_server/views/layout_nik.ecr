@@ -27,6 +27,7 @@
     <link rel="icon" type="image/png" href="/images/camera.32.png"  sizes="32x32" />
     <link href="https://fonts.googleapis.com/css?family=Bitter:700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Istok+Web" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> <!-- load it early, I'm too lazy to want to have to worry about whether it's installed yet or not... -->
     <%= yield_content "header" %>
 </head>
 
@@ -104,7 +105,7 @@
             </div>
         </div>
     </div>
-   <%= render "views/_installed_js.ecr" %> <!-- several wanted it LOL, go first so it can be overridden -->
+    <%= render "views/_installed_js.ecr" %> <!-- several wanted it LOL, go first so it can be overridden -->
 
   <%= content %>
 
@@ -134,13 +135,12 @@
                 <a href="/jobs"><%= currently_hiring? ? "We're Hiring!" : "Volunteers wanted" %></a>
             </div>
             <div class="cell auto">
-                &copy; 2019 Goodness Plus LLC
+                &copy; 2020 Goodness Plus LLC
             </div>
         </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="/js/vendor/what-input.js"></script>
+    <script src="/js/vendor/what-input.js"></script> <!-- used by foundation??? -->
     <script src="/js/vendor/foundation.min.js"></script>
     <script src="/js/app.js"></script>
 
