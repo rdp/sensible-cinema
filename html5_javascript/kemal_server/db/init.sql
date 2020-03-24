@@ -194,7 +194,7 @@ update urls set sell_it_edited = ''; -- default
 alter table urls add column stuff_not_edited_out TEXT;
 update urls set stuff_not_edited_out = ''; -- default
 
-update urls set genre = 'genre1'; -- test data
+update urls set genre = 'genre1&#x2F;genre1b'; -- test data
 update urls set amazon_prime_free_type = 'Prime' limit 1;
 update urls set details = 'an awesome movie description' limit 1;
 

@@ -634,6 +634,7 @@ end
 
 get "/browse/genre/:genre" do |env|
   genre = env.params.url["genre"]
+  puts "got genre #{genre}"
   by_genre = Url.all_by_genre(genre).select{|url| url.edit_passes_completed >= 2 }
   movies = {title: "By Genre: " + genre, urls: by_genre, message: ""}
   env.response.title = movies[:title]
@@ -776,7 +777,7 @@ post "/save_tag_edit_list" do |env|
 end
 
 def relative_movie_url(url)
-  "/movie/#{url.url}/#{URI.encode url.name_with_episode.gsub(" ", "_")}"
+  "/movie/#{url.id}/#{URI.encode url.name_with_episode.gsub(" ", "_")}"
 end
 
 def save_local_javascript(db_url, log_message, env) # actually just json these days...

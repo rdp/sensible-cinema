@@ -163,10 +163,10 @@
 
 <% all_urls = get_all_urls %>
 
-  <script>
+<script>
   $( function() {
-    var allMovies = <%= all_urls.map{|url| {label: HTML.unescape(url.name_with_episode), link_name: url.name_with_episode.gsub(" ", "_"), id: url.id}}.to_json %>;
-    var allGenres = <%= all_urls.select{|u| u.genre.presence}.group_by{|url| url.genre}.keys.map{|genre| {label: HTML.unescape(genre) + " (genre)", genre: genre}}.to_json %>;
+    var allMovies = <%= all_urls.map{|url| {label: HTML.unescape(url.name_with_episode), link_name: url.name_with_episode.gsub(" ", "_"), relative_url: relative_movie_url(url)}}.to_json %>;
+    var allGenres = <%= all_urls.select{|u| u.genre.presence}.group_by{|url| url.genre}.keys.map{ |genre| {label: HTML.unescape(genre) + " (genre)", relative_url: "/browse/genre/" + genre}}.to_json %>;
     $( "#search_id" ).autocomplete({
       source: allMovies.concat(allGenres),
       minLength: 2,
@@ -177,15 +177,11 @@
         }
       },
       select: function( event, ui ) { // they selected item from a dropdown
-        if (ui.item.genre) {
-          window.location.href = '/browse/genre/' + ui.item.genre;
-        } else {
-          window.location.href = '/movie/' + ui.item.id + "/" + ui.item.link_name; // u.item is anything you add, label is also what is displayed for dropdown...
-        }
+          window.location.href = ui.item.relative_url;
       },
     });
   } );
-  </script>
+</script>
 
 </body>
 
