@@ -626,17 +626,6 @@ get "/" do |env| # home
   render "views/main_nik.ecr", "views/layout_nik.ecr"
 end
 
-get "/old_home" do |env| # old home index...
-  all_urls = get_all_urls
-  all_urls_done = all_urls.select{|url| url.edit_passes_completed >= 2 }
-  all_urls_half_way = all_urls.select{|url| url.edit_passes_completed == 1 }
-  all_urls_just_started = all_urls.select{|url| url.edit_passes_completed == 0 }
-  start = Time.local
-  out = render "views/old_main.ecr", "views/layout_nik.ecr"
-  puts "view took #{Time.local - start}"  # pre view takes as long as first query :|
-  out
-end
-
 get "/browse/:type" do |env| # like all_movies
   type = env.params.url["type"]
   movies = get_movies_sorted.select{ |group| group[:type].to_s == type}[0]
@@ -682,20 +671,6 @@ def get_in_works(all_urls)
   thrones, others = in_works.partition{|u| u.name =~ /game of thrones/i }
   put_test_last(others)
   return others + thrones
-end
-
-get "/movies_in_works" do |env| # old way...
-  urls = get_all_urls.reject{|url| url.edit_passes_completed == 0 }
-  if env.params.query["by_self"]? # the default uh think these days?
-    render "views/_list_movies.ecr"
-  else
-    render "views/_list_movies.ecr", "views/layout_nik.ecr"
-  end
-end
-
-get "/old_single_movie_lower/:url_id" do |env|
-  movie = get_url_from_url_id(env)
-  render "views/old_single_movie_lower.ecr" # no layout on purpose
 end
 
 get "/go_admin" do |env|
