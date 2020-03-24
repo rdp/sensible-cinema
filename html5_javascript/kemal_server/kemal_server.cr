@@ -633,7 +633,7 @@ get "/browse/:type" do |env| # like all_movies
 end
 
 get "/genre/:genre" do |env|
-  genre = env.params.url["genre"]
+  genre = URI.decode_www_form(env.params.url["genre"])
   puts "got genre #{genre}"
   by_genre = Url.all_by_genre(genre).select{|url| url.edit_passes_completed >= 2 }
   movies = {title: "By Genre: " + genre, urls: by_genre, message: ""}
