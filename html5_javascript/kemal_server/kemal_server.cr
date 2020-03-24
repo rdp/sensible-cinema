@@ -777,7 +777,7 @@ post "/save_tag_edit_list" do |env|
 end
 
 def relative_movie_url(url)
-  "/movie/#{url.id}/#{URI.encode url.name_with_episode.gsub(" ", "_")}"
+  "/movie/#{url.id}/#{URI.encode_www_form url.name_with_episode.gsub(" ", "_")}"
 end
 
 def save_local_javascript(db_url, log_message, env) # actually just json these days...
