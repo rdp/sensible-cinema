@@ -166,7 +166,7 @@
 <script>
   $( function() {
     var allMovies = <%= all_urls.map{|url| {label: HTML.unescape(url.name_with_episode), link_name: url.name_with_episode.gsub(" ", "_"), relative_url: relative_movie_url(url)}}.to_json %>;
-    var allGenres = <%= all_urls.select{|u| u.genre.presence}.group_by{|url| url.genre}.keys.map{ |genre| {label: HTML.unescape(genre) + " (genre)", relative_url: "/browse/genre/" + URI.encode_www_form(genre)}}.to_json %>;
+    var allGenres = <%= all_urls.select{|u| u.genre.presence}.group_by{|url| url.genre}.keys.map{ |genre| {label: HTML.unescape(genre) + " (genre)", relative_url: "/genre/" + URI.encode_www_form(genre)}}.to_json %>;
     $( "#search_id" ).autocomplete({
       source: allMovies.concat(allGenres),
       minLength: 2,
