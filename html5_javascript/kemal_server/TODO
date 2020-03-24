@@ -1,15 +1,10 @@
 == todo list (ordered) ==
 
-disallow clicking through if no plugin
-  advertise blade runner?
+advertise blade runner?
 
 chick flick genre broken
 
-this page:
-https://playitmyway.org/movie/240/Breaking_Bad_Season_1,_Episode_1_:_Pilot
-should auto open it... TODO
-
-ihttps://playitmyway.org/personalized_edit_list/548 doesn't save :|
+https://playitmyway.org/personalized_edit_list/548 doesn't save :|
 
 M had some edits once on something I missed...newsies?
 
@@ -68,10 +63,8 @@ allow subscriptions?
   rename premium sub -> supporter sub or something?
 
 nik layout
-  browse menu add genres? LOL
   footer is messed up on mobile
   sell better to non primers? and primers?
-  glance at old layout
   layout ugly in certain screen sizes/mobile :|
     iphone has ugly white space main page? :|
   personalize black background layout...
@@ -85,9 +78,8 @@ nik layout
   search has some funky chars in it :)
   youtube embed page to right newer layout
   Honesty why....maybe? FAQ?
-  make "all pages" black layout muhaha
   search magnifying glass wrong color background
-  add back in twitter etc.
+  add back in instagram etc.
 
 youtubes them :|
   previews
@@ -124,13 +116,8 @@ crystal
 some movie said "add?" mar 16
 
 main page startup time is still a leetle slow...
-  jezuh leetle...
 
 if you haven't bought it on amazon you can't tell if editing "is about to work for it"
-
-browse button dropdown doesn't work "for quite awhile" on slow connections :(
-
-fix google analytics to show in popups :|
 
 do the "total views" thing main page?
 
@@ -144,6 +131,8 @@ allow personal playlist...
 add "autoplay" to amazon url's? avoid preview
 
 one link is unreadable youtube editor...
+
+one page still uses old layout
 
 green smiley ugly plugin LOL
 
@@ -182,10 +171,7 @@ weird white top of youtube edited?  Only needed for ios?
 google search results look good?
 SEO?
 
-
 couple FAQ's broken
-
-rename holiday -> christmas add? :)
 
 GoT failure!
 
@@ -199,8 +185,6 @@ the "this is edited" text
 ask lawyer on portion of video :)
 
 finish cleanup lewdness_level it's out of order :|
-
-spinner sometimes remains again :| ??
 
 update category in db: swimsuits, and some others :| see code source comments
 
@@ -236,17 +220,13 @@ edit greg's one movie [sync? :| ]
 
 ================= todo all never LOL =======================
 
-does kemal use too much RAM? [crystal LOL]
+spinner sometimes remains again :| ??
 
 get second url's for "everything" :|
 
 a youtube video for the chrome store
 
 try out android one last time
-
-establish twitter/instagram et al, add back to homepage
-
-figure out if/why it's using a whopping 100MB RAM.  When it starts with less? LOL...
 
 downstairs computer auto collapses all dropdown selects? huh?
 

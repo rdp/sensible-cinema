@@ -1,5 +1,5 @@
 def all_genres # obviously DB must sync here :|
-  ["romance/chick flick", "romantic comedy", "animation/cartoon", "documentary", "horror", "action/adventure", "western", "military/war", "comedy", "music/musical", "drama", "sports", "holiday", "fantasy", "sci-fi", "mystery/thriller", "faith/spirituality"].sort
+  ["romance/chick flick", "romantic comedy", "animation/cartoon", "documentary", "horror", "action/adventure", "western", "military/war", "comedy", "music/musical", "drama", "sports", "holiday/christmas", "fantasy", "sci-fi", "mystery/thriller", "faith/spirituality"].sort
 end
 
 def most_recent_pass_levels # attempt to use int's so I can tweak verbiage but...hmm...
