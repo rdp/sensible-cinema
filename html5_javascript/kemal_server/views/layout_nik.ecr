@@ -165,8 +165,8 @@
 
   <script>
   $( function() {
-    var allMovies = <%= all_urls.map{|url| {label: url.name_with_episode, link_name: url.name_with_episode.gsub(" ", "_"), id: url.id}}.to_json %>;
-    var allGenres = <%= all_urls.select{|u| u.genre.presence}.group_by{|url| url.genre}.keys.map{|genre| {label: genre + " genre", genre: genre}}.to_json %>;
+    var allMovies = <%= all_urls.map{|url| {label: HTML.unescape(url.name_with_episode), link_name: url.name_with_episode.gsub(" ", "_"), id: url.id}}.to_json %>;
+    var allGenres = <%= all_urls.select{|u| u.genre.presence}.group_by{|url| url.genre}.keys.map{|genre| {label: HTML.unescape(genre) + " (genre)", genre: genre}}.to_json %>;
     $( "#search_id" ).autocomplete({
       source: allMovies.concat(allGenres),
       minLength: 2,
