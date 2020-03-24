@@ -28,6 +28,10 @@
     <link href="https://fonts.googleapis.com/css?family=Bitter:700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Istok+Web" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> <!-- load it early, I'm too lazy to want to have to worry about whether it's installed yet or not... -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/js/vendor/what-input.js"></script> <!-- used by foundation??? -->
+    <script src="/js/vendor/foundation.min.js"></script>
+
     <%= yield_content "header" %>
 </head>
 
@@ -140,11 +144,10 @@
         </div>
     </footer>
 
-    <script src="/js/vendor/what-input.js"></script> <!-- used by foundation??? -->
-    <script src="/js/vendor/foundation.min.js"></script>
-    <script src="/js/app.js"></script>
+<script>
+  $(document).foundation(); // I think this initializes the foundation world...so has to be after everything is setup/created in the DOM :|
+</script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 <% if !editor?(env) %>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-4531218-7"></script>

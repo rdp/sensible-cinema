@@ -13,8 +13,9 @@
 <div style="clear: both;"></div>
 <h3> <a href="/"><<< Back to Home/browse.</a></h3>
 
-<script defer='defer'>
-
-  $('#decisionModal<%= movie.id %>').foundation('open');
+<script >
+  $(function() { // onready
+    $('#decisionModal<%= movie.id %>').foundation('open');
+  });
 
 </script>
