@@ -1,5 +1,10 @@
 # old url's
 
-get "/view_url/:url_id" do |env|
-  env.redirect "/show_details/#{env.params.url["url_id"]}"
+get "/show_details/:url_id" do |env| # old
+  env.redirect "/show_tag_details/#{env.params.url["url_id"]}"
 end
+
+get "/view_url/:url_id" do |env| # old
+  env.redirect "/movie/#{env.params.url["url_id"]}/name"
+end
+

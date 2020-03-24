@@ -278,7 +278,7 @@ get "/delete_tag/:tag_id" do |env|
   tag.destroy_in_tag_edit_lists
   tag.destroy_no_cascade
   save_local_javascript tag.url, "removed tag", env
-  env.redirect "/show_details/#{tag.url.id}"
+  env.redirect "/show_tag_details/#{tag.url.id}"
 end
 
 get "/view_tag/:tag_id" do |env|
@@ -384,11 +384,11 @@ get "/add_new_tag/:url_id" do |env|
   render "views/add_new_tag.ecr", "views/layout_nik.ecr"
 end
 
-get "/show_details/:url_id" do |env|
+get "/show_tag_details/:url_id" do |env| # the view "full tags" confusing page...
   url = get_url_from_url_id(env)
   show_tag_details =  env.params.query["show_tag_details"]?
   env.response.title = url.name_with_episode + " Edited"
-  render "views/show_details.ecr", "views/layout_nik.ecr"
+  render "views/show_tag_details.ecr", "views/layout_nik.ecr"
 end
 
 get "/movie/:url_id/:name_ignored" do |env|
@@ -573,7 +573,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     end
     already_by_name = Url.get_only_or_nil_by_name_and_episode_number(title, episode_number) # don't just blow up on DB constraint if from a non listed second url :|
     if already_by_name
-      return "appears we already have a movie by that title in our database, go to <a href=/show_details/#{already_by_name.id}>here</a> and if it's an exact match, add url #{sanitized_url} as its 'second' amazon url, or report this occurrence to us, we'll fix it"
+      return "appears we already have a movie by that title in our database, go to <a href=/show_tag_details/#{already_by_name.id}>here</a> and if it's an exact match, add url #{sanitized_url} as its 'second' amazon url, or report this occurrence to us, we'll fix it"
     end
     url = Url.new
     url.name = title # or series name
@@ -928,7 +928,7 @@ post "/save_url" do |env|
   save_local_javascript db_url, "updated movie info #{db_url.name}", env
 	
   add_to_flash(env, "Success! saved #{db_url.name_with_episode}")
-  env.redirect "/show_details/" + db_url.id.to_s
+  env.redirect "/show_tag_details/" + db_url.id.to_s
 end
 
 def download_youtube_image_if_possible(db_url)
@@ -971,7 +971,7 @@ post "/upload_from_subtitles_post/:url_id" do |env|
     add_to_flash(env, "You should see [#{middle_sub[:details]}] at #{seconds_to_human middle_sub[:start]} if the subtitle file timing is right, please double check it using the \"frame\" button!")
   end
   save_local_javascript db_url, "added subs", env
-  env.redirect "/show_details/#{db_url.id}?show_tag_details=true"
+  env.redirect "/show_tag_details/#{db_url.id}?show_tag_details=true"
 end
 
 def add_to_flash(env, string)

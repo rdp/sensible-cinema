@@ -24,7 +24,7 @@
             <%= if_present_with_break "#{movie.genre} (#{movie.human_duration})", "Genre:" %>
             <%= if_present_with_break movie.cost_string, "Price:" %>
             <% if editor?(env) %>
-              editor: <a href="/show_details/<%= movie.id %>">See individual tag details</a>
+              editor: <a href="/show_tag_details/<%= movie.id %>">See individual tag details</a>
             <% end %>
             </br>
             <br/>
