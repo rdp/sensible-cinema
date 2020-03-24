@@ -632,7 +632,7 @@ get "/browse/:type" do |env| # like all_movies
   render "views/list_movies_nik.ecr", "views/layout_nik.ecr"
 end
 
-get "/browse/genre/:genre" do |env|
+get "/genre/:genre" do |env|
   genre = env.params.url["genre"]
   puts "got genre #{genre}"
   by_genre = Url.all_by_genre(genre).select{|url| url.edit_passes_completed >= 2 }
