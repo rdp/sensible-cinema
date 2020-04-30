@@ -1,0 +1,87 @@
+Input 1 or 0 to make it colorful.
+<br>
+<table style="width:50%">
+  <tr>
+    <th>first row</th>
+    <th>second row</th>
+  </tr>
+<!-- need 2x2 x 3rgb -->
+  <tr>
+    <td style="white-space: nowrap;">r
+     <select id="0_0_r", onchange="myFunction(this);">
+       <option value="0">0</option>
+       <option value="1">1</option>
+     </select>
+g
+     <select id="0_0_g", onchange="myFunction(this);">
+       <option value="0">0</option>
+       <option value="1">1</option>
+     </select>
+b
+     <select id="0_0_b", onchange="myFunction(this);">
+       <option value="0">0</option>
+       <option value="1">1</option>
+     </select>
+    </td>
+    <td>
+     top right
+    </td>
+  </tr>
+  <tr>
+    <td> bottom left
+    </td>
+    <td style="white-space: nowrap;">r
+     <select id="1_1_r", onchange="myFunction(this);">
+       <option value="0">0</option>
+       <option value="1">1</option>
+     </select>
+g
+     <select id="1_1_g", onchange="myFunction(this);">
+       <option value="0">0</option>
+       <option value="1">1</option>
+     </select>
+b
+     <select id="1_1_b", onchange="myFunction(this);">
+       <option value="0">0</option>
+       <option value="1">1</option>
+     </select>
+    </td>
+  <tr>
+
+</table>
+<canvas id="myCanvas" width="200" height="200" style="border:1px solid #000000;">
+</canvas>
+
+<script>
+function myFunction(select) {
+  var id = select.id; // 0_0_r
+  var coords = id.split("_");
+  var box = coords[0] + "_" + coords[1];
+  var red = document.getElementById(box + "_r");
+  var green = document.getElementById(box + "_g");
+  var blue = document.getElementById(box + "_b");
+
+  var red_int = parseInt(red.value)*255;
+  var green_int = parseInt(green.value)*255;
+  var blue_int = parseInt(blue.value)*255;
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+ctx.fillStyle = "rgb(" + red_int + "," + green_int + "," + blue_int + ")";
+
+var height = 2;
+var width = 2;
+var total_size = c.width; // 200
+var start_x = parseInt(coords[0])*total_size/2;
+var start_y = parseInt(coords[1])*total_size/2;
+
+ctx.fillRect(start_x, start_y, total_size/width, total_size/height);
+}
+
+// start black
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+ctx.fillStyle = "black";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+</script>
+
