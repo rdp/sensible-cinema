@@ -690,15 +690,19 @@ function liveEpisodeNumber() {
     }
   }
   if (isAmazon()) {
-    var x = document.getElementsByClassName("dvui-playButton");
-    if (x) {
-      var play_text = x[0].getAttribute("aria-label"); // "Episode 2, Continue Watching"
-      if (play_text && play_text.match(/Episode (\d+)/)) {
-        var out = /Episode (\d+)/.exec(play_text)[1];
-        return out;
+
+    var x = document.getElementsByClassName("webPlayerUIContainer"); // I know it's in there somewhere...
+    var currentNode, ni = document.createNodeIterator(x[0], NodeFilter.SHOW_ELEMENT);
+
+    while(currentNode = ni.nextNode()) {
+      if (currentNode.innerHTML.startsWith("Season ")) { // Season 1, Ep. 2 Cat's in the Bag
+        if (currentNode.innerHTML.match(/Ep. (\d+)/)) {
+          var out = /Ep. (\d+)/.exec(currentNode.innerHTML)[1];
+          return out;
+        } 
       }
     }
-    return "0"; // not a series?
+    return "0"; // not a series assume
   }
   else {
     return "0"; // anything else dunno...
