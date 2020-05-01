@@ -102,6 +102,7 @@ def subcategory_map
     {db_name: "violence (other)", human_name: "other", sub_sub_cat: ""},
   ],
   "physical": [
+  # TODO move these commented out ones/actualize if in DB already prod :|
   #  {db_name: "art nudity", human_name: "art based nudity", sub_sub_cat: ""},
     {db_name: "sexual reference", human_name: "spoken sexual innuendo/reference", sub_sub_cat: ""},
     {db_name: "revealing clothing", human_name: "revealing clothing (scantily clad, non cleavage)", sub_sub_cat: ""},
