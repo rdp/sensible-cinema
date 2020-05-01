@@ -921,7 +921,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       save_button.style.color = "blue";
       save_button.value += " !";
     } else {
-      save_button.value += " :( // "kind of saveable" LOL
+      save_button.value += " :("; // "kind of saveable" LOL
     }
     updateHTML(document.getElementById('next_will_be_at_x_span_id'), nextLine);
     updateHTML(document.getElementById('next_will_be_at_x_second_line_span_id'), nextsecondline);
