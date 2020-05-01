@@ -690,17 +690,18 @@ function liveEpisodeNumber() {
     }
   }
   if (isAmazon()) {
-    var subtitle = document.getElementsByClassName("subtitle")[0];
-    if (subtitle && subtitle.innerHTML.match(/Ep. (\d+)/)) {
-      var out = /Ep. (\d+)/.exec(subtitle.innerHTML)[1];
-      return out;
+    var x = document.getElementsByClassName("dvui-playButton");
+    if (x) {
+      var play_text = x[0].getAttribute("aria-label"); // "Episode 2, Continue Watching"
+      if (play_text && play_text.match(/Episode (\d+)/)) {
+        var out = /Episode (\d+)/.exec(play_text)[1];
+        return out;
+      }
     }
-    else {
-      return "0";
-    }
+    return "0"; // not a series?
   }
   else {
-    return "0"; // anything else...
+    return "0"; // anything else dunno...
   }
 }
 
