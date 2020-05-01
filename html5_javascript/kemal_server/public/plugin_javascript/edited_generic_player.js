@@ -919,8 +919,9 @@ function checkIfShouldDoActionAndUpdateUI() {
     var start = humanToTimeStamp(document.getElementById('start').value);  
     if (doubleCheckFullFormAddRedAndAlert(false)) {
       save_button.style.color = "blue";
+      save_button.value += " !";
     } else {
-      save_button.value += " ?"; // "kind of saveable" LOL
+      save_button.value += " :( // "kind of saveable" LOL
     }
     updateHTML(document.getElementById('next_will_be_at_x_span_id'), nextLine);
     updateHTML(document.getElementById('next_will_be_at_x_second_line_span_id'), nextsecondline);
@@ -1201,10 +1202,15 @@ function refreshVideoElement() {
     // timeupdate is not granular enough for much
     if (isAmazon()) {
       var progressbar = document.getElementsByClassName("bottomPanel")[0];
-      progressbar.addEventListener("mouseup", function (event) {
-        console.log("clicked on amazon seek bar " + " cur_time=" + getCurrentTime());  // we don't know the time even for 10ms after...
-        // XXXX do a preemptive heartblank?
-     });
+      if (progressbar) {
+        console.log("yes bottomPanel :)");
+        progressbar.addEventListener("mouseup", function (event) {
+          console.log("clicked on amazon seek bar " + " cur_time=" + getCurrentTime());  // we don't know the time even for 10ms after...
+          // XXXX do a preemptive heartblank?
+       });
+      } else {
+        console.log("no bottomPanel :|");
+      }
     }
   }
 }
