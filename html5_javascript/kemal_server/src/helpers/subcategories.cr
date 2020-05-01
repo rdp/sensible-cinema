@@ -126,6 +126,7 @@ def subcategory_map
   #  {db_name: "shirtless male", human_name: "shirtless male (+- sexual)", sub_sub_cat: ""},
     {db_name: "shirtless male front", human_name: "shirtless male front (+- sexual) (not PJ's, not swimsuit)", sub_sub_cat: ""},
     {db_name: "shirtless male back", human_name: "shirtless male back (+- sexual)", sub_sub_cat: ""},
+    {db_name: "lewd action", human_name: "lewd or suggestive action lesser", sub_sub_cat: ""},
     {db_name: "sexually charged scene", human_name: "sexually charged scene", sub_sub_cat: ""},
     {db_name: "sex foreplay", human_name: "sex foreplay", sub_sub_cat: ""},
     {db_name: "implied sex", human_name: "implied sex offscreen", sub_sub_cat: ""},
