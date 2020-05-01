@@ -1880,7 +1880,7 @@ function getCurrentTime() {
     return youtube_pimw_player.getCurrentTime();
   } else {
     if (isAmazon()) {
-      return video_element.currentTime - 10; // not sure why they did this :|
+      return video_element.currentTime; // not sure why they did this :|
     } else {
       return video_element.currentTime;
     }
@@ -1924,7 +1924,7 @@ function rawRequestSeekToTime(ts, already_cached, current_time) {
     }
   } else {
     if (isAmazon()) {
-      video_element.currentTime = ts + 10;
+      video_element.currentTime = ts;
     } else {
       // really raw HTML5 :) XXX iOS ? :|
       video_element.currentTime = ts;
@@ -1938,7 +1938,7 @@ function getSecondsBufferedAhead() {
   if (isYoutubePimw()) {
     seconds_buffered = youtube_pimw_player.getDuration() * youtube_pimw_player.getVideoLoadedFraction() - cur_time;
   } else if (video_element.buffered.length > 0) { // amazon is this way...but not always...
-    cur_time = video_element.currentTime; // use raw time since amazon is += 10... :| XXX annoying/lame...
+    cur_time = video_element.currentTime; // need to use raw time since amazon is += 10... :| XXX annoying/lame...
     for (var i = 0; i < video_element.buffered.length; i++) {
       if(video_element.buffered.start(i) <= cur_time && video_element.buffered.end(i) >= cur_time) {
         seconds_buffered = (video_element.buffered.end(0) - cur_time); // it reports buffered as "10s ago until 10s from now" or what have you
