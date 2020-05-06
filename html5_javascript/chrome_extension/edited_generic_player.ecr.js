@@ -62,7 +62,7 @@ function addEditUiOnce() {
   </div>
 
   <div id=server_down_div_id style='display: none;' style='font-size: 14px;'> <!-- big -->
-    Play it my way Server down, please alert us and try again later...
+    Play it my way Server down, please alert us and try again later...MOVIE NOT BEING EDITED OUT!
   </div>
 
   <div id="load_succeeded_div_id" style='display: none;'>
