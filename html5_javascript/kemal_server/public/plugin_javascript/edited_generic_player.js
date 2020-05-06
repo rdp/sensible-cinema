@@ -693,12 +693,12 @@ function liveEpisodeNumber() {
     // the new way required this it seemed...I think works with old way...???
     var x = document.getElementsByClassName("webPlayerUIContainer"); // I know it's in there somewhere...old
     if (x.length == 0) {
-      x = document.getElementsByClassName("webPlayerContainer"); // new
+      x = document.getElementsByClassName("webPlayerContainer"); 
     } else {
-      console.log("got the weird old webPlayerUIContainer"); // should never see this again...
+      console.log("got the new webPlayerUIContainer"); // TODO test with episodes on new and old!!!
     }
-    var currentNode, ni = document.createNodeIterator(x[0], NodeFilter.SHOW_ELEMENT);
 
+    var currentNode, ni = document.createNodeIterator(x[0], NodeFilter.SHOW_ELEMENT);
     while(currentNode = ni.nextNode()) {
       if (currentNode.innerHTML.startsWith("Season ")) { // Season 1, Ep. 2 Cat's in the Bag
         if (currentNode.innerHTML.match(/Ep. (\d+)/)) {
@@ -715,11 +715,12 @@ function liveEpisodeNumber() {
 }
 
 function isAmazonTenSecondsOff() {
-  // it is on linux??? WHAT THE????
-  if (navigator.appVersion.indexOf("Linux")!=-1) {
-    return true;
+  // the new way has both webPlayerContainer and webPlayerUIContainer, old lacks latter [and is 10s off]
+  var x = document.getElementsByClassName("webPlayerUIContainer");
+  if (x.length > 0) {
+    return false; // new
   } else {
-    return false; // OS X TODO Windows
+    return true; // old
   }
 }
 
