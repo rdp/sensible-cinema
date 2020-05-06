@@ -403,7 +403,12 @@ function liveEpisodeNumber() {
   }
   if (isAmazon()) {
 
-    var x = document.getElementsByClassName("webPlayerUIContainer"); // I know it's in there somewhere...
+    var x = document.getElementsByClassName("webPlayerUIContainer"); // I know it's in there somewhere...XXX remove in a month...I think they just changed the name...but...huh?
+    if (x.length == 0) {
+      x = document.getElementsByClassName("webPlayerContainer"); // everything these days?
+    } else {
+      console.log("got the weird webPlayerUIContainer");
+    }
     var currentNode, ni = document.createNodeIterator(x[0], NodeFilter.SHOW_ELEMENT);
 
     while(currentNode = ni.nextNode()) {
