@@ -690,12 +690,12 @@ function liveEpisodeNumber() {
     }
   }
   if (isAmazon()) {
-
-    var x = document.getElementsByClassName("webPlayerUIContainer"); // I know it's in there somewhere...XXX remove in a month...I think they just changed the name...but...huh?
+    // the new way required this it seemed...I think works with old way...???
+    var x = document.getElementsByClassName("webPlayerUIContainer"); // I know it's in there somewhere...old
     if (x.length == 0) {
-      x = document.getElementsByClassName("webPlayerContainer"); // everything these days?
+      x = document.getElementsByClassName("webPlayerContainer"); // new
     } else {
-      console.log("got the weird webPlayerUIContainer");
+      console.log("got the weird old webPlayerUIContainer"); // should never see this again...
     }
     var currentNode, ni = document.createNodeIterator(x[0], NodeFilter.SHOW_ELEMENT);
 
@@ -711,6 +711,15 @@ function liveEpisodeNumber() {
   }
   else {
     return "0"; // anything else dunno...
+  }
+}
+
+function isAmazonTenSecondsOff() {
+  // it is on linux??? WHAT THE????
+  if (navigator.appVersion.indexOf("Linux")!=-1) {
+    return true;
+  } else {
+    return false; // OS X TODO Windows
   }
 }
 
@@ -2173,7 +2182,11 @@ function getCurrentTime() {
     return youtube_pimw_player.getCurrentTime();
   } else {
     if (isAmazon()) {
-      return video_element.currentTime; // not sure why they did this :|
+      if (isAmazonTenSecondsOff()) {
+        return video_element.currentTime - 10; // not sure why they did this :|
+      } else {
+        return video_element.currentTime;
+      }
     } else {
       return video_element.currentTime;
     }
@@ -2217,7 +2230,11 @@ function rawRequestSeekToTime(ts, already_cached, current_time) {
     }
   } else {
     if (isAmazon()) {
-      video_element.currentTime = ts;
+      if (isAmazonTenSecondsOff()) {
+        video_element.currentTime = ts + 10;
+      } else {
+        video_element.currentTime = ts;
+      }
     } else {
       // really raw HTML5 :) XXX iOS ? :|
       video_element.currentTime = ts;
