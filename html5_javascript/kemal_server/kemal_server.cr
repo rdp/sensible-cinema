@@ -12,6 +12,7 @@ Kemal::Session.config do |config|
   config.timeout = Time::Span.new(days: 30, hours: 0, minutes: 0, seconds: 0)
   config.engine = Kemal::Session::FileEngine.new({:sessions_dir => "./sessions/"}) # file based to survive restarts, mainly :|
   config.secure = true # send "secure only" cookies
+  config.samesite = HTTP::Cookie::SameSite::None
 end
 
 def currently_hiring?
