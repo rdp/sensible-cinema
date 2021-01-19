@@ -25,7 +25,8 @@
         <a href="<%= movie.url %>" <%= "target='_blank'" unless movie.is_youtube? %>> here</a> to see unedited. 
         <br/> In the meantime you can watch previews and free youtubes and add movies to your watch list for later!
     <% else %>
-      You need to install the app to watch this video edited.  Click <a href=/installation>here for installation instructions</a> for the free editing app <br/>or <a href="<%= movie.url %>" <%= "target='_blank'" unless movie.is_youtube? %>> here to watch it unedited</a> without the app.  Note that previews also won't be edited there.
+      You need to install the app to watch this video edited.  Click <a href=/installation>here for installation instructions</a> for the free editing app <br/>or <a href="<%= movie.url %>" <%= "target='_blank'" unless movie.is_youtube? %>> here to watch it unedited</a> without the app.
+       <br/>  Note that previews also won't be edited there, whether you have the extension installed or not.
     <% end %>
       
       <button class="close-button" data-close aria-label="Close reveal" type="button"> <!-- top right x -->
