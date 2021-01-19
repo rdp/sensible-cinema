@@ -1,30 +1,30 @@
-version: 1.0
+version: 2.0
 shards:
   db:
-    github: crystal-lang/crystal-db
-    version: 0.8.0
+    git: https://github.com/crystal-lang/crystal-db.git
+    version: 0.10.0
 
   exception_page:
-    github: crystal-loot/exception_page
+    git: https://github.com/crystal-loot/exception_page.git
     version: 0.1.4
 
   kemal:
-    github: sdogruyol/kemal
-    commit: 4d6fb0614f29aa02254913dc6ed69b0cb148fa81
+    git: https://github.com/sdogruyol/kemal.git
+    version: 0.27.0+git.commit.bf9f627ac789d2ebe573629904f02beb9e4089d5
 
   kemal-session:
-    github: kemalcr/kemal-session
-    commit: 29f65f0b360640ae36ea617d38d2d81bb2c0fa83
+    git: https://github.com/kemalcr/kemal-session.git
+    version: 0.12.1+git.commit.a9d25e5c851c5bab84be51ee2af47c21adbe3726
 
   kilt:
-    github: jeromegn/kilt
+    git: https://github.com/jeromegn/kilt.git
     version: 0.4.0
 
   mysql:
-    github: crystal-lang/crystal-mysql
-    commit: e37351c3a0474407725a9f97dbb51ed870263d2a
+    git: https://github.com/crystal-lang/crystal-mysql.git
+    version: 0.12.0+git.commit.2deace7a38170b0cf5aaf3f488b25f8b205aa83c
 
   radix:
-    github: luislavena/radix
+    git: https://github.com/luislavena/radix.git
     version: 0.3.9
 
