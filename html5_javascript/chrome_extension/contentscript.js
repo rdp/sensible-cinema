@@ -144,7 +144,7 @@ function autoStartIfShould() {
     chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "netflix/hulu the edited plugin player is disabled."});
   }
   else {
-    console.log("doing nothing non known OK :|"); // youtube is *out* now...
+    console.log("doing nothing non big 2 OK :|" + url); // youtube is *out* now...
     chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "non google play/amazon therefore disabled :("});
   }
 }
