@@ -10,6 +10,7 @@ dependencies:
   kemal:
     github: sdogruyol/kemal
     branch: master
+#  actually not...
   kemal-session:
     github: kemalcr/kemal-session
     branch: master

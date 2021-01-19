@@ -5,7 +5,7 @@ var request_host="playitmyway.org";  // prod
 
 if (typeof clean_stream_timer !== 'undefined') {
   alert("play it my way: already loaded...not loading it again...extension installed twice?");
-  throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
+  throw "dont know how to load it twice"; // in case they had it loaded twice? should never happen anymore...
 }
 
 var video_element;
