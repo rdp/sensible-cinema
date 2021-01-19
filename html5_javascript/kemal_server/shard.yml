@@ -10,9 +10,9 @@ dependencies:
   kemal:
     github: sdogruyol/kemal
     branch: master
-#  actually not...
+# until they have config.samesite
   kemal-session:
-    github: kemalcr/kemal-session
+    github: rdp/kemal-session
     branch: master
   db:
     github: crystal-lang/crystal-db
