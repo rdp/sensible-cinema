@@ -3,3 +3,4 @@ rm -f *.zip
 zip -r chrome_extension_release.zip chrome_extension
 git commit -am "release extension..."
 git pom
+echo "now go publish chrome extensio nreelase.ziP"
