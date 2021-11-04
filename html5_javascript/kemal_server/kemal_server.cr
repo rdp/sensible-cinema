@@ -20,10 +20,11 @@ def currently_hiring?
 end
 
 # until I figure out why after 3 months it takes 150MB...XXX TODO fun, but this works real well for now too... :)
+# 3 days 100MB with this? 50MB.  1% cpu
 spawn do
   loop do
     sleep 1.0
-    GC.collect
+#    GC.collect
   end
 end
 
