@@ -12,10 +12,12 @@ dependencies:
     branch: master
 # until they have config.samesite
   kemal-session:
-    github: rdp/kemal-session
+    github: kemalcr/kemal-session
     branch: master
   db:
     github: crystal-lang/crystal-db
   mysql:
     github: crystal-lang/crystal-mysql
     branch: master
+  json_mapping:
+    github: crystal-lang/json_mapping.cr

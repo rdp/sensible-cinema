@@ -1,30 +1,34 @@
 version: 2.0
 shards:
+  backtracer:
+    git: https://github.com/sija/backtracer.cr.git
+    version: 1.2.1
+
   db:
     git: https://github.com/crystal-lang/crystal-db.git
-    version: 0.10.0
+    version: 0.10.1
 
   exception_page:
     git: https://github.com/crystal-loot/exception_page.git
-    version: 0.1.4
+    version: 0.2.0
+
+  json_mapping:
+    git: https://github.com/crystal-lang/json_mapping.cr.git
+    version: 0.1.1
 
   kemal:
     git: https://github.com/sdogruyol/kemal.git
-    version: 0.27.0+git.commit.bf9f627ac789d2ebe573629904f02beb9e4089d5
+    version: 1.1.0+git.commit.5e2efec0503622267b57d03fe7d5151000d3bf47
 
   kemal-session:
-    git: https://github.com/rdp/kemal-session.git
-    version: 0.12.1+git.commit.76d46b6207af75171c2b75cf6fa4caae57596b23
-
-  kilt:
-    git: https://github.com/jeromegn/kilt.git
-    version: 0.4.0
+    git: https://github.com/kemalcr/kemal-session.git
+    version: 1.0.0+git.commit.2ebaf68ed48da763a9cdd0f8dcbc6347981e115d
 
   mysql:
     git: https://github.com/crystal-lang/crystal-mysql.git
-    version: 0.12.0+git.commit.2deace7a38170b0cf5aaf3f488b25f8b205aa83c
+    version: 0.13.0+git.commit.1a9b99230db732e51b0c63c64a8ecf69b8e62913
 
   radix:
     git: https://github.com/luislavena/radix.git
-    version: 0.3.9
+    version: 0.4.1
 

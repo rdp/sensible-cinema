@@ -25,6 +25,8 @@ def query(*args)
   out
 end
 
+require "json_mapping" # punt on Serializable for now
+
 class Url
   
   DB.mapping({

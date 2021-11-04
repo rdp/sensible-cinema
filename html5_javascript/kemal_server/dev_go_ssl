@@ -11,11 +11,11 @@ if [[ ! -d edit_descriptors ]]; then
 fi
 if [[ ! -f _key.pem ]]; then
   echo "generating dev ssl keys"
-  /usr/local/Cellar/openssl/1.0.2s/bin/openssl req -x509 -newkey rsa:4096 -keyout _key.pem -out cert.pem -days 365 -nodes
+  openssl req -x509 -newkey rsa:4096 -keyout _key.pem -out cert.pem -days 365 -nodes
 fi
 if [[ $1 != "nobuild" ]]; then
   echo "building"
-  crystal build ./kemal_server.cr -o bin.kemal_server --debug $1 || exit 1
+  crystal build ./kemal_server.cr -o bin.kemal_server $1 || exit 1
 fi
 echo "running"
 ./bin.kemal_server --ssl --ssl-key-file _key.pem --ssl-cert-file cert.pem -p 3000 || exit 1

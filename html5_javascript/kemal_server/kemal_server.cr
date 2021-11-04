@@ -38,10 +38,10 @@ class CustomHandler < Kemal::Handler # don't know how to interrupt it from a bef
       end # else too hard
       add_to_flash env, "Please login to unleash the full awesomeness (#{path}), first, below:"
       env.redirect "/login" 
-    elsif env.request.host !~ /localhost|127.0.0.1|playitmyway/
+    elsif env.request.hostname !~ /localhost|127.0.0.1|playitmyway/
       # sometimes some crawlers were calling https://freeldssheetmusic.org as if it were this, weird, attempt redirect for SEO
       env.redirect "https://playitmyway.org#{env.request.path}#{"?" + query if query}" 
-    elsif env.request.host == "playitmyway.inet2.org"
+    elsif env.request.hostname == "playitmyway.inet2.org"
       env.redirect "https://playitmyway.org#{env.request.path}#{"?" + query if query}" 
     else
       # success or no login required
