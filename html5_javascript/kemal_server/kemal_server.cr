@@ -5,6 +5,7 @@ require "kemal-session"
 require "http/client"
 require "mysql"
 require "./src/view_helpers" # make accessible to all views
+require "benchmark"
 
 Kemal::Session.config do |config|
   config.secret = File.read("./db/local_cookie_secret") # generate like $ crystal eval 'require "random/secure"; puts Random::Secure.hex(64)' > db/local_cookie_secret
@@ -841,7 +842,7 @@ def get_int(params, name)
 end
 
 get "/gc" do
-  Benchmark.measure { GC.collect }
+  Benchmark.measure { GC.collect }.to_s
 end
 
 post "/save_url" do |env|

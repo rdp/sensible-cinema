@@ -1,3 +1,0 @@
-sudo -E -u rdp crystal build ./kemal_server.cr  # copy pasted from other file where user mattered...
-killall kemal_server
-echo 'should be new now'
