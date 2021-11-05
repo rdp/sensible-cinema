@@ -840,6 +840,10 @@ def get_int(params, name)
   end
 end
 
+get "/gc" do
+  Benchmark.measure { GC.collect }
+end
+
 post "/save_url" do |env|
   params = env.params.body # POST params
   puts "got save_url params=#{params} env.params=#{env.params}"
