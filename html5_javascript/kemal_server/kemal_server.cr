@@ -842,7 +842,7 @@ def get_int(params, name)
 end
 
 get "/gc" do
-  Benchmark.measure { GC.collect }.to_s
+  Benchmark.measure { GC.collect }.to_s + GC.stats.to_s
 end
 
 post "/save_url" do |env|
