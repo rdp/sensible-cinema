@@ -1,4 +1,6 @@
 # run certbot-auto to get certs it seems... then 
 # sudo crontab =>  30 2 * * 1 /home/rdp/certbot-auto renew --quiet --no-self-upgrade && killall kemal_server
 
-sudo setcap cap_net_bind_service=+ep ./kemal_server && sudo -u rdp ./kemal_server --ssl --ssl-key-file /etc/letsencrypt/live/playitmyway.org/privkey.pem --ssl-cert-file /etc/letsencrypt/live/playitmyway.org/fullchain.pem -p 443
+sudo setcap cap_net_bind_service=+ep ./kemal_server 
+export GC_FREE_SPACE_DIVISOR=200
+sudo -E -u rdp ./kemal_server --ssl --ssl-key-file /etc/letsencrypt/live/playitmyway.org/privkey.pem --ssl-cert-file /etc/letsencrypt/live/playitmyway.org/fullchain.pem -p 443

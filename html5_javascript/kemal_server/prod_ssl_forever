@@ -5,11 +5,11 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 else
   echo "root successfully enabled...we'll need that in a sec..."
-  echo "use like https://playitmyway.org"
+  echo "use soon like https://playitmyway.org"
 fi
 
 # no release since super slow on DO plus crashes out of RAM :|
-sudo -E -u rdp crystal build ./kemal_server.cr || exit 1 # prime the pump :)
+CRYSTAL_PATH=/home/rdp/dev/crystal.unused.this_is_prod/src:lib sudo -E -u rdp crystal build ./kemal_server.cr || exit 1 # prime the pump :)
 while true; do
   ./_prod_ssl_go # wait for it to get killed by cron or web server rebuild+restart etc.
 done
