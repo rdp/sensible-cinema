@@ -261,7 +261,7 @@ class Url
   end
 
   def url_lookup_params
-    "url=#{url}&episode_number=#{episode_number}" # URI.encode_www_form?
+    "url=" + URI.encode_path_segment(HTML.unescape(url)) + "&episode_number=#{episode_number}"
   end
 
   def human_duration

@@ -25,7 +25,7 @@ end
 spawn do
   loop do
     sleep 1.0
-#    GC.collect
+    GC.collect
   end
 end
 
@@ -606,8 +606,8 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
   end
 end
 
-def sanitize_html(name)
-  HTML.escape name
+def sanitize_html(string)
+  HTML.escape string
 end
 
 def get_all_urls
@@ -842,7 +842,7 @@ def get_int(params, name)
 end
 
 get "/gc" do
-  Benchmark.measure { GC.collect }.to_s + GC.stats.to_s
+  GC.stats.to_s + Benchmark.measure { GC.collect }.to_s + GC.stats.to_s
 end
 
 post "/save_url" do |env|
