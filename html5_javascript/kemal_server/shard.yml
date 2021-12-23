@@ -9,8 +9,6 @@ license: MIT
 dependencies:
   kemal:
     github: sdogruyol/kemal
-    branch: master
-# until they have config.samesite
   kemal-session:
     github: kemalcr/kemal-session
     branch: master
