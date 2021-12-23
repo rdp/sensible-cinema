@@ -22,7 +22,7 @@ brew services start mysql@5.7
 # for both, after, also do this:
 
 login to mysql (sudo mysql -uroot on ubuntu)
-SET PASSWORD FOR root@localhost=PASSWORD('');
+SET PASSWORD FOR root@localhost=PASSWORD(''); -- empty password
 # or if that doesn't work 
 # ALTER USER 'root'@'localhost' IDENTIFIED BY ''; 
 # or possibly ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY ''; 

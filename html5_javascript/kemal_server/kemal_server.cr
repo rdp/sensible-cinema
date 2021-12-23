@@ -841,6 +841,12 @@ def get_int(params, name)
   end
 end
 
+get "/gc_stats" do
+  count = 0
+  Fiber.unsafe_each{|f| count += 1}
+  GC.stats.to_s + " fiber=#{count}"
+end
+
 get "/gc" do
   GC.stats.to_s + Benchmark.measure { GC.collect }.to_s + GC.stats.to_s
 end
