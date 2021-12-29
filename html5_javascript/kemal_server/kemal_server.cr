@@ -841,10 +841,12 @@ def get_int(params, name)
   end
 end
 
+start = Time.utc
+
 get "/gc_stats" do
   count = 0
   Fiber.unsafe_each{|f| count += 1}
-  GC.stats.to_s + " fiber=#{count}"
+  GC.stats.to_s + " fiber=#{count} #{start} #{Time.utc - start}"
 end
 
 get "/gc" do
