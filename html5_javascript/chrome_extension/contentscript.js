@@ -2,7 +2,7 @@
 // content script runs on every page...and once again on each embedded iframe...
 // we mostly use this to bootstrap the real player...
 
-console.log("PIMW content script entered... " + window.location); // try and see how fast it "can" load...
+console.log("pimw content script entered... " + window.location); // try and see how fast it "can" load...
 
 function loadScript(url, callback)
 {
@@ -69,25 +69,11 @@ function findFirstVideoTagOrNull() {
    return null;
 }
 
-function onReady(yourMethod) {
-     if (document.readyState === 'complete') {
-       setTimeout(yourMethod, 1); // schedule to run immediately
-     }
-     else {
-       readyStateCheckInterval = setInterval(function() {
-         if (document.readyState === 'complete') {
-           clearInterval(readyStateCheckInterval);
-           yourMethod();
-        }
-        }, 10);
-     }
-}
-
 function injectEditedPlayerOnce() {
-    console.log("injecting editor code...");
+    console.log("pimw injecting editor code...");
     chrome.runtime.sendMessage({text: "load", color: "#808080", details: "Trying to load edited playback..."}); // last thing they see for non big 2 :|
     if (already_loaded) {
-        alert('edited player already loaded for this page...please use its UI. Try clicking "unedited" or the refresh button on your browser.');
+        alert('Double load from content script?'); // should never happen from one content script XXX remove
     }
     else {
         already_loaded = true;
@@ -109,11 +95,9 @@ function autoStartIfShould() {
     chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "facebook we don't handle yet"}); // don't auto load for now, too chatty on the server, not compat... [?]
     return;
   }
-  // youtube_pimw "already has it" hard coded
-  // but want the demo movie still :|
-  var wantItPlayItMyWay = url.includes("playitmyway.org");
+  var wantItPlayItMyWay = url.includes("playitmyway.org");  // for the demo .mp4 movie editing..
   if (wantItPlayItMyWay && url.includes("edited_youtube")) {
-    wantItPlayItMyWay = false; // already hard-coded inline...
+    wantItPlayItMyWay = false; // already hard-coded into the web page itself...
   }
   if (wantItPlayItMyWay && window.navigator.userAgent.includes("PlayItMyWay")) {
     wantItPlayItMyWay = false; // let android inject it, don't want to cheat
@@ -129,22 +113,22 @@ function autoStartIfShould() {
             details: "edited playback and waiting for a video to appear present, then will try to see if edits exist for it so can playback edited"}); 
     }
     // iframe wants to load the extension though, for google play to work...
-    console.log("big 2/pimw polling for video tag..."); // I guess we just look for video tag :|
+    console.log("pimw: big 2/pimw begin polling for video tag..."); // I guess we just look for video tag :|
     var interval = setInterval(function(){
       var video_element = findFirstVideoTagOrNull();
       if (video_element != null) {
-        console.log("big 2 found video tag [or pimw non youtube page], injecting, even if it doesn't have edits...");
+        console.log("pimw: found video tag [or pimw non youtube page], injecting, even if it doesn't have edits...");
         injectEditedPlayerOnce();
         clearInterval(interval);
       }
     }, 50);  // initial delay 50ms but me thinks not too bad, still responsive enough :)
   }
   else if (url.includes("netflix.com/") || url.includes("hulu.com/")) {
-    console.log("doing nothing netflix hulu :|");
+    console.log("pimw doing nothing netflix hulu :|");
     chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "netflix/hulu the edited plugin player is disabled."});
   }
   else {
-    console.log("doing nothing non big 2 OK :|" + url); // youtube is *out* now...
+    console.log("pimw doing nothing non big 2 OK :|" + url); // youtube is *out* now...
     chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "non google play/amazon therefore disabled :("});
   }
 }
@@ -163,49 +147,6 @@ function getStandardizedCurrentUrl() { // duplicated with other .js
   return current_url;
 }
 
-function loadIfCurrentHasOne() {
-  var url = currentUrlNotIframe();
-  var direct_lookup = 'for_current_just_settings_json?url=' + encodeURIComponent(getStandardizedCurrentUrl()) + '&episode_number=0'; // simplified, no episode yet here :|
-  url = '//' + request_host + '/' + direct_lookup;
-  getRequest(url, currentHasEdits, currentHasNone);
-}
-
-function currentHasEdits() {
-  console.log("got extant non big 2 " + currentUrlNotIframe());
-  injectEditedPlayerOnce();
-}
-
-function currentHasNone(status) {
-  if (status == 0) {
-    console.log("appears the cleanstream server is currently down, please alert us! Edits unable to load for now..."); // barely scared it could become too annoying :|
-  }
-  else {
-    console.log("unable to find one on server for " + currentUrlNotIframe() + " so not auto loading it, doing nothing " + status);
-  }
-  // thought it was too invasive to inject the javascript for say facebook :|
-  chrome.runtime.sendMessage({text: "none", color: "#808080", details: "We found a video playing, do not have edits for this video in our system yet, please click above to add it!"}); 
-}
-
-function getRequest (url, success, error) {  
-  console.log("starting attempt download " + url);
-  var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"); 
-  xhr.open("GET", url); 
-  xhr.onreadystatechange = function(){ 
-    if ( xhr.readyState == 4 ) { 
-      if ( xhr.status == 200 ) { 
-        success(xhr.responseText); 
-      } else { 
-        error && error(xhr.status); 
-        error = null;
-      } 
-    } 
-  }; 
-  xhr.onerror = function () { 
-    error && error(xhr.status); 
-    error = null;
-  }; 
-  xhr.send(); 
-}
 
 // onReady(autoStartIfShould); // takes like 5s for onReady whoa! too slow...
 autoStartIfShould(); 
