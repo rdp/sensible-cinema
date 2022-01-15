@@ -1,4 +1,4 @@
-// (c) 2016, 2017, 2018 Roger Pack released under LGPL
+// (c) 2016-2022 Roger Pack released under LGPL
 
 // var request_host="localhost:3000"; // dev
 var request_host="playitmyway.org";  // prod
@@ -282,10 +282,6 @@ By default edit should be turned on?
 
   setupSafeSeekOnce();
 
-  setInterval(doPeriodicChecks, 100); // XX figure out if we even need this v. often or not...
-  setInterval(doRarePeriodicChecks, 1000); // too cpu hungry :|
-  // we don't start the "real" interval until after first safe load...apparently...odd...
-
 } // end addEditUiOnce
 
 var seek_dragger_being_dragged = false;
@@ -407,7 +403,7 @@ function liveEpisodeNumber() {
     if (x.length == 0) {
       x = document.getElementsByClassName("webPlayerContainer"); 
     } else {
-      console.log("got the new webPlayerUIContainer"); // TODO test with episodes on new and old!!!
+      //console.log("got the new webPlayerUIContainer"); // TODO test with episodes on new and old!!!
     }
 
     var currentNode, ni = document.createNodeIterator(x[0], NodeFilter.SHOW_ELEMENT);
@@ -1607,8 +1603,6 @@ function loadSucceeded(json_string) {
   parseSuccessfulJson(json_string);
   setEditsToUseFromSelectedPersonalizeDropdown();
   startWatcherTimerSingleton(); // don't know what to display before this...so leave everything none until now
-  old_current_url = getStandardizedCurrentUrl();
-  old_episode = liveEpisodeNumber();
   var expected_episode_number = current_json.url.episode_number;
   if (liveEpisodeNumber() != expected_episode_number) {
     alert("play it my way\ndanger: may have gotten wrong episode expected=" + expected_episode_number + " got=" + liveEpisodeNumber());
@@ -1622,37 +1616,6 @@ function loadSucceeded(json_string) {
   setExtensionSmiley();
 }
 
-function doPeriodicChecks() {
-  setEditedControlsToMovieRight();
-}
-
-function doRarePeriodicChecks() {
-  // these take a bit o' cpu, do them even less often...
-  addPluginEnabledTextOnce();
-  checkIfEpisodeChanged();
-  refreshVideoElement();
-}
-
-function addPluginEnabledTextOnce() {
-  if (isAmazon() && current_json) {
-    var span = document.getElementsByClassName("av-playback-messages")[0]; // just random from their UI
-    span = span || document.getElementsByClassName("av-alert-inline")[0];
-    if (span && !span.innerHTML.includes("it my way")) {
-      var extra = "<br/><small>(Play it my way enabled! Disclaimer: Performance of the motion picture will be altered from the performance intended by the director/copyright holder, because play it my way enabled)";
-      if (current_json.url.edit_passes_completed < 2) { // XXXX use the new status...somehow...??
-        extra += " (not fully edited yet)";
-      }
-      extra += "</small";
-      span.innerHTML += extra;
-      console.log("added plugin enabled to amazon");
-    }
-  }
-}
-
-function setExtensionSmiley() {
-  sendMessageToPlugin({text: "☺", color: "#008000", details: "Edited playback is enabled and fully operational for current video being played"}); // green
-}
-
 function loadFailed(status) {
   current_json = null;
   hideDiv(document.getElementById("load_succeeded_div_id"));
@@ -1660,8 +1623,6 @@ function loadFailed(status) {
   hideDiv(document.getElementById("server_down_div_id"));
 
   removeAllOptions(document.getElementById("tag_edit_list_dropdown_id")); // clean up...in case it matters...
-  old_current_url = getStandardizedCurrentUrl();
-  old_episode = liveEpisodeNumber();
   sendMessageToPlugin({color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
   if (status == 412) {
     // not in our system yet
@@ -1683,8 +1644,35 @@ function loadFailed(status) {
     // ?? just let it stay saying unedited :|
   }
 
-  startWatcherTimerSingleton(); // so it can check if episode changes to one we like magically LOL [amazon...]
   console.log("got failure/ABSENT HTML response status=" + status);
+}
+
+function doRarePeriodicChecks() {
+  // these take a bit o' cpu, do them even less often...
+  addPluginEnabledTextOnce();
+  checkIfEpisodeChanged();
+  refreshVideoElement();
+  setEditedControlsToMovieRight();
+}
+
+function addPluginEnabledTextOnce() {
+  if (isAmazon() && current_json) {
+    var span = document.getElementsByClassName("av-playback-messages")[0]; // just random from their UI
+    span = span || document.getElementsByClassName("av-alert-inline")[0];
+    if (span && !span.innerHTML.includes("it my way")) {
+      var extra = "<br/><small>(Play it my way enabled! Disclaimer: Performance of the motion picture will be altered from the performance intended by the director/copyright holder, because play it my way enabled)";
+      if (current_json.url.edit_passes_completed < 2) { // XXXX use the new status...somehow...??
+        extra += " (not fully edited yet)";
+      }
+      extra += "</small";
+      span.innerHTML += extra;
+      console.log("added plugin enabled to amazon");
+    }
+  }
+}
+
+function setExtensionSmiley() {
+  sendMessageToPlugin({text: "☺", color: "#008000", details: "Edited playback is enabled and fully operational for current video being played"}); // green
 }
 
 function parseSuccessfulJson(json_string) {
@@ -1808,8 +1796,8 @@ function startOnce() {
   // sanity check
   refreshVideoElement();
   if (video_element == null) {
-    // maybe could get here if they raw load the javascript?
-    console.log("unable to find a video playing, not loading edited playback, should never get here...");
+    // maybe could get here if they raw load the javascript on a page without a started video?
+    console.log("unable to find a video playing, not loading edited playback [startup?], looping...");
     setTimeout(startOnce, 500); // just retry forever :|
     return;
   }
@@ -1822,11 +1810,16 @@ function startOnce() {
     }
   }
 
-  // ready to try and load the editor LOL
-  console.log("adding edit UI, requesting for current URL...");
-
+  // ready to finally try and load the editor LOL
+  console.log("pimw adding edit UI, requesting for current URL...");
   addEditUiOnce(); // and only do once...but before we load anything so it can say "loading" I guess...
-  loadForNewUrl(); // will eventually call startWatcherTimerSingleton
+
+  // calculate some stuff up front so the doRarePeriodicChecks won't get confused while it hasn't loaded yet...
+  old_current_url = getStandardizedCurrentUrl();
+  old_episode = liveEpisodeNumber();  
+  setInterval(doRarePeriodicChecks, 1000); // too cpu hungry :|
+
+  loadForNewUrl(); // will eventually call startWatcherTimerSingleton once successful...
 }
 
 function videoCurrentlyBlackedByUs() {

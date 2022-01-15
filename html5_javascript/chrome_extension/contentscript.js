@@ -69,6 +69,20 @@ function findFirstVideoTagOrNull() {
    return null;
 }
 
+function onReady(yourMethod) {
+     if (document.readyState === 'complete') {
+       setTimeout(yourMethod, 1); // schedule to run immediately
+     }
+     else {
+       readyStateCheckInterval = setInterval(function() {
+         if (document.readyState === 'complete') {
+           clearInterval(readyStateCheckInterval);
+           yourMethod();
+        }
+        }, 10);
+     }
+}
+
 function injectEditedPlayerOnce() {
     console.log("pimw injecting editor code...");
     chrome.runtime.sendMessage({text: "load", color: "#808080", details: "Trying to load edited playback..."}); // last thing they see for non big 2 :|
@@ -104,7 +118,7 @@ function autoStartIfShould() {
   }
   
   if (url.includes("play.google.com") || url.includes("amazon.com") || wantItPlayItMyWay) {
-    if (inIframe()) { 
+    if (inIframe()) {  // wait I thought url couldn't be from iFrame?
       // avoid google iframes popup after it says <smiley> and reset it back even though it is playing OK
       console.log("not setting plugin text to look from an iframe");
     }
@@ -128,7 +142,7 @@ function autoStartIfShould() {
     chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "netflix/hulu the edited plugin player is disabled."});
   }
   else {
-    console.log("pimw doing nothing non big 2 OK :|" + url); // youtube is *out* now...
+    console.log("pimw doing nothing non big 2 :| [" + url + "]"); // youtube is *out* now...
     chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "non google play/amazon therefore disabled :("});
   }
 }
