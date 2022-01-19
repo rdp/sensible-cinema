@@ -9,7 +9,7 @@ else
 fi
 
 # no release since super slow on DO plus crashes out of RAM :|
-CRYSTAL_PATH=/home/rdp/dev/crystal.unused.this_is_prod/src:lib sudo -E -u rdp crystal build ./kemal_server.cr || exit 1 # prime the pump :)
+CRYSTAL_PATH=/home/rdp/dev/crystal.sometimes.used.them/src:lib sudo -E -u rdp crystal build ./kemal_server.cr || exit 1 # prime the pump :)
 while true; do
   ./_prod_ssl_go # wait for it to get killed by cron or web server rebuild+restart etc.
 done

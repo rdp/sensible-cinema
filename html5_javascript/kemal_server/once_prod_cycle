@@ -1,3 +1,4 @@
+echo "outdated, do manually see prod_run_forever"
 sudo -E -u rdp crystal build ./kemal_server.cr || exit 1  # copy pasted from other file where user mattered...
 killall kemal_server
 echo 'should be new now'
