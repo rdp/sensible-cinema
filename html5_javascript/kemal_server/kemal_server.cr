@@ -847,7 +847,9 @@ start = Time.utc
 get "/gc_stats" do
   count = 0
   Fiber.unsafe_each{|f| count += 1}
-  GC.stats.to_s + " fiber=#{count} #{start} #{Time.utc - start}"
+  mem = IO::Memory.new
+  PrettyPrint.format(Fiber.all_with_current_callstacks, mem, 100)
+  GC.stats.to_s + " fiber=#{count} #{start} #{Time.utc - start} <pre>#{mem}" 
 end
 
 get "/gc" do
