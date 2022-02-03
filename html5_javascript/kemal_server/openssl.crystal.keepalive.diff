@@ -1,0 +1,20 @@
+diff --git a/src/openssl/ssl/server.cr b/src/openssl/ssl/server.cr
+index f5e99ead3..4675ab9a3 100644
+--- a/src/openssl/ssl/server.cr
++++ b/src/openssl/ssl/server.cr
+@@ -63,6 +63,7 @@ class OpenSSL::SSL::Server
+   #
+   # This method calls `@wrapped.accept` and wraps the resulting IO in a SSL socket (`OpenSSL::SSL::Socket::Server`) with `context` configuration.
+   def accept : OpenSSL::SSL::Socket::Server
+     new_ssl_socket(@wrapped.accept)
+   end
+ 
+@@ -70,7 +71,10 @@ class OpenSSL::SSL::Server
+   #
+   # This method calls `@wrapped.accept?` and wraps the resulting IO in a SSL socket (`OpenSSL::SSL::Socket::Server`) with `context` configuration.
+   def accept? : OpenSSL::SSL::Socket::Server?
+     if socket = @wrapped.accept?
++      socket.as(TCPSocket).keepalive=true
+       new_ssl_socket(socket)
+     end
+   end
