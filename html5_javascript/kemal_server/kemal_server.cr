@@ -937,12 +937,31 @@ end
 
 post "/upload_from_subtitles_post/:url_id" do |env|
   db_url = get_url_from_url_id(env)
-  params = env.params.body # POST params
-  add_to_beginning = params["add_to_beginning"].to_f
-  add_to_end = params["add_to_end"].to_f
- 
-  if params["amazon_subtitle_url"]?
-    db_url.subtitles = download(params["amazon_subtitle_url"])
+  #params = env.params.body # POST params but can't use them or file contents are discarded :|
+  #add_to_beginning = params["add_to_beginning"].to_f
+  #add_to_end = params["add_to_end"].to_f
+
+  upload_srt = nil
+  add_to_beginning = 0.0
+  add_to_end = 0.0
+  amazon_subtitle_url = nil
+  HTTP::FormData.parse(env.request) do |part|
+    if part.name == "srt_upload"
+      upload_srt = part.body.gets_to_end
+      # also have part.headers.filename somehow I guess...
+    elsif part.name == "add_to_beginning"
+      add_to_beginning = part.body.gets_to_end.to_f
+    elsif part.name == "amazon_subtitle_url"
+      amazon_subtitle_url = part.body.gets_to_end
+    elsif part.name == "add_to_end"
+      add_to_end = part.body.gets_to_end.to_f
+    end
+  end
+  if upload_srt
+    db_url.subtitles = upload_srt # saves contents, why not? :) XXX save euphemized? actually original might be more powerful somehow...
+    profs, all_euphemized = SubtitleProfanityFinder.mutes_from_srt_string(db_url.subtitles)
+  elsif amazon_subtitle_url
+    db_url.subtitles = download(amazon_subtitle_url)
     profs, all_euphemized = SubtitleProfanityFinder.mutes_from_amazon_string(db_url.subtitles)
   else
     raise "no subtitle file uploaded to parse?"
